@@ -765,7 +765,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/sys
 
 %{_mandir}/man1/a2p.1*
-%{_mandir}/man1/dprofpp.1*
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/perl[ae-z]*.1*
@@ -818,6 +817,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_mandir}/man1/c2ph.1*
+%{_mandir}/man1/dprofpp.1*
 %{_mandir}/man1/h2ph.1*
 %{_mandir}/man1/h2xs.1*
 %{_mandir}/man1/perlbug.1*
