@@ -170,8 +170,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man[13]/*
 
 %files -n sperl
-%attr(4711,root,root) /usr/bin/sperl%{perlver}%{perlrel}
-%attr(4711,root,root) /usr/bin/suidperl
+%attr(4755,root,root) /usr/bin/sperl%{perlver}%{perlrel}
+%attr(4755,root,root) /usr/bin/suidperl
 
 %changelog
 * Tue Apr 20 1999 Artur Frysiak <wiget@pld.org.pl>
