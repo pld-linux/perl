@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	14
+Release:	15
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -278,7 +278,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
 install -d B Date Devel ExtUtils File Font HTML HTTP I18N IO/Socket \
-	Mail News Net Parse RPC Text Time XML auto/Mail
+	Mail News Net Parse RPC Text Tie Time XML auto/Mail
 cd %{_target_platform}*/%{version}
 install -d Apache BSD Compress Net auto/{Apache,BSD,Compress,Net}
 )
@@ -319,6 +319,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Parse
 %{_libdir}/perl5/site_perl/RPC
 %{_libdir}/perl5/site_perl/Text
+%{_libdir}/perl5/site_perl/Tie
 %{_libdir}/perl5/site_perl/Time
 %{_libdir}/perl5/site_perl/XML
 %{_libdir}/perl5/site_perl/auto
