@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	44
+Release:	45
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -49,6 +49,7 @@ BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
+Provides:	perl-IO = 1.20
 Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-lib
@@ -277,9 +278,9 @@ more secure running of setuid Perl scripts.
 sperl ist eine binäre setuid Kopie von Perl, mit der (hoffentlich)
 setuid-Skripts sicherer ausgeführt werden können.
 
-%description -n sperl -l pl
-sperl es una copia binaria de setuid para perl que le permite\n"
-una ejecución más segura de los scripts de Perl setuid."
+%description -n sperl -l es
+sperl es una copia binaria de setuid para perl que le permite una
+ejecución más segura de los scripts de Perl setuid.
 
 %description -n sperl -l fr
 sperl est une copie binaire setuid de perl qui permet une exécution
@@ -326,12 +327,12 @@ Group:		Applications/Text
 Requires:	perl-Test-Harness
 Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
-Provides:	perl-Devel-Peek
 Provides:	perl-DProf
+Provides:	perl-Devel-Peek
 Provides:	perl-PodParser
 Obsoletes:	perl-ANSIColor
-Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-DProf
+Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-PodParser
 
 %description modules
@@ -745,7 +746,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/attri*
 %{_mandir}/man3/au*
 %{_mandir}/man3/bas*
-%{_mandir}/man3/c*
+%{_mandir}/man3/co*
 %{_mandir}/man3/fie*
 %{_mandir}/man3/l[io]*
 %{_mandir}/man3/ov*
