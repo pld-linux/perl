@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	40
+Release:	41
 Epoch:		1
 License:	GPL on Artistic
 Group:		Applications/Text
@@ -48,6 +48,8 @@ URL:		http://www.perl.org/
 BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
 Provides:	perl(DynaLoader)
+Provides:	perl-File-Spec = 0.82
+Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
