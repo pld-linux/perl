@@ -34,7 +34,7 @@
 %endif
 
 # temporary (I hope) hack, the above doesn't work with rpm-4.3-0.20030610
-%define _noautoreq 'perl(.*)' 'perl-base'
+%define _noautoreq 'perl(.*)' 'perl-base .*'
 
 
 %define		perlthread	%{?!_without_threads:-thread-multi}
