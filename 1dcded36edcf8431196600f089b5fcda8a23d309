@@ -1,0 +1,2 @@
+- release 29: rebuild on current rpm for generating proper perl module
+  dependencies.
