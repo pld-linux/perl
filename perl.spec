@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	58
+Release:	59
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -497,18 +497,19 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d AI Apache Archive Array Astro Audio Authen B Bundle Business \
-	CGI Class Config Convert Crypt DBD Data Date Devel Digest ExtUtils \
-	File Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
+install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
+	Audio Authen B Bundle Business CGI Cache Chart Class Config \
+	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
+	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
 	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
 	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
-	PostScript Proc RADIUS RPC Regexp SOAP/Transport Set Sort Speech \
-	Spreadsheet Sub Statistics \
-	String Sys TeX Test Text/Query Tie Time Tree WWW XML \
+	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
+	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
+	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Crypt,Mail,Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
-install -d Astro Audio Authen BSD Bit Compress Crypt/OpenSSL Data Devel \
+install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	Digest File IPC Locale Math Net Speech/Recognizer String Term Text \
 	Unicode XML \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
@@ -555,15 +556,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/perl5/site_perl
 %{_libdir}/perl5/site_perl/AI
+%{_libdir}/perl5/site_perl/Algorithm
 %{_libdir}/perl5/site_perl/Apache
-%{_libdir}/perl5/site_perl/Audio
-%{_libdir}/perl5/site_perl/Astro
 %{_libdir}/perl5/site_perl/Archive
 %{_libdir}/perl5/site_perl/Array
+%{_libdir}/perl5/site_perl/Astro
+%{_libdir}/perl5/site_perl/Attribute
+%{_libdir}/perl5/site_perl/Audio
 %{_libdir}/perl5/site_perl/Authen
 %{_libdir}/perl5/site_perl/Bundle
 %{_libdir}/perl5/site_perl/Business
 %{_libdir}/perl5/site_perl/CGI
+%{_libdir}/perl5/site_perl/Cache
+%{_libdir}/perl5/site_perl/Chart
 %{_libdir}/perl5/site_perl/Class
 %{_libdir}/perl5/site_perl/Config
 %{_libdir}/perl5/site_perl/Convert
@@ -573,6 +578,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Date
 %{_libdir}/perl5/site_perl/Devel
 %{_libdir}/perl5/site_perl/Digest
+%{_libdir}/perl5/site_perl/Error
 %{_libdir}/perl5/site_perl/ExtUtils
 %{_libdir}/perl5/site_perl/File
 %{_libdir}/perl5/site_perl/Filesys
@@ -596,8 +602,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Mail
 %{_libdir}/perl5/site_perl/Math
 %{_libdir}/perl5/site_perl/Module
-%{_libdir}/perl5/site_perl/News
 %{_libdir}/perl5/site_perl/Net
+%{_libdir}/perl5/site_perl/News
 %{_libdir}/perl5/site_perl/Number
 %{_libdir}/perl5/site_perl/OLE
 %{_libdir}/perl5/site_perl/Parse
@@ -606,7 +612,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Proc
 %{_libdir}/perl5/site_perl/RADIUS
 %{_libdir}/perl5/site_perl/RPC
+%{_libdir}/perl5/site_perl/RPM
 %{_libdir}/perl5/site_perl/Regexp
+%{_libdir}/perl5/site_perl/SQL
+%{_libdir}/perl5/site_perl/Schedule
 %{_libdir}/perl5/site_perl/Set
 %{_libdir}/perl5/site_perl/Sort
 %{_libdir}/perl5/site_perl/Speech
@@ -621,6 +630,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Tie
 %{_libdir}/perl5/site_perl/Time
 %{_libdir}/perl5/site_perl/Tree
+%{_libdir}/perl5/site_perl/Unicode
 %{_libdir}/perl5/site_perl/WWW
 %{_libdir}/perl5/site_perl/XML
 %{_libdir}/perl5/site_perl/auto
@@ -837,6 +847,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/NetServer
 %{_libdir}/perl5/site_perl/Netscape
 %{_libdir}/perl5/site_perl/SOAP
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/B
 %{_libdir}/perl5/%{version}/B
 %{_libdir}/perl5/%{version}/CPAN
 %{_libdir}/perl5/%{version}/Devel
