@@ -27,7 +27,7 @@ Name:		perl
 Version:	5.6.1
 Release:	53
 Epoch:		1
-License:	GPL or Artistic
+License:	GPL/Artistic
 Group:		Applications/Text
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
