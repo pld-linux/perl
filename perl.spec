@@ -123,7 +123,6 @@ Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Aplikacje/Tekst
 Prereq:		%{name}-lib = %{version}
-Conflicts:	%{name}
 
 %description modules
 Practical Extraction and Report Language - modu³y.
