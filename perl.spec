@@ -170,13 +170,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir /usr/lib/perl5
 %attr( - ,root,root) /usr/lib/perl5/*
-%attr(644,root,root) /usr/share/man/man[13]/*
+/usr/share/man/man[13]/*
 
 %files -n sperl
 %attr(4755,root,root) /usr/bin/sperl%{perlver}%{perlrel}
 %attr(4755,root,root) /usr/bin/suidperl
 
 %changelog
+* Sun May  9 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [5.005_03-4]
+- FHS 2.0 compliant changes.
+
 * Wed Apr 28 1999 Artur Frysiak <wiget@pld.org.pl>
   [5.005_03-3]
 - added db1 patch from RH 6.0
