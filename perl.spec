@@ -18,6 +18,8 @@
 # - *TESTING*
 #
 
+%define	_patch	19377
+
 %if 0%(if [ %{__perl_requires} ]; then echo 1; fi)
 %undefine	__perl_requires
 %define		__perl_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
@@ -56,12 +58,12 @@ Summary(sv):	ProgrammeringssprÂket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
-Version:	5.8.0
-Release:	0.35%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Version:	5.8.1
+Release:	0.%{_patch}.1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}_%{_patch}.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
@@ -71,8 +73,6 @@ Patch2:		%{name}_580-MakeMaker.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_580-soname.patch
-Patch6:		%{name}_580-perluniintro.patch
-Patch7:		%{name}_580-Safe.patch
 Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 Requires:	%{name}-base = %{version}
@@ -598,18 +598,17 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
-%patch2 -p0
+#%patch1 -p0
+#%patch2 -p0
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p0
-%patch7 -p1
 %patch8 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
 install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
 
+	#-Dusedevel \
 %build
 sh Configure \
 	-des \
