@@ -6,7 +6,7 @@
 +
 +export LD_LIBRARY_PATH="FPPATH"
 +
-+filelist=`sed "s/['\"]/\\\&/g"`
++filelist=`sed "s/['\"]/\\\&/g"|egrep -v "\.(ph|pod|gz)$"`
 +
 +echo $filelist|/usr/lib/rpm/find-provides
 +FPPATH/find-perl.prov $filelist
