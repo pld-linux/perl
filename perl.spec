@@ -77,6 +77,7 @@ eksiksiz) olarak tasarlanmýþtýr.
 
 %package devel
 Summary:	Perl development files
+Summary(pl):	Pliki developerskie perla
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
@@ -158,9 +159,9 @@ Practical Extraction and Report Language - dokumentacja w formacie POD.
 %patch12 -p1
 
 for i in find-* ; do
-	%{__mv} -f $i $i.old
-	%{__sed} "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
-	%{__chmod} 755 $i; %{__rm} -f $i.old
+	mv -f $i $i.old
+	sed "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
+	chmod 755 $i; rm -f $i.old
 done
 
 %build
@@ -206,18 +207,18 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid
 
-%{__mv} -f Makefile Makefile.bak
-%{__sed} -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
+mv -f Makefile Makefile.bak
+sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
 	Makefile.bak > Makefile
 
 %{__make}
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT
 
-%{__make} install
-%{__install} utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
+make install
+install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
 
@@ -252,10 +253,10 @@ EOF
 ## Fix paths
 (
 cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
-%{__sed} -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
-%{__mv} -f Config.pm.new Config.pm
-%{__sed} -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
-%{__mv} -f .packlist.new .packlist
+sed -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
+mv -f Config.pm.new Config.pm
+sed -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
+mv -f .packlist.new .packlist
 )
 
 ## Fix permissions
@@ -263,19 +264,19 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.ph -exec chmod 444 {} \;
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 
 ## Fix lib
-%{__rm} -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
-%{__install} libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
-%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
+install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
+ln -s -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix installed man pages list
-%{__rm} -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
 
-%{__gzip} -9nf README Changes
+gzip -9nf README Changes
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
