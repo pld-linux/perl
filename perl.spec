@@ -57,8 +57,7 @@ Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
-Provides:	perl-base = %{version}
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Provides:	perl-base = %{epoch}:%{version}-%{release}
 Obsoletes:	perl-File-Spec
 Obsoletes:	perl-IO
 Obsoletes:	perl-lib
@@ -66,6 +65,7 @@ Obsoletes:	perl-mod-skel
 Obsoletes:	perl-base
 # broken, kill it
 Obsoletes:	perl-SOAP
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -248,7 +248,7 @@ Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	%{name}-modules = %{version}
-Provides:	perl-tools-pod
+Provides:	perl-tools-pod = %{epoch}:%{version}-%{release}
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -766,9 +766,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/perl[ae-z]*.1*
-%{_mandir}/man1/perlb[^u]*.1*
-%{_mandir}/man1/perlc[^c]*.1*
-%{_mandir}/man1/perld[^o]*.1*
+%{_mandir}/man1/perlb[!u]*.1*
+%{_mandir}/man1/perlc[!c]*.1*
+%{_mandir}/man1/perld[!o]*.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
 %lang(fi) %{_mandir}/fi/man1/perl*
@@ -1024,5 +1024,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pod
 %defattr(644,root,root,755)
-%{_libdir}/perl5/%{version}/pod/perl[^d]*
-%{_libdir}/perl5/%{version}/pod/perld[^i]*
+%{_libdir}/perl5/%{version}/pod/perl[!d]*
+%{_libdir}/perl5/%{version}/pod/perld[!i]*
