@@ -296,7 +296,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr( - ,root,root) %{_libdir}/perl5/%{version}/unicode
 %attr( - ,root,root) %{_libdir}/perl5/%{version}/warnings
 
-%{_mandir}/man1/*
+%{_mandir}/man1/a2p.1*
+%{_mandir}/man1/dprofpp.1*
+%{_mandir}/man1/find2perl.1*
+%{_mandir}/man1/perl.1*
+%{_mandir}/man1/s2p.1*
+%{_mandir}/man1/xsubpp.1*
 
 %files lib
 %defattr(644,root,root,755)
@@ -321,6 +326,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/splain
 
 %attr(755,root,root) %{_libdir}/lib*.so
+%{_mandir}/man1/c2ph.1*
+%{_mandir}/man1/h2ph.1*
+%{_mandir}/man1/h2xs.1*
+%{_mandir}/man1/perl[a-z].1*
+%{_mandir}/man1/pl2pm.1*
+%{_mandir}/man1/pod2html.1*
+%{_mandir}/man1/pod2man.1*
+%{_mandir}/man1/pod2text.1*
+%{_mandir}/man1/pod2usage.1*
+%{_mandir}/man1/podchecker.1*
+%{_mandir}/man1/podselect.1*
+%{_mandir}/man1/pstruct.1*
+%{_mandir}/man1/splain.1*
 %{_mandir}/man3/*
 
 %files -n sperl
