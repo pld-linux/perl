@@ -33,6 +33,8 @@ BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-lib
+Obsoletes:	perl-mod-skel
+Provides:	perl(DynaLoader)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -91,7 +93,7 @@ Files for developing applications which embed a Perl interpreter.
 
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
-Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
+Summary(pl):	Practical Extraction and Report Language (binarka SUID root)
 Group:		Applications/Text
 Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
@@ -102,7 +104,7 @@ Requires:	%{name} = %{version}
 Practical Extraction and Report Language (SUID root binary).
 
 %description -n sperl -l pl
-Practical Extraction and Report Language (SUID root binaria).
+Practical Extraction and Report Language (binarka SUID root).
 
 %package modules
 Summary:	Practical Extraction and Report Language - modules
