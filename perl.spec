@@ -777,11 +777,11 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
-install -d Algorithm Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL \
-	Data Devel Digest File IPC Inline Locale Math/BigInt Net \
-	Speech/Recognizer String Sys Term Text Unicode XML \
-	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
-	auto/{Digest,File,IPC,Inline,Locale,Math/BigInt,Net,Regexp} \
+install -d Algorithm Astro Audio Authen B BSD Bit Compress Convert \
+	Crypt/OpenSSL Data Devel Digest File IPC Inline Locale Math/BigInt \
+	Net Speech/Recognizer String Sys Term Text Unicode XML \
+	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Convert,Crypt/OpenSSL,Data} \
+	auto/{Devel,Digest,File,IPC,Inline,Locale,Math/BigInt,Net,Regexp} \
 	auto/{Speech/Recognizer,String,Sys,Term,Text,Unicode,XML}
 )
 
