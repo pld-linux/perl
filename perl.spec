@@ -92,7 +92,7 @@ EOF
 
 sh Configure \
 	-des \
-	-Darchname=%{_target} \
+	-Darchname=%{_target_platform} \
 	-Dprefix=/usr \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
@@ -120,12 +120,12 @@ install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 (cd %{_includedir} ;
 LD_LIBRARY_PATH="%{_builddir}/%{name}%{perlver}_%{perlrel}" \
 PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
-$RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
+$RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread} \
 $RPM_BUILD_ROOT%{_bindir}/h2ph \
--d $RPM_BUILD_ROOT%{_libdir}/perl5/%{_target}/%{perlver}%{perlrel}/ \
+-d $RPM_BUILD_ROOT%{_libdir}/perl5/%{_target_platform}/%{perlver}%{perlrel}/ \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
-( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread}/
+( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}/
 
 mv .packlist .packlist.old
 sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
