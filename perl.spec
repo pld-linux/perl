@@ -11,6 +11,7 @@ Version:     %{perlver}_%{perlrel}
 Release:     2
 Copyright:   GPL
 Group:       Utilities/Text
+Group(pl):   Narzêdzia/Tekst
 Source:      ftp://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch:       perl-noroot_install.patch
 URL:         http://www.perl.org/
@@ -59,6 +60,7 @@ yönelik (kullanýmý kolay, verimli, eksiksiz) olarak tasarlanmýþtýr.
 Summary:     Practical Extraction and Report Language (SUID root binary)
 Summary(pl): Practical Extraction and Report Language (SUID root binaria)
 Group:       Utilities/Text
+Group(pl):   Narzêdzia/Tekst
 Requires:    %{name} = %{version}
 
 %description -n sperl
