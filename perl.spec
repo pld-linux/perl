@@ -138,12 +138,12 @@ strip {perl,suidperl,x2p/a2p}
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
-make install
+%{__make} install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
 # Everybody else is using it so why can't we? ;)
-make all -f - <<EOF
+%{__make} all -f - <<EOF
 PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
 	libpng-devel libtiff-devel ncurses-devel popt-devel \
 	zlib-devel binutils libelf e2fsprogs-devel pam-devel pwdb-devel \
