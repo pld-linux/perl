@@ -281,6 +281,10 @@ Requires:	%{name}-base = %{version}
 GDBM_File is a module which allows Perl programs to make use of the
 facilities provided by the GNU gdbm library.
 
+%description GDBM_File -l pl
+GDBM_File jest modu³em, który umo¿liwia programomom w Perlu
+korzystanie z biblioteki GNU gdbm.
+
 %package devel
 Summary:	Perl development files
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
@@ -483,7 +487,7 @@ Various tools from the core perl distribution:
  piconv    - iconv(1), reinvented in perl
  psed, s2p - a stream editor
 
-%description modules -l pl
+%description tools -l pl
 Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 
  a2p       - translator skryptów Awka do Perla
@@ -546,7 +550,7 @@ format:
  podchecker - check the syntax of POD format documentation files
  podselect  - print selected sections of pod documentation
 
-%description tools-pod
+%description tools-pod -l pl
 Narzêdzia do przetwarzania plików w formacie POD (Plain Old
 Documentation):
 
