@@ -15,7 +15,6 @@ Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
 Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
-Patch1:		perl-db1.patch
 URL:		http://www.perl.org/
 Requires:	csh
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -74,7 +73,6 @@ Practical Extraction and Report Language (SUID root binaria).
 %prep
 %setup  -q -n %{name}%{version}
 %patch0 -p1
-%patch1 -p1
 
 %build
 # this is gross
@@ -119,6 +117,7 @@ install -d $RPM_BUILD_ROOT
 make install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
+#LD_LIBRARY_PATH=%{_builddir}/%{name}%{perlver}_%{perlrel}: $RPM_BUILD_ROOT%{_bindir}/perl 
 
 (cd %{_includedir} ;
 PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
@@ -180,10 +179,6 @@ rm -rf $RPM_BUILD_ROOT
 * Sun May  9 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [5.005_03-4]
 - FHS 2.0 compliant changes.
-
-* Wed Apr 28 1999 Artur Frysiak <wiget@pld.org.pl>
-  [5.005_03-3]
-- added db1 patch from RH 6.0
 
 * Tue Apr 20 1999 Artur Frysiak <wiget@pld.org.pl>
   [5.005_03-2]
