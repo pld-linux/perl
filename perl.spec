@@ -7,23 +7,27 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
-Release:	13
+Release:	14
 Epoch:		1
 License:	GPL
-Group:		Utilities/Text
+Group:		Applications/Text
+Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
-Group(pl):	Narzêdzia/Tekst
-Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
-Patch0:		perl-noroot_install.patch
-Patch1:		perl-nodb.patch
-Patch2:		perl-DESTDIR.patch
-Patch3:		perl-CPAN-1.58.patch
-Patch4:		perl-find-provides.patch
-Patch5:		perl-prereq.patch
-Patch6:		perl-syslog.patch
-Patch7:		perl-CGI-upload-tmpdir.patch
-Patch8:		perl-LD_RUN_PATH.patch
-Patch9:		perl-errno_h-parsing.patch
+Group(pl):	Aplikacje/Tekst
+Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
+Patch0:		%{name}-noroot_install.patch
+Patch1:		%{name}-nodb.patch
+Patch2:		%{name}-DESTDIR.patch
+Patch3:		%{name}-CPAN-1.58.patch
+Patch4:		%{name}-find-provides.patch
+Patch5:		%{name}-prereq.patch
+Patch6:		%{name}-syslog.patch
+Patch7:		%{name}-CGI-upload-tmpdir.patch
+Patch8:		%{name}-LD_RUN_PATH.patch
+Patch9:		%{name}-errno_h-parsing.patch
+Patch10:	%{name}-use-LD_PRELOAD-for-libperl.so.patch
+Patch11:	%{name}-fix-typo-in-syslog.patch
+Patch12:	%{name}-fix-for-coredump-bug-20000607.003.patch
 URL:		http://www.perl.org/
 #Requires:	csh
 Obsoletes:	perl-ANSIColor
@@ -78,9 +82,10 @@ eksiksiz) olarak tasarlanmýþtýr.
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
 Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
-Group:		Utilities/Text
+Group:		Applications/Text
+Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
-Group(pl):	Narzêdzia/Tekst
+Group(pl):	Aplikacje/Tekst
 Requires:	%{name} = %{version}
 
 %description -n sperl
@@ -101,9 +106,12 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 for i in find-* ; do
-	mv $i $i.old
+	mv -f $i $i.old
 	sed "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
 	chmod 755 $i; rm -f $i.old
 done
