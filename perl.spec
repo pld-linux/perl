@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
-Release:	11.1
+Release:	12
 Epoch:		1
 License:	GPL
 Group:		Utilities/Text
