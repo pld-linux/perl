@@ -96,8 +96,8 @@ sh Configure \
 	-des \
 	-Darchname=%{_target} \
 	-Dprefix=/usr \
-	-Dman1dir=/usr/share/man/man1 \
-	-Dman3dir=/usr/share/man/man3 \
+	-Dman1dir=%{_mandir}/man1 \
+	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
 	-Doptimize="$RPM_OPT_FLAGS" \
 	-Duseshrplib \
@@ -137,7 +137,7 @@ mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
 rm -f Config.pm.old )
 
-gzip -9fn $RPM_BUILD_ROOT/usr/share/man/man*/* \
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README Change*
 
 find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-unneeded {} \;
@@ -170,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir /usr/lib/perl5
 %attr( - ,root,root) /usr/lib/perl5/*
-/usr/share/man/man[13]/*
+%{_mandir}/man[13]/*
 
 %files -n sperl
 %attr(4755,root,root) /usr/bin/sperl%{perlver}%{perlrel}
@@ -189,7 +189,7 @@ rm -rf $RPM_BUILD_ROOT
   [5.005_03-2]
 - updated to 5.005_03
 - changed source URL
-- added -Dman3dir=/usr/man/man3 -Dman3ext=3pm -Duseshrplib to Configure
+- added -Dman3dir=%{_mandir}/man3 -Dman3ext=3pm -Duseshrplib to Configure
 - corrected .packlist
 - changed --strip-debug to --strip-unneeded
 - gzipped %doc (instead bzipping2)
@@ -208,7 +208,7 @@ rm -rf $RPM_BUILD_ROOT
   (based on Ian Macdonald <ianmacd@xs4all.nl> spec files),
 - install -d instead mkdir -p,
 - added %defattr, but It's still unable to build from non root's account,
-- man3 subdirectory moved to /usr/man/man3,
+- man3 subdirectory moved to %{_mandir}/man3,
 - minor modifications of spec file.   
 
 * Mon Jun 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
