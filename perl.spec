@@ -96,6 +96,9 @@ Obsoletes:	perl-lib-devel
 %description devel
 Files for developing applications which embed a Perl interpreter.
 
+%description devel -l pl
+Pliki do tworzenia aplikacji opartych na perlu.
+
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
 Summary(pl):	Practical Extraction and Report Language (binarka SUID root)
