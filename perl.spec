@@ -202,9 +202,7 @@ sh Configure \
 %ifarch sparc sparc64
 	-Ud_longdbl \
 %endif
-%ifnarch sparc sparc64
 	-Duseshrplib \
-%endif 
 	-Dd_dosuid \
 	-Ud_setresuid \
 	-Ud_setresgid 
