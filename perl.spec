@@ -12,7 +12,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
-Release:	32
+Release:	34
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -153,6 +153,7 @@ Summary(pl):	Practical Extraction and Report Language (binaria SUID root)
 Summary(uk):	SUID-верс╕я мови Perl
 Group:		Applications/Text
 Requires:	%{name} = %{version}
+Obsoletes:	perl-suidperl
 
 %description -n sperl
 Practical Extraction and Report Language (SUID root binary).
