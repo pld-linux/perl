@@ -63,7 +63,9 @@ Release:	0.%{_patch}.2%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
+# rsync://ftp.linux.activestate.com/perl-5.8.x
 Source0:	http://radek.karnet.pl/pld/%{name}-%{version}_%{_patch}.tar.bz2
+# Source0-md5:	73f0711bb3be572fc7987d7cb2e68593
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
