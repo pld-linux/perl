@@ -1,0 +1,25 @@
+--- perl-5.6.0/ext/Errno/Errno_pm.PL.pix	Sat Mar  4 05:26:54 2000
++++ perl-5.6.0/ext/Errno/Errno_pm.PL	Sun Nov  5 21:41:49 2000
+@@ -29,6 +29,13 @@
+             warn "Cannot open '$file'";
+             return;
+ 	}     
++    } elsif ($^O eq 'linux') {
++	# With the -dM option option, gcc outputs every #define's it finds
++	my $cpp = default_cpp();
++	unless(open(FH, "$cpp -dM < $file |")) {
++            warn "Cannot open '$file'";
++            return;
++	}
+     } else {
+ 	unless(open(FH,"< $file")) {
+ 	    # This file could be a temporary file created by cppstdin
+@@ -79,6 +86,8 @@
+     } elsif ($^O eq 'vmesa') {
+ 	# OS/390 C compiler doesn't generate #file or #line directives
+ 	$file{'../../vmesa/errno.h'} = 1;
++    } elsif ($^O eq 'linux') {
++	$file{'/usr/include/errno.h'} = 1;
+     } else {
+ 	open(CPPI,"> errno.c") or
+ 	    die "Cannot open errno.c";

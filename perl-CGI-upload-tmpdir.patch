@@ -1,0 +1,11 @@
+--- perl-5.6.0/lib/CGI.pm~	Fri Mar 17 03:51:27 2000
++++ perl-5.6.0/lib/CGI.pm	Sat Jul 22 13:23:49 2000
+@@ -22,7 +22,7 @@
+ 
+ # HARD-CODED LOCATION FOR FILE UPLOAD TEMPORARY FILES.
+ # UNCOMMENT THIS ONLY IF YOU KNOW WHAT YOU'RE DOING.
+-# $TempFile::TMPDIRECTORY = '/usr/tmp';
++$TempFile::TMPDIRECTORY = '/tmp';
+ 
+ # >>>>> Here are some globals that you might want to adjust <<<<<<
+ sub initialize_globals {
