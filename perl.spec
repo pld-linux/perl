@@ -2,6 +2,7 @@
 %define		perlthread %{?_with_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(de):	Praktische Extraktions- und Berichtsprache
+Summary(pl):	Interpreter jêzyka Perl (Practical Extraction and Report Language)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
@@ -9,9 +10,21 @@ Release:	17
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
+Group(cs):	Aplikace/Text
+Group(da):	Programmer/Tekst
 Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
+Group(es):	Aplicaciones/Texto
+Group(fr):	Applications/Texte
+Group(is):	Forrit/Texti
+Group(it):	Applicazioni/Testo
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥Æ¥­¥¹¥È
+Group(no):	Applikasjoner/Tekst
 Group(pl):	Aplikacje/Tekst
+Group(pt):	Aplicações/Texto
+Group(ru):	ğÒÉÌÏÖÅÎÉÑ/ôÅËÓÔÏ×ÙÅ ÕÔÉÌÉÔÙ
+Group(sl):	Programi/Besedilo
+Group(sv):	Tillämpningar/Text
+Group(uk):	ğÒÉËÌÁÄÎ¦ ğÒÏÇÒÁÍÉ/ôÅËÓÔÏ×¦ ÕÔÉÌ¦ÔÉ
 Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-noroot_install.patch
@@ -64,10 +77,10 @@ pratique (simple à utiliser, efficace, complet) autant qu'agréable
 %description -l pl
 Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych,
 wyci±gania z nich informacji i drukowania raportu bazuj±cego na tych
-informacjach. Jest równie¿ doskona³ym jêzykiem do wielu prac zwi±zanych
-z nadzorem systemu. Jêzyk ten jest w zamierzeniu bardziej praktyczny
-(³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny, elegancki,
-minimalny).
+informacjach. Jest równie¿ doskona³ym jêzykiem do wielu prac
+zwi±zanych z nadzorem systemu. Jêzyk ten jest w zamierzeniu bardziej
+praktyczny (³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny,
+elegancki, minimalny).
 
 %description -l tr
 Perl, metin dosyalarını taramak, bu metin dosyalarından bilgi çıkarmak
@@ -81,12 +94,21 @@ eksiksiz) olarak tasarlanmıştır.
 Summary:	Perl development files
 Summary(pl):	Pliki deweloperskie perla
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(cs):	Vıvojové prostøedky/Knihovny
+Group(da):	Udvikling/Biblioteker
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
+Group(is):	Şróunartól/Ağgerğasöfn
+Group(it):	Sviluppo/Librerie
+Group(ja):	³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	Utvikling/Bibliotek
 Group(pl):	Programowanie/Biblioteki
 Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(pt):	Desenvolvimento/Bibliotecas
 Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	Razvoj/Knji¾nice
+Group(sv):	Utveckling/Bibliotek
 Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 Requires:	%{name}-modules = %{version}
@@ -102,9 +124,21 @@ Pliki do tworzenia aplikacji opartych na perlu.
 Summary:	Practical Extraction and Report Language (SUID root binary)
 Summary(pl):	Practical Extraction and Report Language (binaria SUID root)
 Group:		Applications/Text
+Group(cs):	Aplikace/Text
+Group(da):	Programmer/Tekst
 Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
+Group(es):	Aplicaciones/Texto
+Group(fr):	Applications/Texte
+Group(is):	Forrit/Texti
+Group(it):	Applicazioni/Testo
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥Æ¥­¥¹¥È
+Group(no):	Applikasjoner/Tekst
 Group(pl):	Aplikacje/Tekst
+Group(pt):	Aplicações/Texto
+Group(ru):	ğÒÉÌÏÖÅÎÉÑ/ôÅËÓÔÏ×ÙÅ ÕÔÉÌÉÔÙ
+Group(sl):	Programi/Besedilo
+Group(sv):	Tillämpningar/Text
+Group(uk):	ğÒÉËÌÁÄÎ¦ ğÒÏÇÒÁÍÉ/ôÅËÓÔÏ×¦ ÕÔÉÌ¦ÔÉ
 Requires:	%{name} = %{version}
 
 %description -n sperl
@@ -117,9 +151,21 @@ Practical Extraction and Report Language (binaria SUID root).
 Summary:	Practical Extraction and Report Language - modules
 Summary(pl):	Practical Extraction and Report Language - modu³y
 Group:		Applications/Text
+Group(cs):	Aplikace/Text
+Group(da):	Programmer/Tekst
 Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
+Group(es):	Aplicaciones/Texto
+Group(fr):	Applications/Texte
+Group(is):	Forrit/Texti
+Group(it):	Applicazioni/Testo
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥Æ¥­¥¹¥È
+Group(no):	Applikasjoner/Tekst
 Group(pl):	Aplikacje/Tekst
+Group(pt):	Aplicações/Texto
+Group(ru):	ğÒÉÌÏÖÅÎÉÑ/ôÅËÓÔÏ×ÙÅ ÕÔÉÌÉÔÙ
+Group(sl):	Programi/Besedilo
+Group(sv):	Tillämpningar/Text
+Group(uk):	ğÒÉËÌÁÄÎ¦ ğÒÏÇÒÁÍÉ/ôÅËÓÔÏ×¦ ÕÔÉÌ¦ÔÉ
 Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
 Provides:	perl-Devel-Peek
@@ -140,9 +186,21 @@ Practical Extraction and Report Language - modu³y.
 Summary:	Perl POD documentation
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Applications/Text
+Group(cs):	Aplikace/Text
+Group(da):	Programmer/Tekst
 Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
+Group(es):	Aplicaciones/Texto
+Group(fr):	Applications/Texte
+Group(is):	Forrit/Texti
+Group(it):	Applicazioni/Testo
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥Æ¥­¥¹¥È
+Group(no):	Applikasjoner/Tekst
 Group(pl):	Aplikacje/Tekst
+Group(pt):	Aplicações/Texto
+Group(ru):	ğÒÉÌÏÖÅÎÉÑ/ôÅËÓÔÏ×ÙÅ ÕÔÉÌÉÔÙ
+Group(sl):	Programi/Besedilo
+Group(sv):	Tillämpningar/Text
+Group(uk):	ğÒÉËÌÁÄÎ¦ ğÒÏÇÒÁÍÉ/ôÅËÓÔÏ×¦ ÕÔÉÌ¦ÔÉ
 Prereq:		%{name} = %{version}
 
 %description pod
