@@ -1,0 +1,16 @@
+--- perl-5.6.0/Makefile.SH.pix	Sat Mar 11 11:05:24 2000
++++ perl-5.6.0/Makefile.SH	Fri Dec 15 07:29:42 2000
+@@ -30,12 +30,7 @@
+ true)
+ 	# Prefix all runs of 'miniperl' and 'perl' with 
+ 	# $ldlibpth so that ./perl finds *this* shared libperl.
+-	case "$LD_LIBRARY_PATH" in
+-	'')
+-		ldlibpth="LD_LIBRARY_PATH=`pwd`";;
+-	*)
+-		ldlibpth="LD_LIBRARY_PATH=`pwd`:${LD_LIBRARY_PATH}";;
+-	esac
++        ldlibpth="LD_PRELOAD=`pwd`/libperl.so"
+ 
+ 	pldlflags="$cccdlflags"
+ 	case "${osname}${osvers}" in
