@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	7
+Release:	8
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -123,6 +123,21 @@ Practical Extraction and Report Language - modules.
 
 %description -l pl modules
 Practical Extraction and Report Language - modu³y.
+
+%package pod 
+Summary:	Perl POD documentation
+Summary(pl):	Dokumentacja Perla w formacie POD
+Group:		Applications/Text
+Group(de):	Applikationen/Text
+Group(fr):	Utilitaires/Texte
+Group(pl):	Aplikacje/Tekst
+Prereq:		%{name} = %{version}
+
+%description pod
+Practical Extraction and Report Language - POD docs
+
+%description -l pl pod
+Practical Extraction and Report Language - dokumentacja w formacie POD
 
 %prep
 %setup  -q
@@ -497,3 +512,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Safe.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/SDBM_File.pm
+
+%files pod
+%defattr(644,root,root,755)
+%{_libdir}/perl5/%{version}/pod
