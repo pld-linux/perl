@@ -60,7 +60,7 @@ Name:		perl
 Version:	5.8.3
 Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
-License:	GPL or Artistic
+License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
 # Source0-md5:	6d2b389f8c6424b7af303f417947714f
