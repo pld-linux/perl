@@ -1,8 +1,8 @@
 #
 # Conditional build:
-# _without_tests   - do not perform "make test"
-# _without_threads - build with support for threads
-# _with_largefiles - build with large file support (think before turning it on)
+# _without_tests      - do not perform "make test"
+# _without_threads    - build without support for threads
+# _without_largefiles - build without large file support
 #
 
 #%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
@@ -60,7 +60,7 @@ Patch3:		%{name}_580-find_provides.patch
 # what is this f* one for?!
 #Patch7:	%{name}-LD_RUN_PATH.patch
 Patch8:		%{name}_580-errno_h-parsing.patch
-Patch9:		%{name}_580-use-LD_PRELOAD-for-lib%{name}.so.patch
+Patch9:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 # *weird*
 #Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}_580-soname.patch
@@ -440,7 +440,7 @@ sh Configure \
 	-Ui_dbm -Ui_gdbm -Ui_ndbm -Ui_db \
 	-Dlibswanted="nsl dl m c crypt util" \
 	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
-	-%{?_with_largefiles:D}%{?!_with_largefiles:U}uselargefiles
+	-%{?_without_largefiles:U}%{?!_without_largefiles:D}uselargefiles
 
 ## why were these three undefined?
 #	-Ud_setresgid \
@@ -481,6 +481,7 @@ WANTED='
 	sys/syscall.h
 	sys/time.h
 '
+export LD_LIBRARY_PATH PERL5LIB PERL H2PH PHDIR WANTED
 
 # just using the occasion, prepare scripts for finding provides
 $PERL -pi -e 's|FPPATH|%{_builddir}/%{name}-%{version}|' find-perl-provides find-perl.prov
@@ -494,14 +495,15 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 %{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
-## Fix installed man pages list
+## remove possibly useless man pages
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
 
-# dir tree for other perl modules
+## dir tree for other perl modules
+install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
 (
-cd $RPM_BUILD_ROOT%{perl_sitelib}
+cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
 	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
@@ -513,7 +515,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
-cd $RPM_BUILD_ROOT%{perl_sitearch}
+cd $RPM_BUILD_ROOT%{perl_vendorarch}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
 	Text Unicode XML \
@@ -521,8 +523,10 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Speech/Recognizer,String} \
 	auto/{Term,Text,Unicode,XML}
 )
+## directories for modules installed using CPAN.pm
+install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}}
 
-# These File::Spec submodules are for non-Unix systems
+## These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
@@ -548,11 +552,13 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
+
 
 %files
 %defattr(644,root,root,755)
@@ -578,6 +584,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlfaq*.*
 %{_mandir}/man1/perlfunc.*
 
+%dir %{perl_sitelib}
+%dir %{perl_sitearch}
+%dir %{perl_vendorlib}
+%dir %{perl_vendorarch}
+%dir %{perl_vendorarch}/auto
+
+%{perl_privlib}/PerlIO
+%{_mandir}/man3/PerlIO::via::*
+
 
 %files base
 %defattr(644,root,root,755)
@@ -585,12 +600,79 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
 %{_mandir}/man1/perl.*
-%lang(fi) %{_mandir}/fi/man1/perl*
-%lang(pl) %{_mandir}/pl/man1/perl*
+%lang(fi) %{_mandir}/fi/man1/perl.*
+%lang(pl) %{_mandir}/pl/man1/perl.*
 
+%dir %{perl_privlib}
+%dir %{perl_archlib}
+%dir %{perl_archlib}/auto
 
+# pragmas
+%{perl_privlib}/[a-z]*.pm
+%{perl_privlib}/[a-z]*.pl
+%{perl_privlib}/warnings
+%{perl_archlib}/[a-z]*.pm
+%{perl_archlib}/threads
+%dir %{perl_archlib}/auto/[a-z]*/
+%attr(755,root,root) %{perl_archlib}/auto/[a-z]*/*.so
+%{perl_archlib}/auto/[a-z]*/*.bs
 %{_mandir}/man3/[a-z]*
-%{_mandir}/man3/English.*
+
+# arch-_IN_dependent modules
+%{perl_privlib}/Auto*
+%{_mandir}/man3/Auto*
+%{perl_privlib}/Carp*
+%{_mandir}/man3/Carp*
+%{perl_privlib}/Exporter*
+%{_mandir}/man3/Exporter*
+%{perl_privlib}/English*
+%{_mandir}/man3/English*
+%{perl_privlib}/File*
+%{_mandir}/man3/File*
+%{perl_privlib}/Getopt*
+%{_mandir}/man3/Getopt*
+%{perl_privlib}/IPC
+%{_mandir}/man3/IPC::Open*
+
+# arch-dependent modules
+%{perl_archlib}/Config*
+%{_mandir}/man3/Config*
+%{perl_archlib}/DynaLoader*
+%{perl_archlib}/auto/DynaLoader
+%{_mandir}/man3/DynaLoader*
+%{perl_archlib}/Errno*
+%{_mandir}/man3/Errno*
+%{perl_archlib}/Safe*
+%{_mandir}/man3/Safe*
+%{perl_archlib}/XSLoader*
+%{_mandir}/man3/XSLoader*
+
+%{perl_archlib}/Fcntl*
+%dir %{perl_archlib}/auto/Fcntl
+%attr(755,root,root) %{perl_archlib}/auto/Fcntl/*.so
+%{perl_archlib}/auto/Fcntl/*.bs
+%{_mandir}/man3/Fcntl*
+
+%{perl_archlib}/Opcode*
+%dir %{perl_archlib}/auto/Opcode
+%attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
+%{perl_archlib}/auto/Opcode/*.bs
+%{_mandir}/man3/Opcode*
+
+%{perl_privlib}/PerlIO.pm
+%{perl_archlib}/PerlIO
+%dir %{perl_archlib}/auto/PerlIO
+%dir %{perl_archlib}/auto/PerlIO/*/
+%attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
+%{perl_archlib}/auto/PerlIO/*/*.bs
+%{_mandir}/man3/PerlIO.*
+
+%{perl_archlib}/POSIX*
+%dir %{perl_archlib}/auto/POSIX
+%attr(755,root,root) %{perl_archlib}/auto/POSIX/*.so
+%{perl_archlib}/auto/POSIX/*.bs
+%{perl_archlib}/auto/POSIX/*.al
+%{_mandir}/man3/POSIX*
 
 %attr(755,root,root) %{_libdir}/lib*.so.%{version}
 
