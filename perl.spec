@@ -1,9 +1,8 @@
 #
 # Conditional build:
-# _without_tests      - do not perform "make test"
-# _without_threads    - build without support for threads
-# _without_largefiles - build without large file support
-# _without_gdbm       - build without the GDBM_File module
+%bcond_without	tests		# do not perform "make test"
+%bcond_without	threads		# build without support for threads
+%bcond_without	gdbm		# build without the GDBM_File module
 #
 # TODO:
 # - Think about unicore.  If uf8*.pm, encode.pm, charnames.pm (and
@@ -15,6 +14,7 @@
 # - review the perldiag.pod issue
 # - consider disabling ithreads by default
 # - consider introducing perl-dirs
+# - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
 #
 # TODO for perl-dependent packages:
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
@@ -26,7 +26,7 @@
 
 %define _abi	5.8.0
 
-%define		perlthread	%{?!_without_threads:-thread-multi}
+%define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
 %define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
@@ -57,17 +57,15 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.2
-Release:	5%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Version:	5.8.3
+Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
-# Source0-md5:	fa356b74f99166b63a68a322c3c68f91
+# Source0-md5:	6d2b389f8c6424b7af303f417947714f
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
-Source2:	%{name}.prov
-Source3:	find-perl-provides.sh
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
@@ -76,16 +74,16 @@ Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 #Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
-# versions [4.2, 4.3-0.20030610.20.1] are not supported
-BuildRequires:	rpm-build >= 4.3-0.20030610.20.2
-%{?!_without_gdbm:BuildRequires:	gdbm-devel}
+# required for proper Provides generation (older are not supported by spec)
+BuildRequires:	rpm-build >= 4.3-0.20040107.4
+%{?with_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	perl-doc-reference
 Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__perl	%{_builddir}/%{name}-%{version}/runperl
+%define		__perl		%{_builddir}/%{name}-%{version}/runperl
 %define		__perl_provides %{__perl} /usr/lib/rpm/perl.prov
 
 %description
@@ -267,13 +265,13 @@ Summary:	Base perl components for a minimal installation
 Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji perla
 Group:		Development/Languages/Perl
 Provides:	perl-File-Compare = 1.1003
-Provides:	perl-File-Spec = 0.86
+Provides:	perl-File-Spec = 0.87
 Provides:	perl-File-Temp = 0.14
 Provides:	perl-IO = 1.21
 Provides:	perl-Safe = 2.10
 Provides:	perl-Socket = 1.76
 Provides:	perl-Tie-File = 0.97
-%{?!_without_largefiles:Provides:	perl(largefiles)}
+Provides:	perl(largefiles)
 # broken, unsupported module
 Obsoletes:	perl-SOAP
 
@@ -314,9 +312,9 @@ Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	%{name}-tools-pod
 Provides:	perl-CPAN = 1.76_01
 Provides:	perl-Devel-DProf = 20030813.00
-Provides:	perl-Devel-PPPort = 2.009
+Provides:	perl-Devel-PPPort = 2.011
 Provides:	perl-Devel-Peek = 1.01
-Provides:	perl-ExtUtils-Embed = 1.250601
+Provides:	perl-ExtUtils-Embed = 1.2506_01
 Provides:	perl-ExtUtils-MakeMaker = 6.17
 Obsoletes:	perl-lib-devel
 
@@ -361,40 +359,43 @@ Summary(pl):	Modu³y z podstawowej dystrybucji perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 Provides:	perl-Attribute-Handlers = 0.78
-Provides:	perl-CGI = 3.00
+Provides:	perl-CGI = 3.01
 Provides:	perl-Class-ISA = 0.32
-Provides:	perl-Digest = 1.02
-Provides:	perl-Digest-MD5 = 2.30
+Provides:	perl-Digest = 1.05
+Provides:	perl-Digest-MD5 = 2.33
 Provides:	perl-Filter-Simple = 0.78
-Provides:	perl-FindBin = 1.43
-#Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
+Provides:	perl-FindBin = 1.44
+#Provides:	perl-Hash-Utils = 0.05	Data::Util is missing
+Provides:	perl-I18N-LangTags = 0.29
 Provides:	perl-IPC-SysV = 1.04
+Provides:	perl-Locale-Codes = 2.06
 Provides:	perl-Locale-Maketext = 1.06
 Provides:	perl-MIME-Base64 = 2.21
-Provides:	perl-Math-BigInt = 1.66
+Provides:	perl-Math-BigInt = 1.68
 Provides:	perl-Math-BigRat = 0.10
 Provides:	perl-Math-Trig = 1.02
 Provides:	perl-Memoize = 1.01
 Provides:	perl-NEXT = 0.60
-Provides:	perl-PerlIO-via-QuotedPrint = 0.05
+Provides:	perl-PerlIO-via-QuotedPrint = 0.06
 Provides:	perl-Pod-LaTeX = 0.55
-Provides:	perl-Pod-Parser = 1.13
+Provides:	perl-Pod-Parser = 1.14
 Provides:	perl-Scalar-List-Utils = 1.13
-Provides:	perl-Storable = 2.08
+Provides:	perl-Storable = 2.09
 Provides:	perl-Term-ANSIColor = 1.07
 Provides:	perl-Term-Cap = 1.08
 Provides:	perl-Test = 1.24
-Provides:	perl-Test-Harness = 2.30
+Provides:	perl-Test-Harness = 2.40
 Provides:	perl-Test-Simple = 0.47
 Provides:	perl-Text-Balanced = 1.95
 Provides:	perl-Text-ParseWords = 3.21
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
-#Provides:	perl-Text-Tabs+Wrap = 2001.0929
+#Provides:	perl-Text-Tabs+Wrap = 2001.09291
 Provides:	perl-Time-HiRes = 1.52
 Provides:	perl-UNIVERSAL = 1.01
-Provides:	perl-Unicode-Collate = 0.30
-Provides:	perl-Unicode-Normalize = 0.25
+Provides:	perl-Unicode-Collate = 0.33
+Provides:	perl-Unicode-Normalize = 0.28
+Provides:	perl-libnet = 1.1.1
 Obsoletes:	perl-lib
 
 %description modules
@@ -617,9 +618,6 @@ microperlu - popraw je.
 %patch6 -p1
 #%patch8 -p1
 
-install -m 0755 %{SOURCE2} $PWD/find-perl.prov
-install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
-
 %build
 sh Configure \
 	-des \
@@ -642,11 +640,11 @@ sh Configure \
 	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
 	-Ui_db \
-	%{?_without_gdbm:  -Ui_dbm -Ui_gdbm -Ui_ndbm} \
-	%{?!_without_gdbm: -Ui_dbm -Di_gdbm -Ui_ndbm} \
-	-Dlibswanted="dl m c crypt %{?!_without_gdbm:gdbm}" \
-	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
-	-%{?_without_largefiles:U}%{?!_without_largefiles:D}uselargefiles
+	%{!?with_gdbm: -Ui_dbm -Ui_gdbm -Ui_ndbm} \
+	%{?with_gdbm:  -Ui_dbm -Di_gdbm -Ui_ndbm} \
+	-Dlibswanted="dl m c crypt %{?with_gdbm:gdbm}" \
+	-%{?with_threads:D}%{!?with_threads:U}usethreads \
+	-Duselargefiles
 
 ## why were these three undefined?
 #	-Ud_setresgid \
@@ -682,8 +680,8 @@ rm -f uconfig.h
 	scriptdirexp=%{_bindir} \
 	OPTIMIZE="%{rpmcflags}"
 
-%{?!_without_tests:%{__make} test}
-#%{?!_without_tests:%{__make} minitest}
+%{?with_tests:%{__make} test}
+#%{?with_tests:%{__make} minitest}
 
 cat > runperl <<EOF
 #!/bin/sh
@@ -718,12 +716,8 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
 %{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 %{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 
-## prepare scripts for finding provides
-%{__perl} -pi -e 's,\@perl_build_dir\@,%{_builddir}/%{name}-%{version},g' find-perl-provides.sh
-%{__perl} -pi -e 's,\@perl\@,%{__perl},g'                                 find-perl-provides.sh
-
 ## Generate the *.ph files
-(
+owd="`pwd`"
 cd /usr/include
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
 PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
@@ -740,8 +734,9 @@ WANTED='
 	linux/posix_types.h
 	linux/stddef.h
 '
-%{__perl} $H2PH -a -d $PHDIR $WANTED
-)
+# why it returns non-zero???
+%{__perl} $H2PH -a -d $PHDIR $WANTED || :
+cd "$owd"
 
 ## remove man pages for other operating systems
 rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
@@ -760,9 +755,56 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 ## this object file looks unused; why is it there?
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
+install -d doc-base/{Getopt/Long,Switch} \
+	doc-devel/ExtUtils \
+	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
+
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Getopt/Long/{CHANGES,README} doc-base/Getopt/Long
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Switch/{Changes,README} doc-base/Switch
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/ExtUtils/{Changes,NOTES,PATCHING,README,TODO} \
+	doc-devel/ExtUtils
+
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Attribute/Handlers/{Changes,README} \
+	doc-modules/Attribute/Handlers
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Filter/Simple/{Changes,README} \
+	doc-modules/Filter/Simple
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/I18N/LangTags/{ChangeLog,README} \
+	doc-modules/I18N/LangTags
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Locale/Codes/{ChangeLog,README} \
+	doc-modules/Locale/Codes
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Locale/Maketext/{ChangeLog,README} \
+	doc-modules/Locale/Maketext
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Memoize/{README,TODO} \
+	doc-modules/Memoize
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/NEXT/{Changes,README} \
+	doc-modules/NEXT
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/{ChangeLog.libnet,README.libnet} \
+	doc-modules/Net
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/Ping/Changes \
+	doc-modules/Net/Ping
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Term/ANSIColor/{ChangeLog,README} \
+	doc-modules/Term/ANSIColor
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Test/Simple/{Changes,README} \
+	doc-modules/Test/Simple
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Text/Balanced/{Changes,README} \
+	doc-modules/Text/Balanced
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Text/TabsWrap/CHANGELOG \
+	doc-modules/Text/TabsWrap
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/README \
+	doc-modules/Unicode
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/{Changes,README} \
+	doc-modules/Unicode/Collate
+# needed only for tests
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{README.perl,ReadMe.txt} \
+	doc-modules/unicore
+# source for *.pl
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
+
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
-(
+owd="`pwd`"
+
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
@@ -784,7 +826,8 @@ install -d Algorithm Astro Audio Authen B BSD Bit Compress Convert \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Convert,Crypt/OpenSSL,Data} \
 	auto/{Devel,Digest,File,IPC,Inline,Locale,Math/BigInt,Net,Regexp} \
 	auto/{Speech/Recognizer,String,Sys,Term,Text,Unicode,XML}
-)
+
+cd "$owd"
 
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -822,6 +865,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files base
 %defattr(644,root,root,755)
+%doc doc-base/*
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
 %{_mandir}/man1/perl.*
@@ -966,7 +1010,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Socket.*
 
 
-%if %{?!_without_gdbm:1}0
+%if %{with gdbm}
 %files GDBM_File
 %defattr(644,root,root,755)
 %{perl_archlib}/GDBM_File.*
@@ -979,6 +1023,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%doc doc-devel/*
 %attr(755,root,root) %{_libdir}/libperl.so
 %{perl_archlib}/CORE/*.h
 %{perl_archlib}/CORE/reentr.inc
@@ -1053,6 +1098,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files modules
 %defattr(644,root,root,755)
+%doc doc-modules/*
 %{_examplesdir}/%{name}-modules-%{version}
 
 %{perl_privlib}/unicore
@@ -1100,7 +1146,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/ops.pm
 %{_mandir}/man3/ops.*
 
-%if %{?!_without_threads:1}0
+%if %{with threads}
 %{perl_archlib}/threads*
 %dir %{perl_archlib}/auto/threads
 %dir %{perl_archlib}/auto/threads/shared
@@ -1130,6 +1176,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Data*
 
 %{perl_privlib}/Digest.pm
+%{perl_privlib}/Digest
 %{perl_archlib}/Digest
 %dir %{perl_archlib}/auto/Digest
 %dir %{perl_archlib}/auto/Digest/MD5
@@ -1215,10 +1262,11 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Time/HiRes/*.bs
 %{_mandir}/man3/Time::HiRes*
 
-%{perl_privlib}/Unicode
+%dir %{perl_privlib}/Unicode
+%{perl_privlib}/Unicode/*.pm
 %{perl_archlib}/Unicode
 %dir %{perl_archlib}/auto/Unicode
-%dir %{perl_archlib}/auto/Unicode/*/
+%dir %{perl_archlib}/auto/Unicode/*
 %attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
 %{perl_archlib}/auto/Unicode/*/*.bs
 %{_mandir}/man3/Unicode::*
@@ -1252,10 +1300,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Math::*
 %{perl_privlib}/Memoize*
 %{_mandir}/man3/Memoize*
-%{perl_privlib}/NEXT*
+%{perl_privlib}/NEXT.pm
 %{_mandir}/man3/NEXT*
 # FIXME: README and Changes files
-%{perl_privlib}/Net
+%dir %{perl_privlib}/Net
+%{perl_privlib}/Net/*.eg
+%{perl_privlib}/Net/*.pm
+%{perl_privlib}/Net/FTP
 %{_mandir}/man3/Net::*
 %{perl_privlib}/PerlIO
 %{_mandir}/man3/PerlIO::via::*
@@ -1280,7 +1331,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Test*
 %{perl_privlib}/Text
 %{_mandir}/man3/Text::*
-%if %{?!_without_threads:1}0
+%if %{with threads}
 %{perl_privlib}/Thread*
 %{_mandir}/man3/Thread*
 %endif
