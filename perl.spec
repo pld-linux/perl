@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	61
+Release:	62
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -446,35 +446,27 @@ install -d $RPM_BUILD_ROOT
 %{__make} install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
-## Generate *.ph files with a trick (based on RH).
-
-%{__make} all -f - <<EOF
-PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
-	libpng-devel libtiff-devel ncurses-devel popt-devel \
-	zlib-devel binutils libelf e2fsprogs-devel pam-devel pwdb-devel \
-	rpm-devel
-STDH	= \$(filter %{_includedir}/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' \$(PKGS)))
-STDH	+= \$(wildcard %{_includedir}/linux/*.h) \$(wildcard %{_includedir}/asm/*.h) \$(wildcard %{_includedir}/scsi/*.h)
-GCCDIR	= \$(shell gcc --print-file-name include)
-GCCH	= \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
-
-LIBPATH = %{_builddir}/%{name}-%{version}
-PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
-PERLBIN = $RPM_BUILD_ROOT%{_bindir}/perl
-PERL	= LD_LIBRARY_PATH=\$(LIBPATH) PERL5LIB=\$(PERLLIB) \$(PERLBIN)
-PHDIR	= \$(PERLLIB)/%{_target_platform}%{perlthread}
-PHBIN	= $RPM_BUILD_ROOT%{_bindir}/h2ph
-H2PH	= \$(PERL) \$(PHBIN) -d \$(PHDIR)/
-
-all: std-headers gcc-headers
-
-std-headers: \$(STDH)
-	cd %{_includedir} && \$(H2PH) \$(STDH:%{_includedir}/%%=%%)
-
-gcc-headers: \$(GCCH)
-	cd \$(GCCDIR) && \$(H2PH) \$(GCCH:\$(GCCDIR)/%%=%%)
-
-EOF
+## Generate *.ph files (based on MDK, which based on Debian ;-)
+(
+LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
+PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
+PERL=$RPM_BUILD_ROOT%{_bindir}/perl
+H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
+PHDIR=$PERL5LIB/%{_target_platform}*
+WANTED='
+	syscall.h
+	syslog.h
+	termios.h
+	wait.h
+	asm/termios.h
+	sys/ioctl.h
+	sys/socket.h
+	sys/syscall.h
+	sys/time.h
+'
+cd /usr/include
+$PERL $H2PH -a -d $PHDIR $WANTED
+)
 
 ## Fix paths
 (
@@ -757,13 +749,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.so
 
-# some *.ph files, probably more shoud be included (if not all)
+# *.ph files
 %{_libdir}/perl5/%{version}/%{_target_platform}*/*.ph
 %{_libdir}/perl5/%{version}/%{_target_platform}*/asm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/bits
 %{_libdir}/perl5/%{version}/%{_target_platform}*/gnu
 %{_libdir}/perl5/%{version}/%{_target_platform}*/linux
-%{_libdir}/perl5/%{version}/%{_target_platform}*/net
 %{_libdir}/perl5/%{version}/%{_target_platform}*/sys
 
 %{_mandir}/man1/a2p.1*
