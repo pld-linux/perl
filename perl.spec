@@ -59,7 +59,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	1%{!?with_threads:_nothr}
+Release:	2%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -821,7 +821,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Lingua/{EN,Stem/Snowball} List Locale LockFile Log MIME Mail \
 	Math/{BigInt,Fractal} Modem Module Net/SMTP NetServer Netscape \
 	News Number Object OLE Parse Pod PostScript Proc RADIUS RPC \
-	RPM Regexp SOAP/Transport SQL Schedule Set Sort Speech \
+	RPM RTF Regexp SOAP/Transport SQL Schedule Set Sort Speech \
 	Spreadsheet Statistics String Sub Sys Template TeX Test \
 	Text/Query Tie Time Tree UNIVERSAL Unicode WWW \
 	XML/{Filter,Handler,Parser,XPath} \
@@ -869,7 +869,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
-
 
 %files base
 %defattr(644,root,root,755)
