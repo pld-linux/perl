@@ -9,10 +9,11 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	14
+Release:	15
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
+Epoch:		1
 Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
 Patch1:		perl-DESTDIR.patch
@@ -83,9 +84,9 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch4 -p1
 
 for i in find-* ; do
-  mv $i $i.old
-  sed "s|FPPATH|%{_builddir}/%{name}%{version}|g" < $i.old > $i
-  chmod 755 $i; rm -f $i.old
+	mv $i $i.old
+	sed "s|FPPATH|%{_builddir}/%{name}%{version}|g" < $i.old > $i
+	chmod 755 $i; rm -f $i.old
 done
 
 %build
