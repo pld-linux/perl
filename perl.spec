@@ -277,7 +277,7 @@ Obsoletes:	perl-Sort-PolySort
 
 %description base
 Base components, files, core modules, etc. -- a minimal usable Perl
-installation.  You are encouraged to install a full Perl (the perl
+installation. You are encouraged to install a full Perl (the perl
 package) whenever possible.
 
 %description base -l pl
@@ -501,21 +501,19 @@ Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description tools
 Various tools from the core Perl distribution:
-
- a2p       - Awk to Perl translator
- cpan      - easily interact with CPAN from the command line
- find2perl - translate find command lines to Perl code
- piconv    - iconv(1), reinvented in Perl
- psed, s2p - a stream editor
+a2p		- Awk to Perl translator
+cpan		- easily interact with CPAN from the command line
+find2perl	- translate find command lines to Perl code
+piconv		- iconv(1), reinvented in Perl
+psed, s2p	- a stream editor
 
 %description tools -l pl
 Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
-
- a2p       - translator skryptów Awka do Perla
- cpan      - easily interact with CPAN from the command line
- find2perl - t³umaczenie linii poleceñ programu find na kod w Perlu
- piconv    - iconv(1) napisany w Perlu
- psed, s2p - edytor strumieniowy
+a2p		- translator skryptów Awka do Perla
+cpan		- easily interact with CPAN from the command line
+find2perl	- t³umaczenie linii poleceñ programu find na kod w Perlu
+piconv		- iconv(1) napisany w Perlu
+psed, s2p	- edytor strumieniowy
 
 %package tools-devel
 Summary:	Developer's tools from the core Perl distribution
@@ -526,33 +524,31 @@ Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description tools-devel
 Various tools from the core Perl distribution:
-
- c2ph, pstruct - Dump C structures as generated from C<cc -g -S> stabs
- dprofpp       - display Perl profile data
- enc2xs        - Perl Encode Module Generator
- h2ph          - convert .h C header files to .ph Perl header files
- h2xs          - convert .h C header files to Perl extensions
- perlcc        - generate executables from Perl programs
- perlivp       - Perl Installation Verification Procedure
- pl2pm         - Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
- splain        - force verbose warning diagnostics
+c2ph, pstruct	- Dump C structures as generated from C<cc -g -S> stabs
+dprofpp		- display Perl profile data
+enc2xs		- Perl Encode Module Generator
+h2ph		- convert .h C header files to .ph Perl header files
+h2xs		- convert .h C header files to Perl extensions
+perlcc		- generate executables from Perl programs
+perlivp		- Perl Installation Verification Procedure
+pl2pm		- Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
+splain		- force verbose warning diagnostics
 
 %description tools-devel -l pl
 Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
-
- c2ph, pstruct - zrzucanie struktur C w postaci generowanej z tablic
-                 symboli z cc -g -S
- dprofpp       - wy¶wietlanie perlowych danych profiluj±cych
- enc2xs        - generator modu³ów koduj±cych w Perlu
- h2ph          - konwerter plików nag³ówkowych .h z C na perlowe pliki
-                 nag³ówkowe .ph
- h2xs          - konwerter plików nag³ówkowych .h z C na rozszerzenia
-                 Perla
- perlcc        - generator binarek z programów w Perlu
- perlivp       - procedura weryfikacji instalacji Perla
- pl2pm         - zgrubne narzêdzie do t³umaczenia plików pl Perla 4 na
-                 modu³y .pm Perla 5
- splain        - wymuszenie obszernych ostrze¿eñ diagnostycznych
+c2ph, pstruct	- zrzucanie struktur C w postaci generowanej z tablic
+		  symboli z cc -g -S
+dprofpp		- wy¶wietlanie perlowych danych profiluj±cych
+enc2xs	 	- generator modu³ów koduj±cych w Perlu
+h2ph		- konwerter plików nag³ówkowych .h z C na perlowe pliki
+	 	  nag³ówkowe .ph
+h2xs	 	- konwerter plików nag³ówkowych .h z C na rozszerzenia
+		  Perla
+perlcc	 	- generator binarek z programów w Perlu
+perlivp	 	- procedura weryfikacji instalacji Perla
+pl2pm		- zgrubne narzêdzie do t³umaczenia plików pl Perla 4 na
+		  modu³y .pm Perla 5
+splain		- wymuszenie obszernych ostrze¿eñ diagnostycznych
 
 %package tools-pod
 Summary:	Tools for manipulating files in the POD format
@@ -563,27 +559,25 @@ Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 %description tools-pod
 Tools for manipulating files in the POD (Plain Old Documentation)
 format:
-
- pod2html   - convert .pod files to .html files
- pod2latex  - convert pod documentation to LaTeX format
- pod2man    - convert POD data to formatted *roff input
- pod2text   - convert POD data to formatted ASCII text
- pod2usage  - print usage messages from embedded pod docs in files
- podchecker - check the syntax of POD format documentation files
- podselect  - print selected sections of pod documentation
+pod2html	- convert .pod files to .html files
+pod2latex	- convert pod documentation to LaTeX format
+pod2man		- convert POD data to formatted *roff input
+pod2text	- convert POD data to formatted ASCII text
+pod2usage	- print usage messages from embedded pod docs in files
+podchecker	- check the syntax of POD format documentation files
+podselect	- print selected sections of pod documentation
 
 %description tools-pod -l pl
 Narzêdzia do przetwarzania plików w formacie POD (Plain Old
 Documentation):
-
- pod2html   - konwerter plików .pod do plików .html
- pod2latex  - konwerter dokumentacji pod do formatu LaTeX
- pod2man    - konwerter danych POD na wej¶cie sformatowane dla *roffa
- pod2text   - konwerter danych POD na sformatowany tekst ASCII
- pod2usage  - wypisanie informacji o u¿ywaniu programu z dokumentacji
-              osadzonej w plikach
- podchecker - kontrola sk³adni dokumentacji w formacie POD
- podselect  - wypisanie wybranych sekcji z dokumentacji POD
+pod2html	- konwerter plików .pod do plików .html
+pod2latex	- konwerter dokumentacji pod do formatu LaTeX
+pod2man		- konwerter danych POD na wej¶cie sformatowane dla *roffa
+pod2text	- konwerter danych POD na sformatowany tekst ASCII
+pod2usage	- wypisanie informacji o u¿ywaniu programu z dokumentacji
+		  osadzonej w plikach
+podchecker	- kontrola sk³adni dokumentacji w formacie POD
+podselect	- wypisanie wybranych sekcji z dokumentacji POD
 
 %package -n microperl
 Summary:	A really minimal Perl, even more minimal than miniperl
@@ -593,12 +587,12 @@ Group:		Applications
 
 %description -n microperl
 microperl is supposed to be able a really minimal Perl, even more
-minimal than miniperl.  No Configure is needed to build microperl, on
+minimal than miniperl. No Configure is needed to build microperl, on
 the other hand this means that interfaces between Perl and your
 operating system are left very -- minimal.
 
-All this is experimental.  If you don't know what to do with microperl
-you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
+All this is experimental. If you don't know what to do with microperl
+you probably shouldn't. Do not report bugs in microperl; fix the bugs.
 
 %description -n microperl -l pl
 microperl ma byæ naprawdê minimalnym Perlem, nawet bardziej minimalnym
@@ -640,12 +634,12 @@ sh Configure \
 	-Dsiteman3dir=%{_usr}/local/man/man3 -Dsiteman3ext=3pm \
 	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_usr}/local \
 	-Dlibpth="%{_libdir} /%{_lib}" \
-	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
-	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
+	-Dprivlib=%{perl_privlib} -Darchlib=%{perl_archlib} \
+	-Dsitelib=%{perl_sitelib} -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
 	-Ui_db \
 	%{!?with_gdbm: -Ui_dbm -Ui_gdbm -Ui_ndbm} \
-	%{?with_gdbm:  -Ui_dbm -Di_gdbm -Ui_ndbm} \
+	%{?with_gdbm: -Ui_dbm -Di_gdbm -Ui_ndbm} \
 	-Dlibswanted="dl m c crypt %{?with_gdbm:gdbm}" \
 	-%{?with_threads:D}%{!?with_threads:U}usethreads \
 	-Duselargefiles
@@ -709,10 +703,10 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 %{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
 
 ## use symlinks instead of hardlinks
-%{__ln_s} -f perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
-%{__ln_s} -f perl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
-%{__ln_s} -f c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
-%{__ln_s} -f psed           $RPM_BUILD_ROOT%{_bindir}/s2p
+%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/suidperl
+%{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
+%{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
@@ -721,9 +715,9 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
 %{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
-%{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
-%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
-%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"		$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm',"	$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 
 ## Generate the *.ph files
 owd="`pwd`"
@@ -869,8 +863,8 @@ mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   base -p /sbin/ldconfig
-%postun base -p /sbin/ldconfig
+%post	base -p /sbin/ldconfig
+%postun	base -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -1375,7 +1369,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n sperl
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
-%attr(755,root,root)  %{_bindir}/suidperl
+%attr(755,root,root) %{_bindir}/suidperl
 
 %files tools
 %defattr(644,root,root,755)
