@@ -507,6 +507,28 @@ Tools for manipulating files in the POD (Plain Old Documentation) format:
  podchecker - check the syntax of POD format documentation files
  podselect  - print selected sections of pod documentation on standard output
 
+%package -n miniperl
+Summary:	miniperl - a minimal perl
+Group:		Development/Languages/Perl
+Requires:	%{name}-base = %{version}
+
+%description -n miniperl
+miniperl
+
+%package -n microperl
+Summary:	A really minimal perl, even more minimal than miniperl
+# XXX: is there a more appropiate group?
+Group:		Applications
+
+%description -n microperl
+microperl is supposed to be able a really minimal perl, even more minimal
+than miniperl.  No Configure is needed to build microperl, on the other
+hand this means that interfaces between Perl and your operating system
+are left very -- minimal.
+
+All this is experimental.  If you don't know what to do with microperl
+you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
+
 
 %prep
 %setup -q
@@ -563,14 +585,18 @@ sh Configure \
 # %endif
 
 %{__make}
+%{__make} -f Makefile.micro
 
 %{?!_without_tests:%{__make} test}
+%{?!_without_tests:%{__make} minitest}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install
+install miniperl  $RPM_BUILD_ROOT%{_bindir}
+install microperl $RPM_BUILD_ROOT%{_bindir}
 
 ## use symlinks instead of hardlinks
 %{__ln_s} -f  perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
@@ -1076,7 +1102,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
 
-
 %files tools
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/a2p
@@ -1089,7 +1114,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/s2p
 %{_mandir}/man1/psed.*
 %{_mandir}/man1/s2p.*
-
 
 %files tools-devel
 %defattr(644,root,root,755)
@@ -1114,8 +1138,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/splain
 %{_mandir}/man1/splain.*
 
-
 %files tools-pod
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pod*
 %{_mandir}/man1/pod*
+
+%files -n miniperl
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/miniperl
+
+%files -n microperl
+%defattr(644,root,root,755)
+%doc README.micro Todo.micro
+%attr(755,root,root) %{_bindir}/microperl
