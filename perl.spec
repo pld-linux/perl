@@ -57,7 +57,7 @@ dildir. Ayrýca pek çok sistem yönetimi görevleri için de yararlý yetenekleri
 vardýr. Perl, güzel (ufak, zarif, minimum) olmaktan çok, pratik olmaya
 yönelik (kullanýmý kolay, verimli, eksiksiz) olarak tasarlanmýþtýr.
 
-%package -n	sperl
+%package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
 Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
 Group:		Utilities/Text
@@ -171,8 +171,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man[13]/*
 
 %files -n sperl
-%attr(4711,root,root) %{_bindir}/sperl%{perlver}%{perlrel}
-%attr(4711,root,root) %{_bindir}/suidperl
+%attr(4755,root,root) %{_bindir}/sperl%{perlver}%{perlrel}
+%attr(4755,root,root) %{_bindir}/suidperl
 
 %changelog
 * Sun May  9 1999 Piotr Czerwiñski <pius@pld.org.pl>
