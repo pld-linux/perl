@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	8%{!?with_threads:_nothr}
+Release:	9%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -875,10 +875,11 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
 install -d Algorithm Astro Audio Authen B BSD Bit Compress Convert \
 	Crypt/OpenSSL Data Devel Digest File IPC Inline Locale Math/BigInt \
-	Net Speech/Recognizer String Sys Term Text Unicode XML \
-	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Convert,Crypt/OpenSSL,Data} \
-	auto/{Devel,Digest,File,IPC,Inline,Locale,Math/BigInt,Net,Regexp} \
-	auto/{Speech/Recognizer,String,Sys,Term,Text,Unicode,XML}
+	Net Speech/Recognizer String Sys Template Term Text Unicode XML \
+	auto/{Astro,Audio,Authen,BSD,Bit,Clone,Compress,Convert} \
+	auto/{Crypt/OpenSSL,Data,Devel,Digest,File,IPC,Inline,Locale} \
+	auto/{Math/BigInt,Net,Regexp,Speech/Recognizer,String,Sys,Term,Text} \
+	auto/{Unicode,XML}
 
 cd "$owd"
 
