@@ -94,7 +94,7 @@ EOF
 
 sh Configure \
 	-des \
-	-Darchname=${RPM_ARCH}-linux \
+	-Darchname=%{_target} \
 	-Dprefix=/usr \
 	-Dman3dir=/usr/man/man3 \
 	-Dman3ext=3pm \
@@ -121,12 +121,12 @@ install utils/pl2pm $RPM_BUILD_ROOT/usr/bin/pl2pm
 
 (cd /usr/include ;
 PERL5LIB=$RPM_BUILD_ROOT/usr/lib/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
-$RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread} \
+$RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${_target}%{perlthread} \
 $RPM_BUILD_ROOT/usr/bin/h2ph \
--d $RPM_BUILD_ROOT/usr/lib/perl5/${RPM_ARCH}-linux/%{perlver}%{perlrel}/ \
+-d $RPM_BUILD_ROOT/usr/lib/perl5/${_target}/%{perlver}%{perlrel}/ \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
-( cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread}/
+( cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread}/
 
 mv .packlist .packlist.old
 sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
@@ -168,8 +168,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/splain
 
 %dir /usr/lib/perl5
-%attr(-,root,root) /usr/lib/perl5/*
-/usr/man/man[13]/*
+%attr( - ,root,root) /usr/lib/perl5/*
+%attr(644,root,root) /usr/man/man[13]/*
 
 %files -n sperl
 %attr(4755,root,root) /usr/bin/sperl%{perlver}%{perlrel}
