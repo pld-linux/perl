@@ -33,7 +33,6 @@ Provides:	perl-ANSIColor
 Provides:	perl-Devel-Peek
 Provides:	perl-DProf
 Provides:	perl-PodParser
-Prereq:		%{name}-lib = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-ANSIColor
 Obsoletes:	perl-Devel-Peek
