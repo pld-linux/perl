@@ -59,7 +59,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.4
-Release:	0.1%{!?with_threads:_nothr}
+Release:	0.2%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -671,8 +671,8 @@ EOF
 ## microperl
 %if %{with microperl}
 rm -f uconfig.h
-chmod u+w uconfig.sh
-echo "usemallocwrap='define'" >> uconfig.sh
+#chmod u+w uconfig.sh
+#echo "usemallocwrap='define'" >> uconfig.sh
 %{__make} -f Makefile.micro \
 	archlib=%{perl_archlib} \
 	archlibexp=%{perl_archlib} \
@@ -683,6 +683,7 @@ echo "usemallocwrap='define'" >> uconfig.sh
 	bin=%{_bindir} \
 	scriptdir=%{_bindir} \
 	scriptdirexp=%{_bindir} \
+	usemallocwrap='define' \
 	OPTIMIZE="%{rpmcflags}"
 %endif
 
@@ -1191,6 +1192,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Digest/MD5/*.bs
 %{_mandir}/man3/Digest*
 
+# FIXME: Changes file
+%{perl_privlib}/DBM_Filter*
+%{_mandir}/man3/DBM_Filter*
+
 # FIXME: *.h to devel(?), check out the use for *.e2x files
 %{perl_privlib}/Encode
 %{perl_archlib}/Encode*
@@ -1375,6 +1380,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/cpan.*
 %attr(755,root,root) %{_bindir}/find2perl
 %{_mandir}/man1/find2perl.*
+%attr(755,root,root) %{_bindir}/instmodsh
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
 %attr(755,root,root) %{_bindir}/piconv
