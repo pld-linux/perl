@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -347,10 +347,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_libdir}/perl5/%{version}/AutoLoader.pm
 %{_libdir}/perl5/%{version}/Carp.pm
-%{_libdir}/perl5/%{version}/Carp/Heavy.pm
 %{_libdir}/perl5/%{version}/Cwd.pm
+%{_libdir}/perl5/%{version}/DirHandle.pm
 %{_libdir}/perl5/%{version}/Exporter.pm
-%{_libdir}/perl5/%{version}/Exporter/Heavy.pm
+%{_libdir}/perl5/%{version}/File/Basename.pm
+%{_libdir}/perl5/%{version}/File/Find.pm
+%{_libdir}/perl5/%{version}/File/Path.pm
 %{_libdir}/perl5/%{version}/File/Spec.pm
 %{_libdir}/perl5/%{version}/File/Spec/Unix.pm
 %{_libdir}/perl5/%{version}/FileHandle.pm
@@ -362,6 +364,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Symbol.pm
 %{_libdir}/perl5/%{version}/Text/Tabs.pm
 %{_libdir}/perl5/%{version}/Text/Wrap.pm
+%{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/base.pm
 %{_libdir}/perl5/%{version}/constant.pm
@@ -375,18 +378,30 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/warnings.pm
 %{_libdir}/perl5/%{version}/warnings/register.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Data/Dumper.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DynaLoader.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO/*.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/POSIX.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Socket.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/XSLoader.pm
-%attr( - , root, root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper
-%attr( - , root, root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
-%attr( - , root, root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl
-%attr( - , root, root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO
-%attr( - , root, root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX
-%attr( - , root, root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_findfile.al
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.so
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.so
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tmpfile.al
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.so
+
+%dir %{_libdir}/perl5/%{version}/File
+%dir %{_libdir}/perl5/%{version}/File/Spec
+%dir %{_libdir}/perl5/%{version}/IO
+%dir %{_libdir}/perl5/%{version}/IO/Socket
+%dir %{_libdir}/perl5/%{version}/IPC
+%dir %{_libdir}/perl5/%{version}/Text
+%dir %{_libdir}/perl5/%{version}/Time
+%dir %{_libdir}/perl5/%{version}/warnings
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/IO
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket
