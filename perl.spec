@@ -24,14 +24,17 @@
 #   (should this be done on Ra-branch, too?)
 #
 
+%define	_patch	20803
+%define _abi	5.8.0
+
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
 %define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
 %define		perl_sitelib	%{_usr}/local/share/perl5
-%define		perl_sitearch	%{_usr}/local/lib/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_sitearch	%{_usr}/local/lib/perl5/%{_abi}/%{_target_platform}%{perlthread}
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
-%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{version}/%{_target_platform}%{perlthread}
+%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
@@ -55,26 +58,26 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.0
-Release:	0.51%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Version:	5.8.1
+Release:	0.%{_patch}.1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
+Source0:	http://www.cpan.org/src/%{name}-%{version}_%{_patch}.tar.bz2
 # Source0-md5:	d9bdb180620306023fd35901a2878b62
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
-Patch0:		%{name}_580-noroot_install.patch
-Patch1:		%{name}_580-INC.patch
-Patch2:		%{name}_580-MakeMaker.patch
+Patch0:		%{name}_581-noroot_install.patch
+Patch1:		%{name}_581-INC.patch
+#Patch2:		%{name}_580-MakeMaker.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
-Patch5:		%{name}_580-soname.patch
-Patch6:		%{name}_580-perluniintro.patch
-Patch7:		%{name}_580-Safe.patch
-Patch8:		%{name}_580-microperl_uconfig.patch
+Patch5:		%{name}_581-soname.patch
+#Patch6:		%{name}_580-perluniintro.patch
+#Patch7:		%{name}_580-Safe.patch
+#Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # versions [4.2, 4.3-0.20030610.20.1] are not supported
 BuildRequires:	rpm-build >= 4.3-0.20030610.20.2
@@ -507,6 +510,7 @@ Requires:	%{name}-devel = %{epoch}:%{version}
 Various tools from the core perl distribution:
 
  a2p       - Awk to Perl translator
+ cpan      - easily interact with CPAN from the command line
  find2perl - translate find command lines to Perl code
  piconv    - iconv(1), reinvented in perl
  psed, s2p - a stream editor
@@ -515,6 +519,7 @@ Various tools from the core perl distribution:
 Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 
  a2p       - translator skryptów Awka do Perla
+ cpan      - easily interact with CPAN from the command line
  find2perl - t³umaczenie linii poleceñ programu find na kod w Perlu
  piconv    - iconv(1) napisany w Perlu
  psed, s2p - edytor strumieniowy
@@ -615,14 +620,14 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
-%patch2 -p0
+%patch1 -p1
+#%patch2 -p0
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p0
-%patch7 -p1
-%patch8 -p1
+#%patch6 -p0
+#%patch7 -p1
+#%patch8 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
 install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
@@ -706,9 +711,9 @@ install microperl $RPM_BUILD_ROOT%{_bindir}
 
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{version}'";s|^'%{_libdir}'/*||;print'` \
-	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{version}
-%{__ln_s} libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
+	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
+%{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -792,10 +797,13 @@ mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
 mv $RPM_BUILD_ROOT%{perl_privlib}/Attribute/Handlers/demo \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Attribute-Handlers
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Attribute::Handlers::demo*
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA/test.pl
-rmdir $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA
+#rm -f $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA/test.pl
+#rmdir $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA
 mv $RPM_BUILD_ROOT%{perl_privlib}/Net/demos \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Net
+# XXX: bug bug bug...
+mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
+	$RPM_BUILD_ROOT%{perl_archlib}/auto/POSIX
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -823,16 +831,16 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/perl5
 %dir %{perl_privlib}
 %dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{version}
+%dir %{_libdir}/perl5/%{_abi}
 %dir %{perl_archlib}
 %dir %{perl_archlib}/auto
 
 %dir %{perl_archlib}/CORE
-%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{version}
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
 %attr(755,root,root) %{_libdir}/libperl.so.*
 
 %dir %{_libdir}/perl5/vendor_perl
-%dir %{_libdir}/perl5/vendor_perl/%{version}
+%dir %{_libdir}/perl5/vendor_perl/%{_abi}
 %{perl_vendorarch}
 %{perl_vendorlib}
 
@@ -948,6 +956,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/POSIX/*.al
 %{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.ix
+%{perl_archlib}/auto/POSIX/SigAction
 %{_mandir}/man3/POSIX.*
 
 %{perl_archlib}/Socket.*
@@ -1029,6 +1038,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perl[5aefghlmnoprstuvwx]*
 %{_mandir}/man1/perlbo*
 %{_mandir}/man1/perlcall.*
+%{_mandir}/man1/perlcheat.*
 %{_mandir}/man1/perlclib.*
 %{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
@@ -1301,6 +1311,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/a2p
 %{_mandir}/man1/a2p.*
+%attr(755,root,root) %{_bindir}/cpan
+%{_mandir}/man1/cpan.*
 %attr(755,root,root) %{_bindir}/find2perl
 %{_mandir}/man1/find2perl.*
 %attr(755,root,root) %{_bindir}/libnetcfg
