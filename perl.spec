@@ -20,6 +20,7 @@ Patch2:		perl-DESTDIR.patch
 Patch3:		perl-CPAN-1.54.patch
 Patch4:		perl-find-provides.patch
 Patch5:		perl-prereq.patch
+Patch6:		perl-syslog.patch
 URL:		http://www.perl.org/
 #Requires:	csh
 Obsoletes:	perl-ANSIColor
@@ -93,6 +94,7 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 for i in find-* ; do
 	mv $i $i.old
