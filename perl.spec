@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	55.1
+Release:	56
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -669,6 +669,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/AutoLoader.pm
 %{_libdir}/perl5/%{version}/Carp
 %{_libdir}/perl5/%{version}/Carp.pm
+%{_libdir}/perl5/%{version}/Class
 %{_libdir}/perl5/%{version}/Cwd.pm
 %{_libdir}/perl5/%{version}/DirHandle.pm
 %{_libdir}/perl5/%{version}/Exporter
@@ -825,7 +826,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/SOAP
 %{_libdir}/perl5/%{version}/B
 %{_libdir}/perl5/%{version}/CPAN
-%{_libdir}/perl5/%{version}/Class
 %{_libdir}/perl5/%{version}/Devel
 %{_libdir}/perl5/%{version}/ExtUtils
 %{_libdir}/perl5/%{version}/File/CheckTree.pm
