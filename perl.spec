@@ -1,28 +1,28 @@
-%define		perlver 5.005
-%define		perlrel 03
-%define		perlthread -thread
-%define 	__find_provides	%{_builddir}/%{name}%{version}/find-perl-provides
+%define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
+%define		perlthread 	-thread-multi
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
 Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
-Version:	%{perlver}_%{perlrel}
-Release:	15
+Version:	5.6.0
+Release:	1
+Serial:		1
 License:	GPL
 Group:		Utilities/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
-Epoch:		1
-Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
+Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
-Patch1:		perl-DESTDIR.patch
-Patch2:		perl-File-Spec-0.7.patch
-Patch3:		perl-CPAN-1.50.patch
-Patch4:		perl-find-provides.patch
+Patch1:		perl-installman.patch
+Patch2:		perl-nodb.patch
+Patch3:		perl-prereq.patch
+Patch3:		perl-DESTDIR.patch
+Patch4:		perl-CPAN-1.54.patch
+Patch5:		perl-find-provides.patch
 URL:		http://www.perl.org/
-Requires:	csh
+#Requires:	csh
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -83,16 +83,17 @@ Practical Extraction and Report Language (SUID root binary).
 Practical Extraction and Report Language (SUID root binaria).
 
 %prep
-%setup  -q -n %{name}%{version}
+%setup  -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 for i in find-* ; do
 	mv $i $i.old
-	sed "s|FPPATH|%{_builddir}/%{name}%{version}|g" < $i.old > $i
+	sed "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
 	chmod 755 $i; rm -f $i.old
 done
 
@@ -130,7 +131,7 @@ sh Configure \
 
 %{__make}
 
-# Strip binaries (done now rather than at install)
+## Strip binaries (done now rather than at install)
 
 strip {perl,suidperl,x2p/a2p}
 
@@ -142,7 +143,7 @@ install -d $RPM_BUILD_ROOT
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
-# Everybody else is using it so why can't we? ;)
+
 %{__make} all -f - <<EOF
 PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
 	libpng-devel libtiff-devel ncurses-devel popt-devel \
@@ -153,8 +154,8 @@ STDH	+= \$(wildcard /usr/include/linux/*.h) \$(wildcard /usr/include/asm/*.h) \$
 GCCDIR	= \$(shell gcc --print-file-name include)
 GCCH    = \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
 
-LIBPATH = %{_builddir}/%{name}%{perlver}_%{perlrel}
-PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}
+LIBPATH = %{_builddir}/%{name}-%{version}
+PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
 PERLBIN = $RPM_BUILD_ROOT%{_bindir}/perl
 PERL	= LD_LIBRARY_PATH=\$(LIBPATH) PERL5LIB=\$(PERLLIB) \$(PERLBIN)
 PHDIR	= \$(PERLLIB)/%{_target_platform}%{perlthread}
@@ -171,25 +172,26 @@ gcc-headers: \$(GCCH)
 
 EOF
 
-( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}/
+(
+cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
 
 ## Fix permissions
 find . -name \*.ph -exec chmod 644 {} \;
 find . -type d -exec chmod 755 {} \;
 
 ## Fix paths
-mv .packlist .packlist.old
-sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
-rm -f .packlist.old
+sed -e "s|\$(RPM_BUILD_ROOT)||g" < Config.pm > Config.pm.new
+mv -f Config.pm.new Config.pm
 
-mv Config.pm Config.pm.old
-sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
-rm -f Config.pm.old )
+sed -e "s|\$(RPM_BUILD_ROOT)||g" < .packlist > .packlist.new
+mv -f .packlist.new .packlist
+)
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README Change*
 
-find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so -exec strip --strip-unneeded {} \;
+find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so \
+	-exec strip --strip-unneeded {} \;
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -204,7 +206,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h2ph
 %attr(755,root,root) %{_bindir}/h2xs
 %attr(755,root,root) %{_bindir}/perl
-%attr(755,root,root) %{_bindir}/perl%{perlver}%{perlrel}
+%attr(755,root,root) %{_bindir}/perl%{version}
 %attr(755,root,root) %{_bindir}/perlbug
 %attr(755,root,root) %{_bindir}/perlcc
 %attr(755,root,root) %{_bindir}/perldoc
@@ -225,5 +227,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n sperl
 %defattr(644,root,root,755)
-%attr(4755,root,root) %{_bindir}/sperl%{perlver}%{perlrel}
+%attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
