@@ -329,7 +329,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/c2ph.1*
 %{_mandir}/man1/h2ph.1*
 %{_mandir}/man1/h2xs.1*
-%{_mandir}/man1/perl[a-z].1*
+%{_mandir}/man1/perl[a-z]*.1*
 %{_mandir}/man1/pl2pm.1*
 %{_mandir}/man1/pod2html.1*
 %{_mandir}/man1/pod2man.1*
