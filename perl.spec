@@ -1,13 +1,13 @@
 %define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{?bcond_on_perl_threads:-thread-multi}
+%define		perlthread %{!?bcond_off_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
 Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
-Version:	5.6.1
-Release:	1
+Version:	5.6.0
+Release:	15
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -18,25 +18,22 @@ Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
 Patch2:		%{name}-DESTDIR.patch
-Patch3:		%{name}-find-provides.patch
-Patch4:		%{name}-prereq.patch
-Patch5:		%{name}-syslog.patch
-Patch6:		%{name}-CGI-upload-tmpdir.patch
-Patch7:		%{name}-LD_RUN_PATH.patch
-Patch8:		%{name}-errno_h-parsing.patch
-Patch9:		%{name}-use-LD_PRELOAD-for-libperl.so.patch
+Patch3:		%{name}-CPAN-1.58.patch
+Patch4:		%{name}-find-provides.patch
+Patch5:		%{name}-prereq.patch
+Patch6:		%{name}-syslog.patch
+Patch7:		%{name}-CGI-upload-tmpdir.patch
+Patch8:		%{name}-LD_RUN_PATH.patch
+Patch9:		%{name}-errno_h-parsing.patch
+Patch10:	%{name}-use-LD_PRELOAD-for-libperl.so.patch
+Patch11:	%{name}-fix-typo-in-syslog.patch
+Patch12:	%{name}-fix-for-coredump-bug-20000607.003.patch
 URL:		http://www.perl.org/
 #Requires:	csh
-Provides:	perl-ANSIColor
-Provides:	perl-Devel-Peek
-Provides:	perl-DProf
-Provides:	perl-PodParser
-Provides:	perl-CGI
 Obsoletes:	perl-ANSIColor
 Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-DProf
 Obsoletes:	perl-PodParser
-Obsoletes:	perl-CGI
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -97,6 +94,22 @@ Practical Extraction and Report Language (SUID root binary).
 %description -n sperl -l pl
 Practical Extraction and Report Language (SUID root binaria).
 
+%package -n perl-base
+Summary:	Practical Extraction and Report Language - base files
+Summary(pl):	Practical Extraction and Report Language - pliki podstawowe
+Group:		Applications/Text
+Group(de):	Applikationen/Text
+Group(fr):	Utilitaires/Texte
+Group(pl):	Aplikacje/Tekst
+Requires:	%{name} = %{version}
+
+%description -n perl-base
+Practical Extraction and Report Language - base files, usefull
+on embedded systems.
+
+%description -n perl-base -l pl
+Practical Extraction and Report Language - pliki podstawowe, przydatne
+dla systemów osadzonych.
 
 %prep
 %setup  -q
@@ -110,6 +123,9 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
@@ -119,8 +135,6 @@ done
 
 %build
 # this is gross
-# i added more ugly stuff here
-# i know that is ugly way to set that but i dont know how do it better	
 cat > config.over <<EOF
 installprefix=$RPM_BUILD_ROOT%{_prefix}
 test -d \$installprefix || mkdir -p \$installprefix
@@ -133,10 +147,9 @@ installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
 installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
 installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
 installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
-dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
 EOF
 
-USETHREADS=%{!?bcond_on_perl_threads:-U}%{?bcond_on_perl_threads:-D}
+USETHREADS=%{?bcond_off_perl_threads:-U}%{!?bcond_off_perl_threads:-D}
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
@@ -158,8 +171,8 @@ sh Configure \
 %endif 
 	-Dd_dosuid \
 	-Ud_setresuid \
-	-Ud_setresgid 
-
+	-Ud_setresgid
+	
 %{__make}
 
 %install
@@ -214,7 +227,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 
 gzip -9nf README Change*
 
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -243,12 +255,52 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/splain
 
 %dir %{_libdir}/perl5
-%attr( - ,root,root) %{_libdir}/perl5/%{version}/*
-%dir %{_libdir}/perl5/site_perl
-%attr( - ,root,root) %{_libdir}/perl5/site_perl/*
+%attr( - ,root,root) %{_libdir}/perl5/*
+#%dir %{_libdir}/site_perl
+#%attr( - ,root,root) %{_libdir}/site_perl/*
 %{_mandir}/man[13]/*
 
 %files -n sperl
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
+
+%files -n perl-base
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/perl
+%attr(755,root,root) %{_bindir}/perl%{version}
+%attr(4755,root,root) %{_bindir}/sperl%{version}
+%attr(4755,root,root) %{_bindir}/suidperl
+%dir %{_libdir}/perl5
+%dir %{_libdir}/perl5/%{version}
+%{_libdir}/perl5/%{version}/{AutoLoader,Carp,Cwd,DirHandle,Exporter,FileHandle,SelectSaver,Symbol,integer,lib,strict,vars,warnings}.pm
+%dir %{_libdir}/perl5/%{version}/File
+%{_libdir}/perl5/%{version}/File/{Basename,Find,Path}.pm
+%dir %{_libdir}/perl5/%{version}/Time
+%{_libdir}/perl5/%{version}/Time/Local.pm
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*
+%{_libdir}/perl5/%{version}/%{_host_alias}*/{Config,DynaLoader,POSIX,Socket,XSLoader,re}.pm
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/CORE
+%{_libdir}/perl5/%{version}/%{_host_alias}*/CORE/libperl.so
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/File
+%{_libdir}/perl5/%{version}/%{_host_alias}*/File/Glob.pm
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/IO
+%{_libdir}/perl5/%{version}/%{_host_alias}*/IO/{Handle,Seekable,Select,Socket}.pm
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/DynaLoader
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/DynaLoader/dl_findfile.al
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob/Glob.so
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob/autosplit.ix
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/IO
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/IO/IO.so
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX/POSIX.so
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX/tmpfile.al
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/Socket
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/Socket/Socket.so
+%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/re
+%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/re/re.so
+%dir %{_libdir}/perl5/%{version}/warnings
+%{_libdir}/perl5/%{version}/warnings/register.pm
