@@ -23,5 +23,3 @@ diff -urN perl-5.6.1/find-perl-provides perl-5.6.1-grabba/find-perl-provides
 +	done
 +fi
 +
-+echo "$provides_perl" | grep -v '^perl(DynaLoader)$'
-+
