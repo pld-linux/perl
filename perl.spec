@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	45
+Release:	46
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -47,6 +47,7 @@ Patch12:	%{name}-db3.patch
 URL:		http://www.perl.org/
 BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
+Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
@@ -675,9 +676,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/autouse.pm
-%{_libdir}/perl5/%{version}/base.pm
+# newer versions are in perl-Class-Fields
+#%{_libdir}/perl5/%{version}/base.pm
+#%{_libdir}/perl5/%{version}/fields.pm
 %{_libdir}/perl5/%{version}/constant.pm
-%{_libdir}/perl5/%{version}/fields.pm
 %{_libdir}/perl5/%{version}/integer.pm
 %{_libdir}/perl5/%{version}/lib.pm
 %{_libdir}/perl5/%{version}/locale.pm
@@ -745,9 +747,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/[Xivw]*
 %{_mandir}/man3/attri*
 %{_mandir}/man3/au*
-%{_mandir}/man3/bas*
+# newer versions are in perl-Class-Fields
+#%{_mandir}/man3/base.*
+#%{_mandir}/man3/fields.*
 %{_mandir}/man3/co*
-%{_mandir}/man3/fie*
 %{_mandir}/man3/l[io]*
 %{_mandir}/man3/ov*
 %{_mandir}/man3/st*
