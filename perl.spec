@@ -6,7 +6,7 @@
 #
 # TODO:
 # - Finish %%files.
-# - Think about unicore.  If uff8*.pm, encode.pm, charnamess.pm (and
+# - Think about unicore.  If uf8*.pm, encode.pm, charnamess.pm (and
 #   probably others) are in the perl-base package, unicore should also
 #   be there.  But it's 5MB...
 # - Think about the package separation.  Split between perl, perl-base
@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.04%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.05%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -89,6 +89,8 @@ URL:		http://www.perl.com/
 Provides:	perl-File-Spec = 0.82
 #Provides:	perl-IO = 1.20
 #Obsoletes:	perl-File-Spec
+Requires:	%{name}-base = %{version}
+Requires:	%{name}-modules = %{version}
 Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
@@ -272,34 +274,79 @@ Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆðÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
 ÓïÑÔ½øÐÐ±àÐ´¡£Äú±ØÐëÔÚÏµÍ³ÖÐ°²×° perl Èí¼þ°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
 %package base
-Summary:	Base Perl components
-# summary need fixup of course...
+Summary:	Base perl components for a minimal installation
+Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji perla
 Group:		Text/Applications
 
 %description base
-Base Perl components, files, core modules, etc.
+Base components, files, core modules, etc. -- a minimal usable perl
+installation.  You are encouraged to install a full perl (the perl
+package) whenever possible.
 
 %package devel
 Summary:	Perl development files
-Summary(es):	Development and include files for perl
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
-Requires:	%{name}-modules = %{version}
 Obsoletes:	perl-lib-devel
 
 %description devel
-Files for developing applications which embed a Perl interpreter.
+Components, required for developing applications which embed a Perl
+interpreter and compiling perl modules.  Also:
 
-%description devel -l es
-Development and include files for perl.
+ c2ph, pstruct - Dump C structures as generated from C<cc -g -S> stabs
+ dprofpp       - display perl profile data
+ enc2xs        - Perl Encode Module Generator
+ h2ph          - convert .h C header files to .ph Perl header files
+ h2xs          - convert .h C header files to Perl extensions
+ perlcc        - generate executables from Perl programs
+ perlivp       - Perl Installation Verification Procedure
+ pl2pm         - Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
+ splain        - force verbose warning diagnostics
 
-%description devel -l pl
-Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu.
+%package doc-pod
+Summary:	Perl documentation in POD format
+Summary(pl):	Dokumentacja Perla w formacie POD
+Group:		Documentation
 
-%description devel -l pt_BR
-Arquivos de desenvolvimento e cabeçalhos para o perl.
+%description doc-pod
+Practical Extraction and Report Language - POD docs.
+
+%description doc-pod -l pl
+Practical Extraction and Report Language - dokumentacja w formacie POD.
+
+%package doc-reference
+Summary:	Perl reference documentation
+Summary(pl):	Dokumentacja Perla
+Group:		Documentation
+Requires:	man
+
+%description doc-reference
+Reference documentation for the Practical Extraction and Report Language
+and it's interpreter in the man(1) format.
+
+%description doc-reference -l pl
+Dokumentacja referencyjna w formacie man do jêzyka Perl (Practical
+Extraction and Report Language) i jego interpretera.
+
+%package modules
+Summary:	Modules from the core perl distribution
+Summary(pl):	Modu³y z podstawowej dystrybucji perla
+Group:		Development/Libraries
+Requires:	%{name}-base = %{version}
+#Provides:	perl-ANSIColor
+#Provides:	perl-DProf
+#Provides:	perl-Devel-Peek
+#Provides:	perl-PodParser
+
+%description modules
+Practical Extraction and Report Language - modules from the core
+distribution.
+
+%description modules -l pl
+Practical Extraction and Report Language - modu³y z podstawowej
+dystrybucji.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
@@ -315,8 +362,8 @@ Summary(ru):	SUID ×ÅÒÓÉÑ ÑÚÙËÁ Perl
 Summary(sv):	sperl, att användas med setuid perlskript
 Summary(uk):	SUID-×ÅÒÓ¦Ñ ÍÏ×É Perl
 Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid perl ½Å±¾Ò»ÆðÊ¹ÓÃ
-Group:		Applications/Text
-Requires:	%{name} = %{version}
+Group:		Development/Languages/Perl
+Requires:	%{name}-base = %{version}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
@@ -367,45 +414,65 @@ suidperl är en setuid binärkopia av pers som tillåter
 suidperl ÊÇ perl µÄ setuid ¶þ½øÖÆ¸±±¾¡£ËüÔÊÐí£¨Ï£ÍûÈç´Ë£© ¸ü°²È«µØÔËÐÐ
 setuid perl ½Å±¾¡£
 
-%package modules
-Summary:	Practical Extraction and Report Language - modules
-Summary(es):	Perl's base modules
-Summary(pl):	Practical Extraction and Report Language - modu³y
-Summary(pt_BR):	Módulos do perl básicos
-Group:		Applications/Text
-#Requires:	perl-Test-Harness
-Prereq:		%{name} = %{version}
-#Provides:	perl-ANSIColor
-#Provides:	perl-DProf
-#Provides:	perl-Devel-Peek
-#Provides:	perl-PodParser
+%package tools
+Summary:	Various tools from the core perl distribution
+Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji perla
+Group:		Applications
+Requires:	%{name}-base = %{version}
 
-%description modules
-Practical Extraction and Report Language - modules.
+%description tools
+Various tools from the core perl distribution:
 
-%description modules -l es
-This package contains standard perl modules needed by some
-application/scripts.
+ a2p       - Awk to Perl translator
+ find2perl - translate find command lines to Perl code
+ piconv    - iconv(1), reinvented in perl
+ psed, s2p - a stream editor
 
 %description modules -l pl
-Practical Extraction and Report Language - modu³y.
+Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 
-%description modules -l pt_BR
-Este pacote contém módulos perl básicos necessários por alguns
-programas/ scripts.
+ a2p       - Awk to Perl translator
+ find2perl - translate find command lines to Perl code
+ piconv    - iconv(1), reinvented in perl
+ psed, s2p - a stream editor
 
-%package pod
-Summary:	Perl POD documentation
-Summary(pl):	Dokumentacja Perla w formacie POD
-Group:		Applications/Text
-Prereq:		%{name} = %{version}
+%package tools-devel
+Summary:	Developer's tools from the core perl distribution
+Summary(pl):	Narzêdzia z podstawowej dystrybucji perla, przeznaczone dla programistów
+Group:		Development/Tools
+Requires:	%{name}-base = %{version}
+#Requires:	%{name}-devel = %{version} (?)
 
-%description pod
-Practical Extraction and Report Language - POD docs.
+%description tools-devel
+Various tools from the core perl distribution:
 
-%description pod -l pl
-Practical Extraction and Report Language - dokumentacja w formacie
-POD.
+ c2ph, pstruct - Dump C structures as generated from C<cc -g -S> stabs
+ dprofpp       - display perl profile data
+ enc2xs        - Perl Encode Module Generator
+ h2ph          - convert .h C header files to .ph Perl header files
+ h2xs          - convert .h C header files to Perl extensions
+ perlcc        - generate executables from Perl programs
+ perlivp       - Perl Installation Verification Procedure
+ pl2pm         - Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
+ splain        - force verbose warning diagnostics
+
+%package tools-pod
+Summary:	Tools for manipulating files in the POD format
+Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
+Group:		Applications
+Requires:	%{name}-base = %{version}
+
+%description tools-pod
+Tools for manipulating files in the POD (Plain Old Documentation) format:
+
+ pod2html   - convert .pod files to .html files
+ pod2latex  - convert pod documentation to latex format
+ pod2man    - Convert POD data to formatted *roff input
+ pod2text   - Convert POD data to formatted ASCII text
+ pod2usage  - print usage messages from embedded pod docs in files
+ podchecker - check the syntax of POD format documentation files
+ podselect  - print selected sections of pod documentation on standard output
+
 
 %prep
 %setup -q
@@ -470,14 +537,24 @@ install -d $RPM_BUILD_ROOT
 
 %{__make} install
 
+## use symlinks instead of hardlinks
 %{__ln_s} -f  perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
 %{__ln_s} -f sperl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
+%{__ln_s} -f  c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
+%{__ln_s} -f  psed           $RPM_BUILD_ROOT%{_bindir}/s2p
+
+
+%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="$RPM_BUILD_ROOT%{perl_privlib}" $RPM_BUILD_ROOT%{_bindir}/perl
+
+## prepare scripts for finding provides
+%{__perl} -pi -e 's|FPPATH|%{_builddir}/%{name}-%{version}|' find-perl-provides find-perl.prov
 
 ## Generate the *.ph files
 (
-LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
-PERL5LIB=$RPM_BUILD_ROOT%{perl_privlib}
-PERL=$RPM_BUILD_ROOT%{_bindir}/perl
+cd /usr/include
+#LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
+#PERL5LIB=$RPM_BUILD_ROOT%{perl_privlib}
+#PERL=$RPM_BUILD_ROOT%{_bindir}/perl
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
 PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
 WANTED='
@@ -491,13 +568,7 @@ WANTED='
 	sys/syscall.h
 	sys/time.h
 '
-export LD_LIBRARY_PATH PERL5LIB PERL H2PH PHDIR WANTED
-
-# just using the occasion, prepare scripts for finding provides
-$PERL -pi -e 's|FPPATH|%{_builddir}/%{name}-%{version}|' find-perl-provides find-perl.prov
-
-cd /usr/include
-$PERL $H2PH -a -d $PHDIR $WANTED
+%{__perl} $H2PH -a -d $PHDIR $WANTED
 )
 
 ## Fix lib
@@ -505,10 +576,22 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 %{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
-## remove possibly useless man pages
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000}* \
-	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
-	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
+## remove man pages for other operating systems
+rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
+
+## These File::Spec submodules are for non-Unix systems
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
+
+## We already have these *.pod files as man pages
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+
+
+## directories for modules installed using CPAN.pm
+install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}}
 
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
@@ -533,16 +616,6 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Speech/Recognizer,String} \
 	auto/{Term,Text,Unicode,XML}
 )
-## directories for modules installed using CPAN.pm
-install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}}
-
-## These File::Spec submodules are for non-Unix systems
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
-
-## We already have these *.pod files as man pages
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
-rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -634,8 +707,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
 %{_mandir}/man1/perl.*
-%lang(fi) %{_mandir}/fi/man1/perl.*
-%lang(pl) %{_mandir}/pl/man1/perl.*
+%lang(fi) %{_mandir}/fi/man1/perl*
+%lang(pl) %{_mandir}/pl/man1/perl*
+#%{_mandir}/man1/
 
 %dir %{perl_privlib}
 %dir %{perl_archlib}
@@ -718,9 +792,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pl2pm
 %attr(755,root,root) %{_bindir}/pstruct
 %attr(755,root,root) %{_bindir}/[sx]*
-%{_mandir}/man1/[acefh]*
+%{_mandir}/man1/[acdefh]*
 %{_mandir}/man1/perlcc.*
-%{_mandir}/man1/perld[^io]*
+%{_mandir}/man1/perldebguts.*
 %{_mandir}/man1/pl2pm.*
 %{_mandir}/man1/pstruct.*
 %{_mandir}/man1/[sx]*
@@ -728,7 +802,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{perl_archlib}/CORE
 
-# FIXME: Changes file to _docdir (MANIFEST.SKIP too?)
+# FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
 %{perl_privlib}/CPAN*
 
@@ -757,19 +831,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/XS::*
 
 
-%files -n sperl
+%files doc-pod
 %defattr(644,root,root,755)
-%attr(4755,root,root) %{_bindir}/sperl%{version}
-%attr(4755,root,root) %{_bindir}/suidperl
-
-
-
-
-%files pod
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/pod2*
 %{perl_privlib}/pod/perl.pod
 %{perl_privlib}/pod/perl[5abceghijklmnopqrstuvwx]*.pod
 %{perl_privlib}/pod/perld[^i]*.pod
 %{perl_privlib}/pod/perlf[^au]*.pod
-%{_mandir}/man1/pod*
+
+
+%files doc-reference
+%defattr(644,root,root,755)
+%{_mandir}/man1/perl[5deghilmnoprstuvwx]*
+%{_mandir}/man1/perlbo*
+%{_mandir}/man1/perlcall.*
+%{_mandir}/man1/perlclib.*
+%{_mandir}/man1/perlcompile.*
+%{_mandir}/man1/perldata.*
+%{_mandir}/man1/perlf[iou]*
+%lang(cn) %{_mandir}/man1/perlcn.*
+%lang(jp) %{_mandir}/man1/perljp.*
+%lang(ko) %{_mandir}/man1/perlko.*
+
+
+%files -n sperl
+%defattr(644,root,root,755)
+%attr(4755,root,root) %{_bindir}/sperl%{version}
+%attr(4755,root,root) %{_bindir}/suidperl
