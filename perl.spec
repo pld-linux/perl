@@ -603,7 +603,7 @@ install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 %{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
-%{__perl} -pi -e "s,^man3ext='3perl',man1ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 
 ## prepare scripts for finding provides
 %{__perl} -pi -e 's,\@perl_build_dir\@,%{_builddir}/%{name}-%{version},g' find-perl-provides.sh
