@@ -649,7 +649,7 @@ sh Configure \
 	-Ui_db \
 	%{?_without_gdbm:  -Ui_dbm -Ui_gdbm -Ui_ndbm} \
 	%{?!_without_gdbm: -Ui_dbm -Di_gdbm -Ui_ndbm} \
-	-Dlibswanted="dl m c crypt %{?!_without_dbm:gdbm}" \
+	-Dlibswanted="dl m c crypt %{?!_without_gdbm:gdbm}" \
 	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
 	-%{?_without_largefiles:U}%{?!_without_largefiles:D}uselargefiles
 
