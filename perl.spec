@@ -828,11 +828,11 @@ install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
 install -d AI Algorithm Astro Audio Authen B BSD Bit Chemistry Class \
 	Compress Convert Crypt/OpenSSL Data Devel Device Digest File IPC \
-	Image Inline Linux Locale Math/BigInt Net Speech/Recognizer String \
-	Sys Template Term Text Time Unicode WWW XML \
+	Image Inline Linux Locale Math/BigInt Net Ogg/Vorbis Speech/Recognizer \
+	String Sys Template Term Text Time Unicode WWW XML \
 	auto/{AI,Algorithm,Astro,Audio,Authen,BSD,Bit,Chemistry,Class,Clone} \
 	auto/{Compress,Convert,Crypt/OpenSSL,Data,Devel,Device,Digest,File} \
-	auto/{IPC,Image,Inline,Locale,Linux,Math/BigInt,Net,Regexp} \
+	auto/{IPC,Image,Inline,Locale,Linux,Math/BigInt,Net,Ogg/Vorbis,Regexp} \
 	auto/{Speech/Recognizer,String,Sys,Term,Text,Time,Unicode,WWW,XML}
 
 cd "$owd"
