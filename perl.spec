@@ -59,6 +59,7 @@ Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
 # Source0-md5:	3eb135afd0114f4e1acdd4ad6b8fd947
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
+Source2:	perl.prov
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
@@ -69,7 +70,6 @@ Patch7:		%{name}_584-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
-BuildRequires:	rpm-perlprov
 %{?with_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
@@ -78,7 +78,7 @@ Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/%{name}-%{version}/runperl
-%define		__perl_provides %{__perl} /usr/lib/rpm/perl.prov
+%define		__perl_provides %{__perl} %{SOURCE2}
 
 # gcc 3.3.x miscompiles pp_hot.c
 # (in PUSHSUB in entersub two SvREFCNT_inc()s are working as one)
