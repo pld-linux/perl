@@ -46,7 +46,7 @@ Summary(is):	Forritunarmálið Perl
 Summary(it):	Perl: linguaggio di programmazione
 Summary(ja):	Perl ¥×¥í¥°¥é¥ß¥ó¥°¸À¸ì
 Summary(ko):	ÆÞ ÇÁ·Î±×·¡¹Ö ¾ð¾î
-Summary(no):	Programmeringsspråket Perl
+Summary(nb):	Programmeringsspråket Perl
 Summary(pl):	Interpreter jêzyka Perl (Practical Extraction and Report Language)
 Summary(pt):	A linguagem de programação Perl
 Summary(pt_BR):	Linguagem prática de extração e relatório
