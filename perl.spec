@@ -56,7 +56,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.51%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.52%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -78,11 +78,11 @@ Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # versions [4.2, 4.3-0.20030610.20.1] are not supported
 BuildRequires:	rpm-build >= 4.3-0.20030610.20.2
+%{?!_without_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	perl-doc-reference
 Requires:	perldoc
-%{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" %{buildroot}%{_bindir}/perl
