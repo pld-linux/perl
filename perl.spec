@@ -270,42 +270,42 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
 
-%files -n perl-base
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/perl
-%attr(755,root,root) %{_bindir}/perl%{version}
-%attr(4755,root,root) %{_bindir}/sperl%{version}
-%attr(4755,root,root) %{_bindir}/suidperl
-%dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{version}
-%{_libdir}/perl5/%{version}/{AutoLoader,Carp,Cwd,DirHandle,Exporter,FileHandle,SelectSaver,Symbol,integer,lib,strict,vars,warnings}.pm
-%dir %{_libdir}/perl5/%{version}/File
-%{_libdir}/perl5/%{version}/File/{Basename,Find,Path}.pm
-%dir %{_libdir}/perl5/%{version}/Time
-%{_libdir}/perl5/%{version}/Time/Local.pm
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*
-%{_libdir}/perl5/%{version}/%{_host_alias}*/{Config,DynaLoader,POSIX,Socket,XSLoader,re}.pm
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/CORE
-%{_libdir}/perl5/%{version}/%{_host_alias}*/CORE/libperl.so
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/File
-%{_libdir}/perl5/%{version}/%{_host_alias}*/File/Glob.pm
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/IO
-%{_libdir}/perl5/%{version}/%{_host_alias}*/IO/{Handle,Seekable,Select,Socket}.pm
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/DynaLoader
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/DynaLoader/dl_findfile.al
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob/Glob.so
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob/autosplit.ix
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/IO
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/IO/IO.so
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX/POSIX.so
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX/tmpfile.al
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/Socket
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/Socket/Socket.so
-%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/re
-%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/re/re.so
-%dir %{_libdir}/perl5/%{version}/warnings
-%{_libdir}/perl5/%{version}/warnings/register.pm
+#%files -n perl-base
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_bindir}/perl
+#%attr(755,root,root) %{_bindir}/perl%{version}
+#%attr(4755,root,root) %{_bindir}/sperl%{version}
+#%attr(4755,root,root) %{_bindir}/suidperl
+#%dir %{_libdir}/perl5
+#%dir %{_libdir}/perl5/%{version}
+#%{_libdir}/perl5/%{version}/{AutoLoader,Carp,Cwd,DirHandle,Exporter,FileHandle,SelectSaver,Symbol,integer,lib,strict,vars,warnings}.pm
+#%dir %{_libdir}/perl5/%{version}/File
+#%{_libdir}/perl5/%{version}/File/{Basename,Find,Path}.pm
+#%dir %{_libdir}/perl5/%{version}/Time
+#%{_libdir}/perl5/%{version}/Time/Local.pm
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/{Config,DynaLoader,POSIX,Socket,XSLoader,re}.pm
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/CORE
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/CORE/libperl.so
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/File
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/File/Glob.pm
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/IO
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/IO/{Handle,Seekable,Select,Socket}.pm
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/DynaLoader
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/DynaLoader/dl_findfile.al
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob/Glob.so
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/File/Glob/autosplit.ix
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/IO
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/IO/IO.so
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX/POSIX.so
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/POSIX/tmpfile.al
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/Socket
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/Socket/Socket.so
+#%dir %{_libdir}/perl5/%{version}/%{_host_alias}*/auto/re
+#%{_libdir}/perl5/%{version}/%{_host_alias}*/auto/re/re.so
+#%dir %{_libdir}/perl5/%{version}/warnings
+#%{_libdir}/perl5/%{version}/warnings/register.pm
