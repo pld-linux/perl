@@ -22,7 +22,7 @@ Summary(sk):	ProgramovacÌ jazyk Perl
 Summary(sl):	Programski jezik Perl
 Summary(sv):	ProgrammeringssprÂket Perl
 Summary(tr):	Kabuk yorumlama dili
-Summary(zh+CN):	Perl ±‡≥Ã”Ô—‘°£
+Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
 Release:	38
