@@ -50,13 +50,15 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.5
-Release:	6%{!?with_threads:_nothr}
+Version:	5.8.6
+%define	_rc	RC1
+Release:	0.%{_rc}.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	9db6be76aa275f415d75c224ad1d4029
+#Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.cpan.org/pub/CPAN/authors/id/N/NW/NWCLARK/%{name}-%{version}-%{_rc}.tar.bz2
+# Source0-md5:	d490c235c8759a78a5fde619a77073c6
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	perl.prov
@@ -77,7 +79,7 @@ Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
 Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__perl		%{_builddir}/%{name}-%{version}/runperl
+%define		__perl		%{_builddir}/%{name}-%{version}-%{_rc}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
 
 # gcc 3.3.x miscompiles pp_hot.c
@@ -605,7 +607,7 @@ prawdopodobnie nie powiniene¶ tego robiæ. Nie zg³aszaj b³êdów w
 microperlu - popraw je.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{_rc}
 %patch0 -p1
 %patch1 -p1
 %patch3 -p1
@@ -685,7 +687,7 @@ rm -f uconfig.h
 
 cat > runperl <<EOF
 #!/bin/sh
-LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
+LD_PRELOAD="%{_builddir}/%{name}-%{version}-%{_rc}/libperl.so.%{_abi}" \\
 PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
 exec %{buildroot}%{_bindir}/perl \$*
 EOF
