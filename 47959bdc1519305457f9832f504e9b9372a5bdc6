@@ -1,0 +1,3 @@
+- %%{_libdir}/perl5/%%{version}/%%{_target_platform}*/auto/DynaLoader/dl_findfile.al
+  removed from perl-modules subpackage; it's in perl.
+- added using %%{__*} macros.
