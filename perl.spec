@@ -98,37 +98,6 @@ Practical Extraction and Report Language (SUID root binary).
 %description -n sperl -l pl
 Practical Extraction and Report Language (SUID root binaria).
 
-%package -n perl-GDBM_File
-Summary:	Practical Extraction and Report Language
-Summary(pl):	Practical Extraction and Report Language
-Group:		Applications/Text
-Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
-Group(pl):	Aplikacje/Tekst
-Requires:	%{name} = %{version}
-
-%description -n perl-GDBM_File
-Practical Extraction and Report Language GDBM_File module.
-
-%description -n perl-GDBM_File -l pl
-Practical Extraction and Report Language modu³ GDBM_File.
-
-%package -n perl-NDBM_File
-Summary:	Practical Extraction and Report Language
-Summary(pl):	Practical Extraction and Report Language
-Group:		Applications/Text
-Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
-Group(pl):	Aplikacje/Tekst
-Requires:	%{name} = %{version}
-
-%description -n perl-NDBM_File
-Practical Extraction and Report Language NDBM_File module.
-
-%description -n perl-NDBM_File -l pl
-Practical Extraction and Report Language modu³ NDBM_File.
-
-
 
 %prep
 %setup  -q
@@ -154,6 +123,8 @@ done
 
 %build
 # this is gross
+# i added more ugly stuff here
+# i know that is ugly way to set that but i dont know how do it better	
 cat > config.over <<EOF
 installprefix=$RPM_BUILD_ROOT%{_prefix}
 test -d \$installprefix || mkdir -p \$installprefix
@@ -166,6 +137,7 @@ installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
 installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
 installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
 installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
+dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
 EOF
 
 USETHREADS=%{?bcond_off_perl_threads:-U}%{!?bcond_off_perl_threads:-D}
@@ -190,29 +162,15 @@ sh Configure \
 %endif 
 	-Dd_dosuid \
 	-Ud_setresuid \
-	-Ud_setresgid
-	
+	-Ud_setresgid 
+
 %{__make}
-
-(
-cd ext/GDBM_File
-../../perl Makefile.PL
-)
-(
-cd ext/NDBM_File
-../../perl Makefile.PL
-)
-%{__make} -C ext/GDBM_File
-%{__make} -C ext/NDBM_File
-
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install
-%{__make} -C ext/GDBM_File install DESTDIR=$RPM_BUILD_ROOT
-%{__make} -C ext/NDBM_File install DESTDIR=$RPM_BUILD_ROOT
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
@@ -298,12 +256,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
-
-%files -n perl-GDBM_File
-%{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/GDBM_File.pm
-%{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/auto/GDBM_File/*
-
-
-%files -n perl-NDBM_File
-%{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/NDBM_File.pm
-%{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/auto/NDBM_File/*
