@@ -1,5 +1,7 @@
+
 %define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?_with_perl_threads:-thread-multi}
+
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(de):	Praktische Extraktions- und Berichtsprache
 Summary(es):	Lenguaje práctica de extracción y listado
@@ -10,11 +12,11 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
-Release:	29
+Release:	29.1
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
-Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.perl.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
