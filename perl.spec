@@ -650,7 +650,7 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
 
 ## directories for modules installed using CPAN.pm
-install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}}
+install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}/auto}
 
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
@@ -721,12 +721,18 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/warnings
 %{perl_archlib}/[a-z]*.pm
 %{perl_archlib}/threads
-%dir %{perl_archlib}/auto/[a-z]*/
-%dir %{perl_archlib}/auto/[a-z]*/*/
-%attr(755,root,root) %{perl_archlib}/auto/[a-z]*/*.so
-%attr(755,root,root) %{perl_archlib}/auto/[a-z]*/*/*.so
-%{perl_archlib}/auto/[a-z]*/*.bs
-%{perl_archlib}/auto/[a-z]*/*/*.bs
+%dir %{perl_archlib}/auto/attrs
+%dir %{perl_archlib}/auto/re
+%dir %{perl_archlib}/auto/threads
+%dir %{perl_archlib}/auto/threads/shared
+%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
+%attr(755,root,root) %{perl_archlib}/auto/re/*.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
+%{perl_archlib}/auto/attrs/*.bs
+%{perl_archlib}/auto/re/*.bs
+%{perl_archlib}/auto/threads/*.bs
+%{perl_archlib}/auto/threads/shared/*.bs
 %{_mandir}/man3/[a-z]*
 
 # arch-_IN_dependent modules
@@ -871,13 +877,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc-reference
 %defattr(644,root,root,755)
-%{_mandir}/man1/perl[5adeghilmnoprstuvwx]*
+%{_mandir}/man1/perl[5adefghilmnoprstuvwx]*
 %{_mandir}/man1/perlbo*
 %{_mandir}/man1/perlcall.*
 %{_mandir}/man1/perlclib.*
 %{_mandir}/man1/perlcompile.*
-%{_mandir}/man1/perlf[iou]*
-%{_mandir}/man1/perlfunc.*
 %lang(cn) %{_mandir}/man1/perlcn.*
 %lang(jp) %{_mandir}/man1/perljp.*
 %lang(ko) %{_mandir}/man1/perlko.*
@@ -911,7 +915,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Digest/MD5/*.bs
 %{_mandir}/man3/Digest*
 
-## shouldn't this be in perl-base?
 ## FIXME: *.h to devel(?), check out the use for *.e2x files
 %{perl_privlib}/Encode
 %{perl_archlib}/Encode*
@@ -1098,8 +1101,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/pod/perldiag.pod
 %{perl_privlib}/pod/perlfaq*.pod
 %{perl_privlib}/pod/perlfunc.pod
-%{_mandir}/man1/perld[io]*
-%{_mandir}/man1/perlfaq*.*
+%{_mandir}/man1/perldoc.*
 
 
 %files -n sperl
