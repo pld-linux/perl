@@ -24,14 +24,17 @@
 #   (should this be done on Ra-branch, too?)
 #
 
+%define	_patch	20874
+%define _abi	5.8.0
+
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
 %define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
 %define		perl_sitelib	%{_usr}/local/share/perl5
-%define		perl_sitearch	%{_usr}/local/lib/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_sitearch	%{_usr}/local/lib/perl5/%{_abi}/%{_target_platform}%{perlthread}
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
-%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{version}/%{_target_platform}%{perlthread}
+%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
@@ -55,26 +58,24 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.0
-Release:	0.51%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Version:	5.8.1
+Release:	0.%{_patch}.2%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
-# Source0-md5:	d9bdb180620306023fd35901a2878b62
+# rsync://ftp.linux.activestate.com/perl-5.8.x
+Source0:	http://radek.karnet.pl/pld/%{name}-%{version}_%{_patch}.tar.bz2
+# Source0-md5:	73f0711bb3be572fc7987d7cb2e68593
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
-Patch0:		%{name}_580-noroot_install.patch
-Patch1:		%{name}_580-INC.patch
-Patch2:		%{name}_580-MakeMaker.patch
+Patch0:		%{name}_581-noroot_install.patch
+Patch1:		%{name}_581-INC.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
-Patch5:		%{name}_580-soname.patch
-Patch6:		%{name}_580-perluniintro.patch
-Patch7:		%{name}_580-Safe.patch
-Patch8:		%{name}_580-microperl_uconfig.patch
+Patch5:		%{name}_581-soname.patch
+#Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # versions [4.2, 4.3-0.20030610.20.1] are not supported
 BuildRequires:	rpm-build >= 4.3-0.20030610.20.2
@@ -275,12 +276,12 @@ Summary:	Base perl components for a minimal installation
 Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji perla
 Group:		Text/Applications
 Provides:	perl-File-Compare = 1.1003
-Provides:	perl-File-Spec = 0.83
-Provides:	perl-File-Temp = 0.13
-Provides:	perl-IO = 1.20
+Provides:	perl-File-Spec = 0.86
+Provides:	perl-File-Temp = 0.14
+Provides:	perl-IO = 1.21
 Provides:	perl-Safe = 2.09
-Provides:	perl-Socket = 1.75
-Provides:	perl-Tie-File = 0.93
+Provides:	perl-Socket = 1.76
+Provides:	perl-Tie-File = 0.97
 %{?!_without_largefiles:Provides:	perl(largefiles)}
 # broken, unsupported module
 Obsoletes:	perl-SOAP
@@ -320,12 +321,12 @@ Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	%{name}-tools-pod
-Provides:	perl-CPAN = 1.61
-Provides:	perl-Devel-DProf = 20000000.00_01
-Provides:	perl-Devel-PPPort = 2.0002
-Provides:	perl-Devel-Peek = 1.00_03
-Provides:	perl-ExtUtils-MakeMaker = 6.03
+Provides:	perl-CPAN = 1.76
+Provides:	perl-Devel-DProf = 20030813.00
+Provides:	perl-Devel-PPPort = 2.0004
+Provides:	perl-Devel-Peek = 1.01
 Provides:	perl-ExtUtils-Embed = 1.250601
+Provides:	perl-ExtUtils-MakeMaker = 6.16
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -368,40 +369,41 @@ Summary:	Modules from the core perl distribution
 Summary(pl):	Modu³y z podstawowej dystrybucji perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
-Provides:	perl-Attribute-Handlers = 0.77
-Provides:	perl-CGI = 2.81
+Provides:	perl-Attribute-Handlers = 0.78
+Provides:	perl-CGI = 2.98
 Provides:	perl-Class-ISA = 0.32
-Provides:	perl-Digest = 1.00
-Provides:	perl-Digest-MD5 = 2.20
+Provides:	perl-Digest = 1.02
+Provides:	perl-Digest-MD5 = 2.27
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.43
 #Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
-Provides:	perl-IPC-SysV = 1.03_00
-Provides:	perl-Locale-Maketext = 1.03
-Provides:	perl-MIME-Base64 = 2.12
-Provides:	perl-Math-BigInt = 1.60
-Provides:	perl-Math-BigRat = 0.07
-Provides:	perl-Math-Trig = 1.01
+Provides:	perl-IPC-SysV = 1.04
+Provides:	perl-Locale-Maketext = 1.06
+Provides:	perl-MIME-Base64 = 2.20
+Provides:	perl-Math-BigInt = 1.65
+Provides:	perl-Math-BigRat = 0.10
+Provides:	perl-Math-Trig = 1.02
 Provides:	perl-Memoize = 1.01
-Provides:	perl-NEXT = 0.50
-Provides:	perl-PerlIO-via-QuotedPrint = 0.04
-Provides:	perl-Pod-LaTeX = 0.54
+Provides:	perl-NEXT = 0.60
+Provides:	perl-PerlIO-via-QuotedPrint = 0.05
+Provides:	perl-Pod-LaTeX = 0.55
 Provides:	perl-Pod-Parser = 1.13
-Provides:	perl-Scalar-List-Utils = 1.07_00
-Provides:	perl-Storable = 2.04
-Provides:	perl-Term-ANSIColor = 1.05
-Provides:	perl-Term-Cap = 1.07
-Provides:	perl-Test = 1.20
-Provides:	perl-Test-Harness = 2.26
-Provides:	perl-Test-Simple = 0.45
-Provides:	perl-Text-Balanced = 1.89
+Provides:	perl-Scalar-List-Utils = 1.12
+Provides:	perl-Storable = 2.08
+Provides:	perl-Term-ANSIColor = 1.07
+Provides:	perl-Term-Cap = 1.08
+Provides:	perl-Test = 1.24
+Provides:	perl-Test-Harness = 2.30
+Provides:	perl-Test-Simple = 0.47
+Provides:	perl-Text-Balanced = 1.95
 Provides:	perl-Text-ParseWords = 3.21
 Provides:	perl-Text-Soundex = 1.01
-Provides:	perl-Text-Tabs+Wrap = 2001.0929
-Provides:	perl-Time-HiRes = 1.20_00
-Provides:	perl-UNIVERSAL = 1.00
-Provides:	perl-Unicode-Collate = 0.12
-Provides:	perl-Unicode-Normalize = 0.17
+# XXX: I'm not sure what to do with this one...
+#Provides:	perl-Text-Tabs+Wrap = 2001.0929
+Provides:	perl-Time-HiRes = 1.50
+Provides:	perl-UNIVERSAL = 1.01
+Provides:	perl-Unicode-Collate = 0.26
+Provides:	perl-Unicode-Normalize = 0.23
 Obsoletes:	perl-lib
 
 %description modules
@@ -415,7 +417,7 @@ dystrybucji.
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
-Provides:	perldoc = 2.03@%{version}
+Provides:	perldoc = 3.09@%{version}
 Requires:	%{name}-base
 Group:		Development/Tools
 
@@ -507,6 +509,7 @@ Requires:	%{name}-devel = %{epoch}:%{version}
 Various tools from the core perl distribution:
 
  a2p       - Awk to Perl translator
+ cpan      - easily interact with CPAN from the command line
  find2perl - translate find command lines to Perl code
  piconv    - iconv(1), reinvented in perl
  psed, s2p - a stream editor
@@ -515,6 +518,7 @@ Various tools from the core perl distribution:
 Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 
  a2p       - translator skryptów Awka do Perla
+ cpan      - easily interact with CPAN from the command line
  find2perl - t³umaczenie linii poleceñ programu find na kod w Perlu
  piconv    - iconv(1) napisany w Perlu
  psed, s2p - edytor strumieniowy
@@ -615,14 +619,11 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
-%patch2 -p0
+%patch1 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p0
-%patch7 -p1
-%patch8 -p1
+#%patch8 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
 install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
@@ -647,7 +648,6 @@ sh Configure \
 	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
 	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
-	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
 	-Ui_db \
 	%{?_without_gdbm:  -Ui_dbm -Ui_gdbm -Ui_ndbm} \
 	%{?!_without_gdbm: -Ui_dbm -Di_gdbm -Ui_ndbm} \
@@ -672,7 +672,8 @@ use ExtUtils::MakeMaker;
 WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm");
 EOF
 
-%{__make}
+%{__make} \
+	LIBPERL_SONAME=libperl.so.%{_abi}
 
 ## microperl
 rm -f uconfig.h
@@ -695,7 +696,8 @@ rm -f uconfig.h
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
-%{__make} install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 install microperl $RPM_BUILD_ROOT%{_bindir}
 
 ## use symlinks instead of hardlinks
@@ -706,9 +708,9 @@ install microperl $RPM_BUILD_ROOT%{_bindir}
 
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{version}'";s|^'%{_libdir}'/*||;print'` \
-	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{version}
-%{__ln_s} libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
+	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
+%{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -792,10 +794,13 @@ mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
 mv $RPM_BUILD_ROOT%{perl_privlib}/Attribute/Handlers/demo \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Attribute-Handlers
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Attribute::Handlers::demo*
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA/test.pl
-rmdir $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA
+#rm -f $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA/test.pl
+#rmdir $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA
 mv $RPM_BUILD_ROOT%{perl_privlib}/Net/demos \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Net
+# XXX: bug bug bug...
+mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
+	$RPM_BUILD_ROOT%{perl_archlib}/auto/POSIX
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -828,11 +833,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto
 
 %dir %{perl_archlib}/CORE
-%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{version}
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
 %attr(755,root,root) %{_libdir}/libperl.so.*
 
 %dir %{_libdir}/perl5/vendor_perl
-%dir %{_libdir}/perl5/vendor_perl/%{version}
+%dir %{_libdir}/perl5/vendor_perl/%{_abi}
 %{perl_vendorarch}
 %{perl_vendorlib}
 
@@ -948,6 +953,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/POSIX/*.al
 %{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.ix
+%{perl_archlib}/auto/POSIX/SigAction
 %{_mandir}/man3/POSIX.*
 
 %{perl_archlib}/Socket.*
@@ -1029,6 +1035,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perl[5aefghlmnoprstuvwx]*
 %{_mandir}/man1/perlbo*
 %{_mandir}/man1/perlcall.*
+%{_mandir}/man1/perlcheat.*
 %{_mandir}/man1/perlclib.*
 %{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
@@ -1301,6 +1308,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/a2p
 %{_mandir}/man1/a2p.*
+%attr(755,root,root) %{_bindir}/cpan
+%{_mandir}/man1/cpan.*
 %attr(755,root,root) %{_bindir}/find2perl
 %{_mandir}/man1/find2perl.*
 %attr(755,root,root) %{_bindir}/libnetcfg
