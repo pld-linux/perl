@@ -65,7 +65,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.37%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.38%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -288,6 +288,7 @@ Perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
 
 %package GDBM_File
 Summary:	GDBM_File - Perl5 access to the gdbm library
+Summary(pl):	GDBM_File - dostêp Perla do biblioteki gdbm
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 # FIXME: Set Version: 1.06 and Release: 1 instead of inheriting
@@ -773,8 +774,8 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
 	Text Unicode XML \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
-	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Speech/Recognizer,String} \
-	auto/{Term,Text,Unicode,XML}
+	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Regexp,Speech/Recognizer} \
+	auto/{String,Term,Text,Unicode,XML}
 )
 
 ## non-english man pages
