@@ -30,7 +30,9 @@ Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
+# Source0-md5:	ec1ff15464809b562aecfaa2e65edba6
 Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
 Patch2:		%{name}-DESTDIR.patch
