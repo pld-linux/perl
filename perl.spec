@@ -146,10 +146,10 @@ GCCDIR	= \$(shell gcc --print-file-name include)
 GCCH    = \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
 
 LIBPATH = %{_builddir}/%{name}%{perlver}_%{perlrel}
-PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5
+PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}
 PERLBIN = $RPM_BUILD_ROOT%{_bindir}/perl
 PERL	= LD_LIBRARY_PATH=\$(LIBPATH) PERL5LIB=\$(PERLLIB) \$(PERLBIN)
-PHDIR	= \$(PERLLIB)/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}
+PHDIR	= \$(PERLLIB)/%{_target_platform}%{perlthread}
 PHBIN	= $RPM_BUILD_ROOT%{_bindir}/h2ph
 H2PH	= \$(PERL) \$(PHBIN) -d \$(PHDIR)/
 
