@@ -13,7 +13,7 @@
 +
 --- perl5.005_03/find-perl.prov	Thu Jan  1 01:00:00 1970
 +++ perl5.005_03.new/find-perl.prov	Fri Oct 22 17:44:18 1999
-@@ -0,0 +1,113 @@
+@@ -0,0 +1,112 @@
 +#!FPPATH/perl
 +
 +# a simple script to print the proper name for perl libraries.
@@ -43,11 +43,10 @@
 +
 +
 +foreach $module (sort keys %require) {
-+  ($mod = $module) =~ s/::/-/g;
 +  if (length($require{$module}) == 0) {
-+    print "perl($mod)\n";
++    print "perl($module)\n";
 +  } else {
-+    print "perl($mod) = $require{$module}\n";
++    print "perl($module) = $require{$module}\n";
 +
 +    # we need to print it without the version number until the
 +    # requires syntax accepts version numbers correctly.
