@@ -617,7 +617,7 @@ microperlu - popraw je.
 %build
 sh Configure \
 	-des \
-	-Dcc=%{__cc} \
+	-Dcc="%{__cc}" \
 	-Darchname=%{_target_platform} \
 	-Dcccdlflags='-fPIC' \
 	-Dccdlflags='-rdynamic' \
@@ -628,8 +628,8 @@ sh Configure \
 	-Dman3dir=%{_mandir}/man3 -Dman3ext=3perl \
 	-Dvendorman1=%{_mandir}/man1 -Dvendorman1ext=1p \
 	-Dvendorman3=%{_mandir}/man3 -Dvendorman3ext=3pm \
-	-Dsiteman1=%{_usr}/local/share/man/man1 -Dsiteman1ext=1p \
-	-Dsiteman3=%{_usr}/local/share/man/man3 -Dsiteman3ext=3pm \
+	-Dsiteman1=%{_usr}/local/man/man1 -Dsiteman1ext=1p \
+	-Dsiteman3=%{_usr}/local/man/man3 -Dsiteman3ext=3pm \
 	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_usr}/local \
 	-Dlibpth="%{_libdir} /%{_lib}" \
 	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
