@@ -123,6 +123,8 @@ rm -f Config.pm.old
 
 mv $RPM_BUILD_ROOT/usr/lib/perl5/5.00502/man/man3 $RPM_BUILD_ROOT/usr/man
 
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man3
+
 find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-debug {} \;
 
 %clean
