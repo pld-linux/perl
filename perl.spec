@@ -69,6 +69,7 @@ Patch7:		%{name}_584-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
+BuildRequires:	rpm-perlprov
 %{?with_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
