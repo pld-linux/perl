@@ -12,7 +12,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
-Release:	34
+Release:	35
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -357,12 +357,11 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 install -d B Crypt Date Devel ExtUtils File Font HTML HTTP I18N IO/Socket \
 	Mail News Net Parse RPC Text Tie Time XML auto/Mail
 cd %{_target_platform}*/%{version}
-install -d Apache BSD Compress Net Term auto/{Apache,BSD,Compress,Net,Term,XML}
+install -d Apache BSD Compress Digest Net Term \
+	auto/{Apache,BSD,Compress,Net,Term,XML}
 )
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-
-gzip -9nf README Changes
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -407,6 +406,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Compress
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Digest
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Term
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
@@ -499,7 +499,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README Changes
 %attr(755,root,root) %{_bindir}/c2ph
 %attr(755,root,root) %{_bindir}/dprofpp
 %attr(755,root,root) %{_bindir}/h2ph
