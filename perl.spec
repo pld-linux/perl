@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	46
+Release:	47
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -492,12 +492,13 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d Apache Archive Authen B Bundle Business CGI Class Convert Crypt \
-	DBD Data Date Devel ExtUtils File Filesys Font Games Getopt Graph \
-	HTML HTTP I18N IO/Socket IPC Image Inline Language Lingua/EN \
-	Locale Log MIME Mail Math Module Net NetServer Netscape News \
-	Number Parse Pod PostScript Proc RADIUS RPC Regexp Set Sort \
-	Statistics String Sys TeX Test Text/Query Tie Time Tree XML \
+install -d Apache Archive Array Authen B Bundle Business CGI Class \
+	Config Convert Crypt DBD Data Date Devel Digest ExtUtils File \
+	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
+	Image Inline Language Lingua/EN Locale Log MIME Mail Math \
+	Module Net NetServer Netscape News Number Parse Pod PostScript \
+	Proc RADIUS RPC Regexp Set Sort Sub Statistics String Sys TeX \
+	Test Text/Query Tie Time Tree WWW XML \
 	auto/{Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
@@ -547,17 +548,20 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/site_perl
 %{_libdir}/perl5/site_perl/Apache
 %{_libdir}/perl5/site_perl/Archive
+%{_libdir}/perl5/site_perl/Array
 %{_libdir}/perl5/site_perl/Authen
 %{_libdir}/perl5/site_perl/Bundle
 %{_libdir}/perl5/site_perl/Business
 %{_libdir}/perl5/site_perl/CGI
 %{_libdir}/perl5/site_perl/Class
+%{_libdir}/perl5/site_perl/Config
 %{_libdir}/perl5/site_perl/Convert
 %{_libdir}/perl5/site_perl/Crypt
 %{_libdir}/perl5/site_perl/DBD
 %{_libdir}/perl5/site_perl/Data
 %{_libdir}/perl5/site_perl/Date
 %{_libdir}/perl5/site_perl/Devel
+%{_libdir}/perl5/site_perl/Digest
 %{_libdir}/perl5/site_perl/ExtUtils
 %{_libdir}/perl5/site_perl/File
 %{_libdir}/perl5/site_perl/Filesys 
@@ -594,6 +598,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Sort
 %{_libdir}/perl5/site_perl/Statistics
 %{_libdir}/perl5/site_perl/String
+%{_libdir}/perl5/site_perl/Sub
 %{_libdir}/perl5/site_perl/Sys
 %{_libdir}/perl5/site_perl/TeX
 %{_libdir}/perl5/site_perl/Test
@@ -601,6 +606,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Tie
 %{_libdir}/perl5/site_perl/Time
 %{_libdir}/perl5/site_perl/Tree
+%{_libdir}/perl5/site_perl/WWW
 %{_libdir}/perl5/site_perl/XML
 %{_libdir}/perl5/site_perl/auto
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
