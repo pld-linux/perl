@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	56
+Release:	57
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -742,6 +742,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.so
+
+# some *.ph files, probably more shoud be included (if not all)
+%{_libdir}/perl5/%{version}/%{_target_platform}*/*.ph
+%{_libdir}/perl5/%{version}/%{_target_platform}*/asm
+%{_libdir}/perl5/%{version}/%{_target_platform}*/bits
+%{_libdir}/perl5/%{version}/%{_target_platform}*/gnu
+%{_libdir}/perl5/%{version}/%{_target_platform}*/linux
+%{_libdir}/perl5/%{version}/%{_target_platform}*/net
+%{_libdir}/perl5/%{version}/%{_target_platform}*/sys
 
 %{_mandir}/man1/a2p.1*
 %{_mandir}/man1/dprofpp.1*
