@@ -157,7 +157,7 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Oct 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [5.005_02-2]
 - added using $RPM_OPT_FLAGS during compile,
-- added striping modules,
+- added stripping modules,
 - added URL,
 - added sperl subpackage with suid perl binaries.
 
