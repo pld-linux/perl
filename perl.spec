@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.09%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.10%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -596,7 +596,7 @@ install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}" %{buildroot}/%{_bindir}/perl
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
-%{__perl} -pi.bak -e 's,%{buildroot}/*,/,g'          $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 %{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 %{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 
@@ -697,7 +697,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlfunc.*
 
 %{perl_sitelib}
+%{perl_sitearch}
 %{perl_vendorlib}
+%{perl_vendorarch}
 
 
 %files base
