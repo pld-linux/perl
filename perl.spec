@@ -9,10 +9,8 @@
 # - Think about unicore.  If uf8*.pm, encode.pm, charnames.pm (and
 #   probably others) are in the perl-base package, unicore should also
 #   be there.  But it's 5MB...
-# - profile the perl-base vs. perl-modules separation
 # - fix "FIXME"s, review "XXX"s
 # - fix perl.prov's handling in rpm -- it should use the __perl macro
-# - fix some duplicate files (are there any left?)
 # - add the {O,N}DBM_File modules
 # - review the perldiag.pod issue
 # - consider disabling ithreads by default
@@ -58,7 +56,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.44%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.50%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -503,7 +501,7 @@ setuid perl ½Å±¾¡£
 Summary:	Various tools from the core perl distribution
 Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji perla
 Group:		Applications
-Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description tools
 Various tools from the core perl distribution:
@@ -562,7 +560,7 @@ Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 Summary:	Tools for manipulating files in the POD format
 Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
 Group:		Applications
-Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-modules = %{epoch}:%{version}
 
 %description tools-pod
 Tools for manipulating files in the POD (Plain Old Documentation)
@@ -838,24 +836,41 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}
 %{perl_vendorlib}
 
-# pragmas
-%{perl_privlib}/[a-z]*.pm
-%{perl_privlib}/[a-z]*.pl
-%{perl_privlib}/warnings
-%{perl_archlib}/[a-r]*.pm
-%dir %{perl_archlib}/auto/attrs
-%{perl_archlib}/auto/attrs/*.bs
-%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
-%dir %{perl_archlib}/auto/re
-%{perl_archlib}/auto/re/*.bs
-%attr(755,root,root) %{perl_archlib}/auto/re/*.so
-%{_mandir}/man3/[a-su-w]*
+## pragmas
+%{perl_privlib}/base.pm
+%{_mandir}/man3/base.*
+%{perl_privlib}/constant.pm
+%{_mandir}/man3/constant.*
+%{perl_privlib}/diagnostics.pm
+%{_mandir}/man3/diagnostics.*
+%{perl_privlib}/fields.pm
+%{_mandir}/man3/fields.*
+%{perl_privlib}/integer.pm
+%{_mandir}/man3/integer.*
+%{perl_privlib}/overload.pm
+%{_mandir}/man3/overload.*
+%{perl_privlib}/sort.pm
+%{_mandir}/man3/sort.*
+%{perl_privlib}/strict.pm
+%{_mandir}/man3/strict.*
+%{perl_privlib}/subs.pm
+%{_mandir}/man3/subs.*
+%{perl_privlib}/vars.pm
+%{_mandir}/man3/vars.*
+%{perl_privlib}/warnings*
+%{_mandir}/man3/warnings*
 
-# arch-_IN_dependent modules
+%{perl_archlib}/lib.pm
+%{_mandir}/man3/lib.*
+
+## arch-_IN_dependent modules
 %{perl_privlib}/Auto*
 %{_mandir}/man3/Auto*
 %{perl_privlib}/Carp*
 %{_mandir}/man3/Carp*
+%dir %{perl_privlib}/Class
+%{perl_privlib}/Class/Struct*
+%{_mandir}/man3/Class::Struct*
 %{perl_privlib}/Exporter*
 %{_mandir}/man3/Exporter*
 %{perl_privlib}/English*
@@ -864,8 +879,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Getopt*
 %{perl_privlib}/IPC
 %{_mandir}/man3/IPC::Open*
+%{perl_privlib}/SelectSaver.pm
+%{_mandir}/man3/SelectSaver.*
+%{perl_privlib}/Symbol.pm
+%{_mandir}/man3/Symbol.*
+%{perl_privlib}/Tie
+%{_mandir}/man3/Tie::*
 
-# arch-dependent modules
+## arch-dependent modules
 %{perl_archlib}/Config*
 %{_mandir}/man3/Config*
 %{perl_archlib}/DynaLoader*
@@ -898,6 +919,13 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/File/*/*.bs
 %{_mandir}/man3/File*
 
+%{perl_privlib}/IO
+%{perl_archlib}/IO*
+%dir %{perl_archlib}/auto/IO
+%attr(755,root,root) %{perl_archlib}/auto/IO/*.so
+%{perl_archlib}/auto/IO/*.bs
+%{_mandir}/man3/IO*
+
 %{perl_archlib}/Opcode.*
 %dir %{perl_archlib}/auto/Opcode
 %attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
@@ -921,6 +949,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.ix
 %{_mandir}/man3/POSIX.*
+
+%{perl_archlib}/Socket.*
+%dir %{perl_archlib}/auto/Socket
+%attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
+%{perl_archlib}/auto/Socket/*.bs
+%{_mandir}/man3/Socket.*
 
 
 %if %{?!_without_gdbm:1}0
@@ -1008,8 +1042,50 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_examplesdir}/%{name}-modules-%{version}
 
-# XXX: should it really be in this package?
 %{perl_privlib}/unicore
+
+## pragmas
+%{perl_privlib}/attributes.pm
+%{_mandir}/man3/attributes.*
+%{perl_privlib}/autouse.pm
+%{_mandir}/man3/autouse.*
+%{perl_privlib}/big*.pm
+%{_mandir}/man3/big*
+%{perl_privlib}/blib.pm
+%{_mandir}/man3/blib.*
+%{perl_privlib}/bytes.pm
+%{_mandir}/man3/bytes.*
+%{perl_privlib}/charnames.pm
+%{_mandir}/man3/charnames.*
+%{perl_privlib}/filetest.pm
+%{_mandir}/man3/filetest.*
+%{perl_privlib}/if.pm
+%{_mandir}/man3/if.*
+%{perl_privlib}/less.pm
+%{_mandir}/man3/less.*
+%{perl_privlib}/locale.pm
+%{_mandir}/man3/locale.*
+%{perl_privlib}/open.pm
+%{_mandir}/man3/open.*
+%{perl_privlib}/sigtrap.pm
+%{_mandir}/man3/sigtrap.*
+%{perl_privlib}/utf8.pm
+%{_mandir}/man3/utf8.*
+
+%{perl_archlib}/attrs.pm
+%dir %{perl_archlib}/auto/attrs
+%{perl_archlib}/auto/attrs/*.bs
+%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
+%{_mandir}/man3/attrs.*
+%{perl_archlib}/re.pm
+%dir %{perl_archlib}/auto/re
+%{perl_archlib}/auto/re/*.bs
+%attr(755,root,root) %{perl_archlib}/auto/re/*.so
+%{_mandir}/man3/re.*
+%{perl_archlib}/encoding.pm
+%{_mandir}/man3/encoding.*
+%{perl_archlib}/ops.pm
+%{_mandir}/man3/ops.*
 
 %if %{?!_without_threads:1}0
 %{perl_archlib}/threads*
@@ -1021,6 +1097,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
 %{_mandir}/man3/t*
 %endif
+
+## old *.pl files
+%{perl_privlib}/*.pl
 
 ## *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
@@ -1073,13 +1152,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/I18N/*/*.ix
 %{_mandir}/man3/I18N::*
 
-%{perl_privlib}/IO
-%{perl_archlib}/IO*
-%dir %{perl_archlib}/auto/IO
-%attr(755,root,root) %{perl_archlib}/auto/IO/*.so
-%{perl_archlib}/auto/IO/*.bs
-%{_mandir}/man3/IO*
-
 %{perl_archlib}/IPC
 %dir %{perl_archlib}/auto/IPC
 %dir %{perl_archlib}/auto/IPC/*/
@@ -1106,12 +1178,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/SDBM_File/*.so
 %{perl_archlib}/auto/SDBM_File/*.bs
 %{_mandir}/man3/SDBM_File.*
-
-%{perl_archlib}/Socket.*
-%dir %{perl_archlib}/auto/Socket
-%attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
-%{perl_archlib}/auto/Socket/*.bs
-%{_mandir}/man3/Socket.*
 
 %{perl_archlib}/Storable.*
 %dir %{perl_archlib}/auto/Storable
@@ -1153,8 +1219,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Benchmark*
 %{perl_privlib}/CGI*
 %{_mandir}/man3/CGI*
-%{perl_privlib}/Class
-%{_mandir}/man3/Class::*
+%{perl_privlib}/Class/ISA*
+%{_mandir}/man3/Class::ISA*
 %{perl_privlib}/DirHandle*
 %{_mandir}/man3/DirHandle*
 %{perl_privlib}/Dumpvalue.*
@@ -1187,8 +1253,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Scalar::*
 %{perl_privlib}/Search
 %{_mandir}/man3/Search::*
-%{perl_privlib}/SelectSaver.*
-%{_mandir}/man3/SelectSaver.*
 %{perl_privlib}/SelfLoader.*
 %{_mandir}/man3/SelfLoader.*
 %{perl_privlib}/Shell.*
@@ -1196,8 +1260,6 @@ rm -rf $RPM_BUILD_ROOT
 # FIXME: README and Changes files
 %{perl_privlib}/Switch.*
 %{_mandir}/man3/Switch.*
-%{perl_privlib}/Symbol.*
-%{_mandir}/man3/Symbol.*
 # FIXME: README and Changes files
 %{perl_privlib}/Term
 %{_mandir}/man3/Term::*
@@ -1210,8 +1272,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Thread*
 %{_mandir}/man3/Thread*
 %endif
-%{perl_privlib}/Tie
-%{_mandir}/man3/Tie::*
 %{perl_privlib}/Time
 %{_mandir}/man3/Time::[La-z]*
 # XXX: to perl-base?
