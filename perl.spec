@@ -59,7 +59,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	0.2%{!?with_threads:_nothr}
+Release:	0.3%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -270,7 +270,7 @@ Provides:	perl-File-Spec = 0.87
 Provides:	perl-File-Temp = 0.14
 Provides:	perl-IO = 1.21
 Provides:	perl-Safe = 2.10
-Provides:	perl-Socket = 1.76
+Provides:	perl-Socket = 1.77
 Provides:	perl-Tie-File = 0.97
 Provides:	perl(largefiles)
 # broken, unsupported module
@@ -359,10 +359,10 @@ Summary:	Modules from the core perl distribution
 Summary(pl):	Modu≥y z podstawowej dystrybucji perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
-Provides:	perl-Attribute-Handlers = 0.78
-Provides:	perl-CGI = 3.01
+Provides:	perl-Attribute-Handlers = 0.78_01
+Provides:	perl-CGI = 3.04
 Provides:	perl-Class-ISA = 0.32
-Provides:	perl-Digest = 1.05
+Provides:	perl-Digest = 1.06
 Provides:	perl-Digest-MD5 = 2.33
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.44
@@ -370,10 +370,10 @@ Provides:	perl-FindBin = 1.44
 Provides:	perl-I18N-LangTags = 0.29
 Provides:	perl-IPC-SysV = 1.04
 Provides:	perl-Locale-Codes = 2.06
-Provides:	perl-Locale-Maketext = 1.06
-Provides:	perl-MIME-Base64 = 2.21
-Provides:	perl-Math-BigInt = 1.68
-Provides:	perl-Math-BigRat = 0.10
+Provides:	perl-Locale-Maketext = 1.08
+Provides:	perl-MIME-Base64 = 3.01
+Provides:	perl-Math-BigInt = 1.70
+Provides:	perl-Math-BigRat = 0.12
 Provides:	perl-Math-Trig = 1.02
 Provides:	perl-Memoize = 1.01
 Provides:	perl-NEXT = 0.60
@@ -381,8 +381,8 @@ Provides:	perl-PerlIO-via-QuotedPrint = 0.06
 Provides:	perl-Pod-LaTeX = 0.55
 Provides:	perl-Pod-Parser = 1.14
 Provides:	perl-Scalar-List-Utils = 1.13
-Provides:	perl-Storable = 2.09
-Provides:	perl-Term-ANSIColor = 1.07
+Provides:	perl-Storable = 2.12
+Provides:	perl-Term-ANSIColor = 1.08
 Provides:	perl-Term-Cap = 1.08
 Provides:	perl-Test = 1.24
 Provides:	perl-Test-Harness = 2.40
@@ -392,7 +392,7 @@ Provides:	perl-Text-ParseWords = 3.21
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
 #Provides:	perl-Text-Tabs+Wrap = 2001.09291
-Provides:	perl-Time-HiRes = 1.52
+Provides:	perl-Time-HiRes = 1.59
 Provides:	perl-UNIVERSAL = 1.01
 Provides:	perl-Unicode-Collate = 0.33
 Provides:	perl-Unicode-Normalize = 0.28
@@ -411,7 +411,7 @@ dystrybucji.
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
-Provides:	perldoc = 3.11@%{version}
+Provides:	perldoc = 3.12@%{version}
 Requires:	%{name}-modules
 Group:		Development/Tools
 
