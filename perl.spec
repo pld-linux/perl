@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	47
+Release:	48
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -499,7 +499,7 @@ install -d Apache Archive Array Authen B Bundle Business CGI Class \
 	Module Net NetServer Netscape News Number Parse Pod PostScript \
 	Proc RADIUS RPC Regexp Set Sort Sub Statistics String Sys TeX \
 	Test Text/Query Tie Time Tree WWW XML \
-	auto/{Net,Statistics,Text,WWW}
+	auto/{Crypt,Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
 install -d Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest File \
