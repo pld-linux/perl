@@ -5,7 +5,6 @@
 # _without_largefiles - build without large file support
 #
 # TODO:
-# - Finish %%files.
 # - Think about unicore.  If uf8*.pm, encode.pm, charnamess.pm (and
 #   probably others) are in the perl-base package, unicore should also
 #   be there.  But it's 5MB...
@@ -16,6 +15,10 @@
 #   not /usr/lib/.  And perl_site* should go to /usr/local/.
 # - Ankry said something about moving perl* manual pages to separate
 #   directory (/usr/share/man/manp/ ?).  This shoud be laid down...
+# - find out why *.so and *.bs files for some pragmas are ,,listed twice''
+# - merge some fixes from 5.6.1 on HEAD, ie. man pages extensions
+# - fix "FIXME"s, review "XXX"s
+# - fix perl.prov not recognising some package names which it should
 # - *TESTING*
 #
 
@@ -52,7 +55,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.05%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.06%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -293,17 +296,7 @@ Obsoletes:	perl-lib-devel
 
 %description devel
 Components, required for developing applications which embed a Perl
-interpreter and compiling perl modules.  Also:
-
- c2ph, pstruct - Dump C structures as generated from C<cc -g -S> stabs
- dprofpp       - display perl profile data
- enc2xs        - Perl Encode Module Generator
- h2ph          - convert .h C header files to .ph Perl header files
- h2xs          - convert .h C header files to Perl extensions
- perlcc        - generate executables from Perl programs
- perlivp       - Perl Installation Verification Procedure
- pl2pm         - Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
- splain        - force verbose warning diagnostics
+interpreter and compiling perl modules.
 
 %package doc-pod
 Summary:	Perl documentation in POD format
@@ -441,7 +434,7 @@ Summary:	Developer's tools from the core perl distribution
 Summary(pl):	NarzÍdzia z podstawowej dystrybucji perla, przeznaczone dla programistÛw
 Group:		Development/Tools
 Requires:	%{name}-base = %{version}
-#Requires:	%{name}-devel = %{version} (?)
+Requires:	%{name}-devel = %{version}
 
 %description tools-devel
 Various tools from the core perl distribution:
@@ -547,14 +540,11 @@ install -d $RPM_BUILD_ROOT
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="$RPM_BUILD_ROOT%{perl_privlib}" $RPM_BUILD_ROOT%{_bindir}/perl
 
 ## prepare scripts for finding provides
-%{__perl} -pi -e 's|FPPATH|%{_builddir}/%{name}-%{version}|' find-perl-provides find-perl.prov
+%{__perl} -pi -e 's,FPPATH,%{_builddir}/%{name}-%{version},' find-perl-provides find-perl.prov
 
 ## Generate the *.ph files
 (
 cd /usr/include
-#LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
-#PERL5LIB=$RPM_BUILD_ROOT%{perl_privlib}
-#PERL=$RPM_BUILD_ROOT%{_bindir}/perl
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
 PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
 WANTED='
@@ -670,8 +660,11 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/[a-z]*.pm
 %{perl_archlib}/threads
 %dir %{perl_archlib}/auto/[a-z]*/
+%dir %{perl_archlib}/auto/[a-z]*/*/
 %attr(755,root,root) %{perl_archlib}/auto/[a-z]*/*.so
+%attr(755,root,root) %{perl_archlib}/auto/[a-z]*/*/*.so
 %{perl_archlib}/auto/[a-z]*/*.bs
+%{perl_archlib}/auto/[a-z]*/*/*.bs
 %{_mandir}/man3/[a-z]*
 
 # arch-_IN_dependent modules
@@ -683,8 +676,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Exporter*
 %{perl_privlib}/English*
 %{_mandir}/man3/English*
-%{perl_privlib}/File*
-%{_mandir}/man3/File*
 %{perl_privlib}/Getopt*
 %{_mandir}/man3/Getopt*
 %{perl_privlib}/IPC
@@ -703,32 +694,47 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/XSLoader*
 %{_mandir}/man3/XSLoader*
 
-%{perl_archlib}/Fcntl*
+%{perl_archlib}/Cwd.*
+%dir %{perl_archlib}/auto/Cwd
+%attr(755,root,root) %{perl_archlib}/auto/Cwd/*.so
+%{perl_archlib}/auto/Cwd/*.bs
+%{_mandir}/man3/Cwd.*
+
+%{perl_archlib}/Fcntl.*
 %dir %{perl_archlib}/auto/Fcntl
 %attr(755,root,root) %{perl_archlib}/auto/Fcntl/*.so
 %{perl_archlib}/auto/Fcntl/*.bs
-%{_mandir}/man3/Fcntl*
+%{_mandir}/man3/Fcntl.*
 
-%{perl_archlib}/Opcode*
+%{perl_privlib}/File*
+%{perl_archlib}/File
+%dir %{perl_archlib}/auto/File
+%dir %{perl_archlib}/auto/File/*/
+%attr(755,root,root) %{perl_archlib}/auto/File/*/*.so
+%{perl_archlib}/auto/File/*/*.bs
+%{_mandir}/man3/File*
+
+%{perl_archlib}/Opcode.*
 %dir %{perl_archlib}/auto/Opcode
 %attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
 %{perl_archlib}/auto/Opcode/*.bs
-%{_mandir}/man3/Opcode*
+%{_mandir}/man3/Opcode.*
 
-%{perl_privlib}/PerlIO.pm
+%{perl_privlib}/PerlIO.*
 %{perl_archlib}/PerlIO
 %dir %{perl_archlib}/auto/PerlIO
 %dir %{perl_archlib}/auto/PerlIO/*/
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
 %{perl_archlib}/auto/PerlIO/*/*.bs
-%{_mandir}/man3/PerlIO.*
+%{_mandir}/man3/PerlIO*
 
 %{perl_archlib}/POSIX*
 %dir %{perl_archlib}/auto/POSIX
 %attr(755,root,root) %{perl_archlib}/auto/POSIX/*.so
-%{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.al
-%{_mandir}/man3/POSIX*
+%{perl_archlib}/auto/POSIX/*.bs
+%{perl_archlib}/auto/POSIX/*.ix
+%{_mandir}/man3/POSIX.*
 
 %attr(755,root,root) %{_libdir}/lib*.so.%{version}
 
@@ -755,6 +761,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/ExtUtils*
 %{perl_privlib}/CPAN*
 %{_mandir}/man3/CPAN*
+%{perl_privlib}/DB.*
+%{_mandir}/man3/DB.*
+%{perl_archlib}/O.*
+%{_mandir}/man3/O.*
 
 %{perl_privlib}/B
 %{perl_archlib}/B
@@ -766,6 +776,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/B/*.bs
 %{perl_archlib}/auto/B/C/*.bs
 %{_mandir}/man3/B[.:]*
+
+%{perl_archlib}/ByteLoader.*
+%dir %{perl_archlib}/auto/ByteLoader
+%attr(755,root,root) %{perl_archlib}/auto/ByteLoader/*.so
+%{perl_archlib}/auto/ByteLoader/*.bs
+%{_mandir}/man3/ByteLoader.*
 
 %{perl_privlib}/Devel
 %{perl_archlib}/Devel
@@ -809,11 +825,9 @@ rm -rf $RPM_BUILD_ROOT
 # XXX: should it really be in this package?
 %{perl_privlib}/unicore
 
-%{perl_privlib}/PerlIO
-%{_mandir}/man3/PerlIO::via::*
-
 # *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
+%{perl_archlib}/asm
 %{perl_archlib}/bits
 %{perl_archlib}/gnu
 %{perl_archlib}/linux
@@ -835,6 +849,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Digest*
 
 ## shouldn't this be in perl-base?
+## FIXME: *.h to devel(?), check out the use for *.e2x files
+%{perl_privlib}/Encode
 %{perl_archlib}/Encode*
 %dir %{perl_archlib}/auto/Encode
 %dir %{perl_archlib}/auto/Encode/*/
@@ -843,6 +859,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Encode*
 
 # FIXME: README and Changes files
+%{perl_privlib}/Filter
 %{perl_archlib}/Filter
 %dir %{perl_archlib}/auto/Filter
 %dir %{perl_archlib}/auto/Filter/Util
@@ -850,6 +867,90 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
 %{perl_archlib}/auto/Filter/Util/Call/*.bs
 %{_mandir}/man3/Filter*
+
+%{perl_privlib}/I18N
+%{perl_archlib}/I18N
+%dir %{perl_archlib}/auto/I18N
+%dir %{perl_archlib}/auto/I18N/*/
+%attr(755,root,root) %{perl_archlib}/auto/I18N/*/*.so
+%{perl_archlib}/auto/I18N/*/*.bs
+%{perl_archlib}/auto/I18N/*/*.ix
+%{_mandir}/man3/I18N::*
+
+%{perl_privlib}/IO
+%{perl_archlib}/IO*
+%dir %{perl_archlib}/auto/IO
+%attr(755,root,root) %{perl_archlib}/auto/IO/*.so
+%{perl_archlib}/auto/IO/*.bs
+%{_mandir}/man3/IO*
+
+%{perl_archlib}/IPC
+%dir %{perl_archlib}/auto/IPC
+%dir %{perl_archlib}/auto/IPC/*/
+%attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
+%{perl_archlib}/auto/IPC/*/*.bs
+%{_mandir}/man3/IPC::[MS]*
+
+# FIXME: List/Util.pm should be archlib; patch needed
+%{perl_privlib}/List
+%dir %{perl_archlib}/auto/List
+%dir %{perl_archlib}/auto/List/*/
+%attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
+%{perl_archlib}/auto/List/*/*.bs
+%{_mandir}/man3/List::*
+
+%{perl_archlib}/MIME
+%dir %{perl_archlib}/auto/MIME
+%dir %{perl_archlib}/auto/MIME/Base64
+%attr(755,root,root) %{perl_archlib}/auto/MIME/Base64/*.so
+%{perl_archlib}/auto/MIME/Base64/*.bs
+%{_mandir}/man3/MIME::*
+
+%{perl_archlib}/SDBM_File.*
+%dir %{perl_archlib}/auto/SDBM_File
+%attr(755,root,root) %{perl_archlib}/auto/SDBM_File/*.so
+%{perl_archlib}/auto/SDBM_File/*.bs
+%{_mandir}/man3/SDBM_File.*
+
+%{perl_archlib}/Socket.*
+%dir %{perl_archlib}/auto/Socket
+%attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
+%{perl_archlib}/auto/Socket/*.bs
+%{_mandir}/man3/Socket.*
+
+%{perl_archlib}/Storable.*
+%dir %{perl_archlib}/auto/Storable
+%attr(755,root,root) %{perl_archlib}/auto/Storable/*.so
+%{perl_archlib}/auto/Storable/*.al
+%{perl_archlib}/auto/Storable/*.bs
+%{perl_archlib}/auto/Storable/*.ix
+%{_mandir}/man3/Storable.*
+
+%{perl_archlib}/Sys
+%dir %{perl_archlib}/auto/Sys
+%dir %{perl_archlib}/auto/Sys/*/
+%attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
+%{perl_archlib}/auto/Sys/*/*.bs
+%{perl_archlib}/auto/Sys/*/*.ix
+%{_mandir}/man3/Sys::*
+
+%{perl_archlib}/Time
+%dir %{perl_archlib}/auto/Time
+%dir %{perl_archlib}/auto/Time/HiRes
+%attr(755,root,root) %{perl_archlib}/auto/Time/HiRes/*.so
+%{perl_archlib}/auto/Time/HiRes/*.bs
+%{_mandir}/man3/Time::HiRes*
+
+%{perl_privlib}/Unicode
+%{perl_archlib}/Unicode
+%dir %{perl_archlib}/auto/Unicode
+%dir %{perl_archlib}/auto/Unicode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
+%{perl_archlib}/auto/Unicode/*/*.bs
+%{perl_archlib}/auto/Unicode/*/*.ix
+%{_mandir}/man3/Unicode::*
+
+
 
 %{perl_privlib}/AnyDBM*
 %{_mandir}/man3/AnyDBM*
@@ -865,16 +966,68 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Class*
 %{perl_privlib}/DirHandle*
 %{_mandir}/man3/DirHandle*
-%{perl_privlib}/Dumpvalue*
-%{_mandir}/man3/Dumpvalue*
-%{perl_privlib}/Fatal*
-%{_mandir}/man3/Fatal*
-%{perl_privlib}/FindBin*
-%{_mandir}/man3/FindBin*
-%{perl_privlib}/Hash*
-%{_mandir}/man3/Hash*
-%{perl_privlib}/I18N
-%{_mandir}/man3/I18N*
+%{perl_privlib}/Dumpvalue.*
+%{_mandir}/man3/Dumpvalue.*
+%{perl_privlib}/Env.*
+%{_mandir}/man3/Env.*
+%{perl_privlib}/Fatal.*
+%{_mandir}/man3/Fatal.*
+%{perl_privlib}/FindBin.*
+%{_mandir}/man3/FindBin.*
+%{perl_privlib}/Hash
+%{_mandir}/man3/Hash::*
+# FIXME: README and Changes files
+%{perl_privlib}/Locale
+%{_mandir}/man3/Locale::*
+%{perl_privlib}/Math
+%{_mandir}/man3/Math::*
+%{perl_privlib}/Memoize*
+%{_mandir}/man3/Memoize*
+%{perl_privlib}/NEXT*
+%{_mandir}/man3/NEXT*
+# FIXME: README and Changes files, */demos to %_examplesdir or /dev/null
+%{perl_privlib}/Net
+%{_mandir}/man3/Net::*
+%{perl_privlib}/PerlIO
+%{_mandir}/man3/PerlIO::via::*
+%{perl_privlib}/Pod
+%{_mandir}/man3/Pod::*
+%{perl_privlib}/Scalar
+%{_mandir}/man3/Scalar::*
+%{perl_privlib}/Search
+%{_mandir}/man3/Search::*
+%{perl_privlib}/SelectSaver.*
+%{_mandir}/man3/SelectSaver.*
+%{perl_privlib}/SelfLoader.*
+%{_mandir}/man3/SelfLoader.*
+%{perl_privlib}/Shell.*
+%{_mandir}/man3/Shell.*
+# FIXME: README and Changes files
+%{perl_privlib}/Switch.*
+%{_mandir}/man3/Switch.*
+%{perl_privlib}/Symbol.*
+%{_mandir}/man3/Symbol.*
+# FIXME: README and Changes files
+%{perl_privlib}/Term
+%{_mandir}/man3/Term::*
+# FIXME: README and Changes files
+%{perl_privlib}/Test*
+%{_mandir}/man3/Test*
+%{perl_privlib}/Text
+%{_mandir}/man3/Text::*
+# XXX: to perl-base?
+%{perl_privlib}/Thread*
+%{_mandir}/man3/Thread*
+%{perl_privlib}/Tie
+%{_mandir}/man3/Tie::*
+%{perl_privlib}/Time
+%{_mandir}/man3/Time::[La-z]*
+# XXX: to perl-base?
+%{perl_privlib}/UNIVERSAL.*
+%{_mandir}/man3/UNIVERSAL.*
+# FIXME: README and Changes files
+%{perl_privlib}/User
+%{_mandir}/man3/User::*
 
 
 %files -n sperl
