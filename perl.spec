@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	12
+Release:	13
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -217,7 +217,7 @@ sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdyna
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
-make install
+%{__make} install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
@@ -266,12 +266,20 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
-ln -s -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix installed man pages list
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
+
+# dir tree for other perl modules
+(cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
+install -d B Date Devel ExtUtils File Font HTML HTTP I18N IO/Socket \
+	Mail News Net Parse RPC Text Time XML auto/Mail
+cd %{_target_platform}*/%{version}
+install -d Apache BSD Compress Net auto/{Apache,BSD,Compress,Net}
+)
 
 gzip -9nf README Changes
 
@@ -292,9 +300,35 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/perl5
 %dir %{_libdir}/perl5/%{version}
+
 %dir %{_libdir}/perl5/site_perl
+%{_libdir}/perl5/site_perl/Date
+%{_libdir}/perl5/site_perl/Devel
+%{_libdir}/perl5/site_perl/ExtUtils
+%{_libdir}/perl5/site_perl/File
+%{_libdir}/perl5/site_perl/Font
+%{_libdir}/perl5/site_perl/HTML
+%{_libdir}/perl5/site_perl/HTTP
+%{_libdir}/perl5/site_perl/I18N
+%{_libdir}/perl5/site_perl/IO
+%{_libdir}/perl5/site_perl/Mail
+%{_libdir}/perl5/site_perl/News
+%{_libdir}/perl5/site_perl/Net
+%{_libdir}/perl5/site_perl/Parse
+%{_libdir}/perl5/site_perl/RPC
+%{_libdir}/perl5/site_perl/Text
+%{_libdir}/perl5/site_perl/Time
+%{_libdir}/perl5/site_perl/XML
+%{_libdir}/perl5/site_perl/auto
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Compress
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
+%dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Net
 
 %{_libdir}/perl5/%{version}/AutoLoader.pm
 %{_libdir}/perl5/%{version}/Carp
@@ -413,6 +447,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files modules
 %defattr(644,root,root,755)
+%{_libdir}/perl5/site_perl/B
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Apache
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Apache
 %{_libdir}/perl5/%{version}/B
 %{_libdir}/perl5/%{version}/CPAN
 %{_libdir}/perl5/%{version}/Class
