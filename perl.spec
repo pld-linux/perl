@@ -437,11 +437,7 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid
 
-mv -f Makefile Makefile.bak
-sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
-	Makefile.bak > Makefile
-
-%{__make}
+%{__make} CCDLFLAGS=-rdynamic
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -532,6 +528,9 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
+# why is it there...?
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE/sperl.o
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -573,6 +572,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Data
 %{_libdir}/perl5/site_perl/Date
 %{_libdir}/perl5/site_perl/Devel
+%{_libdir}/perl5/site_perl/Device
 %{_libdir}/perl5/site_perl/Digest
 %{_libdir}/perl5/site_perl/Error
 %{_libdir}/perl5/site_perl/ExtUtils
@@ -842,6 +842,7 @@ rm -rf $RPM_BUILD_ROOT
 %files modules
 %defattr(644,root,root,755)
 %{_libdir}/perl5/site_perl/B
+%{_libdir}/perl5/site_perl/LockFile
 %{_libdir}/perl5/site_perl/NetServer
 %{_libdir}/perl5/site_perl/Netscape
 %{_libdir}/perl5/site_perl/SOAP
