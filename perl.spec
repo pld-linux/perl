@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl 编程语言。
 Name:		perl
 Version:	5.8.0
-Release:	0.01
+Release:	0.02
 #Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -33,31 +33,39 @@ Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
-Patch2:		%{name}-DESTDIR.patch
+# weird one...
+#Patch2:	%{name}-DESTDIR.patch
+# I don't like this one...
 Patch3:		%{name}-find-provides.patch
-Patch4:		%{name}-prereq.patch
-Patch5:		%{name}-syslog.patch
-Patch6:		%{name}-CGI-upload-tmpdir.patch
-Patch7:		%{name}-LD_RUN_PATH.patch
+# applied in a similar way
+#Patch4:	%{name}-prereq.patch
+# failed
+#Patch5:	%{name}-syslog.patch
+# failed
+#Patch6:	%{name}-CGI-upload-tmpdir.patch
+# what is this f* one for?!
+#Patch7:	%{name}-LD_RUN_PATH.patch
 Patch8:		%{name}-errno_h-parsing.patch
 Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
 Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
-Patch12:	%{name}-db4.patch
-Patch13:	%{name}-gcc3.patch
+# there is no "db-devel > 4.1", as for today.  think before you type.
+#Patch12:	%{name}-db4.patch
+# failed; is it still necessary?
+#Patch13:	%{name}-gcc3.patch
 URL:		http://www.perl.org/
-BuildRequires:	db-devel > 4.1
+#BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
-Requires:	perl-Class-Fields
-Provides:	perl(DynaLoader)
-Provides:	perl-File-Spec = 0.82
-Provides:	perl-IO = 1.20
-Obsoletes:	perl-File-Spec
+#Requires:	perl-Class-Fields
+#Provides:	perl(DynaLoader)
+#Provides:	perl-File-Spec = 0.82
+#Provides:	perl-IO = 1.20
+#Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	perl-IO
-Obsoletes:	perl-lib
-Obsoletes:	perl-mod-skel
-Obsoletes:	perl-base
+#Obsoletes:	perl-IO
+#Obsoletes:	perl-lib
+#Obsoletes:	perl-mod-skel
+#Obsoletes:	perl-base
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -235,6 +243,14 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 编程。\n Web 上的大部分 CGI 脚本均使用 Perl
 语言进行编写。您必须在系统中安装 perl 软件包， 以便处理 Perl 脚本。
 
+%package perl-base
+Summary:	Base Perl components
+# summaries needs fixup of course...
+Group:		Text/Applications
+
+%description perl-base
+Base Perl components, files, core modules, etc.
+
 %package devel
 Summary:	Perl development files
 Summary(es):	Development and include files for perl
@@ -371,45 +387,39 @@ POD.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+#%patch4 -p1
+#%patch5 -p1
+#%patch6 -p1
+#%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
-for i in find-* ; do
-	mv -f $i $i.old
-	sed "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
-	chmod 755 $i; rm -f $i.old
-done
+#%patch12 -p1
+#%patch13 -p1
 
 %build
 # this is gross
 # i added more ugly stuff here
 # i know that is ugly way to set that but i dont know how do it better
-cat > config.over <<EOF
-installprefix=$RPM_BUILD_ROOT%{_prefix}
-test -d \$installprefix || mkdir -p \$installprefix
-test -d \$installprefix/bin || mkdir -p \$installprefix/bin
-installarchlib=\`echo \$installarchlib | sed "s!\$prefix!\$installprefix!"\`
-installbin=\`echo \$installbin | sed "s!\$prefix!\$installprefix!"\`
-installman1dir=\`echo \$installman1dir | sed "s!\$prefix!\$installprefix!"\`
-installman3dir=\`echo \$installman3dir | sed "s!\$prefix!\$installprefix!"\`
-installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
-installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
-installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
-installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
-dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
-EOF
+#cat > config.over <<EOF
+#installprefix=$RPM_BUILD_ROOT%{_prefix}
+#test -d \$installprefix || mkdir -p \$installprefix
+#test -d \$installprefix/bin || mkdir -p \$installprefix/bin
+#installarchlib=\`echo \$installarchlib | sed "s!\$prefix!\$installprefix!"\`
+#installbin=\`echo \$installbin | sed "s!\$prefix!\$installprefix!"\`
+#installman1dir=\`echo \$installman1dir | sed "s!\$prefix!\$installprefix!"\`
+#installman3dir=\`echo \$installman3dir | sed "s!\$prefix!\$installprefix!"\`
+#installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
+#installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
+#installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
+#installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
+#dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
+#EOF
 
-USETHREADS=%{!?_with_perl_threads:-U}%{?_with_perl_threads:-D}
+
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
@@ -423,19 +433,15 @@ sh Configure \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
 	-Doptimize="%{rpmcflags}" \
-	${USETHREADS}usethreads \
 	-Uuselargefiles \
-%ifarch sparc sparc64
-	-Ud_longdbl \
-%endif
 	-Duseshrplib \
 	-Dd_dosuid \
 	-Ud_setresuid \
 	-Ud_setresgid
-
-mv -f Makefile Makefile.bak
-sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
-	Makefile.bak > Makefile
+	%{?_with_perl_threads:-Dusethreads} \
+%ifarch sparc sparc64
+	-Ud_longdbl \
+%endif
 
 %{__make}
 
@@ -444,7 +450,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install
-install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
+
+# is there anyone who ever used this script...?
+#install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files (based on MDK, which based on Debian ;-)
 (
