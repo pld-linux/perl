@@ -26,7 +26,7 @@
 #   (should this be done on Ra-branch, too?)
 #
 
-%if 0%(if [ %{__perl_requires} ]; then echo 1; fi)
+%if 0%(if [ "%{__perl_requires}" != "%%{__perl_requires}" ]; then echo 1; fi)
 %undefine	__perl_requires
 %define		__perl_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
 %else
@@ -65,7 +65,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.36%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.37%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
