@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh+CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	37
+Release:	38
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -488,8 +488,12 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d B Class Crypt Date Devel ExtUtils File Font HTML HTTP I18N \
-	IO/Socket Image Inline Mail News Net Parse RPC Text Tie Time XML \
+install -d Archive Authen B Bundle Business CGI Class Convert Crypt DBD \
+	Data Date Devel ExtUtils File Filesys Font Games Getopt Graph \
+	HTML HTTP I18N IO/Socket IPC Image Inline Language Lingua/EN \
+	Locale Log MIME Mail Math Module Net NetServer Netscape News \
+	Number Parse Pod PostScript Proc RADIUS RPC Regexp Set Sort \
+	Statistics String Sys TeX Text/Query Tie Time Tree XML \
 	auto/Mail
 cd %{_target_platform}*/%{version}
 install -d Apache BSD Compress Digest Net Term XML \
@@ -517,27 +521,59 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}
 
 %dir %{_libdir}/perl5/site_perl
+%{_libdir}/perl5/site_perl/Archive
+%{_libdir}/perl5/site_perl/Authen
+%{_libdir}/perl5/site_perl/Bundle
+%{_libdir}/perl5/site_perl/Business
+%{_libdir}/perl5/site_perl/CGI
 %{_libdir}/perl5/site_perl/Class
+%{_libdir}/perl5/site_perl/Convert
 %{_libdir}/perl5/site_perl/Crypt
+%{_libdir}/perl5/site_perl/DBD
+%{_libdir}/perl5/site_perl/Data
 %{_libdir}/perl5/site_perl/Date
 %{_libdir}/perl5/site_perl/Devel
 %{_libdir}/perl5/site_perl/ExtUtils
 %{_libdir}/perl5/site_perl/File
+%{_libdir}/perl5/site_perl/Filesys 
 %{_libdir}/perl5/site_perl/Font
+%{_libdir}/perl5/site_perl/Games
+%{_libdir}/perl5/site_perl/Getopt
+%{_libdir}/perl5/site_perl/Graph
 %{_libdir}/perl5/site_perl/HTML
 %{_libdir}/perl5/site_perl/HTTP
 %{_libdir}/perl5/site_perl/I18N
 %{_libdir}/perl5/site_perl/IO
+%{_libdir}/perl5/site_perl/IPC
 %{_libdir}/perl5/site_perl/Image
 %{_libdir}/perl5/site_perl/Inline
+%{_libdir}/perl5/site_perl/Language
+%{_libdir}/perl5/site_perl/Lingua
+%{_libdir}/perl5/site_perl/Locale
+%{_libdir}/perl5/site_perl/Log
 %{_libdir}/perl5/site_perl/Mail
+%{_libdir}/perl5/site_perl/Math
+%{_libdir}/perl5/site_perl/Module
 %{_libdir}/perl5/site_perl/News
 %{_libdir}/perl5/site_perl/Net
+%{_libdir}/perl5/site_perl/Number
 %{_libdir}/perl5/site_perl/Parse
+%{_libdir}/perl5/site_perl/Pod
+%{_libdir}/perl5/site_perl/PostScript
+%{_libdir}/perl5/site_perl/Proc
+%{_libdir}/perl5/site_perl/RADIUS
 %{_libdir}/perl5/site_perl/RPC
+%{_libdir}/perl5/site_perl/Regexp
+%{_libdir}/perl5/site_perl/Set
+%{_libdir}/perl5/site_perl/Sort
+%{_libdir}/perl5/site_perl/Statistics
+%{_libdir}/perl5/site_perl/String
+%{_libdir}/perl5/site_perl/Sys
+%{_libdir}/perl5/site_perl/TeX
 %{_libdir}/perl5/site_perl/Text
 %{_libdir}/perl5/site_perl/Tie
 %{_libdir}/perl5/site_perl/Time
+%{_libdir}/perl5/site_perl/Tree
 %{_libdir}/perl5/site_perl/XML
 %{_libdir}/perl5/site_perl/auto
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
@@ -682,6 +718,8 @@ rm -rf $RPM_BUILD_ROOT
 %files modules
 %defattr(644,root,root,755)
 %{_libdir}/perl5/site_perl/B
+%{_libdir}/perl5/site_perl/NetServer
+%{_libdir}/perl5/site_perl/Netscape
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Apache
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Apache
 %{_libdir}/perl5/%{version}/B
