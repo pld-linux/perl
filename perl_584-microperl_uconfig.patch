@@ -44,14 +44,15 @@
  selecttype=int
 --- perl-5.8.4/Makefile.micro.orig	2003-08-12 14:58:29.000000000 +0200
 +++ perl-5.8.4/Makefile.micro	2004-04-26 18:03:04.242934480 +0200
-@@ -35,10 +35,15 @@
+@@ -35,10 +35,16 @@
  distclean:	clean
  	-rm -f uconfig.h
  
 +# not really autoconfigured variables (PLD hack, requires patched uconfig.sh)
 +NRACV = archlib=$(archlib) archlibexp=$(archlibexp) privlib=$(privlib) \
 +	privlibexp=$(privlibexp) archname=$(archname) osname=$(osname) \
-+	bin=$(bin) scriptdir=$(scriptdir) scriptdirexp=$(scriptdirexp)
++	bin=$(bin) scriptdir=$(scriptdir) scriptdirexp=$(scriptdirexp) \
++	usemallocwrap=$(usemallocwrap)
 +
  # The microconfiguration.
  
