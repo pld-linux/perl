@@ -3,16 +3,29 @@
 %define		perlthread %{?_with_perl_threads:-thread-multi}
 
 Summary:	Practical Extraction and Report Language (Perl)
+Summary(cs):	Programovací jazyk Perl
+Summary(da):	Programmeringssproget Perl
 Summary(de):	Praktische Extraktions- und Berichtsprache
 Summary(es):	Lenguaje práctica de extracción y listado
+Summary(fr):	Langage de programmation Perl
+Summary(id):	Bahasa pemrograman Perl
+Summary(is):	Forritunarmáliğ Perl
+Summary(it):	Perl: linguaggio di programmazione
+Summary(ja):	Perl ¥×¥í¥°¥é¥ß¥ó¥°¸À¸ì
+Summary(ko):	ÆŞ ÇÁ·Î±×·¡¹Ö ¾ğ¾î
+Summary(no):	Programmeringsspråket Perl
 Summary(pl):	Interpreter jêzyka Perl (Practical Extraction and Report Language)
+Summary(pt):	A linguagem de programação Perl
 Summary(pt_BR):	Linguagem prática de extração e relatório
-Summary(ru):	Practical Extraction and Report Language
+Summary(ru):	ñÚÙË ĞÒÏÇÒÁÍÍÉÒÏ×ÁÎÉÑ Perl
+Summary(sk):	Programovací jazyk Perl
+Summary(sl):	Programski jezik Perl
+Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
-Summary(uk):	Practical Extraction and Report Language
+Summary(zh+CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	36
+Release:	37
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -48,6 +61,25 @@ system management tasks. The language is intended to be practical
 (easy to use, efficient, complete) rather than beautiful (tiny,
 elegant, minimal).
 
+%description -l cs
+Perl je vy¹¹í programovací jazyk s koøeny v jazyce C, sed, awk a
+shellovıch skriptech. Perl je vhodnı pro manipulace s procesy a
+soubory, ale obzvlá¹tì se hodí ke zpracovávání textù. Perl vyniká
+praktièností úèinností. I kdy¾ se pou¾ívá prakticky na cokoli,
+vìt¹ina Perlovıch programù slou¾í jako správcovské utility nebo
+programy pro WWW. V Perlu je napsáno velmi mnoho CGI skriptù
+pro WWW servery na celém svìtì.
+
+%description -l da
+Perl er et høgniveauprogramsprog med røtter i C, sed, awk og
+skalskript. Perl er godt på at behandle processer og filer, og er
+særskilt godt på at behandle text. Utmærkende for Perl er at det er
+praktisk og effektivt. Det bruges for at gøre en mængd forskellige
+saker, men de almindeligeste programmerne er systemadministration og
+webbprogrammering. En stor andel af CGI-skripten på webben er skrivna
+i Perl. Du behøver installere pakken perl på dit system så at ditt
+system kan behandle Perlskript.
+
 %description -l de
 Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger
 Text- dateien, Extrahieren von Informationen aus diesen Dateien und
@@ -73,6 +105,46 @@ de nombreuses procédures de gestion système. Ce langage se veut
 pratique (simple à utiliser, efficace, complet) autant qu'agréable
 (conscrit, élégant, minimal).
 
+%description -l id
+Perl adalah sebuah bahasa pemrograman tingkat tinggi yang didasarkan
+pada C, sed, awk, dan bahasa shell. Perl memiliki kemampuan penanganan
+proses dan file yang bagus, tapi terutama kemampuan penanganan teksnya
+yang baik. Ciri khas Perl adalah kepraktisan dan efisiensi. Meski
+digunakan untuk berbagai hal, aplikasi Perl yang paling umum adalah
+utilitas sistem administrasi dan pemrograman web. Sebagian besar skrip
+CGI yang ada di web ditulis dalam Perl. Anda perlu memasang paket perl
+di sistem agar dapat menjalankan skrip-skrip Perl.
+
+%description -l is
+Perl er hás stigs forritunar tungumál sem á rætur sínar ağ rekja til
+C, sed, awk, og skeljar forritunar. Perl er góğ í ağ meğhöndla processa
+og skrár og er sérstaklega góğ í ağ meğhöndla texta. Perls kostir eru
+nytsamleiki og virkni. Á meğan şağ er notağ til ağ gera marga mismunandi
+hluti, Perl mest notuğu forrit eru krefisstjórnunar tól og vef forritun
+Stór hluti af CGI forritum á vefnum eru skrifağar í Perl. Şú şarft
+perl pakkann settan upp á şínu krefi svo şitt kerfi geti notağ Perl
+scriptur.
+
+%description -l it
+Perl è un linguaggio di programmazione di alto livello derivato
+dal linguaggio C, da sed, da awk e dallo scripting delle shell. E' adatto
+per la gestione di processi, di file e in particolare di file di testo.
+Perl è un linguaggio semplice ed efficiente. Viene utilizzato per
+numerosi scopi, ma le sue applicazioni più diffuse sono le
+utility di amministrazione del sistema e la programmazione Web. Una grossa
+parte degli script CGI nel Web sono scritti in Perl. È consigliabile installare
+il pacchetto perl in modo che il sistema sia in grado di gestire gli script di Perl.
+
+%description -l ja
+Perl ¤Ï C¸À¸ì¡¢sed, awk¡¢µÚ¤Ó ¥·¥§¥ë¥¹¥¯¥ê¥×¥Æ¥£¥ó¥°¤Ëº¬¸»¤ò
+»ı¤Ä¥Ï¥¤¥ì¥Ù¥ë¤Ê ¥×¥í¥°¥é¥à¸À¸ì¤Ç¤¹¡£Perl ¤Ï¥×¥í¥»¥¹¤ä¥Õ¥¡¥¤¥ë¤Î½èÍı¤Ë
+Å¬ÀÚ¤Ç ¡¢ÆÃ¤Ë ¥Æ¥­¥¹¥È½èÍı¤Ë¤ÏºÇÅ¬¤Ç¤¹¡£¤µ¤Ş¤¶¤Ş¤Êºî¶È¤Ë
+»ÈÍÑ¤µ¤ì¤Ş¤¹¤¬¡¢ Perl¤ÎºÇ¤âÉÑÈË¤Ê³èÍÑ¤Ï¥·¥¹¥Æ¥à¥¢¥É¥ß¥Ë¥¹¥È¥ì¡¼¥·¥ç¥ó
+¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤È web¥×¥í¥°¥é¥ß¥ó¥°¤Ç¤¹¡£web¾å¤Î ÂçÉôÊ¬¤ÎCGI"
+¥¹¥¯¥ê¥×¥È¤¬Perl¤Ç½ñ¤«¤ì¤Æ¤¤¤Ş¤¹¡£ ¥·¥¹¥Æ¥à¤¬Perl¥¹¥¯¥ê¥×¥È¤ò
+½èÍı½ĞÍè¤ë¤è¤¦¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï  perl¥Ñ¥Ã¥±¡¼¥¸¤ò ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
+É¬Í×¤¬¤¢¤ê¤Ş¤¹¡£
+
 %description -l pl
 Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych,
 wyci±gania z nich informacji i drukowania raportu bazuj±cego na tych
@@ -80,6 +152,18 @@ informacjach. Jest równie¿ doskona³ym jêzykiem do wielu prac
 zwi±zanych z nadzorem systemu. Jêzyk ten jest w zamierzeniu bardziej
 praktyczny (³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny,
 elegancki, minimalny).
+
+%description -l pt
+O perl é uma linguagem de programação de alto nível que tem como raizes o
+C, sed, awk, e 'shell scripting'. O perl é bom a manipular processos e
+ficheiros, e é especialmente bom para manipular texto. Características do
+Perl são a eficiência e o uso prático. As aplicações mais comuns do Perl
+são utilitários de administração de sistema e programação Web. Uma grande
+parte dos 'scripts' CGI na Web são escritos em Perl. Você precisa do pacote
+perl instalado no seu sistema de maneira a que este possa tratar de
+'scripts' de Perl.
+
+%description -l no
 
 %description -l pt_BR
 Perl é uma linguagem interpretada, otimizada para tratar arquivos
@@ -103,6 +187,26 @@ C, sed, awk É ÑÚÙËÉ ËÏÍÁÎÄÎÙÈ ÏÂÏÌÏŞÅË (shell). Perl ÈÏÒÏÛ ÄÌÑ ÒÁÂÏÔÙ
 ÓÏÓÔÁ× ÄÒÕÇÉÈ ĞÁËÅÔÏ× ×ÓÔÒÅŞÁÀÔÓÑ ÏŞÅÎØ ŞÁÓÔÏ, ÌÕŞÛÅ ×ÓÅÇÏ ÕÓÔÁÎÏ×ÉÔØ
 ÜÔÏÔ ĞÁËÅÔ.
 
+%description -l sk
+Perl je programovací jazyk vy¹¹ej úrovne s koreòmi v C, sed, awk,
+a shell skriptoch. Perl má vhodné vlastnosti pre spracovanie procesov
+a súborov a je zvlá¹» vhodnı pre spracovanie textu. Jeho cieµmi sú
+praktiènos» a efektivita. Aj keï je pou¾ívanı pre mno¾stvo rozliènıch
+èinností, jeho najèastej¹ím pou¾itím (a kde vyniká najviac) sú
+pravdepodobne nástroje pre správu systému a programovanie na Webe.
+Veµká èas» CGI skriptov na Webe je napísaná v Perle. Balík perl
+potrebujete ma» nain¹talovanı, aby bol vá¹ systém schopnı spracova»
+Perl skripty.
+
+%description -l sv
+Perl är ett högnivåprogramspråk med rötter i C, sed, awk och
+skalskript.  Perl är bra på att hantera processer och filer, och är
+särskilt bra på att hantera text.  Utmärkande för Perl är att det är
+praktiskt och effektivt.  Det används för att göra en mängd olika
+saker, men de vanligaste tillämpningarna är systemadministration och
+webbprogrammering.  En stor andel av CGI-skripten på webben är skrivna
+i Perl.  Du behöver installera paketet perl på ditt system så att ditt
+
 %description -l tr
 Perl, metin dosyalarını taramak, bu metin dosyalarından bilgi çıkarmak
 ve bu bilgiye dayalı raporlar hazırlamak icin geliştirilmiş bir
@@ -123,6 +227,13 @@ sed, awk ÔÁ ÍÏ×ÁÈ ËÏÍÁÎÄÎÉÈ ÏÂÏÌÏÎÏË (shell). Perl ÄÏÂÒÅ Ğ¦ÄÈÏÄÉÔØ ÄÌÑ
 ïÓË¦ÌØËÉ ÕÔÉÌ¦ÔÉ ÎÁ Perl ÎÅÏÂÈ¦ÄÎ¦ ÄÌÑ ÓÉÓÔÅÍÉ ŞÉ Ô¦, ÑË¦ ×ÈÏÄÑÔØ ÄÏ
 ÓËÌÁÄÕ ¦ÎÛÉÈ ĞÁËÅÔ¦× ÚÕÓÔÒ¦ŞÁÀÔØÓÑ ÄÏÓÉÔØ ŞÁÓÔÏ, ×ÁÒÔÏ ÃÅÊ ĞÁËÅÔ
 ×ÓÔÁÎÏ×ÉÔÉ.
+
+%description -l zh_CN
+Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆğÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
+ËüÉÆÓÚ´¦Àí½ø³ÌºÍÎÄ¼ş£¬ÓÈÆäÊÇ´¦ÀíÎÄ±¾¡£Perl µÄÌØµãÔÚÓÚÆäÊµÓÃĞÔºÍÓĞĞ§ĞÔ¡£
+¾¡¹ÜËü¿ÉÓÃÓÚÖ´ĞĞĞí¶à²»Í¬µÄÈÎÎñ£¬µ«ÊÇÍ¨³£¶àÓ¦ÓÃÓÚÏµÍ³¹ÜÀíÊµÓÃ³ÌĞòºÍ Web
+±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
+ÓïÑÔ½øĞĞ±àĞ´¡£Äú±ØĞëÔÚÏµÍ³ÖĞ°²×° perl  Èí¼ş°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
 %package devel
 Summary:	Perl development files
@@ -184,6 +295,7 @@ Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - modu³y
 Summary(pt_BR):	Módulos do perl básicos
 Group:		Applications/Text
+Requires:	perl-Test-Harness
 Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
 Provides:	perl-Devel-Peek
@@ -564,7 +676,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Pod
 %{_libdir}/perl5/%{version}/Search
 %{_libdir}/perl5/%{version}/Term
-%{_libdir}/perl5/%{version}/Test
+#%{_libdir}/perl5/%{version}/Test
 %{_libdir}/perl5/%{version}/Text/Abbrev.pm
 %{_libdir}/perl5/%{version}/Text/ParseWords.pm
 %{_libdir}/perl5/%{version}/Text/Soundex.pm
