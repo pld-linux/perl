@@ -8,19 +8,18 @@ Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
 Release:	1
-Serial:		1
+Epoch:		1
 License:	GPL
 Group:		Utilities/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
 Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
-Patch1:		perl-installman.patch
-Patch2:		perl-nodb.patch
-Patch3:		perl-DESTDIR.patch
-Patch4:		perl-CPAN-1.54.patch
-Patch5:		perl-find-provides.patch
-Patch6:		perl-prereq.patch
+Patch1:		perl-nodb.patch
+Patch2:		perl-DESTDIR.patch
+Patch3:		perl-CPAN-1.54.patch
+Patch4:		perl-find-provides.patch
+Patch5:		perl-prereq.patch
 URL:		http://www.perl.org/
 #Requires:	csh
 Obsoletes:	perl-ANSIColor
@@ -94,7 +93,6 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 for i in find-* ; do
 	mv $i $i.old
