@@ -128,7 +128,7 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid 
 
-make
+%{__make}
 
 # Strip binaries (done now rather than at install)
 
