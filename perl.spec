@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	42
+Release:	43
 Epoch:		1
 License:	GPL on Artistic
 Group:		Applications/Text
@@ -495,7 +495,7 @@ install -d Apache Archive Authen B Bundle Business CGI Class Convert Crypt \
 	HTML HTTP I18N IO/Socket IPC Image Inline Language Lingua/EN \
 	Locale Log MIME Mail Math Module Net NetServer Netscape News \
 	Number Parse Pod PostScript Proc RADIUS RPC Regexp Set Sort \
-	Statistics String Sys TeX Text/Query Tie Time Tree XML \
+	Statistics String Sys TeX Test Text/Query Tie Time Tree XML \
 	auto/{Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
@@ -594,6 +594,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/String
 %{_libdir}/perl5/site_perl/Sys
 %{_libdir}/perl5/site_perl/TeX
+%{_libdir}/perl5/site_perl/Test
 %{_libdir}/perl5/site_perl/Text
 %{_libdir}/perl5/site_perl/Tie
 %{_libdir}/perl5/site_perl/Time
