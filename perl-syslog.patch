@@ -1,5 +1,6 @@
---- perl-5.6.0/perl.c.orig	Fri Mar 17 23:35:15 2000
-+++ perl-5.6.0/perl.c	Fri Aug 11 18:22:33 2000
+diff -urN perl-5.6.1.orig/perl.c perl-5.6.1/perl.c
+--- perl-5.6.1.orig/perl.c	Thu Mar 22 06:05:02 2001
++++ perl-5.6.1/perl.c	Thu Apr 12 20:52:12 2001
 @@ -21,6 +21,9 @@
  #include <unistd.h>
  #endif
@@ -10,7 +11,7 @@
  #if !defined(STANDARD_C) && !defined(HAS_GETENV_PROTOTYPE)
  char *getenv (char *); /* Usually in <stdlib.h> */
  #endif
-@@ -2758,6 +2761,16 @@
+@@ -2880,6 +2883,16 @@
  	    if (tmpstatbuf.st_dev != PL_statbuf.st_dev ||
  		tmpstatbuf.st_ino != PL_statbuf.st_ino) {
  		(void)PerlIO_close(PL_rsfp);
@@ -23,14 +24,6 @@
 +		syslog(LOG_ALERT, "Filename of setuid script was %s, uid %ld"
 +		       " gid %ld.", SvPVX(GvSV(CopFILEGV(PL_curcop))),
 +		       PL_statbuf.st_uid, PL_statbuf.st_gid);
-+#else
- 		if (PL_rsfp = PerlProc_popen("/bin/mail root","w")) {	/* heh, heh */
- 		    PerlIO_printf(PL_rsfp,
- "User %"Uid_t_f" tried to run dev %ld ino %ld in place of dev %ld ino %ld!\n\
-@@ -2768,6 +2781,7 @@
- 			PL_statbuf.st_uid, PL_statbuf.st_gid);
- 		    (void)PerlProc_pclose(PL_rsfp);
- 		}
 +#endif
  		Perl_croak(aTHX_ "Permission denied\n");
  	    }

@@ -1,14 +1,15 @@
---- perl-5.6.0/lib/ExtUtils/MakeMaker.pm.prereq	Mon Feb 28 07:58:49 2000
-+++ perl-5.6.0/lib/ExtUtils/MakeMaker.pm	Thu Mar 23 17:59:56 2000
-@@ -201,6 +201,7 @@
-     NAME NEEDS_LINKING NOECHO NORECURS NO_VC OBJECT OPTIMIZE PERL PERLMAINCC
+diff -urN perl-5.6.1.orig/lib/ExtUtils/MakeMaker.pm perl-5.6.1/lib/ExtUtils/MakeMaker.pm
+--- perl-5.6.1.orig/lib/ExtUtils/MakeMaker.pm	Fri Feb 23 03:57:55 2001
++++ perl-5.6.1/lib/ExtUtils/MakeMaker.pm	Thu Apr 12 20:43:14 2001
+@@ -202,6 +202,7 @@
      PERL_ARCHLIB PERL_LIB PERL_SRC PERM_RW PERM_RWX
-     PL_FILES PM PMLIBDIRS POLLUTE PPM_INSTALL_EXEC PPM_INSTALL_SCRIPT PREFIX
+     PL_FILES PM PM_FILTER PMLIBDIRS POLLUTE PPM_INSTALL_EXEC
+ 	PPM_INSTALL_SCRIPT PREFIX
 +    PRINT_PREREQ
      PREREQ_PM SKIP TYPEMAPS VERSION VERSION_FROM XS XSOPT XSPROTOARG
      XS_VERSION clean depend dist dynamic_lib linkext macro realclean
      tool_autosplit
-@@ -316,6 +317,14 @@
+@@ -319,6 +320,14 @@
  sub ExtUtils::MakeMaker::new {
      my($class,$self) = @_;
      my($key);

@@ -1,16 +1,18 @@
---- perl-5.6.0/lib/ExtUtils/Liblist.pm.orig	Wed Mar 22 17:16:31 2000
-+++ perl-5.6.0/lib/ExtUtils/Liblist.pm	Fri Aug 18 01:03:48 2000
-@@ -39,6 +39,7 @@
+diff -urN perl-5.6.1.orig/lib/ExtUtils/Liblist.pm perl-5.6.1/lib/ExtUtils/Liblist.pm
+--- perl-5.6.1.orig/lib/ExtUtils/Liblist.pm	Fri Feb 23 03:57:55 2001
++++ perl-5.6.1/lib/ExtUtils/Liblist.pm	Thu Apr 12 20:57:10 2001
+@@ -60,6 +60,7 @@
      my(@searchpath); # from "-L/path" entries in $potential_libs
      my(@libpath) = split " ", $Config{'libpth'};
      my(@ldloadlibs, @bsloadlibs, @extralibs, @ld_run_path, %ld_run_path_seen);
 +    $ld_run_path_seen{$_} = 1 foreach qw(/usr/X11R6/lib /usr/lib /lib);
+     my(@libs, %libs_seen);
      my($fullname, $thislib, $thispth, @fullname);
      my($pwd) = cwd(); # from Cwd.pm
-     my($found) = 0;
---- perl-5.6.0/lib/ExtUtils/MM_Unix.pm~	Fri Aug 18 01:03:48 2000
-+++ perl-5.6.0/lib/ExtUtils/MM_Unix.pm	Fri Aug 18 01:04:22 2000
-@@ -529,9 +529,16 @@
+diff -urN perl-5.6.1.orig/lib/ExtUtils/MM_Unix.pm perl-5.6.1/lib/ExtUtils/MM_Unix.pm
+--- perl-5.6.1.orig/lib/ExtUtils/MM_Unix.pm	Thu Apr 12 20:29:35 2001
++++ perl-5.6.1/lib/ExtUtils/MM_Unix.pm	Thu Apr 12 20:56:30 2001
+@@ -524,9 +524,16 @@
  };
      my($tmp);
      for $tmp (qw/

@@ -1,11 +1,12 @@
---- perl-5.6.0/lib/CGI.pm~	Fri Mar 17 03:51:27 2000
-+++ perl-5.6.0/lib/CGI.pm	Sat Jul 22 13:23:49 2000
-@@ -22,7 +22,7 @@
+diff -urN perl-5.6.1.orig/lib/CGI.pm perl-5.6.1/lib/CGI.pm
+--- perl-5.6.1.orig/lib/CGI.pm	Sat Mar  3 20:53:20 2001
++++ perl-5.6.1/lib/CGI.pm	Thu Apr 12 20:54:36 2001
+@@ -23,7 +23,7 @@
  
  # HARD-CODED LOCATION FOR FILE UPLOAD TEMPORARY FILES.
  # UNCOMMENT THIS ONLY IF YOU KNOW WHAT YOU'RE DOING.
 -# $TempFile::TMPDIRECTORY = '/usr/tmp';
 +$TempFile::TMPDIRECTORY = '/tmp';
+ use CGI::Util qw(rearrange make_attributes unescape escape expires);
  
- # >>>>> Here are some globals that you might want to adjust <<<<<<
- sub initialize_globals {
+ use constant XHTML_DTD => ['-//W3C//DTD XHTML Basic 1.0//EN',
