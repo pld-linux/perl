@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -25,6 +25,7 @@ Patch6:		%{name}-CGI-upload-tmpdir.patch
 Patch7:		%{name}-LD_RUN_PATH.patch
 Patch8:		%{name}-errno_h-parsing.patch
 Patch9:		%{name}-use-LD_PRELOAD-for-libperl.so.patch
+Patch10:	%{name}-sitearch.patch
 URL:		http://www.perl.org/
 #Requires:	csh
 Provides:	perl-ANSIColor
@@ -47,7 +48,7 @@ system management tasks. The language is intended to be practical
 (easy to use, efficient, complete) rather than beautiful (tiny,
 elegant, minimal).
 
-This version has support for threads compiled in.
+#This version has support for threads compiled in.
 
 %description -l de
 Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger
@@ -127,6 +128,7 @@ dla systemów osadzonych.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
@@ -161,6 +163,7 @@ sh Configure \
 	-Dcccdlflags='-fPIC' \
 	-Dprefix=%{_prefix} \
 	-Dscriptdir=%{_bindir} \
+	-Dsitelib=%{_libdir}/perl5/site_perl \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
