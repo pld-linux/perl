@@ -734,6 +734,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/C[a-z]*
 %{_mandir}/man3/T[^e]*
 %{_mandir}/man3/Te[^s]*
+%{_mandir}/man3/Test.3*
 %lang(fi) %{_mandir}/fi/man1/perl[a-z]*.1*
 %lang(pl) %{_mandir}/pl/man1/perl[a-z]*.1*
 
