@@ -9,12 +9,13 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	2
+Release:	3
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
 Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
+Patch1:		perl-db1.patch
 URL:		http://www.perl.org/
 Requires:	csh
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -71,8 +72,9 @@ Practical Extraction and Report Language (SUID root binary).
 Practical Extraction and Report Language (SUID root binaria).
 
 %prep
-%setup -q -n %{name}%{version}
-%patch -p1
+%setup  -q -n %{name}%{version}
+%patch0 -p1
+%patch1 -p1
 
 %build
 # this is gross
@@ -174,6 +176,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) /usr/bin/suidperl
 
 %changelog
+* Wed Apr 28 1999 Artur Frysiak <wiget@pld.org.pl>
+  [5.005_03-3]
+- added db1 patch from RH 6.0
+
 * Tue Apr 20 1999 Artur Frysiak <wiget@pld.org.pl>
   [5.005_03-2]
 - updated to 5.005_03
