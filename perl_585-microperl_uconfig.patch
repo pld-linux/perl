@@ -44,7 +44,7 @@
  selecttype=int
 --- perl-5.8.5/Makefile.micro	2004-07-04 23:43:19.000000000 +0200
 +++ perl-5.8.5/Makefile.micro	2004-07-21 20:28:23.168095384 +0200
-@@ -34,10 +34,16 @@
+@@ -34,10 +34,18 @@
  
  distclean:	clean
  
@@ -59,6 +59,8 @@
  regen_uconfig:
 -	$(ENV) CONFIG_SH=uconfig.sh CONFIG_H=uconfig.h sh ./config_h.SH
 +	$(ENV) CONFIG_SH=uconfig.sh CONFIG_H=uconfig.h $(NRACV) sh ./config_h.SH
++ 
++ uconfig.h: regen_uconfig
  
  # Do not regenerate perly.c and perly.h.
  
