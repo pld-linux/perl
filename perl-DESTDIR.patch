@@ -1,7 +1,6 @@
-diff -ur perl5.005_61.old/lib/ExtUtils/MM_Unix.pm perl5.005_61/lib/ExtUtils/MM_Unix.pm
---- perl5.005_61.old/lib/ExtUtils/MM_Unix.pm	Fri Aug 20 17:51:31 1999
-+++ perl5.005_61/lib/ExtUtils/MM_Unix.pm	Thu Aug 26 00:22:31 1999
-@@ -527,8 +527,7 @@
+--- perl5.005_03/lib/ExtUtils/MM_Unix.pm.wiget	Fri Mar  5 01:34:20 1999
++++ perl5.005_03/lib/ExtUtils/MM_Unix.pm	Tue Sep 14 16:32:31 1999
+@@ -515,8 +515,7 @@
  	      AR_STATIC_ARGS NAME DISTNAME NAME_SYM VERSION
  	      VERSION_SYM XS_VERSION INST_BIN INST_EXE INST_LIB
  	      INST_ARCHLIB INST_SCRIPT PREFIX  INSTALLDIRS
@@ -11,7 +10,7 @@ diff -ur perl5.005_61.old/lib/ExtUtils/MM_Unix.pm perl5.005_61/lib/ExtUtils/MM_U
  	      PERL_ARCHLIB SITELIBEXP SITEARCHEXP LIBPERL_A MYEXTLIB
  	      FIRST_MAKEFILE MAKE_APERL_FILE PERLMAINCC PERL_SRC
  	      PERL_INC PERL FULLPERL
-@@ -538,6 +537,15 @@
+@@ -526,6 +525,15 @@
  	push @m, "$tmp = $self->{$tmp}\n";
      }
  
@@ -27,37 +26,22 @@ diff -ur perl5.005_61.old/lib/ExtUtils/MM_Unix.pm perl5.005_61/lib/ExtUtils/MM_U
      push @m, qq{
  VERSION_MACRO = VERSION
  DEFINE_VERSION = -D\$(VERSION_MACRO)=\\\"\$(VERSION)\\\"
-@@ -580,17 +588,27 @@
+@@ -565,10 +573,17 @@
  ";
  
      for $tmp (qw/
--	      INST_HTMLPRIVLIBDIR INSTALLHTMLPRIVLIBDIR
--	      INST_HTMLSITELIBDIR INSTALLHTMLSITELIBDIR
--	      INST_HTMLSCRIPTDIR  INSTALLHTMLSCRIPTDIR
--	      INST_HTMLLIBDIR                    HTMLEXT
--	      INST_MAN1DIR        INSTALLMAN1DIR MAN1EXT
--	      INST_MAN3DIR        INSTALLMAN3DIR MAN3EXT
-+	      INST_HTMLPRIVLIBDIR 
-+	      INST_HTMLSITELIBDIR 
-+	      INST_HTMLSCRIPTDIR  
-+	      INST_HTMLLIBDIR     HTMLEXT
-+	      INST_MAN1DIR        MAN1EXT
-+	      INST_MAN3DIR        MAN3EXT
+-	      INST_MAN1DIR INSTALLMAN1DIR MAN1EXT INST_MAN3DIR INSTALLMAN3DIR MAN3EXT
++	      INST_MAN1DIR MAN1EXT INST_MAN3DIR MAN3EXT
  	      /) {
  	next unless defined $self->{$tmp};
  	push @m, "$tmp = $self->{$tmp}\n";
-     }
- 
++    }
++
 +    for $tmp (qw/
-+	      INSTALLHTMLPRIVLIBDIR
-+	      INSTALLHTMLSITELIBDIR
-+	      INSTALLHTMLSCRIPTDIR
-+	      INSTALLMAN1DIR 
-+	      INSTALLMAN3DIR 
++	      INSTALLMAN1DIR INSTALLMAN3DIR
 +	      /) {
 +	next unless defined $self->{$tmp};
 +	push @m, "$tmp = \$\(DESTDIR\)$self->{$tmp}\n";
-+    }
+     }
+ 
      for $tmp (qw(
- 		PERM_RW PERM_RWX
- 		)

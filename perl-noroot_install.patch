@@ -1,7 +1,6 @@
-diff -ru perl5.005_61/installperl perl5.005_61.new/installperl
---- perl5.005_61/installperl	Wed Jul 28 20:11:20 1999
-+++ perl5.005_61.new/installperl	Tue Aug 24 21:09:39 1999
-@@ -127,8 +127,6 @@
+--- perl5.005_56/installperl~	Mon Feb 15 15:23:47 1999
++++ perl5.005_56/installperl	Tue Apr 20 19:16:44 1999
+@@ -117,8 +117,6 @@
  
  # Do some quick sanity checks.
  
@@ -10,14 +9,12 @@ diff -ru perl5.005_61/installperl perl5.005_61.new/installperl
     $installbin		|| die "No installbin directory in config.sh\n";
  -d $installbin		|| mkpath($installbin, 1, 0777);
  -d $installbin		|| $nonono || die "$installbin is not a directory\n";
-@@ -207,7 +205,7 @@
- safe_unlink("$installbin/s$perl_verbase$ver$exe_ext");
+@@ -182,7 +180,7 @@
+ safe_unlink("$installbin/s$perl$ver$exe_ext");
  if ($d_dosuid) {
-     copy("suidperl$exe_ext", "$installbin/s$perl_verbase$ver$exe_ext");
--    chmod(04711, "$installbin/s$perl_verbase$ver$exe_ext");
-+    chmod(0755, "$installbin/s$perl_verbase$ver$exe_ext");
+     copy("suidperl$exe_ext", "$installbin/s$perl$ver$exe_ext");
+-    chmod(04711, "$installbin/s$perl$ver$exe_ext");
++    chmod(0755, "$installbin/s$perl$ver$exe_ext");
  }
  
  # Install library files.
-Only in perl5.005_61.new/: installperl.rej
-Only in perl5.005_61.new/: installperl~
