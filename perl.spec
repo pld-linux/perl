@@ -65,7 +65,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.39%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.40%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -759,7 +759,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Convert Crypt DBD Data Date Devel Device Digest Error ExtUtils \
 	File Filesys Font Games Getopt GnuPG Graph Graphics HTML HTTP I18N \
 	IO/Socket IPC Image Inline Language Lingua/{EN,Stem/Snowball} \
-	List Locale LockFile Log MIME Mail Math Modem Module Net/SMTP \
+	List Locale LockFile Log MIME Mail Math/BigInt Modem Module Net/SMTP \
 	NetServer Netscape News Number OLE Parse Pod PostScript Proc \
 	RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule Set Sort \
 	Speech Spreadsheet Statistics String Sub Sys TeX Test \
@@ -768,16 +768,15 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
-	Digest File IPC Inline Locale Math Net Speech/Recognizer String Sys \
-	Term Text Unicode XML \
+	Digest File IPC Inline Locale Math/BigInt Net Speech/Recognizer String \
+	Sys Term Text Unicode XML \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
-	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Regexp,Speech/Recognizer} \
-	auto/{String,Sys,Term,Text,Unicode,XML}
+	auto/{Digest,File,IPC,Inline,Locale,Math/BigInt,Net,Regexp} \
+	auto/{Speech/Recognizer,String,Sys,Term,Text,Unicode,XML}
 )
 
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-
 
 ## examples and demos
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
