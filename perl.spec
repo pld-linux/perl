@@ -73,6 +73,7 @@ Patch1:		%{name}_581-INC.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
+Patch6:		%{name}-test-noproc.patch
 #Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # versions [4.2, 4.3-0.20030610.20.1] are not supported
@@ -621,6 +622,7 @@ microperlu - popraw je.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 #%patch8 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
