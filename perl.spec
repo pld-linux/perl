@@ -598,7 +598,7 @@ install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 %{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 
-%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}" %{buildroot}/%{_bindir}/perl
+%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}:%{buildroot}/%{perl_archlib}" %{buildroot}/%{_bindir}/perl
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -607,7 +607,7 @@ install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 
 ## prepare scripts for finding provides
 %{__perl} -pi -e 's,\@perl_build_dir\@,%{_builddir}/%{name}-%{version},g' find-perl-provides.sh
-%{__perl} -pi -e 's,\@perl\@,%{__perl},g' find-perl-provides.sh
+%{__perl} -pi -e 's,\@perl\@,%{__perl},g'                                 find-perl-provides.sh
 
 ## Generate the *.ph files
 (
