@@ -59,7 +59,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	2%{!?with_threads:_nothr}
+Release:	3%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -636,7 +636,7 @@ sh Configure \
 	-Dvendorman1=%{_mandir}/man1 -Dvendorman1ext=1p \
 	-Dvendorman3=%{_mandir}/man3 -Dvendorman3ext=3pm \
 	-Dsiteman1=%{_usr}/local/share/man/man1 -Dsiteman1ext=1p \
-	-Dsiteman3=%{_usr}/local/share/man/man3p -Dsiteman3ext=3pm \
+	-Dsiteman3=%{_usr}/local/share/man/man3 -Dsiteman3ext=3pm \
 	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_usr}/local \
 	-Dlibpth="%{_libdir} /%{_lib}" \
 	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
