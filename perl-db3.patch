@@ -10,3 +10,16 @@
  
  typedef struct {
  	DBM * 	dbp ;
+--- perl-5.6.1/ext/NDBM_File/Makefile.PL~	Fri Apr 20 18:16:55 2001
++++ perl-5.6.1/ext/NDBM_File/Makefile.PL	Fri Apr 20 18:33:48 2001
+@@ -1,8 +1,8 @@
+ use ExtUtils::MakeMaker;
+ WriteMakefile(
+     NAME	=> 'NDBM_File',
+-    LIBS => ["-L/usr/local/lib -lndbm", "-ldbm -lucb"],
+-    CCFLAGS => '-I/usr/include/db1 -Dbool=char -DHAS_BOOL',
++    LIBS => ["-L/usr/local/lib -ldb"],
++    CCFLAGS => '-Dbool=char -DHAS_BOOL',
+     MAN3PODS 	=> {}, 	# Pods will be built by installman.
+     XSPROTOARG => '-noprototypes', 		# XXX remove later?
+     VERSION_FROM => 'NDBM_File.pm',
