@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.31%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.32%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -313,6 +313,7 @@ Perla oraz kompilowania modu≥Ûw Perla.
 Summary:	Perl documentation in POD format
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Documentation
+Requires:	perldoc
 Obsoletes:	perl-pod
 
 %description doc-pod
@@ -1194,6 +1195,7 @@ rm -rf $RPM_BUILD_ROOT
 %files perldoc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/perldoc
+%dir %{perl_privlib}/pod
 %{perl_privlib}/pod/perldiag.pod
 %{perl_privlib}/pod/perlfaq*.pod
 %{perl_privlib}/pod/perlfunc.pod
