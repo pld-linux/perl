@@ -16,6 +16,8 @@ Group(pl):	Narzêdzia/Tekst
 Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
 Patch1:		perl-DESTDIR.patch
+Patch2:		perl-File-Spec-0.7.patch
+Patch3:		perl-CPAN-1.50.patch
 URL:		http://www.perl.org/
 Requires:	csh
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -74,7 +76,9 @@ Practical Extraction and Report Language (SUID root binaria).
 %prep
 %setup  -q -n %{name}%{version}
 %patch0 -p1
-%patch1 -p1 -b .wiget
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 # this is gross
