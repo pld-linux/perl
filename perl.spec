@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	4%{!?with_threads:_nothr}
+Release:	5%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -78,6 +78,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/%{name}-%{version}/runperl
 %define		__perl_provides %{__perl} /usr/lib/rpm/perl.prov
+
+# gcc 3.3.x miscompiles pp_hot.c
+# (in PUSHSUB in entersub two SvREFCNT_inc()s are working as one)
+# -fno-strict-aliasing is already used to build perl and doesn't help
+%define		specflags_ppc	-O1
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
