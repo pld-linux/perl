@@ -1,13 +1,13 @@
 %define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{!?bcond_off_perl_threads:-thread-multi}
+%define		perlthread %{?bcond_on_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
 Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
-Version:	5.6.0
-Release:	15
+Version:	5.6.1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -18,22 +18,25 @@ Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
 Patch2:		%{name}-DESTDIR.patch
-Patch3:		%{name}-CPAN-1.58.patch
-Patch4:		%{name}-find-provides.patch
-Patch5:		%{name}-prereq.patch
-Patch6:		%{name}-syslog.patch
-Patch7:		%{name}-CGI-upload-tmpdir.patch
-Patch8:		%{name}-LD_RUN_PATH.patch
-Patch9:		%{name}-errno_h-parsing.patch
-Patch10:	%{name}-use-LD_PRELOAD-for-libperl.so.patch
-Patch11:	%{name}-fix-typo-in-syslog.patch
-Patch12:	%{name}-fix-for-coredump-bug-20000607.003.patch
+Patch3:		%{name}-find-provides.patch
+Patch4:		%{name}-prereq.patch
+Patch5:		%{name}-syslog.patch
+Patch6:		%{name}-CGI-upload-tmpdir.patch
+Patch7:		%{name}-LD_RUN_PATH.patch
+Patch8:		%{name}-errno_h-parsing.patch
+Patch9:		%{name}-use-LD_PRELOAD-for-libperl.so.patch
 URL:		http://www.perl.org/
 #Requires:	csh
+Provides:	perl-ANSIColor
+Provides:	perl-Devel-Peek
+Provides:	perl-DProf
+Provides:	perl-PodParser
+Provides:	perl-CGI
 Obsoletes:	perl-ANSIColor
 Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-DProf
 Obsoletes:	perl-PodParser
+Obsoletes:	perl-CGI
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -111,6 +114,7 @@ on embedded systems.
 Practical Extraction and Report Language - pliki podstawowe, przydatne
 dla systemów osadzonych.
 
+
 %prep
 %setup  -q
 %patch0 -p1
@@ -123,9 +127,6 @@ dla systemów osadzonych.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
@@ -135,6 +136,8 @@ done
 
 %build
 # this is gross
+# i added more ugly stuff here
+# i know that is ugly way to set that but i dont know how do it better	
 cat > config.over <<EOF
 installprefix=$RPM_BUILD_ROOT%{_prefix}
 test -d \$installprefix || mkdir -p \$installprefix
@@ -147,9 +150,10 @@ installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
 installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
 installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
 installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
+dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
 EOF
 
-USETHREADS=%{?bcond_off_perl_threads:-U}%{!?bcond_off_perl_threads:-D}
+USETHREADS=%{!?bcond_on_perl_threads:-U}%{?bcond_on_perl_threads:-D}
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
@@ -171,8 +175,8 @@ sh Configure \
 %endif 
 	-Dd_dosuid \
 	-Ud_setresuid \
-	-Ud_setresgid
-	
+	-Ud_setresgid 
+
 %{__make}
 
 %install
@@ -227,6 +231,7 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 
 gzip -9nf README Change*
 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -255,9 +260,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/splain
 
 %dir %{_libdir}/perl5
-%attr( - ,root,root) %{_libdir}/perl5/*
-#%dir %{_libdir}/site_perl
-#%attr( - ,root,root) %{_libdir}/site_perl/*
+%attr( - ,root,root) %{_libdir}/perl5/%{version}/*
+%dir %{_libdir}/perl5/site_perl
+%attr( - ,root,root) %{_libdir}/perl5/site_perl/*
 %{_mandir}/man[13]/*
 
 %files -n sperl
