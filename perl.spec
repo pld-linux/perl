@@ -332,7 +332,7 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DynaLoader.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/IO/*.pm
+%{_libdir}/perl5/%{version}/%{_target_platform}*/IO
 %{_libdir}/perl5/%{version}/%{_target_platform}*/POSIX.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Socket.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/XSLoader.pm
@@ -354,7 +354,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %dir %{_libdir}/perl5/%{version}/Time
 %dir %{_libdir}/perl5/%{version}/warnings
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/IO
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO
@@ -433,14 +432,13 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/Text/ParseWords.pm
 %{_libdir}/perl5/%{version}/Text/Soundex.pm
 %{_libdir}/perl5/%{version}/Tie
-%{_libdir}/perl5/%{version}/Time
+%{_libdir}/perl5/%{version}/Time/[!L]*
 %{_libdir}/perl5/%{version}/User
 %{_libdir}/perl5/%{version}/auto
 %{_libdir}/perl5/%{version}/pod/perldiag.pod
 %{_libdir}/perl5/%{version}/unicode
 %{_libdir}/perl5/%{version}/*.pl
 %{_libdir}/perl5/%{version}/AnyDBM_File.pm
-%{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/AutoSplit.pm
 %{_libdir}/perl5/%{version}/Benchmark.pm
 %{_libdir}/perl5/%{version}/blib.pm
@@ -469,7 +467,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Data
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Devel
 %{_libdir}/perl5/%{version}/%{_target_platform}*/File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/IO
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IPC
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Sys
 %defattr(-,root,root,755)
@@ -478,7 +475,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/DynaLoader.a
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/autosplit.ix
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_expandspec.al
@@ -509,7 +505,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
