@@ -1,0 +1,3 @@
+- moved the %libdir/%version/Class directory from perl-modules
+  to perl: perl-Class-Fields requires it
+- release 56
