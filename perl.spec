@@ -65,7 +65,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.40%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.41%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -273,6 +273,8 @@ Provides:	perl-File-Spec = 0.83
 Provides:	perl-File-Temp = 0.13
 Provides:	perl-Safe = 2.09
 %{?!_without_largefiles:Provides:	perl(largefiles)}
+# broken, unsupported module
+Obsoletes:	perl-SOAP
 
 %description base
 Base components, files, core modules, etc. -- a minimal usable perl
