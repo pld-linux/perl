@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	6
+Release:	7
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -29,15 +29,8 @@ Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
 URL:		http://www.perl.org/
-Provides:	perl-ANSIColor
-Provides:	perl-Devel-Peek
-Provides:	perl-DProf
-Provides:	perl-PodParser
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	perl-ANSIColor
-Obsoletes:	perl-Devel-Peek
-Obsoletes:	perl-DProf
-Obsoletes:	perl-PodParser
+Obsoletes:	perl-lib
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -87,6 +80,8 @@ Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
+Requires:	%{name}-modules = %{version}
+Obsoletes:	perl-lib-devel
 
 %description devel
 Files for developing applications which embed a Perl interpreter.
@@ -114,9 +109,17 @@ Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Aplikacje/Tekst
 Prereq:		%{name} = %{version}
+Provides:	perl-ANSIColor
+Provides:	perl-Devel-Peek
+Provides:	perl-DProf
+Provides:	perl-PodParser
+Obsoletes:	perl-ANSIColor
+Obsoletes:	perl-Devel-Peek
+Obsoletes:	perl-DProf
+Obsoletes:	perl-PodParser
 
 %description modules
-Practical Extraction and Report Language - modu³y.
+Practical Extraction and Report Language - modules.
 
 %description -l pl modules
 Practical Extraction and Report Language - modu³y.
@@ -285,6 +288,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/File/Find.pm
 %{_libdir}/perl5/%{version}/File/Path.pm
 %{_libdir}/perl5/%{version}/File/Spec.pm
+%{_libdir}/perl5/%{version}/File/stat.pm
 %{_libdir}/perl5/%{version}/File/Spec/Unix.pm
 %{_libdir}/perl5/%{version}/FileHandle.pm
 %{_libdir}/perl5/%{version}/IO/Socket/INET.pm
@@ -297,6 +301,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Text/Wrap.pm
 %{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
+%{_libdir}/perl5/%{version}/autouse.pm
 %{_libdir}/perl5/%{version}/base.pm
 %{_libdir}/perl5/%{version}/constant.pm
 %{_libdir}/perl5/%{version}/fields.pm
@@ -316,9 +321,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Socket.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/XSLoader.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_findfile.al
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.so
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tmpfile.al
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.so
 
 %dir %{_libdir}/perl5/%{version}/File
@@ -349,17 +357,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755,root,root) %{_bindir}/c2ph
+%attr(755,root,root) %{_bindir}/dprofpp
 %attr(755,root,root) %{_bindir}/h2ph
 %attr(755,root,root) %{_bindir}/h2xs
 %attr(755,root,root) %{_bindir}/perlbug
 %attr(755,root,root) %{_bindir}/perlcc
 %attr(755,root,root) %{_bindir}/perldoc
 %attr(755,root,root) %{_bindir}/pl2pm
-%attr(755,root,root) %{_bindir}/pod2html
-%attr(755,root,root) %{_bindir}/pod2latex
-%attr(755,root,root) %{_bindir}/pod2man
-%attr(755,root,root) %{_bindir}/pod2text
-%attr(755,root,root) %{_bindir}/podselect
+%attr(755,root,root) %{_bindir}/pod*
 %attr(755,root,root) %{_bindir}/pstruct
 %attr(755,root,root) %{_bindir}/splain
 
@@ -377,7 +382,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/podselect.1*
 %{_mandir}/man1/pstruct.1*
 %{_mandir}/man1/splain.1*
-%{_mandir}/man3/*
+%{_mandir}/man3/[A-BD-Za-z]*
+%{_mandir}/man3/CPAN*
+%{_mandir}/man3/C[a-z]*
 %{_libdir}/perl5/%{version}/%{_target_platform}*/CORE
 
 %files -n sperl
@@ -394,9 +401,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Exporter
 %{_libdir}/perl5/%{version}/ExtUtils
 %{_libdir}/perl5/%{version}/File/CheckTree.pm
-%{_libdir}/perl5/%{version}/File/Compare.pm  
-%{_libdir}/perl5/%{version}/File/Copy.pm   
-%{_libdir}/perl5/%{version}/File/Temp.pm    
+%{_libdir}/perl5/%{version}/File/Compare.pm
+%{_libdir}/perl5/%{version}/File/Copy.pm
+%{_libdir}/perl5/%{version}/File/DosGlob.pm
+%{_libdir}/perl5/%{version}/File/Temp.pm
+%{_libdir}/perl5/%{version}/File/Spec/[A-OV-Z]*.pm
 %{_libdir}/perl5/%{version}/Getopt
 %{_libdir}/perl5/%{version}/I18N
 %{_libdir}/perl5/%{version}/Math
@@ -404,6 +413,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Pod
 %{_libdir}/perl5/%{version}/Search
 %{_libdir}/perl5/%{version}/Term
+%{_libdir}/perl5/%{version}/Test
 %{_libdir}/perl5/%{version}/Text/Abbrev.pm
 %{_libdir}/perl5/%{version}/Text/ParseWords.pm
 %{_libdir}/perl5/%{version}/Text/Soundex.pm
@@ -411,6 +421,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Time
 %{_libdir}/perl5/%{version}/User
 %{_libdir}/perl5/%{version}/auto
+%{_libdir}/perl5/%{version}/pod/perldiag.pod
+%{_libdir}/perl5/%{version}/unicode
 %{_libdir}/perl5/%{version}/*.pl
 %{_libdir}/perl5/%{version}/AnyDBM_File.pm
 %{_libdir}/perl5/%{version}/attributes.pm
@@ -472,8 +484,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/perl5/%{version}/%{_target_platform}*/B.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ByteLoader.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
+%{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
