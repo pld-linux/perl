@@ -18,9 +18,12 @@
 # - *TESTING*
 #
 
+%if 0%(if [ %{__perl_requires} ]; then echo 1; fi)
 %undefine	__perl_requires
 %define		__perl_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
-#%%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
+%else
+%define		__find_provides %{_builddir}/%{name}-%{version}/find-perl-provides.sh
+%endif
 
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
