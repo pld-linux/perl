@@ -55,8 +55,7 @@ Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-#Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
-Source0:	http://opensource.fotango.com/~nclark/perl-5.8.6.tar.bz2
+Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
 # Source0-md5:	3d030b6ff2a433840edb1a407d18dc0a
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
@@ -388,7 +387,7 @@ Provides:	perl-Test = 1.25
 Provides:	perl-Test-Harness = 2.42
 Provides:	perl-Test-Simple = 0.47
 Provides:	perl-Text-Balanced = 1.95
-Provides:	perl-Text-ParseWords = 3.22
+Provides:	perl-Text-ParseWords = 3.23
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
 #Provides:	perl-Text-Tabs+Wrap = 2001.09291
