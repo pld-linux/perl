@@ -693,7 +693,7 @@ rm -f uconfig.h
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -767,11 +767,12 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Convert Crypt DBD Data Date Devel Device Digest Email Error ExtUtils \
 	File Filesys Font Games Getopt GnuPG Graph Graphics HTML HTTP I18N \
 	IO/Socket IPC Image Inline Language Lingua/{EN,Stem/Snowball} \
-	List Locale LockFile Log MIME Mail Math/BigInt Modem Module Net/SMTP \
-	NetServer Netscape News Number OLE Parse Pod PostScript Proc \
+	List Locale LockFile Log MIME Mail Math/{BigInt,Fractal} Modem Module \
+	Net/SMTP NetServer Netscape News Number OLE Parse Pod PostScript Proc \
 	RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule Set Sort \
 	Speech Spreadsheet Statistics String Sub Sys TeX Test \
-	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
+	Text/Query Tie Time Tree UNIVERSAL Unicode WWW \
+	XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
@@ -785,6 +786,11 @@ install -d Algorithm Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL \
 
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
 ## examples and demos
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
@@ -810,10 +816,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
-%lang(cn) %doc README.cn
-%lang(jp) %doc README.jp
-%lang(ko) %doc README.ko
-%lang(tw) %doc README.tw
 
 
 %files base
@@ -1039,9 +1041,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
 %{_mandir}/man1/perli[!v]*
-%lang(cn) %{_mandir}/man1/perlcn.*
-%lang(jp) %{_mandir}/man1/perljp.*
-%lang(ko) %{_mandir}/man1/perlko.*
+
+%lang(zh_CN) %{_mandir}/zh_CN/man1/perlcn.*
+%lang(ja) %{_mandir}/ja/man1/perljp.*
+%lang(ko) %{_mandir}/ko/man1/perlko.*
+%lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.*
 
 
 %files modules
