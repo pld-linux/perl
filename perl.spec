@@ -22,7 +22,7 @@
 # - *TESTING*
 #
 
-%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
+%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_libdir}/perl5/%{version}
@@ -62,12 +62,12 @@ Group:		Development/Languages/Perl
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
+Source3:	find-perl-provides.sh
 Patch0:		%{name}_580-noroot_install.patch
 # mostly obsolete and i just don't like it
 #Patch1:		%{name}-nodb.patch
 # weird one...
 #Patch2:	%{name}-DESTDIR.patch
-Patch3:		%{name}_580-find_provides.patch
 # applied in a similar way
 #Patch4:	%{name}-prereq.patch
 # failed
@@ -91,7 +91,6 @@ URL:		http://www.perl.com/
 #BuildRequires:	db-devel > 4.1
 %{?!_without_largefiles:Provides:	perl(largefiles)}
 Requires:	%{name}-base = %{version}
-Requires:	%{name}-devel = %{version}
 Requires:	%{name}-modules = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -527,7 +526,6 @@ you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
 %patch0 -p1
 #%patch1 -p1
 #%patch2 -p1
-%patch3 -p1
 #%patch4 -p1
 #%patch5 -p1
 #%patch6 -p1
@@ -542,7 +540,7 @@ you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
 %patch15 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
-chmod 0755 find-perl-provides
+install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
 
 %build
 sh Configure \
@@ -580,7 +578,7 @@ sh Configure \
 %{__make} -f Makefile.micro
 
 %{?!_without_tests:%{__make} test}
-%{?!_without_tests:%{__make} minitest}
+#%%{?!_without_tests:%{__make} minitest}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -600,7 +598,8 @@ install microperl $RPM_BUILD_ROOT%{_bindir}
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="$RPM_BUILD_ROOT%{perl_privlib}" $RPM_BUILD_ROOT%{_bindir}/perl
 
 ## prepare scripts for finding provides
-%{__perl} -pi -e 's,FPPATH,%{_builddir}/%{name}-%{version},' find-perl-provides find-perl.prov
+%{__perl} -pi -e 's,\@perl_build_dir\@,%{_builddir}/%{name}-%{version},g' find-perl-provides.sh
+%{__perl} -pi -e 's,\@perl\@,%{__perl},g' find-perl-provides.sh
 
 ## Generate the *.ph files
 (
