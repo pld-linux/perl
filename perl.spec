@@ -58,7 +58,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.2
-Release:	2%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	3%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
@@ -669,7 +669,7 @@ mv ext/List/Util/lib/List/Util.pm ext/List/Util
 rm -f ext/List/Util/Makefile.PL
 cat <<EOF > ext/List/Util/Makefile.PL
 use ExtUtils::MakeMaker;
-WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm");
+WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT");
 EOF
 
 %{__make} \
