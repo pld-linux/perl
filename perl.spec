@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	41
+Release:	42
 Epoch:		1
 License:	GPL on Artistic
 Group:		Applications/Text
@@ -490,8 +490,8 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d Archive Authen B Bundle Business CGI Class Convert Crypt DBD \
-	Data Date Devel ExtUtils File Filesys Font Games Getopt Graph \
+install -d Apache Archive Authen B Bundle Business CGI Class Convert Crypt \
+	DBD Data Date Devel ExtUtils File Filesys Font Games Getopt Graph \
 	HTML HTTP I18N IO/Socket IPC Image Inline Language Lingua/EN \
 	Locale Log MIME Mail Math Module Net NetServer Netscape News \
 	Number Parse Pod PostScript Proc RADIUS RPC Regexp Set Sort \
@@ -499,11 +499,28 @@ install -d Archive Authen B Bundle Business CGI Class Convert Crypt DBD \
 	auto/{Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
-install -d Authen BSD Compress Crypt Data Devel Digest File IPC \
+install -d Authen BSD Bit Compress Crypt Data Devel Digest File IPC \
 	Locale Math Net String Term Text Unicode XML \
 	auto/{Authen,BSD,Bit,Compress,Crypt,Data,Devel,Digest,File,IPC} \
 	auto/{Locale,Math,Net,String,Term,Text,Unicode,XML}
 )
+
+# These File::Spec submodules are for non-Unix systems
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EFMOVW]*.pm
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Functions,Mac,OS2,VMS,Win32}.3pm*
+#
+# Newer Test::Harness is available as a separate package
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
+#
+# Newer DB_File is available as a separate package 
+rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
+#
+# Newer CGI is available as a separate package 
+rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
@@ -526,6 +543,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}
 
 %dir %{_libdir}/perl5/site_perl
+%{_libdir}/perl5/site_perl/Apache
 %{_libdir}/perl5/site_perl/Archive
 %{_libdir}/perl5/site_perl/Authen
 %{_libdir}/perl5/site_perl/Bundle
@@ -556,6 +574,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Lingua
 %{_libdir}/perl5/site_perl/Locale
 %{_libdir}/perl5/site_perl/Log
+%{_libdir}/perl5/site_perl/MIME
 %{_libdir}/perl5/site_perl/Mail
 %{_libdir}/perl5/site_perl/Math
 %{_libdir}/perl5/site_perl/Module
@@ -585,8 +604,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Bit
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Compress
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Crypt
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Data
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Devel
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Digest
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/File
@@ -699,6 +720,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xsubpp.1*
 %lang(fi) %{_mandir}/fi/man1/perl.1*
 %lang(pl) %{_mandir}/pl/man1/perl.1*
+%{_mandir}/man3/AutoL*
+%{_mandir}/man3/C[aow]*
+%{_mandir}/man3/D[iy]*
+%{_mandir}/man3/Exp*
+%{_mandir}/man3/File::[BFPSs]*
+%{_mandir}/man3/FileH*
+%{_mandir}/man3/IO*
+%{_mandir}/man3/IPC::O*
+%{_mandir}/man3/PO*
+%{_mandir}/man3/Sele*
+%{_mandir}/man3/So*
+%{_mandir}/man3/Sym*
+%{_mandir}/man3/Text::[TW]*
+%{_mandir}/man3/Time::L*
+%{_mandir}/man3/[Xivw]*
+%{_mandir}/man3/attri*
+%{_mandir}/man3/au*
+%{_mandir}/man3/bas*
+%{_mandir}/man3/ch*
+%{_mandir}/man3/fie*
+%{_mandir}/man3/l[io]*
+%{_mandir}/man3/ov*
+%{_mandir}/man3/st*
 
 %files devel
 %defattr(644,root,root,755)
@@ -729,14 +773,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/podselect.1*
 %{_mandir}/man1/pstruct.1*
 %{_mandir}/man1/splain.1*
-%{_mandir}/man3/[A-BD-SU-Za-z]*
-%{_mandir}/man3/CPAN*
-%{_mandir}/man3/C[a-z]*
-%{_mandir}/man3/T[^e]*
-%{_mandir}/man3/Te[^s]*
-%{_mandir}/man3/Test.3*
 %lang(fi) %{_mandir}/fi/man1/perl[a-z]*.1*
 %lang(pl) %{_mandir}/pl/man1/perl[a-z]*.1*
+#unknown
+%{_mandir}/man3/W*
+
 
 %{_libdir}/perl5/%{version}/%{_target_platform}*/CORE
 
@@ -760,7 +801,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/File/Copy.pm
 %{_libdir}/perl5/%{version}/File/DosGlob.pm
 %{_libdir}/perl5/%{version}/File/Temp.pm
-%{_libdir}/perl5/%{version}/File/Spec/[A-OV-Z]*.pm
+#%{_libdir}/perl5/%{version}/File/Spec/[A-OV-Z]*.pm
 %{_libdir}/perl5/%{version}/Getopt
 %{_libdir}/perl5/%{version}/I18N
 %{_libdir}/perl5/%{version}/Math
@@ -816,10 +857,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/autosplit.ix
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.so
+# we have newer DB_File in a separate package
+#%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
+#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/autosplit.ix
+#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.bs
+#%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.so
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper/Dumper.bs
@@ -880,7 +922,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/sdbm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/B.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ByteLoader.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
+#%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
@@ -890,6 +932,40 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Safe.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/SDBM_File.pm
+
+%{_mandir}/man3/An*
+%{_mandir}/man3/AutoS*
+%{_mandir}/man3/[BMNOU]*
+%{_mandir}/man3/C[Pl]*
+%{_mandir}/man3/D[Beu]*
+%{_mandir}/man3/E[nr]*
+%{_mandir}/man3/Ext*
+%{_mandir}/man3/Fa*
+%{_mandir}/man3/File::[CDGT]*
+%{_mandir}/man3/FileC*
+%{_mandir}/man3/Fin*
+%{_mandir}/man3/G[De]*
+%{_mandir}/man3/I1*
+%{_mandir}/man3/IPC::[MS]*
+%{_mandir}/man3/Po*
+%{_mandir}/man3/S[Dah]*
+%{_mandir}/man3/Sea*
+%{_mandir}/man3/Self*
+%{_mandir}/man3/Sys*
+%{_mandir}/man3/Te[rs]*
+%{_mandir}/man3/Text::[APS]*
+%{_mandir}/man3/Tie*
+%{_mandir}/man3/Time::[glt]*
+%{_mandir}/man3/attrs*
+%{_mandir}/man3/b[ly]*
+%{_mandir}/man3/ch*
+%{_mandir}/man3/d*
+%{_mandir}/man3/fil*
+%{_mandir}/man3/le*
+%{_mandir}/man3/op*
+%{_mandir}/man3/re*
+%{_mandir}/man3/s[iu]*
+%{_mandir}/man3/u*
 
 %files pod
 %defattr(644,root,root,755)
