@@ -275,24 +275,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.gz Change*
 
 %attr(755,root,root) %{_bindir}/a2p
-%attr(755,root,root) %{_bindir}/c2ph
 %attr(755,root,root) %{_bindir}/find2perl
-%attr(755,root,root) %{_bindir}/h2ph
-%attr(755,root,root) %{_bindir}/h2xs
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
-%attr(755,root,root) %{_bindir}/perlbug
-%attr(755,root,root) %{_bindir}/perlcc
-%attr(755,root,root) %{_bindir}/perldoc
-%attr(755,root,root) %{_bindir}/pl2pm
-%attr(755,root,root) %{_bindir}/pod2html
-%attr(755,root,root) %{_bindir}/pod2latex
-%attr(755,root,root) %{_bindir}/pod2man
-%attr(755,root,root) %{_bindir}/pod2text
-%attr(755,root,root) %{_bindir}/podselect
-%attr(755,root,root) %{_bindir}/pstruct
 %attr(755,root,root) %{_bindir}/s2p
-%attr(755,root,root) %{_bindir}/splain
 
 %dir %{_libdir}/perl5
 %dir %{_libdir}/perl5/%{version}
@@ -315,6 +301,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/c2ph
+%attr(755,root,root) %{_bindir}/h2ph
+%attr(755,root,root) %{_bindir}/h2xs
+%attr(755,root,root) %{_bindir}/perlbug
+%attr(755,root,root) %{_bindir}/perlcc
+%attr(755,root,root) %{_bindir}/perldoc
+%attr(755,root,root) %{_bindir}/pl2pm
+%attr(755,root,root) %{_bindir}/pod2html
+%attr(755,root,root) %{_bindir}/pod2latex
+%attr(755,root,root) %{_bindir}/pod2man
+%attr(755,root,root) %{_bindir}/pod2text
+%attr(755,root,root) %{_bindir}/podselect
+%attr(755,root,root) %{_bindir}/pstruct
+%attr(755,root,root) %{_bindir}/splain
+
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_mandir}/man3/*
 
