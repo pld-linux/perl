@@ -30,6 +30,10 @@ Patch11:	%{name}-fix-typo-in-syslog.patch
 Patch12:	%{name}-fix-for-coredump-bug-20000607.003.patch
 URL:		http://www.perl.org/
 #Requires:	csh
+Provides:	perl-ANSIColor
+Provides:	perl-Devel-Peek
+Provides:	perl-DProf
+Provides:	perl-PodParser
 Obsoletes:	perl-ANSIColor
 Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-DProf
