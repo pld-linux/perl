@@ -43,10 +43,10 @@ Patch8:		%{name}-errno_h-parsing.patch
 Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
 Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
-Patch12:	%{name}-db3.patch
+Patch12:	%{name}-db4.patch
 Patch13:	%{name}-gcc3.patch
 URL:		http://www.perl.org/
-BuildRequires:	db3-devel
+BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
 Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
