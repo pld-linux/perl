@@ -768,7 +768,8 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	NetServer Netscape News Number OLE Parse Pod PostScript Proc \
 	RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule Set Sort \
 	Speech Spreadsheet Statistics String Sub Sys TeX Test \
-	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
+	Text/Query Tie Time Tree UNIVERSAL Unicode WWW \
+	XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
