@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	39
+Release:	40
 Epoch:		1
 License:	GPL on Artistic
 Group:		Applications/Text
@@ -698,7 +698,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fi) %{_mandir}/fi/man1/perl.1*
 %lang(pl) %{_mandir}/pl/man1/perl.1*
 
-
 %files devel
 %defattr(644,root,root,755)
 %doc README Changes
@@ -728,9 +727,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/podselect.1*
 %{_mandir}/man1/pstruct.1*
 %{_mandir}/man1/splain.1*
-%{_mandir}/man3/[A-BD-Za-z]*
+%{_mandir}/man3/[A-BD-SU-Za-z]*
 %{_mandir}/man3/CPAN*
 %{_mandir}/man3/C[a-z]*
+%{_mandir}/man3/T[^e]*
+%{_mandir}/man3/Te[^s]*
 %lang(fi) %{_mandir}/fi/man1/perl[a-z]*.1*
 %lang(pl) %{_mandir}/pl/man1/perl[a-z]*.1*
 
