@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
-Release:	2
+Release:	11
 Epoch:		1
 License:	GPL
 Group:		Utilities/Text
@@ -126,26 +126,23 @@ EOF
 
 sh Configure \
 	-des \
-	-Dcc=gcc \
+	-Dcc=%{__cc} \
 	-Darchname=%{_target_platform} \
+	-Dcccdlflags='-fPIC' \
 	-Dprefix=%{_prefix} \
 	-Dscriptdir=%{_bindir} \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
 	-Doptimize="$RPM_OPT_FLAGS" \
-	-Duseshrplib \
 	-Dusethreads \
 	-Uuselargefiles \
-	-Dd_dosuid \
-	-Ud_setresuid \
-	-Ud_setresgid 
+%ifarch sparc sparc64
+	-Ud_longdbl \
+%endif
+	-Dd_dosuid
 
 %{__make}
-
-## Strip binaries (done now rather than at install)
-
-strip {perl,suidperl,x2p/a2p}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -197,11 +194,7 @@ mv -f .packlist.new .packlist
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.ph -exec chmod 444 {} \;
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	README Change*
-
-find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so \
-	-exec strip --strip-unneeded {} \;
+gzip -9nf README Change*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
