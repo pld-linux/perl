@@ -30,10 +30,11 @@ Patch12:	%{name}-db3.patch
 URL:		http://www.perl.org/
 BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
+Provides:	perl(DynaLoader)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
-Provides:	perl(DynaLoader)
+Obsoletes:	perl-base
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
