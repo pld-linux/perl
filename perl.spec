@@ -266,7 +266,7 @@ Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Provides:	perl-File-Compare = 1.1003
-Provides:	perl-File-Spec = 0.87
+Provides:	perl-File-Spec = 3.01
 Provides:	perl-File-Temp = 0.14
 Provides:	perl-IO = 1.21
 Provides:	perl-Safe = 2.11
@@ -314,7 +314,7 @@ Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
 Provides:	perl-CPAN = 1.76_01
 Provides:	perl-Devel-DProf = 20030813.00
-Provides:	perl-Devel-PPPort = 2.011
+Provides:	perl-Devel-PPPort = 3.03
 Provides:	perl-Devel-Peek = 1.01
 Provides:	perl-ExtUtils-Embed = 1.2506_01
 Provides:	perl-ExtUtils-MakeMaker = 6.17
@@ -368,13 +368,13 @@ Provides:	perl-Digest-MD5 = 2.33
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.44
 #Provides:	perl-Hash-Utils = 0.05	Data::Util is missing
-Provides:	perl-I18N-LangTags = 0.33
+Provides:	perl-I18N-LangTags = 0.35
 Provides:	perl-IPC-SysV = 1.04
 Provides:	perl-Locale-Codes = 2.07
 Provides:	perl-Locale-Maketext = 1.09
-Provides:	perl-MIME-Base64 = 3.01
-Provides:	perl-Math-BigInt = 1.70
-Provides:	perl-Math-BigRat = 0.12
+Provides:	perl-MIME-Base64 = 3.05
+Provides:	perl-Math-BigInt = 1.73
+Provides:	perl-Math-BigRat = 0.13
 Provides:	perl-Math-Trig = 1.02
 Provides:	perl-Memoize = 1.01
 Provides:	perl-NEXT = 0.60
@@ -393,7 +393,7 @@ Provides:	perl-Text-ParseWords = 3.22
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
 #Provides:	perl-Text-Tabs+Wrap = 2001.09291
-Provides:	perl-Time-HiRes = 1.59
+Provides:	perl-Time-HiRes = 1.65
 Provides:	perl-UNIVERSAL = 1.01
 Provides:	perl-Unicode-Collate = 0.40
 Provides:	perl-Unicode-Normalize = 0.30
