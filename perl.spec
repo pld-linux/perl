@@ -783,6 +783,16 @@ install -d Algorithm Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL \
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
+# mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
+
+echo ".so perlcn.1" > $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1/perl.1
+echo ".so perljp.1" > $RPM_BUILD_ROOT%{_mandir}/ja/man1/perl.1
+echo ".so perlko.1" > $RPM_BUILD_ROOT%{_mandir}/ko/man1/perl.1
+# echo ".so perltw.1" > $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1/perl.1
+
 ## examples and demos
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
 mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
@@ -1030,10 +1040,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
 %{_mandir}/man1/perli[!v]*
-%lang(cn) %{_mandir}/man1/perlcn.*
-%lang(jp) %{_mandir}/man1/perljp.*
+%lang(zh_CN) %{_mandir}/man1/perlcn.*
+%lang(ja) %{_mandir}/man1/perljp.*
 %lang(ko) %{_mandir}/man1/perlko.*
-
+#%lang(zh_TW) %{_mandir}/man1/perltw.*
 
 %files modules
 %defattr(644,root,root,755)
