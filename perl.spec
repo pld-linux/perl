@@ -29,6 +29,8 @@ Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
 URL:		http://www.perl.org/
+BuildRequires:	db3-devel
+BuildRequires:	gdbm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-lib
 
@@ -204,7 +206,7 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid
 
-%{__mv} Makefile Makefile.bak
+%{__mv} -f Makefile Makefile.bak
 %{__sed} -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
 	Makefile.bak > Makefile
 
