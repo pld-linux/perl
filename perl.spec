@@ -329,6 +329,7 @@ Provides:	perl-Attribute-Handlers = 0.77
 Provides:	perl-CGI = 2.81
 Provides:	perl-Class-ISA = 0.32
 Provides:	perl-Digest = 1.00
+Provides:	perl-Digest-MD5 = 2.20
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.43
 #Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
