@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	5%{!?with_threads:_nothr}
+Release:	6%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -62,7 +62,6 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
-Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 Patch8:		%{name}_584-microperl_uconfig.patch
@@ -614,7 +613,6 @@ microperlu - popraw je.
 %patch0 -p1
 %patch1 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch8 -p1
