@@ -27,7 +27,7 @@ Name:		perl
 Version:	5.6.1
 Release:	43
 Epoch:		1
-License:	GPL on Artistic
+License:	GPL or Artistic
 Group:		Applications/Text
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
@@ -717,14 +717,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/dprofpp.1*
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
+%{_mandir}/man1/perl[ae-z]*.1*
+%{_mandir}/man1/perlb[^u]*.1*
+%{_mandir}/man1/perlc[^c]*.1*
+%{_mandir}/man1/perld[^o]*.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
-%lang(fi) %{_mandir}/fi/man1/perl.1*
-%lang(pl) %{_mandir}/pl/man1/perl.1*
+%lang(fi) %{_mandir}/fi/man1/perl*
+%lang(pl) %{_mandir}/pl/man1/perl*
 %{_mandir}/man3/AutoL*
 %{_mandir}/man3/C[aow]*
 %{_mandir}/man3/D[iy]*
 %{_mandir}/man3/Exp*
+%{_mandir}/man3/Fcntl*
 %{_mandir}/man3/File::[BFPSs]*
 %{_mandir}/man3/FileH*
 %{_mandir}/man3/IO*
@@ -739,7 +744,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/attri*
 %{_mandir}/man3/au*
 %{_mandir}/man3/bas*
-%{_mandir}/man3/ch*
+%{_mandir}/man3/c*
 %{_mandir}/man3/fie*
 %{_mandir}/man3/l[io]*
 %{_mandir}/man3/ov*
@@ -764,7 +769,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/c2ph.1*
 %{_mandir}/man1/h2ph.1*
 %{_mandir}/man1/h2xs.1*
-%{_mandir}/man1/perl[a-z]*.1*
+%{_mandir}/man1/perlbug.1*
+%{_mandir}/man1/perlcc.1*
+%{_mandir}/man1/perldoc.1*
 %{_mandir}/man1/pl2pm.1*
 %{_mandir}/man1/pod2html.1*
 %{_mandir}/man1/pod2man.1*
@@ -774,11 +781,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/podselect.1*
 %{_mandir}/man1/pstruct.1*
 %{_mandir}/man1/splain.1*
-%lang(fi) %{_mandir}/fi/man1/perl[a-z]*.1*
-%lang(pl) %{_mandir}/pl/man1/perl[a-z]*.1*
-#unknown
-%{_mandir}/man3/W*
-
 
 %{_libdir}/perl5/%{version}/%{_target_platform}*/CORE
 
@@ -938,7 +940,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/AutoS*
 %{_mandir}/man3/[BMNOU]*
 %{_mandir}/man3/C[Pl]*
-%{_mandir}/man3/D[Beu]*
+%{_mandir}/man3/D[Baeu]*
 %{_mandir}/man3/E[nr]*
 %{_mandir}/man3/Ext*
 %{_mandir}/man3/Fa*
