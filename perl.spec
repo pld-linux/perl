@@ -628,6 +628,7 @@ sh Configure \
 	-Dccdlflags='-rdynamic' \
 	-Dldlibpthname=none \
 	-Doptimize="%{rpmcflags}" \
+	%{?debug:-DDEBUGGING} \
 	-Duseshrplib \
 	-Dd_dosuid \
 	-Dman1dir=%{_mandir}/man1 -Dman1ext=1 \
