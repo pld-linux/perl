@@ -58,7 +58,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.2
-Release:	0.1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
@@ -278,7 +278,7 @@ Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 0.86
 Provides:	perl-File-Temp = 0.14
 Provides:	perl-IO = 1.21
-Provides:	perl-Safe = 2.09
+Provides:	perl-Safe = 2.10
 Provides:	perl-Socket = 1.76
 Provides:	perl-Tie-File = 0.97
 %{?!_without_largefiles:Provides:	perl(largefiles)}
@@ -320,12 +320,12 @@ Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	%{name}-tools-pod
-Provides:	perl-CPAN = 1.76
+Provides:	perl-CPAN = 1.76_01
 Provides:	perl-Devel-DProf = 20030813.00
-Provides:	perl-Devel-PPPort = 2.0004
+Provides:	perl-Devel-PPPort = 2.009
 Provides:	perl-Devel-Peek = 1.01
 Provides:	perl-ExtUtils-Embed = 1.250601
-Provides:	perl-ExtUtils-MakeMaker = 6.16
+Provides:	perl-ExtUtils-MakeMaker = 6.17
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -369,17 +369,17 @@ Summary(pl):	Modu≥y z podstawowej dystrybucji perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 Provides:	perl-Attribute-Handlers = 0.78
-Provides:	perl-CGI = 2.98
+Provides:	perl-CGI = 3.00
 Provides:	perl-Class-ISA = 0.32
 Provides:	perl-Digest = 1.02
-Provides:	perl-Digest-MD5 = 2.27
+Provides:	perl-Digest-MD5 = 2.30
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.43
 #Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
 Provides:	perl-IPC-SysV = 1.04
 Provides:	perl-Locale-Maketext = 1.06
-Provides:	perl-MIME-Base64 = 2.20
-Provides:	perl-Math-BigInt = 1.65
+Provides:	perl-MIME-Base64 = 2.21
+Provides:	perl-Math-BigInt = 1.66
 Provides:	perl-Math-BigRat = 0.10
 Provides:	perl-Math-Trig = 1.02
 Provides:	perl-Memoize = 1.01
@@ -387,7 +387,7 @@ Provides:	perl-NEXT = 0.60
 Provides:	perl-PerlIO-via-QuotedPrint = 0.05
 Provides:	perl-Pod-LaTeX = 0.55
 Provides:	perl-Pod-Parser = 1.13
-Provides:	perl-Scalar-List-Utils = 1.12
+Provides:	perl-Scalar-List-Utils = 1.13
 Provides:	perl-Storable = 2.08
 Provides:	perl-Term-ANSIColor = 1.07
 Provides:	perl-Term-Cap = 1.08
@@ -399,10 +399,10 @@ Provides:	perl-Text-ParseWords = 3.21
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
 #Provides:	perl-Text-Tabs+Wrap = 2001.0929
-Provides:	perl-Time-HiRes = 1.50
+Provides:	perl-Time-HiRes = 1.52
 Provides:	perl-UNIVERSAL = 1.01
-Provides:	perl-Unicode-Collate = 0.26
-Provides:	perl-Unicode-Normalize = 0.23
+Provides:	perl-Unicode-Collate = 0.30
+Provides:	perl-Unicode-Normalize = 0.25
 Obsoletes:	perl-lib
 
 %description modules
@@ -416,8 +416,8 @@ dystrybucji.
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
-Provides:	perldoc = 3.09@%{version}
-Requires:	%{name}-base
+Provides:	perldoc = 3.11@%{version}
+Requires:	%{name}-modules
 Group:		Development/Tools
 
 %description perldoc
