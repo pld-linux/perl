@@ -736,6 +736,8 @@ WANTED='
 	sys/socket.h
 	sys/syscall.h
 	sys/time.h
+	linux/posix_types.h
+	linux/stddef.h
 '
 %{__perl} $H2PH -a -d $PHDIR $WANTED
 )
