@@ -9,7 +9,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	13
+Release:	14
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
@@ -133,13 +133,38 @@ install -d $RPM_BUILD_ROOT
 make install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
-(cd %{_includedir} ;
-LD_LIBRARY_PATH="%{_builddir}/%{name}%{perlver}_%{perlrel}" \
-PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
-$RPM_BUILD_ROOT%{_bindir}/h2ph \
--d $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread} \
-*.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
+## Generate *.ph files with a trick (based on RH).
+# Everybody else is using it so why can't we? ;)
+make all -f - <<EOF
+PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
+	libpng-devel libtiff-devel ncurses-devel popt-devel \
+	zlib-devel binutils libelf e2fsprogs-devel pam-devel pwdb-devel \
+	rpm-devel
+STDH	= \$(filter /usr/include/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' \$(PKGS)))
+STDH	+= \$(wildcard /usr/include/linux/*.h) \$(wildcard /usr/include/asm/*.h) \$(wildcard /usr/include/scsi/*.h)
+GCCDIR	= \$(shell gcc --print-file-name include)
+GCCH    = \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
 
+LIBPATH = %{_builddir}/%{name}%{perlver}_%{perlrel}
+PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5
+PERLBIN = $RPM_BUILD_ROOT%{_bindir}/perl
+PERL	= LD_LIBRARY_PATH=\$(LIBPATH) PERL5LIB=\$(PERLLIB) \$(PERLBIN)
+PHDIR	= \$(PERLLIB)/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}
+PHBIN	= $RPM_BUILD_ROOT%{_bindir}/h2ph
+H2PH	= \$(PERL) \$(PHBIN) -d \$(PHDIR)/
+
+all: std-headers gcc-headers
+
+std-headers: \$(STDH)
+	cd /usr/include && \$(H2PH) \$(STDH:/usr/include/%%=%%)
+
+gcc-headers: \$(GCCH)
+	cd \$(GCCDIR) && \$(H2PH) \$(GCCH:\$(GCCDIR)/%%=%%)
+
+EOF
+
+
+## Fix paths
 ( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}/
 
 mv .packlist .packlist.old
