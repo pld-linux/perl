@@ -9,7 +9,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	15
+Release:	16
 License:	GPL
 Group:		Utilities/Text
 Group(fr):	Utilitaires/Texte
