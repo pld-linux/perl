@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	48
+Release:	49
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -53,6 +53,7 @@ Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
 Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
 Obsoletes:	perl-base
@@ -69,10 +70,10 @@ elegant, minimal).
 Perl je vy¹¹í programovací jazyk s koøeny v jazyce C, sed, awk a
 shellovıch skriptech. Perl je vhodnı pro manipulace s procesy a
 soubory, ale obzvlá¹tì se hodí ke zpracovávání textù. Perl vyniká
-praktièností úèinností. I kdy¾ se pou¾ívá prakticky na cokoli,
-vìt¹ina Perlovıch programù slou¾í jako správcovské utility nebo
-programy pro WWW. V Perlu je napsáno velmi mnoho CGI skriptù
-pro WWW servery na celém svìtì.
+praktièností úèinností. I kdy¾ se pou¾ívá prakticky na cokoli, vìt¹ina
+Perlovıch programù slou¾í jako správcovské utility nebo programy pro
+WWW. V Perlu je napsáno velmi mnoho CGI skriptù pro WWW servery na
+celém svìtì.
 
 %description -l da
 Perl er et høgniveauprogramsprog med røtter i C, sed, awk og
@@ -121,23 +122,24 @@ di sistem agar dapat menjalankan skrip-skrip Perl.
 
 %description -l is
 Perl er hás stigs forritunar tungumál sem á rætur sínar ağ rekja til
-C, sed, awk, og skeljar forritunar. Perl er góğ í ağ meğhöndla processa
-og skrár og er sérstaklega góğ í ağ meğhöndla texta. Perls kostir eru
-nytsamleiki og virkni. Á meğan şağ er notağ til ağ gera marga mismunandi
-hluti, Perl mest notuğu forrit eru krefisstjórnunar tól og vef forritun
-Stór hluti af CGI forritum á vefnum eru skrifağar í Perl. Şú şarft
-perl pakkann settan upp á şínu krefi svo şitt kerfi geti notağ Perl
-scriptur.
+C, sed, awk, og skeljar forritunar. Perl er góğ í ağ meğhöndla
+processa og skrár og er sérstaklega góğ í ağ meğhöndla texta. Perls
+kostir eru nytsamleiki og virkni. Á meğan şağ er notağ til ağ gera
+marga mismunandi hluti, Perl mest notuğu forrit eru krefisstjórnunar
+tól og vef forritun Stór hluti af CGI forritum á vefnum eru skrifağar
+í Perl. Şú şarft perl pakkann settan upp á şínu krefi svo şitt kerfi
+geti notağ Perl scriptur.
 
 %description -l it
-Perl è un linguaggio di programmazione di alto livello derivato
-dal linguaggio C, da sed, da awk e dallo scripting delle shell. E' adatto
-per la gestione di processi, di file e in particolare di file di testo.
-Perl è un linguaggio semplice ed efficiente. Viene utilizzato per
-numerosi scopi, ma le sue applicazioni più diffuse sono le
-utility di amministrazione del sistema e la programmazione Web. Una grossa
-parte degli script CGI nel Web sono scritti in Perl. È consigliabile installare
-il pacchetto perl in modo che il sistema sia in grado di gestire gli script di Perl.
+Perl è un linguaggio di programmazione di alto livello derivato dal
+linguaggio C, da sed, da awk e dallo scripting delle shell. E' adatto
+per la gestione di processi, di file e in particolare di file di
+testo. Perl è un linguaggio semplice ed efficiente. Viene utilizzato
+per numerosi scopi, ma le sue applicazioni più diffuse sono le utility
+di amministrazione del sistema e la programmazione Web. Una grossa
+parte degli script CGI nel Web sono scritti in Perl. È consigliabile
+installare il pacchetto perl in modo che il sistema sia in grado di
+gestire gli script di Perl.
 
 %description -l ja
 Perl ¤Ï C¸À¸ì¡¢sed, awk¡¢µÚ¤Ó ¥·¥§¥ë¥¹¥¯¥ê¥×¥Æ¥£¥ó¥°¤Ëº¬¸»¤ò
@@ -146,7 +148,7 @@ Perl ¤Ï C¸À¸ì¡¢sed, awk¡¢µÚ¤Ó ¥·¥§¥ë¥¹¥¯¥ê¥×¥Æ¥£¥ó¥°¤Ëº¬¸»¤ò
 »ÈÍÑ¤µ¤ì¤Ş¤¹¤¬¡¢ Perl¤ÎºÇ¤âÉÑÈË¤Ê³èÍÑ¤Ï¥·¥¹¥Æ¥à¥¢¥É¥ß¥Ë¥¹¥È¥ì¡¼¥·¥ç¥ó
 ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤È web¥×¥í¥°¥é¥ß¥ó¥°¤Ç¤¹¡£web¾å¤Î ÂçÉôÊ¬¤ÎCGI"
 ¥¹¥¯¥ê¥×¥È¤¬Perl¤Ç½ñ¤«¤ì¤Æ¤¤¤Ş¤¹¡£ ¥·¥¹¥Æ¥à¤¬Perl¥¹¥¯¥ê¥×¥È¤ò
-½èÍı½ĞÍè¤ë¤è¤¦¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï  perl¥Ñ¥Ã¥±¡¼¥¸¤ò ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
+½èÍı½ĞÍè¤ë¤è¤¦¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï perl¥Ñ¥Ã¥±¡¼¥¸¤ò ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
 É¬Í×¤¬¤¢¤ê¤Ş¤¹¡£
 
 %description -l pl
@@ -158,14 +160,14 @@ praktyczny (³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny,
 elegancki, minimalny).
 
 %description -l pt
-O perl é uma linguagem de programação de alto nível que tem como raizes o
-C, sed, awk, e 'shell scripting'. O perl é bom a manipular processos e
-ficheiros, e é especialmente bom para manipular texto. Características do
-Perl são a eficiência e o uso prático. As aplicações mais comuns do Perl
-são utilitários de administração de sistema e programação Web. Uma grande
-parte dos 'scripts' CGI na Web são escritos em Perl. Você precisa do pacote
-perl instalado no seu sistema de maneira a que este possa tratar de
-'scripts' de Perl.
+O perl é uma linguagem de programação de alto nível que tem como
+raizes o C, sed, awk, e 'shell scripting'. O perl é bom a manipular
+processos e ficheiros, e é especialmente bom para manipular texto.
+Características do Perl são a eficiência e o uso prático. As
+aplicações mais comuns do Perl são utilitários de administração de
+sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
+são escritos em Perl. Você precisa do pacote perl instalado no seu
+sistema de maneira a que este possa tratar de 'scripts' de Perl.
 
 %description -l no
 
@@ -188,9 +190,9 @@ C, sed, awk É ÑÚÙËÉ ËÏÍÁÎÄÎÙÈ ÏÂÏÌÏŞÅË (shell). Perl ÈÏÒÏÛ ÄÌÑ ÒÁÂÏÔÙ
 ÎÁĞÉÓÁÎÁ ÎÁ Perl.
 
 %description -l sk
-Perl je programovací jazyk vy¹¹ej úrovne s koreòmi v C, sed, awk,
-a shell skriptoch. Perl má vhodné vlastnosti pre spracovanie procesov
-a súborov a je zvlá¹» vhodnı pre spracovanie textu. Jeho cieµmi sú
+Perl je programovací jazyk vy¹¹ej úrovne s koreòmi v C, sed, awk, a
+shell skriptoch. Perl má vhodné vlastnosti pre spracovanie procesov a
+súborov a je zvlá¹» vhodnı pre spracovanie textu. Jeho cieµmi sú
 praktiènos» a efektivita. Aj keï je pou¾ívanı pre mno¾stvo rozliènıch
 èinností, jeho najèastej¹ím pou¾itím (a kde vyniká najviac) sú
 pravdepodobne nástroje pre správu systému a programovanie na Webe.
@@ -200,12 +202,12 @@ Perl skripty.
 
 %description -l sv
 Perl är ett högnivåprogramspråk med rötter i C, sed, awk och
-skalskript.  Perl är bra på att hantera processer och filer, och är
-särskilt bra på att hantera text.  Utmärkande för Perl är att det är
-praktiskt och effektivt.  Det används för att göra en mängd olika
+skalskript. Perl är bra på att hantera processer och filer, och är
+särskilt bra på att hantera text. Utmärkande för Perl är att det är
+praktiskt och effektivt. Det används för att göra en mängd olika
 saker, men de vanligaste tillämpningarna är systemadministration och
-webbprogrammering.  En stor andel av CGI-skripten på webben är skrivna
-i Perl.  Du behöver installera paketet perl på ditt system så att ditt
+webbprogrammering. En stor andel av CGI-skripten på webben är skrivna
+i Perl. Du behöver installera paketet perl på ditt system så att ditt
 
 %description -l tr
 Perl, metin dosyalarını taramak, bu metin dosyalarından bilgi çıkarmak
@@ -226,10 +228,11 @@ sed, awk ÔÁ ÍÏ×ÁÈ ËÏÍÁÎÄÎÉÈ ÏÂÏÌÏÎÏË (shell). Perl ÄÏÂÒÅ Ğ¦ÄÈÏÄÉÔØ ÄÌÑ
 
 %description -l zh_CN
 Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆğÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
-ËüÉÆÓÚ´¦Àí½ø³ÌºÍÎÄ¼ş£¬ÓÈÆäÊÇ´¦ÀíÎÄ±¾¡£Perl µÄÌØµãÔÚÓÚÆäÊµÓÃĞÔºÍÓĞĞ§ĞÔ¡£
+ËüÉÆÓÚ´¦Àí½ø³ÌºÍÎÄ¼ş£¬ÓÈÆäÊÇ´¦ÀíÎÄ±¾¡£Perl
+µÄÌØµãÔÚÓÚÆäÊµÓÃĞÔºÍÓĞĞ§ĞÔ¡£
 ¾¡¹ÜËü¿ÉÓÃÓÚÖ´ĞĞĞí¶à²»Í¬µÄÈÎÎñ£¬µ«ÊÇÍ¨³£¶àÓ¦ÓÃÓÚÏµÍ³¹ÜÀíÊµÓÃ³ÌĞòºÍ Web
 ±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
-ÓïÑÔ½øĞĞ±àĞ´¡£Äú±ØĞëÔÚÏµÍ³ÖĞ°²×° perl  Èí¼ş°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
+ÓïÑÔ½øĞĞ±àĞ´¡£Äú±ØĞëÔÚÏµÍ³ÖĞ°²×° perl Èí¼ş°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
 %package devel
 Summary:	Perl development files
@@ -296,13 +299,13 @@ sperl ¤Ï setuid Perl scripts.¤ò¤â¤Ã¤È°ÂÁ´¤ËÆ°ºî¤Ç¤­¤ë(´üÂÔ¤Î¤¢¤ë)°Ù¤Î
 perl ¤Îsetuid ¥Ğ¥¤¥Ê¥ê ¥³¥Ô¡¼¤Ç¤¹¡£
 
 %description -n sperl -l pl
-sperl jest to kopia setuid root programu binarnego perl
-umo¿liwiaj±ca bezpieczniejsze (miejmy nadziejê) uruchamianie
-setuidowych skryptów Perla.
+sperl jest to kopia setuid root programu binarnego perl umo¿liwiaj±ca
+bezpieczniejsze (miejmy nadziejê) uruchamianie setuidowych skryptów
+Perla.
 
 %description -n sperl -l pt
-O suidperl é uma cópia do perl com 'setuid' que permite uma execução mais
-segura dos 'scripts' de Perl 'setuid'.
+O suidperl é uma cópia do perl com 'setuid' que permite uma execução
+mais segura dos 'scripts' de Perl 'setuid'.
 
 %description -n sperl -l ru
 Suid perl ÉÓĞÌØÚÕÅÔÓÑ ÄÌÑ ÔÏÇÏ, ŞÔÏÂÙ ÄÁÔØ ×ÏÚÍÏÖÎÏÓÔØ ÓÏÚÄÁ×ÁÔØ
@@ -316,8 +319,8 @@ suidperl är en setuid binärkopia av pers som tillåter
 (förhoppningsvis) säkrare körning av setuid perlskript.
 
 %description -n sperl -l zh_CN
-suidperl ÊÇ perl µÄ setuid ¶ş½øÖÆ¸±±¾¡£ËüÔÊĞí£¨Ï£ÍûÈç´Ë£©
-¸ü°²È«µØÔËĞĞ setuid perl ½Å±¾¡£
+suidperl ÊÇ perl µÄ setuid ¶ş½øÖÆ¸±±¾¡£ËüÔÊĞí£¨Ï£ÍûÈç´Ë£© ¸ü°²È«µØÔËĞĞ
+setuid perl ½Å±¾¡£
 
 %package modules
 Summary:	Practical Extraction and Report Language - modules
@@ -492,19 +495,19 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d Apache Archive Array Authen B Bundle Business CGI Class \
+install -d Apache Archive Array Astro Authen B Bundle Business CGI Class \
 	Config Convert Crypt DBD Data Date Devel Digest ExtUtils File \
 	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
-	Image Inline Language Lingua/EN Locale Log MIME Mail Math \
+	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
 	Module Net NetServer Netscape News Number Parse Pod PostScript \
 	Proc RADIUS RPC Regexp Set Sort Sub Statistics String Sys TeX \
 	Test Text/Query Tie Time Tree WWW XML \
 	auto/{Crypt,Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
-install -d Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest File \
-	IPC Locale Math Net String Term Text Unicode XML \
-	auto/{Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel,Digest} \
+install -d Astro Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest \
+	File IPC Locale Math Net String Term Text Unicode XML \
+	auto/{Astro,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel,Digest} \
 	auto/{File,IPC,Locale,Math,Net,String,Term,Text,Unicode,XML}
 )
 
@@ -516,12 +519,12 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
 #
-# Newer DB_File is available as a separate package 
+# Newer DB_File is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
 #
-# Newer CGI is available as a separate package 
+# Newer CGI is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
 
@@ -547,6 +550,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/perl5/site_perl
 %{_libdir}/perl5/site_perl/Apache
+%{_libdir}/perl5/site_perl/Astro
 %{_libdir}/perl5/site_perl/Archive
 %{_libdir}/perl5/site_perl/Array
 %{_libdir}/perl5/site_perl/Authen
@@ -564,7 +568,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Digest
 %{_libdir}/perl5/site_perl/ExtUtils
 %{_libdir}/perl5/site_perl/File
-%{_libdir}/perl5/site_perl/Filesys 
+%{_libdir}/perl5/site_perl/Filesys
 %{_libdir}/perl5/site_perl/Font
 %{_libdir}/perl5/site_perl/Games
 %{_libdir}/perl5/site_perl/Getopt
@@ -578,6 +582,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Inline
 %{_libdir}/perl5/site_perl/Language
 %{_libdir}/perl5/site_perl/Lingua
+%{_libdir}/perl5/site_perl/List
 %{_libdir}/perl5/site_perl/Locale
 %{_libdir}/perl5/site_perl/Log
 %{_libdir}/perl5/site_perl/MIME
@@ -611,6 +616,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/auto
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Astro
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Bit
@@ -630,6 +636,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Unicode
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/XML
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Astro
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Bit
