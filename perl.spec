@@ -16,7 +16,7 @@
 # - Ankry said something about moving perl* manual pages to separate
 #   directory (/usr/share/man/manp/ ?).  This shoud be laid down...
 # - find out why *.so and *.bs files for some pragmas are ,,listed twice''
-# - merge some fixes from 5.6.1 on HEAD, ie. man pages extensions
+# - merge some fixes from 5.6.1 on HEAD
 # - fix "FIXME"s, review "XXX"s
 # - fix perl.prov not recognising some package names which it should
 # - *TESTING*
@@ -55,7 +55,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.06%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.07%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -549,18 +549,16 @@ sh Configure \
 	-Darchname=%{_target_platform} \
 	-Dcccdlflags='-fPIC' \
 	-Dccdlflags='-rdynamic' \
-	-Dcf_by=PLD -Dmyhostname=localhost -Dperladmin=root@localhost \
-	-Dd_dosuid \
-	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
-	-Dman1dir=%{_mandir}/man1 \
-	-Dman3dir=%{_mandir}/man3 \
-	-Dman3ext=3pm \
 	-Doptimize="%{rpmcflags}" \
-	-Dprefix=%{_prefix} \
+	-Duseshrplib \
+	-Dd_dosuid \
+	-Dman1dir=%{_mandir}/man1 -Dman1ext=1 \
+	-Dman3dir=%{_mandir}/man3 -Dman3ext=3perl \
+	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_prefix} \
 	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
 	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
-	-Duseshrplib \
+	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
 	-Ui_dbm -Ui_gdbm -Ui_ndbm -Ui_db \
 	-Dlibswanted="nsl dl m c crypt util" \
 	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
@@ -578,7 +576,7 @@ sh Configure \
 %{__make} -f Makefile.micro
 
 %{?!_without_tests:%{__make} test}
-#%%{?!_without_tests:%{__make} minitest}
+#%{?!_without_tests:%{__make} minitest}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -594,8 +592,18 @@ install microperl $RPM_BUILD_ROOT%{_bindir}
 %{__ln_s} -f  c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
 %{__ln_s} -f  psed           $RPM_BUILD_ROOT%{_bindir}/s2p
 
+## Fix lib
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
+install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
+%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+
 
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="$RPM_BUILD_ROOT%{perl_privlib}" $RPM_BUILD_ROOT%{_bindir}/perl
+
+## Fix Config.pm: remove buildroot path and change man pages extensions
+%{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man3ext='3perl',man1ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 
 ## prepare scripts for finding provides
 %{__perl} -pi -e 's,\@perl_build_dir\@,%{_builddir}/%{name}-%{version},g' find-perl-provides.sh
@@ -619,11 +627,6 @@ WANTED='
 '
 %{__perl} $H2PH -a -d $PHDIR $WANTED
 )
-
-## Fix lib
-rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
-install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
-%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## remove man pages for other operating systems
 rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
