@@ -1,5 +1,5 @@
 %define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{!?bcond_off_perl_threads:-thread-multi}
+%define		perlthread %{?bcond_on_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
-Release:	14
+Release:	15
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -140,7 +140,7 @@ installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
 dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
 EOF
 
-USETHREADS=%{?bcond_off_perl_threads:-U}%{!?bcond_off_perl_threads:-D}
+USETHREADS=%{!?bcond_on_perl_threads:-U}%{?bcond_on_perl_threads:-D}
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
@@ -248,8 +248,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/perl5
 %attr( - ,root,root) %{_libdir}/perl5/%{version}/*
-#%dir %{_libdir}/site_perl
-#%attr( - ,root,root) %{_libdir}/site_perl/*
+%dir %{_libdir}/perl5/site_perl
+%attr( - ,root,root) %{_libdir}/perl5/site_perl/*
 %{_mandir}/man[13]/*
 
 %files -n sperl
