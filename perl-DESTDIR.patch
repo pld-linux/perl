@@ -1,6 +1,6 @@
---- perl5.005_03/lib/ExtUtils/MM_Unix.pm.wiget	Fri Mar  5 01:34:20 1999
-+++ perl5.005_03/lib/ExtUtils/MM_Unix.pm	Tue Sep 14 16:32:31 1999
-@@ -515,8 +515,7 @@
+--- perl-5.6.0/lib/ExtUtils/MM_Unix.pm.pius	Thu Mar  2 18:52:52 2000
++++ perl-5.6.0/lib/ExtUtils/MM_Unix.pm	Sun Jul  2 11:13:32 2000
+@@ -552,8 +552,7 @@
  	      AR_STATIC_ARGS NAME DISTNAME NAME_SYM VERSION
  	      VERSION_SYM XS_VERSION INST_BIN INST_EXE INST_LIB
  	      INST_ARCHLIB INST_SCRIPT PREFIX  INSTALLDIRS
@@ -9,39 +9,43 @@
 +	      PERL_LIB
  	      PERL_ARCHLIB SITELIBEXP SITEARCHEXP LIBPERL_A MYEXTLIB
  	      FIRST_MAKEFILE MAKE_APERL_FILE PERLMAINCC PERL_SRC
- 	      PERL_INC PERL FULLPERL
-@@ -526,6 +525,15 @@
+ 	      PERL_INC PERL FULLPERL FULL_AR
+@@ -563,6 +562,16 @@
  	push @m, "$tmp = $self->{$tmp}\n";
      }
  
 +    for $tmp (qw/
 +
-+	      INSTALLPRIVLIB INSTALLARCHLIB INSTALLSITELIB
-+	      INSTALLSITEARCH INSTALLBIN INSTALLSCRIPT 
++             INSTALLPRIVLIB INSTALLARCHLIB INSTALLSITELIB
++             INSTALLSITEARCH INSTALLBIN INSTALLSCRIPT
 +
-+	      / ) {
-+	next unless defined $self->{$tmp};
-+	push @m, "$tmp = \$\(DESTDIR\)$self->{$tmp}\n";
++             / ) {
++       next unless defined $self->{$tmp};
++       push @m, "$tmp = \$\(DESTDIR\)$self->{$tmp}\n";
 +    }
++
      push @m, qq{
  VERSION_MACRO = VERSION
  DEFINE_VERSION = -D\$(VERSION_MACRO)=\\\"\$(VERSION)\\\"
-@@ -565,10 +573,17 @@
- ";
- 
-     for $tmp (qw/
--	      INST_MAN1DIR INSTALLMAN1DIR MAN1EXT INST_MAN3DIR INSTALLMAN3DIR MAN3EXT
-+	      INST_MAN1DIR MAN1EXT INST_MAN3DIR MAN3EXT
+@@ -609,12 +618,19 @@
+ 	      INST_HTMLSITELIBDIR INSTALLHTMLSITELIBDIR
+ 	      INST_HTMLSCRIPTDIR  INSTALLHTMLSCRIPTDIR
+ 	      INST_HTMLLIBDIR                    HTMLEXT
+-	      INST_MAN1DIR        INSTALLMAN1DIR MAN1EXT
+-	      INST_MAN3DIR        INSTALLMAN3DIR MAN3EXT
++	      INST_MAN1DIR        MAN1EXT
++	      INST_MAN3DIR        MAN3EXT
  	      /) {
  	next unless defined $self->{$tmp};
  	push @m, "$tmp = $self->{$tmp}\n";
-+    }
+     }
 +
 +    for $tmp (qw/
-+	      INSTALLMAN1DIR INSTALLMAN3DIR
-+	      /) {
-+	next unless defined $self->{$tmp};
-+	push @m, "$tmp = \$\(DESTDIR\)$self->{$tmp}\n";
-     }
++             INSTALLMAN1DIR INSTALLMAN3DIR
++             /) {
++       next unless defined $self->{$tmp};
++       push @m, "$tmp = \$\(DESTDIR\)$self->{$tmp}\n";
++     }
  
      for $tmp (qw(
+ 		PERM_RW PERM_RWX

@@ -1,6 +1,6 @@
---- perl5.005_56/installperl~	Mon Feb 15 15:23:47 1999
-+++ perl5.005_56/installperl	Tue Apr 20 19:16:44 1999
-@@ -117,8 +117,6 @@
+--- perl-5.6.0/installperl.pius	Wed Mar  8 13:22:41 2000
++++ perl-5.6.0/installperl	Sun Jul  2 13:36:20 2000
+@@ -143,8 +143,6 @@
  
  # Do some quick sanity checks.
  
@@ -9,12 +9,12 @@
     $installbin		|| die "No installbin directory in config.sh\n";
  -d $installbin		|| mkpath($installbin, 1, 0777);
  -d $installbin		|| $nonono || die "$installbin is not a directory\n";
-@@ -182,7 +180,7 @@
- safe_unlink("$installbin/s$perl$ver$exe_ext");
+@@ -224,7 +222,7 @@
+ safe_unlink("$installbin/s$perl_verbase$ver$exe_ext");
  if ($d_dosuid) {
-     copy("suidperl$exe_ext", "$installbin/s$perl$ver$exe_ext");
--    chmod(04711, "$installbin/s$perl$ver$exe_ext");
-+    chmod(0755, "$installbin/s$perl$ver$exe_ext");
+     copy("suidperl$exe_ext", "$installbin/s$perl_verbase$ver$exe_ext");
+-    chmod(04711, "$installbin/s$perl_verbase$ver$exe_ext");
++    chmod(0755, "$installbin/s$perl_verbase$ver$exe_ext");
  }
  
  # Install library files.
