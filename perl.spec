@@ -87,8 +87,6 @@ Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
-Requires:	perldoc
-Requires:	perl-doc-reference
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -345,7 +343,6 @@ POD.
 Summary:	Perl reference documentation
 Summary(pl):	Dokumentacja Perla
 Group:		Documentation
-Requires:	man
 
 %description doc-reference
 Reference documentation for the Practical Extraction and Report Language
