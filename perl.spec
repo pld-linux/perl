@@ -413,6 +413,7 @@ Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Provides:	perldoc = 3.12@%{version}
 Requires:	%{name}-modules
+Requires:	%{name}-tools-pod
 Group:		Development/Tools
 
 %description perldoc
