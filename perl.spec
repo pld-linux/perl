@@ -9,7 +9,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	3
+Release:	4
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
@@ -96,7 +96,8 @@ sh Configure \
 	-des \
 	-Darchname=%{_target} \
 	-Dprefix=/usr \
-	-Dman3dir=/usr/man/man3 \
+	-Dman1dir=/usr/share/man/man1 \
+	-Dman3dir=/usr/share/man/man3 \
 	-Dman3ext=3pm \
 	-Doptimize="$RPM_OPT_FLAGS" \
 	-Duseshrplib \
@@ -136,7 +137,7 @@ mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
 rm -f Config.pm.old )
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man*/* \
+gzip -9fn $RPM_BUILD_ROOT/usr/share/man/man*/* \
 	README Change*
 
 find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-unneeded {} \;
@@ -169,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir /usr/lib/perl5
 %attr( - ,root,root) /usr/lib/perl5/*
-%attr(644,root,root) /usr/man/man[13]/*
+%attr(644,root,root) /usr/share/man/man[13]/*
 
 %files -n sperl
 %attr(4755,root,root) /usr/bin/sperl%{perlver}%{perlrel}
