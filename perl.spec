@@ -9,13 +9,14 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	16
+Release:	17
 License:	GPL
 Group:		Utilities/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
 Epoch:		1
 Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
+Source1:	%{name}-db3.tar.gz
 Patch0:		perl-noroot_install.patch
 Patch1:		perl-DESTDIR.patch
 Patch2:		perl-File-Spec-0.7.patch
@@ -84,7 +85,7 @@ Practical Extraction and Report Language (SUID root binary).
 Practical Extraction and Report Language (SUID root binaria).
 
 %prep
-%setup  -q -n %{name}%{version}
+%setup  -q -n %{name}%{version} -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
