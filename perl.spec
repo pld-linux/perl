@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	16
+Release:	17
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -15,6 +15,7 @@ Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Aplikacje/Tekst
 Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
+Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
 Patch2:		%{name}-DESTDIR.patch
@@ -288,6 +289,8 @@ cd %{_target_platform}*/%{version}
 install -d Apache BSD Compress Net Term auto/{Apache,BSD,Compress,Net,Term}
 )
 
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+
 gzip -9nf README Changes
 
 %clean
@@ -417,6 +420,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
+%lang(fi) %{_mandir}/fi/man1/perl.1*
+%lang(pl) %{_mandir}/pl/man1/perl.1*
+
 
 %files devel
 %defattr(644,root,root,755)
@@ -450,6 +456,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/[A-BD-Za-z]*
 %{_mandir}/man3/CPAN*
 %{_mandir}/man3/C[a-z]*
+%lang(fi) %{_mandir}/fi/man1/perl[a-z]*.1*
+%lang(pl) %{_mandir}/pl/man1/perl[a-z]*.1*
+
 %{_libdir}/perl5/%{version}/%{_target_platform}*/CORE
 
 %files -n sperl
