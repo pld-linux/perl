@@ -58,7 +58,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.2
-Release:	1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	2%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
@@ -978,6 +978,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libperl.so
 %{perl_archlib}/CORE/*.h
+%{perl_archlib}/CORE/reentr.inc
 
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
