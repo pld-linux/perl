@@ -561,16 +561,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
-
 %attr(755,root,root) %{_bindir}/perlbug
 %{_mandir}/man1/perlbug.*
-
 %attr(755,root,root) %{_bindir}/piconv
 %{_mandir}/man1/piconv.*
-
 %attr(755,root,root) %{_bindir}/psed
 %{_mandir}/man1/psed.*
-
 %attr(755,root,root) %{_bindir}/perldoc
 %{perl_privlib}/pod/perldiag.pod
 %{perl_privlib}/pod/perlfaq*.pod
@@ -585,8 +581,51 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorarch}
 %dir %{perl_vendorarch}/auto
 
+# FIXME: should it really be in the main package?
+%{perl_privlib}/unicore
+
 %{perl_privlib}/PerlIO
 %{_mandir}/man3/PerlIO::via::*
+
+# *.ph files (could be made a separate package, but an auto*helper's support is needed)
+%{perl_archlib}/*.ph
+%{perl_archlib}/bits
+%{perl_archlib}/gnu
+%{perl_archlib}/linux
+%{perl_archlib}/sys
+
+%{perl_archlib}/Data
+%dir %{perl_archlib}/auto/Data
+%dir %{perl_archlib}/auto/Data/Dumper
+%attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
+%{perl_archlib}/auto/Data/Dumper/*.bs
+%{_mandir}/man3/Data*
+
+%{perl_privlib}/Digest.pm
+%{perl_archlib}/Digest
+%dir %{perl_archlib}/auto/Digest
+%dir %{perl_archlib}/auto/Digest/MD5
+%attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/*.so
+%{perl_archlib}/auto/Digest/MD5/*.bs
+%{_mandir}/man3/Digest*
+
+## shouldn't this be in perl-base?
+%{perl_archlib}/Encode*
+%dir %{perl_archlib}/auto/Encode
+%dir %{perl_archlib}/auto/Encode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
+%{perl_archlib}/auto/Encode/*/*.bs
+%{_mandir}/man3/Encode*
+
+# FIXME: README and Changes files
+%{perl_archlib}/Filter
+%dir %{perl_archlib}/auto/Filter
+%dir %{perl_archlib}/auto/Filter/Util
+%dir %{perl_archlib}/auto/Filter/Util/Call
+%attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
+%{perl_archlib}/auto/Filter/Util/Call/*.bs
+%{_mandir}/man3/Filter*
+
 
 
 %files base
@@ -688,6 +727,34 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/lib*.so
 %{perl_archlib}/CORE
+
+# FIXME: Changes file to _docdir (MANIFEST.SKIP too?)
+%{perl_privlib}/ExtUtils
+%{perl_privlib}/CPAN*
+
+%{perl_archlib}/B
+%{perl_archlib}/B.pm
+%dir %{perl_archlib}/auto/B
+%dir %{perl_archlib}/auto/B/C
+%attr(755,root,root) %{perl_archlib}/auto/B/*.so
+%attr(755,root,root) %{perl_archlib}/auto/B/C/*.so
+%{perl_archlib}/auto/B/*.bs
+%{perl_archlib}/auto/B/C/*.bs
+%{_mandir}/man3/B[.:]*
+
+%{perl_archlib}/Devel
+%dir %{perl_archlib}/auto/Devel
+%dir %{perl_archlib}/auto/Devel/*/
+%attr(755,root,root) %{perl_archlib}/auto/Devel/*/*.so
+%{perl_archlib}/auto/Devel/*/*.bs
+%{_mandir}/man3/Devel::*
+
+%{perl_archlib}/XS
+%dir %{perl_archlib}/auto/XS
+%dir %{perl_archlib}/auto/XS/*/
+%attr(755,root,root) %{perl_archlib}/auto/XS/*/*.so
+%{perl_archlib}/auto/XS/*/*.bs
+%{_mandir}/man3/XS::*
 
 
 %files -n sperl
