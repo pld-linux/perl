@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	10
+Release:	11
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -298,6 +298,7 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/Carp.pm
 %{_libdir}/perl5/%{version}/Cwd.pm
 %{_libdir}/perl5/%{version}/DirHandle.pm
+%{_libdir}/perl5/%{version}/Exporter
 %{_libdir}/perl5/%{version}/Exporter.pm
 %{_libdir}/perl5/%{version}/File/Basename.pm
 %{_libdir}/perl5/%{version}/File/Find.pm
@@ -331,6 +332,7 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %dir %{_libdir}/perl5/%{version}/pod
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DynaLoader.pm
+%{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO
 %{_libdir}/perl5/%{version}/%{_target_platform}*/POSIX.pm
@@ -412,7 +414,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/CPAN
 %{_libdir}/perl5/%{version}/Class
 %{_libdir}/perl5/%{version}/Devel
-%{_libdir}/perl5/%{version}/Exporter
 %{_libdir}/perl5/%{version}/ExtUtils
 %{_libdir}/perl5/%{version}/File/CheckTree.pm
 %{_libdir}/perl5/%{version}/File/Compare.pm
@@ -502,7 +503,6 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ByteLoader.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
