@@ -1,0 +1,11 @@
+--- perl-5.6.1/Configure~	Sat Apr 14 15:38:22 2001
++++ perl-5.6.1/Configure	Sat Apr 14 15:52:43 2001
+@@ -6035,7 +6035,7 @@
+ : sitelib may have an optional trailing /share.
+ case "$sitearch" in
+ '')	dflt=`echo $sitelib | $sed 's,/share$,,'`
+-	dflt="$dflt/$archname"
++	dflt="$dflt/$archname/$version"
+ 	;;
+ *)	dflt="$sitearch"
+ 	;;
