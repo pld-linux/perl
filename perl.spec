@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	62
+Release:	63
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -492,7 +492,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
 	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
-	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
+	Filesys Font Games Getopt GnuPG Graph HTML HTTP I18N IO/Socket IPC \
 	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
 	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
@@ -577,6 +577,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Font
 %{_libdir}/perl5/site_perl/Games
 %{_libdir}/perl5/site_perl/Getopt
+%{_libdir}/perl5/site_perl/GnuPG
 %{_libdir}/perl5/site_perl/Graph
 %{_libdir}/perl5/site_perl/HTML
 %{_libdir}/perl5/site_perl/HTTP
