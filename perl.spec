@@ -183,10 +183,6 @@ C, sed, awk и языки командных оболочек (shell). Perl хорош для работы
 администрирования и web-программирование. Большая часть CGI скриптов
 написана на Perl.
 
-Поскольку утилиты на Perl необходимые для системы или входящие в
-состав других пакетов встречаются очень часто, лучше всего установить
-этот пакет.
-
 %description -l sk
 Perl je programovacМ jazyk vy╧╧ej Зrovne s koreРmi v C, sed, awk,
 a shell skriptoch. Perl mА vhodnИ vlastnosti pre spracovanie procesov
@@ -224,10 +220,6 @@ sed, awk та мовах командних оболонок (shell). Perl добре п╕дходить для
 найсильн╕ша сторона) це, ╕мов╕рно, утил╕ти системного адм╕н╕стрування
 та web-програмування. Б╕льша частина CGI скрипт╕в написана на Perl.
 
-Оск╕льки утил╕ти на Perl необх╕дн╕ для системи чи т╕, як╕ входять до
-складу ╕нших пакет╕в зустр╕чаються досить часто, варто цей пакет
-встановити.
-
 %description -l zh_CN
 Perl йгр╩жж╦ъ╪╤╠ЮЁлсОятё╛фПт╢сз C║╒sed║╒awk ╨м shell ╫е╠╬║ё
 кЭифсз╢╕юМ╫ЬЁл╨мнд╪Чё╛схфДйг╢╕юМнд╠╬║ёPerl ╣дль╣ЦтзсзфДй╣сцпт╨мспп╖пт║ё
@@ -258,36 +250,70 @@ Pliki potrzebne przy tworzeniu wЁasnych aplikacji w perlu.
 Arquivos de desenvolvimento e cabeГalhos para o perl.
 
 %package -n sperl
-Summary:	Practical Extraction and Report Language (SUID root binary)
+Summary:	Perl setuid root binaries for use with setuid Perl scripts
+Summary(de):	sperl zur Verwendung mit setuid Perl-Skripts
+Summary(es):	sperl, para uso con los scrips de Perl setuid
+Summary(fr):	sperl, Ю utiliser avec les scripts Perl setuid
+Summary(it):	sperl, da usare con gli script di Perl setuid
+Summary(ja):	Setuid Perl scripts ╓х╟Л╫О╓к╩хмя╓╧╓К╓©╓А╓н suidperl
+Summary(ko):	Setuid фч ╫╨е╘╦Ёф╝©м гт╡╡ ╩Г©К╣г╢б suidperl
+Summary(pl):	Binaria setuid root Perla dla setuid-owych skryptСw Perla
+Summary(pt):	O suidperl, para usar com os programas de Perl 'setuid'
 Summary(ru):	SUID версия языка Perl
-Summary(pl):	Practical Extraction and Report Language (binaria SUID root)
+Summary(sv):	sperl, att anvДndas med setuid perlskript
 Summary(uk):	SUID-верс╕я мови Perl
+Summary(zh_CN):	sperlё╛сцю╢сК setuid perl ╫е╠╬р╩фПй╧сц
 Group:		Applications/Text
 Requires:	%{name} = %{version}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
-Practical Extraction and Report Language (SUID root binary).
+sperl is a setuid root binary copy of perl that allows for (hopefully)
+more secure running of setuid Perl scripts.
+
+%description -n sperl -l de
+sperl ist eine binДre setuid Kopie von Perl, mit der (hoffentlich)
+setuid-Skripts sicherer ausgefЭhrt werden kЖnnen.
 
 %description -n sperl -l pl
-Practical Extraction and Report Language (binaria SUID root).
+sperl es una copia binaria de setuid para perl que le permite\n"
+una ejecuciСn mАs segura de los scripts de Perl setuid."
+
+%description -n sperl -l fr
+sperl est une copie binaire setuid de perl qui permet une exИcution
+plus sШre de scripts Perl setuid.
+
+%description -n sperl -l it
+sperl Х una copia binaria setuid di perl che consente un'esecuzione
+piЫ sicura di script di Perl setuid.
+
+%description -n sperl -l ja
+sperl ╓о setuid Perl scripts.╓Р╓Б╓ц╓х╟ба╢╓кф╟╨Н╓г╓╜╓К(╢Эбт╓н╓╒╓К)╟ы╓н
+perl ╓нsetuid ╔п╔╓╔й╔Й ╔Ё╔т║╪╓г╓╧║ё
+
+%description -n sperl -l pl
+sperl jest to kopia setuid root programu binarnego perl
+umo©liwiaj╠ca bezpieczniejsze (miejmy nadziejЙ) uruchamianie
+setuidowych skryptСw Perla.
+
+%description -n sperl -l pt
+O suidperl И uma cСpia do perl com 'setuid' que permite uma execuГЦo mais
+segura dos 'scripts' de Perl 'setuid'.
 
 %description -n sperl -l ru
-Perl - это интерпретируемый язык программирования, уходящий корнями в
-C, sed, awk и языки командных оболочек (shell). Perl хорош для работы
-с процессами и файлами, а особенно хорош для задач обработки текстов.
-Особенности Perl - практичность и эффективность. Хотя он и
-используется для решения самых разных задач, наиболее распространенные
-применения (и то, в чем он силен) это, вероятно, утилиты системного
-администрирования и web-программирование. Большая часть CGI скриптов
-написана на Perl.
-
 Suid perl испльзуется для того, чтобы дать возможность создавать
 скрипты с утановленным битом SUID. Хотя в него встроено достаточно
 много проверок, призваных обеспечить безопасность его использования
 suid perl все равно представляет собой значительную потенциальную
-опасность. Установливайте этот пакет только в том случае, когда вы
-уверены, что он вам действительно необходим.
+опасность.
+
+%description -n sperl -l sv
+suidperl Дr en setuid binДrkopia av pers som tillЕter
+(fЖrhoppningsvis) sДkrare kЖrning av setuid perlskript.
+
+%description -n sperl -l zh_CN
+suidperl йг perl ╣д setuid ╤Ч╫Ьжф╦╠╠╬║ёкЭтйпМё╗оёмШхГ╢кё╘
+╦Э╟╡х╚╣ьткпп setuid perl ╫е╠╬║ё
 
 %package modules
 Summary:	Practical Extraction and Report Language - modules
