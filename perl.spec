@@ -560,7 +560,7 @@ sh Configure \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
 	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
 	-Ui_dbm -Ui_gdbm -Ui_ndbm -Ui_db \
-	-Dlibswanted="nsl dl m c crypt util" \
+	-Dlibswanted="dl m c crypt" \
 	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
 	-%{?_without_largefiles:U}%{?!_without_largefiles:D}uselargefiles
 
