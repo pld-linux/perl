@@ -1,19 +1,19 @@
+%define		perlver 5.005
+%define		perlrel 03
+%define		perlthread -thread
+
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
 Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
-%define		perlver 5.005
-%define		perlrel 02
-%define		perlthread -thread
 Version:	%{perlver}_%{perlrel}
 Release:	2
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
-#######		ftp://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0
-Source:		%{name}%{version}.tar.gz
+Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
 URL:		http://www.perl.org/
 Requires:	csh
@@ -90,8 +90,17 @@ installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
 installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
 EOF
 
-sh Configure -des -Dprefix=/usr -Darchname=${RPM_ARCH}-linux -Dd_dosuid \
-	-Ud_setresuid -Ud_setresgid -Dusethreads -Doptimize="$RPM_OPT_FLAGS"
+sh Configure \
+	-Darchname=${RPM_ARCH}-linux \
+	-Dprefix=/usr \
+	-Dman3dir=/usr/man/man3 \
+	-Dman3ext=3pm \
+	-Doptimize="$RPM_OPT_FLAGS" \
+	-Dusethreads \
+	-des \
+	-Dd_dosuid \
+	-Ud_setresuid \
+	-Ud_setresgid 
 
 make
 
@@ -106,7 +115,6 @@ install -d $RPM_BUILD_ROOT
 make install
 install utils/pl2pm $RPM_BUILD_ROOT/usr/bin/pl2pm
 
-bzip2 -9 README Change*
 
 (cd /usr/include ;
 PERL5LIB=$RPM_BUILD_ROOT/usr/lib/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
@@ -115,50 +123,54 @@ $RPM_BUILD_ROOT/usr/bin/h2ph \
 -d $RPM_BUILD_ROOT/usr/lib/perl5/${RPM_ARCH}-linux/%{perlver}%{perlrel}/ \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
-cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread}/
+( cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread}/
+
+mv .packlist .packlist.old
+sed "s|$RPM_BUILD_ROOT||" < .packlist.old > .packlist
+rm -f .packlist.old
 
 mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||" < Config.pm.old > Config.pm
-rm -f Config.pm.old
+rm -f Config.pm.old )
 
-mv $RPM_BUILD_ROOT/usr/lib/perl5/5.00502/man/man3 $RPM_BUILD_ROOT/usr/man
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man*/* \
+	README Change*
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man3
-
-find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-debug {} \;
+find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-unneeded {} \;
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.bz2 Change*
+%doc README.gz Change*
 
-%attr(755, root, root) /usr/bin/a2p
-%attr(755, root, root) /usr/bin/c2ph
-%attr(755, root, root) /usr/bin/find2perl
-%attr(755, root, root) /usr/bin/h2ph
-%attr(755, root, root) /usr/bin/h2xs
-%attr(755, root, root) /usr/bin/perl
-%attr(755, root, root) /usr/bin/perl5.00502
-%attr(755, root, root) /usr/bin/perlbug
-%attr(755, root, root) /usr/bin/perlcc
-%attr(755, root, root) /usr/bin/perldoc
-%attr(755, root, root) /usr/bin/pl2pm
-%attr(755, root, root) /usr/bin/pod2html
-%attr(755, root, root) /usr/bin/pod2latex
-%attr(755, root, root) /usr/bin/pod2man
-%attr(755, root, root) /usr/bin/pod2text
-%attr(755, root, root) /usr/bin/pstruct
-%attr(755, root, root) /usr/bin/s2p
-%attr(755, root, root) /usr/bin/splain
+%attr(755,root,root) /usr/bin/a2p
+%attr(755,root,root) /usr/bin/c2ph
+%attr(755,root,root) /usr/bin/find2perl
+%attr(755,root,root) /usr/bin/h2ph
+%attr(755,root,root) /usr/bin/h2xs
+%attr(755,root,root) /usr/bin/perl
+%attr(755,root,root) /usr/bin/perl%{perlver}%{perlrel}
+%attr(755,root,root) /usr/bin/perlbug
+%attr(755,root,root) /usr/bin/perlcc
+%attr(755,root,root) /usr/bin/perldoc
+%attr(755,root,root) /usr/bin/pl2pm
+%attr(755,root,root) /usr/bin/pod2html
+%attr(755,root,root) /usr/bin/pod2latex
+%attr(755,root,root) /usr/bin/pod2man
+%attr(755,root,root) /usr/bin/pod2text
+%attr(755,root,root) /usr/bin/pstruct
+%attr(755,root,root) /usr/bin/s2p
+%attr(755,root,root) /usr/bin/splain
 
-%attr(-,root,root,755) /usr/lib/perl5
+%dir /usr/lib/perl5
+%attr(-,root,root) /usr/lib/perl5/*
 /usr/man/man[13]/*
 
 %files -n sperl
-%attr(4711, root, root) /usr/bin/sperl5.00502
-%attr(4711, root, root) /usr/bin/suidperl
+%attr(4711,root,root) /usr/bin/sperl%{perlver}%{perlrel}
+%attr(4711,root,root) /usr/bin/suidperl
 
 %changelog
 * Mon Oct 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
