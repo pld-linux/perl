@@ -50,13 +50,13 @@ Summary(sv):	ProgrammeringssprÂket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
-Version:	5.8.4
-Release:	9%{!?with_threads:_nothr}
+Version:	5.8.5
+Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	3eb135afd0114f4e1acdd4ad6b8fd947
+# Source0-md5:	9db6be76aa275f415d75c224ad1d4029
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	perl.prov
