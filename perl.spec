@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.30%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.31%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -913,8 +913,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_mandir}/man1/perldebguts.*
-
 %attr(755,root,root) %{_libdir}/lib*.so
 %{perl_archlib}/CORE
 
@@ -965,17 +963,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{perl_privlib}/pod/perl.pod
 %{perl_privlib}/pod/perl[5abceghijklmnopqrstuvwx]*.pod
-%{perl_privlib}/pod/perld[^i]*.pod
-%{perl_privlib}/pod/perlf[^au]*.pod
+%{perl_privlib}/pod/perld[!i]*.pod
+%{perl_privlib}/pod/perlf[!au]*.pod
 
 
 %files doc-reference
 %defattr(644,root,root,755)
-%{_mandir}/man1/perl[5adefghilmnoprstuvwx]*
+%{_mandir}/man1/perl[5aefghlmnoprstuvwx]*
 %{_mandir}/man1/perlbo*
 %{_mandir}/man1/perlcall.*
 %{_mandir}/man1/perlclib.*
 %{_mandir}/man1/perlcompile.*
+%{_mandir}/man1/perld[!o]*
+%{_mandir}/man1/perli[!v]*
 %lang(cn) %{_mandir}/man1/perlcn.*
 %lang(jp) %{_mandir}/man1/perljp.*
 %lang(ko) %{_mandir}/man1/perlko.*
