@@ -1,0 +1,5 @@
+- added messing with Config.pm (stripping buildroot and new man pages
+  extensions); NFY -- ExtUtils::MakeMaker is fucked up (nie mogê oprzeæ
+  siê wra¿eniu, ¿e ch³opaki gdzie¶ w okolicy wersji 5.9x spu¶cili swoje
+  mózgi wraz z papierem toaletowym)
+- release 0.07
