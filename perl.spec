@@ -12,7 +12,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
-Release:	31
+Release:	32
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -356,7 +356,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 install -d B Crypt Date Devel ExtUtils File Font HTML HTTP I18N IO/Socket \
 	Mail News Net Parse RPC Text Tie Time XML auto/Mail
 cd %{_target_platform}*/%{version}
-install -d Apache BSD Compress Net Term auto/{Apache,BSD,Compress,Net,Term}
+install -d Apache BSD Compress Net Term auto/{Apache,BSD,Compress,Net,Term,XML}
 )
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -412,6 +412,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Term
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/XML
 
 %{_libdir}/perl5/%{version}/AutoLoader.pm
 %{_libdir}/perl5/%{version}/Carp
