@@ -694,9 +694,9 @@ rm -f uconfig.h
 
 cat > runperl <<EOF
 #!/bin/sh
-LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" \
-	PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
-	exec %{buildroot}%{_bindir}/perl \$*
+LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
+PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
+exec %{buildroot}%{_bindir}/perl \$*
 EOF
 chmod a+x runperl
 
