@@ -645,6 +645,7 @@ sh Configure \
 	-Dsiteman1=%{_usr}/local/share/man/man1 -Dsiteman1ext=1p \
 	-Dsiteman3=%{_usr}/local/share/man/man3p -Dsiteman3ext=3pm \
 	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_usr}/local \
+	-Dlibpth="%{_libdir} /%{_lib}" \
 	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
 	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
