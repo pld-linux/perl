@@ -16,7 +16,7 @@
 # - add the {O,N}DBM_File modules
 # - review the perldiag.pod issue
 # - consider disabling ithreads by default
-# - move the perl_vendorarch directories to perl-base (?)
+# - consider introducing perl-dirs
 #
 # TODO for perl-dependent packages:
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
@@ -32,6 +32,10 @@
 %else
 %define		__find_provides %{_builddir}/%{name}-%{version}/find-perl-provides.sh
 %endif
+
+# temporary (I hope) hack, the above doesn't work with rpm-4.3-0.20030610
+%define _noautoreq 'perl(.*)' 'perl-base'
+
 
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
@@ -834,21 +838,25 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/[a-z]*.pm
 %{perl_privlib}/[a-z]*.pl
 %{perl_privlib}/warnings
-%{perl_archlib}/[a-z]*.pm
-%{perl_archlib}/threads
+%{perl_archlib}/[a-r]*.pm
 %dir %{perl_archlib}/auto/attrs
+%{perl_archlib}/auto/attrs/*.bs
+%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
 %dir %{perl_archlib}/auto/re
+%{perl_archlib}/auto/re/*.bs
+%attr(755,root,root) %{perl_archlib}/auto/re/*.so
+%{_mandir}/man3/[a-su-w]*
+
+%if %{?!_without_threads:1}0
+%{perl_archlib}/threads*
 %dir %{perl_archlib}/auto/threads
 %dir %{perl_archlib}/auto/threads/shared
-%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
-%attr(755,root,root) %{perl_archlib}/auto/re/*.so
-%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
-%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
-%{perl_archlib}/auto/attrs/*.bs
-%{perl_archlib}/auto/re/*.bs
 %{perl_archlib}/auto/threads/*.bs
 %{perl_archlib}/auto/threads/shared/*.bs
-%{_mandir}/man3/[a-z]*
+%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
+%{_mandir}/man3/t*
+%endif
 
 # arch-_IN_dependent modules
 %{perl_privlib}/Auto*
@@ -1196,9 +1204,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Test*
 %{perl_privlib}/Text
 %{_mandir}/man3/Text::*
-# XXX: to perl-base?
+%if %{?!_without_threads:1}0
 %{perl_privlib}/Thread*
 %{_mandir}/man3/Thread*
+%endif
 %{perl_privlib}/Tie
 %{_mandir}/man3/Tie::*
 %{perl_privlib}/Time
