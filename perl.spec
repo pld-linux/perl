@@ -44,6 +44,7 @@ Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
 Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
+Patch13:	%{name}-gcc3.patch
 URL:		http://www.perl.org/
 BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
@@ -381,6 +382,7 @@ POD.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old

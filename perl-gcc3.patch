@@ -1,0 +1,22 @@
+--- perl-5.6.1/makedepend.SH.orig	Mon Mar 19 08:33:17 2001
++++ perl-5.6.1/makedepend.SH	Tue Sep 10 20:35:55 2002
+@@ -155,6 +155,8 @@
+         $sed \
+ 	    -e '1d' \
+ 	    -e '/^#.*<stdin>/d' \
++	    -e '/^#.*<built-in>/d' \
++	    -e '/^#.*<command line>/d' \
+ 	    -e '/^#.*"-"/d' \
+ 	    -e 's#\.[0-9][0-9]*\.c#'"$file.c#" \
+ 	    -e 's/^[	 ]*#[	 ]*line/#/' \
+--- perl-5.6.1/Configure.orig	Tue Sep 10 20:37:00 2002
++++ perl-5.6.1/Configure	Tue Sep 10 21:14:10 2002
+@@ -990,7 +990,7 @@
+ archname=''
+ : Possible local include directories to search.
+ : Set locincpth to "" in a hint file to defeat local include searches.
+-locincpth="/usr/local/include /opt/local/include /usr/gnu/include"
++locincpth="/opt/local/include /usr/gnu/include"
+ locincpth="$locincpth /opt/gnu/include /usr/GNU/include /opt/GNU/include"
+ :
+ : no include file wanted by default
