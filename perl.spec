@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		Utilities/Text
@@ -225,6 +225,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pod2latex
 %attr(755,root,root) %{_bindir}/pod2man
 %attr(755,root,root) %{_bindir}/pod2text
+%attr(755,root,root) %{_bindir}/podselect
 %attr(755,root,root) %{_bindir}/pstruct
 %attr(755,root,root) %{_bindir}/s2p
 %attr(755,root,root) %{_bindir}/splain
