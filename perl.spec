@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	59
+Release:	60
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -510,11 +510,11 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 
 cd %{_target_platform}*/%{version}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
-	Digest File IPC Locale Math Net Speech/Recognizer String Term Text \
-	Unicode XML \
+	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
+	Text Unicode XML \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
-	auto/{Digest,File,IPC,Locale,Math,Net,Speech/Recognizer,String,Term} \
-	auto/{Text,Unicode,XML}
+	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Speech/Recognizer,String} \
+	auto/{Term,Text,Unicode,XML}
 )
 
 # These File::Spec submodules are for non-Unix systems
@@ -648,6 +648,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Digest
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/File
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/IPC
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Inline
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Locale
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Math
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
@@ -670,6 +671,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Digest
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/File
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/IPC
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Inline
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Locale
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Math
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Net
