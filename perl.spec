@@ -1,5 +1,5 @@
 %define		perlver 5.005
-%define		perlrel 03
+%define		perlrel 61
 %define		perlthread -thread
 
 Summary:	Practical Extraction and Report Language
@@ -9,7 +9,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	5
+Release:	0.1
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
@@ -92,8 +92,9 @@ EOF
 
 sh Configure \
 	-des \
+	-Dcc=gcc \
 	-Darchname=%{_target_platform} \
-	-Dprefix=/usr \
+	-Dprefix=%{_prefix} \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
