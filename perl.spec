@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	51
+Release:	52
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -495,7 +495,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d Apache Archive Array Astro Authen B Bundle Business CGI Class \
+install -d Apache Archive Array Astro Audio Authen B Bundle Business CGI Class \
 	Config Convert Crypt DBD Data Date Devel Digest ExtUtils File \
 	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
 	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
@@ -505,10 +505,10 @@ install -d Apache Archive Array Astro Authen B Bundle Business CGI Class \
 	auto/{Array,Crypt,Mail,Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
-install -d Astro Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest \
+install -d Astro Audio Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest \
 	File IPC Locale Math Net String Term Text Unicode XML \
-	auto/{Astro,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel,Digest} \
-	auto/{File,IPC,Locale,Math,Net,String,Term,Text,Unicode,XML}
+	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
+	auto/{Digest,File,IPC,Locale,Math,Net,String,Term,Text,Unicode,XML}
 )
 
 # These File::Spec submodules are for non-Unix systems
@@ -550,6 +550,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/perl5/site_perl
 %{_libdir}/perl5/site_perl/Apache
+%{_libdir}/perl5/site_perl/Audio
 %{_libdir}/perl5/site_perl/Astro
 %{_libdir}/perl5/site_perl/Archive
 %{_libdir}/perl5/site_perl/Array
@@ -617,6 +618,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Astro
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Audio
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Bit
@@ -637,6 +639,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/XML
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Astro
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Audio
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Bit
