@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.0
-Release:	11
+Release:	11.1
 Epoch:		1
 License:	GPL
 Group:		Utilities/Text
@@ -140,8 +140,13 @@ sh Configure \
 %ifarch sparc sparc64
 	-Ud_longdbl \
 %endif
-	-Dd_dosuid
-
+%ifnarch sparc sparc64
+	-Duseshrplib \
+%endif 
+	-Dd_dosuid \
+	-Ud_setresuid \
+	-Ud_setresgid
+	
 %{__make}
 
 %install
