@@ -1,5 +1,11 @@
+#
+# Conditional build:
+# _without_tests   - do not perform "make test"
+# _with_threads    - build with support for threads
+# _with_largefiles - build with large file support (think before turning it on)
+#
 
-%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
+#%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?_with_perl_threads:-thread-multi}
 
 Summary:	Practical Extraction and Report Language (Perl)
@@ -36,7 +42,7 @@ Patch1:		%{name}-nodb.patch
 # weird one...
 #Patch2:	%{name}-DESTDIR.patch
 # I don't like this one...
-Patch3:		%{name}-find-provides.patch
+#Patch3:		%{name}-find-provides.patch
 # applied in a similar way
 #Patch4:	%{name}-prereq.patch
 # failed
@@ -47,9 +53,10 @@ Patch3:		%{name}-find-provides.patch
 #Patch7:	%{name}-LD_RUN_PATH.patch
 Patch8:		%{name}-errno_h-parsing.patch
 Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
+# *weird*
 #Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
-# there is no "db-devel > 4.1", as for today.  think before you type.
+# is this one really needed?
 #Patch12:	%{name}-db4.patch
 # failed; is it still necessary?
 #Patch13:	%{name}-gcc3.patch
@@ -388,7 +395,7 @@ POD.
 %patch0 -p1
 %patch1 -p1
 #%patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 #%patch4 -p1
 #%patch5 -p1
 #%patch6 -p1
@@ -401,49 +408,32 @@ POD.
 #%patch13 -p1
 
 %build
-# this is gross
-# i added more ugly stuff here
-# i know that is ugly way to set that but i dont know how do it better
-#cat > config.over <<EOF
-#installprefix=$RPM_BUILD_ROOT%{_prefix}
-#test -d \$installprefix || mkdir -p \$installprefix
-#test -d \$installprefix/bin || mkdir -p \$installprefix/bin
-#installarchlib=\`echo \$installarchlib | sed "s!\$prefix!\$installprefix!"\`
-#installbin=\`echo \$installbin | sed "s!\$prefix!\$installprefix!"\`
-#installman1dir=\`echo \$installman1dir | sed "s!\$prefix!\$installprefix!"\`
-#installman3dir=\`echo \$installman3dir | sed "s!\$prefix!\$installprefix!"\`
-#installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
-#installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
-#installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
-#installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
-#dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
-#EOF
-
-
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
 	-Darchname=%{_target_platform} \
 	-Dcccdlflags='-fPIC' \
 	-Dccdlflags='-rdynamic' \
-	-Dprefix=%{_prefix} \
-	-Dscriptdir=%{_bindir} \
-	-Dprefix=%{_prefix} \
-	-Dsitelib=%{_libdir}/perl5/site_perl \
+	-Dcf_by=PLD -Dmyhostname=localhost -Dperladmin=root@localhost \
+	-Dd_dosuid \
+	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
-	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
 	-Dman3ext=3pm \
 	-Doptimize="%{rpmcflags}" \
-	-Uuselargefiles \
+	-Dprefix=%{_prefix} \
 	-Duseshrplib \
-	-Dd_dosuid \
-	-Ud_setresuid \
-	-Ud_setresgid
-	%{?_with_perl_threads:-Dusethreads} \
-%ifarch sparc sparc64
-	-Ud_longdbl \
-%endif
+	%{?_with_largefiles:-Duselargefiles} \
+	%{?_with_threads:-Dusethreads}
+
+## why were these three undefined?
+#	-Uuselargefiles \
+#	-Ud_setresgid \
+#	-Ud_setresuid \
+## what's the problem with this one?
+# %ifarch sparc sparc64
+#	-Ud_longdbl
+# %endif
 
 %{__make}
 
