@@ -677,7 +677,8 @@ use ExtUtils::MakeMaker;
 WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm");
 EOF
 
-%{__make}
+%{__make} \
+	LIBPERL_SONAME=libperl.so.%{_abi}
 
 ## microperl
 rm -f uconfig.h
@@ -831,7 +832,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/perl5
 %dir %{perl_privlib}
 %dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{_abi}
+%dir %{_libdir}/perl5/%{version}
 %dir %{perl_archlib}
 %dir %{perl_archlib}/auto
 
