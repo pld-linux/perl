@@ -6,7 +6,7 @@
 #
 
 #%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{?_with_perl_threads:-thread-multi}
+%define		perlthread %{?_with_threads:-thread-multi}
 
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
@@ -37,12 +37,12 @@ License:	GPL/Artistic
 Group:		Applications/Text
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
+Source2:	%{name}.prov
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
 # weird one...
 #Patch2:	%{name}-DESTDIR.patch
-# I don't like this one...
-#Patch3:		%{name}-find-provides.patch
+Patch3:		%{name}-find-provides.patch
 # applied in a similar way
 #Patch4:	%{name}-prereq.patch
 # failed
@@ -64,6 +64,9 @@ URL:		http://www.perl.org/
 #BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
 #Requires:	perl-Class-Fields
+Requires:	perl-Attribute-Handlers
+Requires:	perl-Test-Harness
+Requires:	perl-Time-HiRes
 #Provides:	perl(DynaLoader)
 #Provides:	perl-File-Spec = 0.82
 #Provides:	perl-IO = 1.20
@@ -250,12 +253,12 @@ Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆðÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
 ±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
 ÓïÑÔ½øÐÐ±àÐ´¡£Äú±ØÐëÔÚÏµÍ³ÖÐ°²×° perl Èí¼þ°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
-%package perl-base
+%package base
 Summary:	Base Perl components
 # summaries needs fixup of course...
 Group:		Text/Applications
 
-%description perl-base
+%description base
 Base Perl components, files, core modules, etc.
 
 %package devel
@@ -395,7 +398,7 @@ POD.
 %patch0 -p1
 %patch1 -p1
 #%patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 #%patch4 -p1
 #%patch5 -p1
 #%patch6 -p1
@@ -406,6 +409,9 @@ POD.
 %patch11 -p1
 #%patch12 -p1
 #%patch13 -p1
+
+%{__install} -m 0755 %{SOURCE2} $PWD
+%{__chmod} +x find-perl-provides
 
 %build
 sh Configure \
@@ -423,11 +429,10 @@ sh Configure \
 	-Doptimize="%{rpmcflags}" \
 	-Dprefix=%{_prefix} \
 	-Duseshrplib \
-	%{?_with_largefiles:-Duselargefiles} \
-	%{?_with_threads:-Dusethreads}
+	-%{?_with_threads:D}%{?!_with_threads:U}usethreads \
+	-%{?_with_largefiles:D}%{?!_with_largefiles:U}uselargefiles
 
 ## why were these three undefined?
-#	-Uuselargefiles \
 #	-Ud_setresgid \
 #	-Ud_setresuid \
 ## what's the problem with this one?
@@ -443,16 +448,13 @@ install -d $RPM_BUILD_ROOT
 
 %{__make} install
 
-# is there anyone who ever used this script...?
-#install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
-
-## Generate *.ph files (based on MDK, which based on Debian ;-)
+## Generate the *.ph files
 (
 LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
 PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
 PERL=$RPM_BUILD_ROOT%{_bindir}/perl
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
-PHDIR=$PERL5LIB/%{_target_platform}*
+PHDIR=$PERL5LIB/%{_target_platform}%{perlthread}
 WANTED='
 	syscall.h
 	syslog.h
@@ -468,27 +470,19 @@ cd /usr/include
 $PERL $H2PH -a -d $PHDIR $WANTED
 )
 
-## Fix paths
-(
-cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
-sed -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
-mv -f Config.pm.new Config.pm
-sed -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
-mv -f .packlist.new .packlist
-)
-
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix installed man pages list
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
 
 # dir tree for other perl modules
-(cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
+(
+cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl/%{version}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
 	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
@@ -500,7 +494,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
-cd %{_target_platform}*/%{version}
+cd %{_target_platform}%{perlthread}/%{version}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
 	Text Unicode XML \
@@ -513,18 +507,25 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 #
-# Newer Test::Harness is available as a separate package
+# Test::Harness is available as a separate package
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
 #
-# Newer DB_File is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
+# DB_File is available as a separate package
+rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/DB_File
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/DB_File.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
 #
-# Newer CGI is available as a separate package
+# CGI is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
+#
+# Attribute::Handlers is available as a separate package
+rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Attribute/Handlers*
+#
+# Time::HiRes is available as a separate package
+rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/Time/HiRes
+rm $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/Time/HiRes.pm
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
@@ -536,20 +537,65 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README AUTHORS
+
+
+%files base
+%defattr(644,root,root,755)
+
+%attr(755,root,root) %{_bindir}/libnetcfg
+%attr(755,root,root) %{_bindir}/perl
+%attr(755,root,root) %{_bindir}/perl%{version}
+%attr(755,root,root) %{_bindir}/perlbug
+%attr(755,root,root) %{_bindir}/perldoc
+%attr(755,root,root) %{_bindir}/piconv
+%attr(755,root,root) %{_bindir}/psed
+
+%{_mandir}/man1/libnetcfg.*
+%{_mandir}/man1/perl.*
+%{_mandir}/man1/perlbug.*
+%{_mandir}/man1/perldoc.*
+%{_mandir}/man1/piconv.*
+%{_mandir}/man1/psed.*
+%lang(fi) %{_mandir}/fi/man1/perl*
+%lang(pl) %{_mandir}/pl/man1/perl*
+
+%{_mandir}/man3/[a-z]*
+%{_mandir}/man3/English.*
+
+%attr(755,root,root) %{_libdir}/lib*.so.%{version}
+
 
 %files devel
 %defattr(644,root,root,755)
-%doc README Changes
+%attr(755,root,root) %{_bindir}/[acdefh]*
+%attr(755,root,root) %{_bindir}/perlcc
+%attr(755,root,root) %{_bindir}/pl2pm
+%attr(755,root,root) %{_bindir}/pstruct
+%attr(755,root,root) %{_bindir}/[sx]*
+%{_mandir}/man1/[acdefh]*
+%{_mandir}/man1/perlcc.*
+%{_mandir}/man1/pl2pm.*
+%{_mandir}/man1/pstruct.*
+%{_mandir}/man1/[sx]*
+
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/CORE
+
 
 %files -n sperl
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
 
+
 %files modules
 %defattr(644,root,root,755)
 
+
 %files pod
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/pod2*
 %{_libdir}/perl5/%{version}/pod/perl[^d]*
 %{_libdir}/perl5/%{version}/pod/perld[^i]*
+%{_mandir}/man1/pod*
