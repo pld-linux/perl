@@ -25,9 +25,9 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	38
+Release:	39
 Epoch:		1
-License:	GPL
+License:	GPL on Artistic
 Group:		Applications/Text
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
@@ -494,10 +494,13 @@ install -d Archive Authen B Bundle Business CGI Class Convert Crypt DBD \
 	Locale Log MIME Mail Math Module Net NetServer Netscape News \
 	Number Parse Pod PostScript Proc RADIUS RPC Regexp Set Sort \
 	Statistics String Sys TeX Text/Query Tie Time Tree XML \
-	auto/Mail
+	auto/{Net,Statistics,Text,WWW}
+
 cd %{_target_platform}*/%{version}
-install -d Apache BSD Compress Digest Net Term XML \
-	auto/{Apache,BSD,Compress,Digest,Net,Term,XML}
+install -d Authen BSD Compress Crypt Data Devel Digest File IPC \
+	Locale Math Net String Term Text Unicode XML \
+	auto/{Authen,BSD,Bit,Compress,Crypt,Data,Devel,Digest,File,IPC} \
+	auto/{Locale,Math,Net,String,Term,Text,Unicode,XML}
 )
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -578,17 +581,40 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/auto
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Compress
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Crypt
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Devel
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Digest
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/File
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/IPC
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Locale
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Math
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/String
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Term
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Text
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Unicode
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/XML
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Authen
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Bit
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Crypt
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Data
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Devel
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Digest
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/File
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/IPC
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Locale
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Math
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Net
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/String
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Term
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Text
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Unicode
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/XML
 
 %{_libdir}/perl5/%{version}/AutoLoader.pm
@@ -720,8 +746,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/B
 %{_libdir}/perl5/site_perl/NetServer
 %{_libdir}/perl5/site_perl/Netscape
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Apache
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Apache
 %{_libdir}/perl5/%{version}/B
 %{_libdir}/perl5/%{version}/CPAN
 %{_libdir}/perl5/%{version}/Class
