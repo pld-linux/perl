@@ -56,9 +56,9 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	2%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
-License:	GPL v1+ or Artistic
+License:	GPL or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
 # Source0-md5:	d9bdb180620306023fd35901a2878b62
@@ -787,7 +787,7 @@ install -d Algorithm Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL \
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
-# mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
 ## examples and demos
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
@@ -810,10 +810,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
-%lang(zh_CN) %doc README.cn
-%lang(ja) %doc README.jp
-%lang(ko) %doc README.ko
-%lang(zh_TW) %doc README.tw
 
 %files base
 %defattr(644,root,root,755)
@@ -1039,7 +1035,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(zh_CN) %{_mandir}/zh_CN/man1/perlcn.*
 %lang(ja) %{_mandir}/ja/man1/perljp.*
 %lang(ko) %{_mandir}/ko/man1/perlko.*
-#%lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.*
+%lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.*
 
 %files modules
 %defattr(644,root,root,755)
