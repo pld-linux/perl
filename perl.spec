@@ -262,6 +262,11 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
 ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
+## Fix installed man pages list
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
+
 gzip -9nf README Change*
 
 %clean
@@ -272,8 +277,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.gz Change*
-
 %attr(755,root,root) %{_bindir}/a2p
 %attr(755,root,root) %{_bindir}/find2perl
 %attr(755,root,root) %{_bindir}/perl
@@ -301,6 +304,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%doc README.gz Change*
 %attr(755,root,root) %{_bindir}/c2ph
 %attr(755,root,root) %{_bindir}/h2ph
 %attr(755,root,root) %{_bindir}/h2xs
