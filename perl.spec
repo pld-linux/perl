@@ -12,6 +12,7 @@
 # - consider disabling ithreads by default
 # - consider introducing perl-dirs
 # - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
+# - patch MakeMaker to get rid of empty *.bs files (MM_Unix::dynamic_bs())
 #
 # TODO for perl-dependent packages:
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
