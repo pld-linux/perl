@@ -16,6 +16,7 @@
 # - fix perl.prov's handling in rpm -- it should use the __perl macro
 # - include gdbm-dependent modules, they aren't distributed standalone
 #   anymore
+# - fix some duplicate files
 # - *TESTING*
 #
 
@@ -52,7 +53,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.20%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.21%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -697,6 +698,8 @@ rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
+## this object file looks unused; why is it there?
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
 ## directories for modules installed using CPAN.pm
 install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}/auto}
@@ -849,7 +852,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/PerlIO/*/
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
 %{perl_archlib}/auto/PerlIO/*/*.bs
-%{_mandir}/man3/PerlIO*
+%{_mandir}/man3/PerlIO.*
+%{_mandir}/man3/PerlIO::[es]*
+%{_mandir}/man3/PerlIO::via.*
 
 %{perl_archlib}/POSIX*
 %dir %{perl_archlib}/auto/POSIX
@@ -864,17 +869,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/[acdefh]*
-%attr(755,root,root) %{_bindir}/perlcc
-%attr(755,root,root) %{_bindir}/pl2pm
-%attr(755,root,root) %{_bindir}/pstruct
-%attr(755,root,root) %{_bindir}/[sx]*
-%{_mandir}/man1/[acdefh]*
-%{_mandir}/man1/perlcc.*
 %{_mandir}/man1/perldebguts.*
-%{_mandir}/man1/pl2pm.*
-%{_mandir}/man1/pstruct.*
-%{_mandir}/man1/[sx]*
 
 %attr(755,root,root) %{_libdir}/lib*.so
 %{perl_archlib}/CORE
@@ -1203,6 +1198,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/pl2pm.*
 %attr(755,root,root) %{_bindir}/splain
 %{_mandir}/man1/splain.*
+%attr(755,root,root) %{_bindir}/xsubpp
+%{_mandir}/man1/xsubpp.*
 
 %files tools-pod
 %defattr(644,root,root,755)
