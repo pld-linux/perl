@@ -97,6 +97,7 @@ Provides a shared library for programs which embed a Perl interpreter.
 Summary:	Perl development files
 Group:		Development/Libraries
 Requires:	%{name}-lib = %{version}
+Obsoletes:	%{name}-lib-devel
 
 %description devel
 Files for developing applications which embed a Perl interpreter.
