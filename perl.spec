@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	70
+Release:	71
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -495,9 +495,9 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
-install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
-	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
-	Text Unicode XML \
+install -d Algorithm Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL \
+	Data Devel Digest File IPC Inline Locale Math Net Speech/Recognizer \
+	String Term Text Unicode XML \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
 	auto/{Digest,File,IPC,Inline,Locale,Math,Net,Speech/Recognizer,String} \
 	auto/{Term,Text,Unicode,XML}
@@ -628,6 +628,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/auto
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Algorithm
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Astro
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Audio
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Authen
