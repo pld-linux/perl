@@ -23,7 +23,7 @@
 #
 
 %define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{?!_without_threads:-thread-multi}
+%define		perlthread	%{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_libdir}/perl5/%{version}
 %define		perl_archlib	%{perl_privlib}/%{_target_platform}%{perlthread}
@@ -91,6 +91,7 @@ URL:		http://www.perl.com/
 #BuildRequires:	db-devel > 4.1
 %{?!_without_largefiles:Provides:	perl(largefiles)}
 Requires:	%{name}-base = %{version}
+Requires:	%{name}-devel = %{version}
 Requires:	%{name}-modules = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -289,7 +290,9 @@ Summary:	Perl development files
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name}-base = %{version}
+Requires:	%{name}-modules = %{version}
+Requires:	%{name}-tools-pod
 Provides:	perl-CPAN = 1.61
 Provides:	perl-Devel-DProf = 20000000.00_01
 Provides:	perl-Devel-PPPort = 2.0002
