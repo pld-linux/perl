@@ -607,7 +607,7 @@ prawdopodobnie nie powiniene¶ tego robiæ. Nie zg³aszaj b³êdów w
 microperlu - popraw je.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch3 -p1
