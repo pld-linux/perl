@@ -1,7 +1,7 @@
 diff -urN perl-5.6.1/find-perl-provides perl-5.6.1-grabba/find-perl-provides
 --- perl-5.6.1/find-perl-provides	Thu Jan  1 00:00:00 1970
 +++ perl-5.6.1-grabba/find-perl-provides	Sun Mar  3 14:41:39 2002
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,21 @@
 +#!/bin/sh
 +ulimit -c 0
 +
