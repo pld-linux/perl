@@ -282,8 +282,8 @@ GDBM_File is a module which allows Perl programs to make use of the
 facilities provided by the GNU gdbm library.
 
 %description GDBM_File -l pl
-GDBM_File jest modu³em, który umo¿liwia programomom w Perlu
-korzystanie z biblioteki GNU gdbm.
+GDBM_File jest modu³em, który umo¿liwia programom w Perlu korzystanie
+z biblioteki GNU gdbm.
 
 %package devel
 Summary:	Perl development files
