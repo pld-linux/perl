@@ -79,6 +79,7 @@ Requires:	%{name}-base = %{version}
 Requires:	%{name}-modules = %{version}
 Requires:	perldoc
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
+Conflicts:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
