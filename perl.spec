@@ -1,7 +1,7 @@
 %define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?_with_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language
-Summary(de):	Praktische Extraktions- und Berichtsprache 
+Summary(de):	Praktische Extraktions- und Berichtsprache
 Summary(fr):	Practical Extraction and Report Language (Perl)
 Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
@@ -60,10 +60,10 @@ pratique (simple à utiliser, efficace, complet) autant qu'agréable
 %description -l pl
 Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych,
 wyci±gania z nich informacji i drukowania raportu bazuj±cego na tych
-informacjach. Jest równie¿ doskona³ym jêzykiem dla wielu narzêdzi do
-nadzoru systemu. Jêzyk ten jest w zamierzeniu praktycznym (³atwym w
-u¿yciu, efektywnym, kompletnym) bardziej ni¿ piêkny ;) (skromny,
-elegancki, minimalny).
+informacjach. Jest równie¿ doskona³ym jêzykiem do wielu prac zwi±zanych
+z nadzorem systemu. Jêzyk ten jest w zamierzeniu bardziej praktyczny
+(³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny, elegancki,
+minimalny).
 
 %description -l tr
 Perl, metin dosyalarýný taramak, bu metin dosyalarýndan bilgi çýkarmak
@@ -98,7 +98,7 @@ Requires:	%{name} = %{version}
 %description -n sperl
 Practical Extraction and Report Language (SUID root binary).
 
-%description -l pl -n sperl
+%description -n sperl -l pl
 Practical Extraction and Report Language (SUID root binaria).
 
 %package modules
@@ -121,10 +121,10 @@ Obsoletes:	perl-PodParser
 %description modules
 Practical Extraction and Report Language - modules.
 
-%description -l pl modules
+%description modules -l pl
 Practical Extraction and Report Language - modu³y.
 
-%package pod 
+%package pod
 Summary:	Perl POD documentation
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Applications/Text
@@ -134,13 +134,13 @@ Group(pl):	Aplikacje/Tekst
 Prereq:		%{name} = %{version}
 
 %description pod
-Practical Extraction and Report Language - POD docs
+Practical Extraction and Report Language - POD docs.
 
-%description -l pl pod
-Practical Extraction and Report Language - dokumentacja w formacie POD
+%description pod -l pl
+Practical Extraction and Report Language - dokumentacja w formacie POD.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -202,7 +202,7 @@ sh Configure \
 	-Duseshrplib \
 	-Dd_dosuid \
 	-Ud_setresuid \
-	-Ud_setresgid 
+	-Ud_setresgid
 
 %{__mv} Makefile Makefile.bak
 %{__sed} -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
@@ -227,7 +227,7 @@ PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
 STDH	= \$(filter /usr/include/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' \$(PKGS)))
 STDH	+= \$(wildcard /usr/include/linux/*.h) \$(wildcard /usr/include/asm/*.h) \$(wildcard /usr/include/scsi/*.h)
 GCCDIR	= \$(shell gcc --print-file-name include)
-GCCH    = \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
+GCCH	= \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
 
 LIBPATH = %{_builddir}/%{name}-%{version}
 PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
@@ -275,7 +275,7 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
