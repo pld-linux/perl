@@ -3,6 +3,7 @@
 %bcond_without	tests		# do not perform "make test"
 %bcond_without	threads		# build without support for threads
 %bcond_without	gdbm		# build without the GDBM_File module
+%bcond_without	microperl	# don't build microperl
 #
 # TODO:
 # - Think about unicore.  If uf8*.pm, encode.pm, charnames.pm (and
@@ -57,13 +58,13 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.3
+Version:	5.8.4
 Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
-# Source0-md5:	6d2b389f8c6424b7af303f417947714f
+Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	3eb135afd0114f4e1acdd4ad6b8fd947
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Patch0:		%{name}_581-noroot_install.patch
@@ -72,7 +73,7 @@ Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
-#Patch8:		%{name}_580-microperl_uconfig.patch
+Patch8:		%{name}_584-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
@@ -617,7 +618,7 @@ microperlu - popraw je.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#%patch8 -p1
+%patch8 -p1
 
 %build
 sh Configure \
@@ -668,7 +669,10 @@ EOF
 	LIBPERL_SONAME=libperl.so.%{_abi}
 
 ## microperl
+%if %{with microperl}
 rm -f uconfig.h
+chmod u+w uconfig.sh
+echo "usemallocwrap='define'" >> uconfig.sh
 %{__make} -f Makefile.micro \
 	archlib=%{perl_archlib} \
 	archlibexp=%{perl_archlib} \
@@ -680,6 +684,7 @@ rm -f uconfig.h
 	scriptdir=%{_bindir} \
 	scriptdirexp=%{_bindir} \
 	OPTIMIZE="%{rpmcflags}"
+%endif
 
 %{?with_tests:%{__make} test}
 #%{?with_tests:%{__make} minitest}
@@ -698,13 +703,13 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-install microperl $RPM_BUILD_ROOT%{_bindir}
+%{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
 
 ## use symlinks instead of hardlinks
-%{__ln_s} -f  perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
-%{__ln_s} -f sperl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
-%{__ln_s} -f  c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
-%{__ln_s} -f  psed           $RPM_BUILD_ROOT%{_bindir}/s2p
+%{__ln_s} -f perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f perl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
+%{__ln_s} -f c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
+%{__ln_s} -f psed           $RPM_BUILD_ROOT%{_bindir}/s2p
 
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
@@ -1360,7 +1365,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n sperl
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
-%attr(4755,root,root) %{_bindir}/suidperl
+%attr(755,root,root)  %{_bindir}/suidperl
 
 %files tools
 %defattr(644,root,root,755)
@@ -1411,7 +1416,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pod*
 %{_mandir}/man1/pod*
 
+%if %{with microperl}
 %files -n microperl
 %defattr(644,root,root,755)
 %doc README.micro Todo.micro
 %attr(755,root,root) %{_bindir}/microperl
+%endif
