@@ -24,7 +24,7 @@
 #   (should this be done on Ra-branch, too?)
 #
 
-%define _abi	5.8.1
+%define _abi	5.8.0
 
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
@@ -57,14 +57,14 @@ Summary(sv):	ProgrammeringssprÂket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
-Version:	5.8.1
-Release:	1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Version:	5.8.2
+Release:	0.1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
 # rsync://ftp.linux.activestate.com/perl-5.8.x
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
-# Source0-md5:	87cf132f1fbf23e780f0b218046438a6
+# Source0-md5:	fa356b74f99166b63a68a322c3c68f91
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
