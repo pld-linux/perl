@@ -351,7 +351,8 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
 install -d B Class Crypt Date Devel ExtUtils File Font HTML HTTP I18N \
-	IO/Socket Image Mail News Net Parse RPC Text Tie Time XML auto/Mail
+	IO/Socket Image Inline Mail News Net Parse RPC Text Tie Time XML \
+	auto/Mail
 cd %{_target_platform}*/%{version}
 install -d Apache BSD Compress Digest Net Term XML \
 	auto/{Apache,BSD,Compress,Digest,Net,Term,XML}
@@ -390,6 +391,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/I18N
 %{_libdir}/perl5/site_perl/IO
 %{_libdir}/perl5/site_perl/Image
+%{_libdir}/perl5/site_perl/Inline
 %{_libdir}/perl5/site_perl/Mail
 %{_libdir}/perl5/site_perl/News
 %{_libdir}/perl5/site_perl/Net
