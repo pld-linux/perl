@@ -1,0 +1,4 @@
+- %%{_libdir}/perl5/%%{version}/%%{_target_platform}*/Errno.pm
+  and %%{_libdir}/perl5/%%{version}/Exporter (Heavy.pm) moved
+  from perl-modules to perl to assure package coherence,
+- release 11.
