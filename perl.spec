@@ -17,10 +17,13 @@ Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
 Patch1:		perl-nodb.patch
 Patch2:		perl-DESTDIR.patch
-Patch3:		perl-CPAN-1.54.patch
+Patch3:		perl-CPAN-1.58.patch
 Patch4:		perl-find-provides.patch
 Patch5:		perl-prereq.patch
 Patch6:		perl-syslog.patch
+Patch7:		perl-CGI-upload-tmpdir.patch
+Patch8:		perl-LD_RUN_PATH.patch
+Patch9:		perl-errno_h-parsing.patch
 URL:		http://www.perl.org/
 #Requires:	csh
 Obsoletes:	perl-ANSIColor
@@ -95,6 +98,9 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 for i in find-* ; do
 	mv $i $i.old
