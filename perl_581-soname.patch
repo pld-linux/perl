@@ -1,5 +1,23 @@
 --- perl-5.8.1/Makefile.SH.orig	Tue Aug 19 18:42:51 2003
 +++ perl-5.8.1/Makefile.SH	Fri Aug 22 14:33:39 2003
+@@ -116,7 +116,7 @@
+ 	    # INSTALL file, under "Building a shared perl library".
+ 	    # If there is no pre-existing $libperl, we don't need
+ 	    # to do anything further.
+-	    if test -f $archlib/CORE/$libperl; then
++#	    if test -f $archlib/CORE/$libperl; then
+ 		rm -f preload
+ 		cat <<'EOT' > preload
+ #! /bin/sh
+@@ -127,7 +127,7 @@
+ EOT
+ 		chmod 755 preload
+ 		ldlibpth="$ldlibpth `pwd`/preload `pwd`/$libperl"
+-	    fi
++#	    fi
+ 	    ;;
+ 	os390)	test -f /bin/env && ldlibpth="/bin/env $ldlibpth"
+ 		;;
 @@ -494,13 +489,15 @@
  Makefile: $Makefile_s
  !GROK!THIS!
