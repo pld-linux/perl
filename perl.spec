@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	5
+Release:	6
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -87,14 +87,14 @@ eksiksiz) olarak tasarlanmýþtýr.
 
 %package lib
 Summary:	Shared Perl library and other version dependant files
-Group:		Applications/Text
+Group:		Libraries
 
 %description lib
 Provides a shared library for programs which embed a Perl interpreter.
 
 %package lib-devel
 Summary:	Shared Perl library - development files
-Group:		Applications/Text
+Group:		Development/Libraries
 Requires:	%{name}-lib = %{version}
 
 %description lib-devel
@@ -132,7 +132,6 @@ Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Aplikacje/Tekst
 Prereq:		%{name}-lib = %{version}
-Provides:	%{name} = %{version}
 Conflicts:	%{name}
 
 %description minimal
