@@ -1,5 +1,5 @@
 %define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{?bcond_on_perl_threads:-thread-multi}
+%define		perlthread %{?_with_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
@@ -165,7 +165,7 @@ installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
 dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
 EOF
 
-USETHREADS=%{!?bcond_on_perl_threads:-U}%{?bcond_on_perl_threads:-D}
+USETHREADS=%{!?_with_perl_threads:-U}%{?_with_perl_threads:-D}
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
