@@ -82,7 +82,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # gcc 3.3.x miscompiles pp_hot.c
 # (in PUSHSUB in entersub two SvREFCNT_inc()s are working as one)
-# -fno-strict-aliasing is already used to build perl and doesn't help
+# -fno-strict-aliasing is already used to build Perl and doesn't help
 %define		specflags_ppc	-O1
 
 %description
@@ -109,7 +109,7 @@ særskilt godt på at behandle text. Utmærkende for Perl er at det er
 praktisk og effektivt. Det bruges for at gøre en mængd forskellige
 saker, men de almindeligeste programmerne er systemadministration og
 webbprogrammering. En stor andel af CGI-skripten på webben er skrivna
-i Perl. Du behøver installere pakken perl på dit system så at ditt
+i Perl. Du behøver installere pakken Perl på dit system så at ditt
 system kan behandle Perlskript.
 
 %description -l de
@@ -144,7 +144,7 @@ proses dan file yang bagus, tapi terutama kemampuan penanganan teksnya
 yang baik. Ciri khas Perl adalah kepraktisan dan efisiensi. Meski
 digunakan untuk berbagai hal, aplikasi Perl yang paling umum adalah
 utilitas sistem administrasi dan pemrograman web. Sebagian besar skrip
-CGI yang ada di web ditulis dalam Perl. Anda perlu memasang paket perl
+CGI yang ada di web ditulis dalam Perl. Anda Perlu memasang paket Perl
 di sistem agar dapat menjalankan skrip-skrip Perl.
 
 %description -l is
@@ -154,7 +154,7 @@ processa og skrár og er sérstaklega góð í að meðhöndla texta. Perls
 kostir eru nytsamleiki og virkni. Á meðan það er notað til að gera
 marga mismunandi hluti, Perl mest notuðu forrit eru krefisstjórnunar
 tól og vef forritun Stór hluti af CGI forritum á vefnum eru skrifaðar
-í Perl. Þú þarft perl pakkann settan upp á þínu krefi svo þitt kerfi
+í Perl. Þú þarft Perl pakkann settan upp á þínu krefi svo þitt kerfi
 geti notað Perl scriptur.
 
 %description -l it
@@ -165,7 +165,7 @@ testo. Perl è un linguaggio semplice ed efficiente. Viene utilizzato
 per numerosi scopi, ma le sue applicazioni più diffuse sono le utility
 di amministrazione del sistema e la programmazione Web. Una grossa
 parte degli script CGI nel Web sono scritti in Perl. È consigliabile
-installare il pacchetto perl in modo che il sistema sia in grado di
+installare il pacchetto Perl in modo che il sistema sia in grado di
 gestire gli script di Perl.
 
 %description -l ja
@@ -175,7 +175,7 @@ Perl ¤Ï C¸À¸ì¡¢sed, awk¡¢µÚ¤Ó ¥·¥§¥ë¥¹¥¯¥ê¥×¥Æ¥£¥ó¥°¤Ëº¬¸»¤ò
 »ÈÍÑ¤µ¤ì¤Þ¤¹¤¬¡¢ Perl¤ÎºÇ¤âÉÑÈË¤Ê³èÍÑ¤Ï¥·¥¹¥Æ¥à¥¢¥É¥ß¥Ë¥¹¥È¥ì¡¼¥·¥ç¥ó
 ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤È web¥×¥í¥°¥é¥ß¥ó¥°¤Ç¤¹¡£web¾å¤Î ÂçÉôÊ¬¤ÎCGI"
 ¥¹¥¯¥ê¥×¥È¤¬Perl¤Ç½ñ¤«¤ì¤Æ¤¤¤Þ¤¹¡£ ¥·¥¹¥Æ¥à¤¬Perl¥¹¥¯¥ê¥×¥È¤ò
-½èÍý½ÐÍè¤ë¤è¤¦¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï perl¥Ñ¥Ã¥±¡¼¥¸¤ò ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
+½èÍý½ÐÍè¤ë¤è¤¦¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï Perl¥Ñ¥Ã¥±¡¼¥¸¤ò ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
 É¬Í×¤¬¤¢¤ê¤Þ¤¹¡£
 
 %description -l pl
@@ -187,13 +187,13 @@ praktyczny (³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny,
 elegancki, minimalny).
 
 %description -l pt
-O perl é uma linguagem de programação de alto nível que tem como
-raizes o C, sed, awk, e 'shell scripting'. O perl é bom a manipular
+O Perl é uma linguagem de programação de alto nível que tem como
+raizes o C, sed, awk, e 'shell scripting'. O Perl é bom a manipular
 processos e ficheiros, e é especialmente bom para manipular texto.
 Características do Perl são a eficiência e o uso prático. As
 aplicações mais comuns do Perl são utilitários de administração de
 sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
-são escritos em Perl. Você precisa do pacote perl instalado no seu
+são escritos em Perl. Você precisa do pacote Perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
 
 %description -l pt_BR
@@ -221,7 +221,7 @@ súborov a je zvlá¹» vhodný pre spracovanie textu. Jeho cieµmi sú
 praktiènos» a efektivita. Aj keï je pou¾ívaný pre mno¾stvo rozlièných
 èinností, jeho najèastej¹ím pou¾itím (a kde vyniká najviac) sú
 pravdepodobne nástroje pre správu systému a programovanie na Webe.
-Veµká èas» CGI skriptov na Webe je napísaná v Perle. Balík perl
+Veµká èas» CGI skriptov na Webe je napísaná v Perle. Balík Perl
 potrebujete ma» nain¹talovaný, aby bol vá¹ systém schopný spracova»
 Perl skripty.
 
@@ -232,7 +232,7 @@ särskilt bra på att hantera text. Utmärkande för Perl är att det är
 praktiskt och effektivt. Det används för att göra en mängd olika
 saker, men de vanligaste tillämpningarna är systemadministration och
 webbprogrammering. En stor andel av CGI-skripten på webben är skrivna
-i Perl. Du behöver installera paketet perl på ditt system så att ditt
+i Perl. Du behöver installera paketet Perl på ditt system så att ditt
 
 %description -l tr
 Perl, metin dosyalarýný taramak, bu metin dosyalarýndan bilgi çýkarmak
@@ -257,11 +257,11 @@ Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆðÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
 µÄÌØµãÔÚÓÚÆäÊµÓÃÐÔºÍÓÐÐ§ÐÔ¡£
 ¾¡¹ÜËü¿ÉÓÃÓÚÖ´ÐÐÐí¶à²»Í¬µÄÈÎÎñ£¬µ«ÊÇÍ¨³£¶àÓ¦ÓÃÓÚÏµÍ³¹ÜÀíÊµÓÃ³ÌÐòºÍ Web
 ±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
-ÓïÑÔ½øÐÐ±àÐ´¡£Äú±ØÐëÔÚÏµÍ³ÖÐ°²×° perl Èí¼þ°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
+ÓïÑÔ½øÐÐ±àÐ´¡£Äú±ØÐëÔÚÏµÍ³ÖÐ°²×° Perl Èí¼þ°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
 %package base
-Summary:	Base perl components for a minimal installation
-Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji perla
+Summary:	Base Perl components for a minimal installation
+Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 0.87
@@ -276,13 +276,13 @@ Obsoletes:	perl-SOAP
 Obsoletes:	perl-Sort-PolySort
 
 %description base
-Base components, files, core modules, etc. -- a minimal usable perl
-installation.  You are encouraged to install a full perl (the perl
+Base components, files, core modules, etc. -- a minimal usable Perl
+installation.  You are encouraged to install a full Perl (the perl
 package) whenever possible.
 
 %description base -l pl
 Podstawowe sk³adniki, pliki, g³ówne modu³y itp. - minimalna instalacja
-perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
+Perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego Perla
 (pakietu perl), je¶li to tylko mo¿liwe.
 
 %package GDBM_File
@@ -304,8 +304,8 @@ z biblioteki GNU gdbm.
 
 %package devel
 Summary:	Perl development files
-Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
-Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
+Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w Perlu
+Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o Perl
 Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
@@ -320,7 +320,7 @@ Obsoletes:	perl-lib-devel
 
 %description devel
 Components required for developing applications which embed a Perl
-interpreter and compiling perl modules.
+interpreter and compiling Perl modules.
 
 %description devel -l pl
 Sk³adniki potrzebne do tworzenia aplikacji osadzaj±cych interpreter
@@ -354,8 +354,8 @@ Dokumentacja referencyjna w formacie man do jêzyka Perl (Practical
 Extraction and Report Language) i jego interpretera.
 
 %package modules
-Summary:	Modules from the core perl distribution
-Summary(pl):	Modu³y z podstawowej dystrybucji perla
+Summary:	Modules from the core Perl distribution
+Summary(pl):	Modu³y z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Provides:	perl-Attribute-Handlers = 0.78_01
@@ -417,15 +417,15 @@ Provides:	perldoc = 3.13@%{version}
 
 %description perldoc
 perldoc looks up a piece of documentation in .pod format that is
-embedded in the perl installation tree or in a perl script, and
+embedded in the Perl installation tree or in a Perl script, and
 displays it via "pod2man | nroff -man | $PAGER". This is primarily
-used for the documentation for the perl library modules.
+used for the documentation for the Perl library modules.
 
 %description perldoc -l pl
 perldoc wyszukuje fragment dokumentacji w formacie .pod osadzony w
-drzewie instalacji perla lub w skypcie perlowym i wy¶wietla go przez
+drzewie instalacji Perla lub w skypcie perlowym i wy¶wietla go przez
 "pod2man | nroff -man | $PAGER". Program ten u¿ywany jest g³ównie do
-dokumentacji modu³ów z bibliotek perla.
+dokumentacji modu³ów z bibliotek Perla.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
@@ -435,18 +435,18 @@ Summary(fr):	sperl, à utiliser avec les scripts Perl setuid
 Summary(it):	sperl, da usare con gli script di Perl setuid
 Summary(ja):	Setuid Perl scripts ¤È°ì½ï¤Ë»ÈÍÑ¤¹¤ë¤¿¤á¤Î suidperl
 Summary(ko):	Setuid ÆÞ ½ºÅ©¸³Æ®¿Í ÇÔ²² »ç¿ëµÇ´Â suidperl
-Summary(pl):	Binaria setuid root perla dla setuid-owych skryptów perla
+Summary(pl):	Binaria setuid root Perla dla setuid-owych skryptów Perla
 Summary(pt):	O suidperl, para usar com os programas de Perl 'setuid'
 Summary(ru):	SUID ×ÅÒÓÉÑ ÑÚÙËÁ Perl
 Summary(sv):	sperl, att användas med setuid perlskript
 Summary(uk):	SUID-×ÅÒÓ¦Ñ ÍÏ×É Perl
-Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid perl ½Å±¾Ò»ÆðÊ¹ÓÃ
+Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid Perl ½Å±¾Ò»ÆðÊ¹ÓÃ
 Group:		Development/Languages/Perl
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
-sperl is a setuid root binary copy of perl that allows for (hopefully)
+sperl is a setuid root binary copy of Perl that allows for (hopefully)
 more secure running of setuid Perl scripts.
 
 %description -n sperl -l de
@@ -454,28 +454,28 @@ sperl ist eine binäre setuid Kopie von Perl, mit der (hoffentlich)
 setuid-Skripts sicherer ausgeführt werden können.
 
 %description -n sperl -l es
-sperl es una copia binaria de setuid para perl que le permite una
+sperl es una copia binaria de setuid para Perl que le permite una
 ejecución más segura de los scripts de Perl setuid.
 
 %description -n sperl -l fr
-sperl est une copie binaire setuid de perl qui permet une exécution
+sperl est une copie binaire setuid de Perl qui permet une exécution
 plus sûre de scripts Perl setuid.
 
 %description -n sperl -l it
-sperl è una copia binaria setuid di perl che consente un'esecuzione
+sperl è una copia binaria setuid di Perl che consente un'esecuzione
 più sicura di script di Perl setuid.
 
 %description -n sperl -l ja
 sperl ¤Ï setuid Perl scripts.¤ò¤â¤Ã¤È°ÂÁ´¤ËÆ°ºî¤Ç¤­¤ë(´üÂÔ¤Î¤¢¤ë)°Ù¤Î
-perl ¤Îsetuid ¥Ð¥¤¥Ê¥ê ¥³¥Ô¡¼¤Ç¤¹¡£
+Perl ¤Îsetuid ¥Ð¥¤¥Ê¥ê ¥³¥Ô¡¼¤Ç¤¹¡£
 
 %description -n sperl -l pl
-sperl jest to kopia setuid root programu binarnego perl umo¿liwiaj±ca
+sperl jest to kopia setuid root programu binarnego Perl umo¿liwiaj±ca
 bezpieczniejsze (miejmy nadziejê) uruchamianie setuidowych skryptów
-perla.
+Perla.
 
 %description -n sperl -l pt
-O suidperl é uma cópia do perl com 'setuid' que permite uma execução
+O suidperl é uma cópia do Perl com 'setuid' que permite uma execução
 mais segura dos 'scripts' de Perl 'setuid'.
 
 %description -n sperl -l ru
@@ -490,26 +490,26 @@ suidperl är en setuid binärkopia av pers som tillåter
 (förhoppningsvis) säkrare körning av setuid perlskript.
 
 %description -n sperl -l zh_CN
-suidperl ÊÇ perl µÄ setuid ¶þ½øÖÆ¸±±¾¡£ËüÔÊÐí£¨Ï£ÍûÈç´Ë£© ¸ü°²È«µØÔËÐÐ
+suidperl ÊÇ Perl µÄ setuid ¶þ½øÖÆ¸±±¾¡£ËüÔÊÐí£¨Ï£ÍûÈç´Ë£© ¸ü°²È«µØÔËÐÐ
 setuid perl ½Å±¾¡£
 
 %package tools
-Summary:	Various tools from the core perl distribution
-Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji perla
+Summary:	Various tools from the core Perl distribution
+Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji Perla
 Group:		Applications
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description tools
-Various tools from the core perl distribution:
+Various tools from the core Perl distribution:
 
  a2p       - Awk to Perl translator
  cpan      - easily interact with CPAN from the command line
  find2perl - translate find command lines to Perl code
- piconv    - iconv(1), reinvented in perl
+ piconv    - iconv(1), reinvented in Perl
  psed, s2p - a stream editor
 
 %description tools -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji perla:
+Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 
  a2p       - translator skryptów Awka do Perla
  cpan      - easily interact with CPAN from the command line
@@ -518,17 +518,17 @@ Ró¿ne narzêdzia z podstawowej dystrybucji perla:
  psed, s2p - edytor strumieniowy
 
 %package tools-devel
-Summary:	Developer's tools from the core perl distribution
-Summary(pl):	Narzêdzia z podstawowej dystrybucji perla, przeznaczone dla programistów
+Summary:	Developer's tools from the core Perl distribution
+Summary(pl):	Narzêdzia z podstawowej dystrybucji Perla, przeznaczone dla programistów
 Group:		Development/Tools
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description tools-devel
-Various tools from the core perl distribution:
+Various tools from the core Perl distribution:
 
  c2ph, pstruct - Dump C structures as generated from C<cc -g -S> stabs
- dprofpp       - display perl profile data
+ dprofpp       - display Perl profile data
  enc2xs        - Perl Encode Module Generator
  h2ph          - convert .h C header files to .ph Perl header files
  h2xs          - convert .h C header files to Perl extensions
@@ -538,7 +538,7 @@ Various tools from the core perl distribution:
  splain        - force verbose warning diagnostics
 
 %description tools-devel -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji perla:
+Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 
  c2ph, pstruct - zrzucanie struktur C w postaci generowanej z tablic
                  symboli z cc -g -S
@@ -549,7 +549,7 @@ Ró¿ne narzêdzia z podstawowej dystrybucji perla:
  h2xs          - konwerter plików nag³ówkowych .h z C na rozszerzenia
                  Perla
  perlcc        - generator binarek z programów w Perlu
- perlivp       - procedura weryfikacji instalacji perla
+ perlivp       - procedura weryfikacji instalacji Perla
  pl2pm         - zgrubne narzêdzie do t³umaczenia plików pl Perla 4 na
                  modu³y .pm Perla 5
  splain        - wymuszenie obszernych ostrze¿eñ diagnostycznych
@@ -586,13 +586,13 @@ Documentation):
  podselect  - wypisanie wybranych sekcji z dokumentacji POD
 
 %package -n microperl
-Summary:	A really minimal perl, even more minimal than miniperl
+Summary:	A really minimal Perl, even more minimal than miniperl
 Summary(pl):	Naprawdê minimalny Perl, nawet bardziej minimalny ni¿ miniperl
 # XXX: is there a more appropiate group?
 Group:		Applications
 
 %description -n microperl
-microperl is supposed to be able a really minimal perl, even more
+microperl is supposed to be able a really minimal Perl, even more
 minimal than miniperl.  No Configure is needed to build microperl, on
 the other hand this means that interfaces between Perl and your
 operating system are left very -- minimal.
