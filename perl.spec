@@ -1,22 +1,23 @@
-Summary:     Practical Extraction and Report Language
-Summary(de): Praktische Extraktions- und Berichtsprache 
-Summary(fr): Practical Extraction and Report Language (Perl)
-Summary(pl): Practical Extraction and Report Language (Perl)
-Summary(tr): Kabuk yorumlama dili
-Name:        perl
-%define      perlver 5.005
-%define      perlrel 02
-%define      perlthread -thread
-Version:     %{perlver}_%{perlrel}
-Release:     2
-Copyright:   GPL
-Group:       Utilities/Text
-Group(pl):   Narzêdzia/Tekst
-Source:      ftp://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
-Patch:       perl-noroot_install.patch
-URL:         http://www.perl.org/
-Requires:    csh
-Buildroot:   /tmp/%{name}-%{version}-root
+Summary:	Practical Extraction and Report Language
+Summary(de):	Praktische Extraktions- und Berichtsprache 
+Summary(fr):	Practical Extraction and Report Language (Perl)
+Summary(pl):	Practical Extraction and Report Language (Perl)
+Summary(tr):	Kabuk yorumlama dili
+Name:		perl
+%define		perlver 5.005
+%define		perlrel 02
+%define		perlthread -thread
+Version:	%{perlver}_%{perlrel}
+Release:	2
+Copyright:	GPL
+Group:		Utilities/Text
+Group(pl):	Narzêdzia/Tekst
+#######		ftp://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0
+Source:		%{name}%{version}.tar.gz
+Patch0:		perl-noroot_install.patch
+URL:		http://www.perl.org/
+Requires:	csh
+Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -56,12 +57,12 @@ dildir. Ayrýca pek çok sistem yönetimi görevleri için de yararlý yetenekleri
 vardýr. Perl, güzel (ufak, zarif, minimum) olmaktan çok, pratik olmaya
 yönelik (kullanýmý kolay, verimli, eksiksiz) olarak tasarlanmýþtýr.
 
-%package -n sperl
-Summary:     Practical Extraction and Report Language (SUID root binary)
-Summary(pl): Practical Extraction and Report Language (SUID root binaria)
-Group:       Utilities/Text
-Group(pl):   Narzêdzia/Tekst
-Requires:    %{name} = %{version}
+%package -n	sperl
+Summary:	Practical Extraction and Report Language (SUID root binary)
+Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
+Group:		Utilities/Text
+Group(pl):	Narzêdzia/Tekst
+Requires:	%{name} = %{version}
 
 %description -n sperl
 Practical Extraction and Report Language (SUID root binary).
@@ -95,9 +96,8 @@ sh Configure -des -Dprefix=/usr -Darchname=${RPM_ARCH}-linux -Dd_dosuid \
 make
 
 # Strip binaries (done now rather than at install)
-strip perl
-strip suidperl
-strip x2p/a2p
+
+strip {perl,suidperl,x2p/a2p}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -106,14 +106,17 @@ install -d $RPM_BUILD_ROOT
 make install
 install utils/pl2pm $RPM_BUILD_ROOT/usr/bin/pl2pm
 
+bzip2 -9 README Change*
+
 (cd /usr/include ;
-PERL5LIB=$RPM_BUILD_ROOT/usr/lib/perl5 $RPM_BUILD_ROOT/usr/bin/perl $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread} \
-      $RPM_BUILD_ROOT/usr/bin/h2ph \
-      -d $RPM_BUILD_ROOT/usr/lib/perl5/${RPM_ARCH}-linux/%{perlver}%{perlrel}/ \
-      *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h
-)
+PERL5LIB=$RPM_BUILD_ROOT/usr/lib/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
+$RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread} \
+$RPM_BUILD_ROOT/usr/bin/h2ph \
+-d $RPM_BUILD_ROOT/usr/lib/perl5/${RPM_ARCH}-linux/%{perlver}%{perlrel}/ \
+*.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
 cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread}/
+
 mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||" < Config.pm.old > Config.pm
 rm -f Config.pm.old
@@ -126,8 +129,8 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-debug {} \;
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644, root, root, 755)
-%doc README Change*
+%defattr(644,root,root,755)
+%doc README.bz2 Change*
 
 %attr(755, root, root) /usr/bin/a2p
 %attr(755, root, root) /usr/bin/c2ph
@@ -149,7 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755, root, root) /usr/bin/splain
 
 %attr(-,root,root,755) /usr/lib/perl5
-%attr(644, root,  man) /usr/man/man[13]/*
+/usr/man/man[13]/*
 
 %files -n sperl
 %attr(4711, root, root) /usr/bin/sperl5.00502
@@ -177,42 +180,4 @@ rm -rf $RPM_BUILD_ROOT
 - added pl translation,
 - moved %changelog to end of spec,
 - removed all old patches. 
-
-* Fri May 08 1998 Cristian Gafton <gafton@redhat.com>
-- added a patch to correct the .ph constructs unless defined (foo) to read
-  unless(defined(foo))
-
-* Thu May 07 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Tue Mar 10 1998 Cristian Gafton <gafton@redhat.com>
-- fixed strftime problem
-
-* Sun Mar 08 1998 Cristian Gafton <gafton@redhat.com>
-- added a patch to fix a security race
-- do not use setres[ug]id - those are not implemented on 2.0.3x kernels
-
-* Mon Mar 02 1998 Cristian Gafton <gafton@redhat.com>
-- upgraded to 5.004_04 - 5.004_01 had some nasty memory leaks.
-- fixed the spec file to be version-independent
-
-* Fri Dec 05 1997 Erik Troan <ewt@redhat.com>
-- Config.pm wasn't right do to the builtrooting
-
-* Mon Oct 20 1997 Erik Troan <ewt@redhat.com>
-- fixed arch-specfic part of spec file
-
-* Sun Oct 19 1997 Erik Troan <ewt@redhat.com>
-- updated to perl 5.004_01
-- users a build root
-
-* Thu Jun 12 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
-
-* Tue Apr 22 1997 Erik Troan <ewt@redhat.com>
-- Incorporated security patch from Chip Salzenberg <salzench@nielsenmedia.com>
-
-* Fri Feb 07 1997 Erik Troan <ewt@redhat.com>
-1) Use -Darchname=i386-linux 
-2) Require csh (for glob)
-3) Use RPM_ARCH during configuration and installation for arch independence
+- start at RH spec file.
