@@ -6,8 +6,8 @@ Summary(fr):	Practical Extraction and Report Language (Perl)
 Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
-Version:	5.6.0
-Release:	15
+Version:	5.6.1
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -18,16 +18,13 @@ Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
 Patch2:		%{name}-DESTDIR.patch
-Patch3:		%{name}-CPAN-1.58.patch
-Patch4:		%{name}-find-provides.patch
-Patch5:		%{name}-prereq.patch
-Patch6:		%{name}-syslog.patch
-Patch7:		%{name}-CGI-upload-tmpdir.patch
-Patch8:		%{name}-LD_RUN_PATH.patch
-Patch9:		%{name}-errno_h-parsing.patch
-Patch10:	%{name}-use-LD_PRELOAD-for-libperl.so.patch
-Patch11:	%{name}-fix-typo-in-syslog.patch
-Patch12:	%{name}-fix-for-coredump-bug-20000607.003.patch
+Patch3:		%{name}-find-provides.patch
+Patch4:		%{name}-prereq.patch
+Patch5:		%{name}-syslog.patch
+Patch6:		%{name}-CGI-upload-tmpdir.patch
+Patch7:		%{name}-LD_RUN_PATH.patch
+Patch8:		%{name}-errno_h-parsing.patch
+Patch9:		%{name}-use-LD_PRELOAD-for-libperl.so.patch
 URL:		http://www.perl.org/
 #Requires:	csh
 Provides:	perl-ANSIColor
@@ -113,9 +110,6 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
