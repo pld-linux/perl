@@ -117,9 +117,8 @@ install -d $RPM_BUILD_ROOT
 make install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
-#LD_LIBRARY_PATH=%{_builddir}/%{name}%{perlver}_%{perlrel}: $RPM_BUILD_ROOT%{_bindir}/perl 
-
 (cd %{_includedir} ;
+LD_LIBRARY_PATH="%{_builddir}/%{name}%{perlver}_%{perlrel}" \
 PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
 $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
 $RPM_BUILD_ROOT%{_bindir}/h2ph \
