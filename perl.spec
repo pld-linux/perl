@@ -53,7 +53,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.22%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.23%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -62,6 +62,7 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
 Patch0:		%{name}_580-noroot_install.patch
+Patch1:		%{name}_580-INC.patch
 Patch2:		%{name}_580-MakeMaker.patch
 # failed
 #Patch5:	%{name}-syslog.patch
@@ -584,6 +585,7 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 %patch2 -p0
 %patch8 -p1
 %patch9 -p1
@@ -702,9 +704,6 @@ rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 ## this object file looks unused; why is it there?
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
-## directories for modules installed using CPAN.pm
-install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}/auto}
-
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
 (
@@ -747,11 +746,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ko) %doc README.ko
 %lang(tw) %doc README.tw
 
-%dir %{perl_sitelib}
-%dir %{_usr}/local/lib/perl5
-%dir %{_usr}/local/lib/perl5/%{version}
-%dir %{perl_sitearch}
-%dir %{perl_sitearch}/auto
 %{perl_vendorlib}
 %dir %{_libdir}/perl5/vendor_perl
 %dir %{_libdir}/perl5/vendor_perl/%{version}
