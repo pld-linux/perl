@@ -22,7 +22,7 @@ Patch3:		perl-CPAN-1.50.patch
 Patch4:		perl-find-provides.patch
 URL:		http://www.perl.org/
 Requires:	csh
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
