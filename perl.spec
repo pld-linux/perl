@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	65
+Release:	66
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -489,7 +489,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
 	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
-	auto/{AI,Array,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
+	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
