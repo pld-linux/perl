@@ -6,16 +6,24 @@
 # _without_gdbm       - build without the GDBM_File module
 #
 # TODO:
-# - Think about unicore.  If uf8*.pm, encode.pm, charnamess.pm (and
+# - Think about unicore.  If uf8*.pm, encode.pm, charnames.pm (and
 #   probably others) are in the perl-base package, unicore should also
 #   be there.  But it's 5MB...
-# - Think about the package separation.  Split between perl, perl-base
-#   and perl-modules is far from obvius.
+# - profile the perl-base vs. perl-modules separation
 # - fix "FIXME"s, review "XXX"s
 # - fix perl.prov's handling in rpm -- it should use the __perl macro
-# - fix some duplicate files
+# - fix some duplicate files (are there any left?)
 # - add the {O,N}DBM_File modules
-# - *TESTING*
+# - review the perldiag.pod issue
+# - consider disabling ithreads by default
+# - move the perl_vendorarch directories to perl-base (?)
+#
+# TODO for perl-dependent packages:
+# - change all "R/BR: perl" to one of perl-{base,modules,devel}
+# - use the requires_eq(perl-base) for all packages strictly depending
+#   on the perl version used for building (files in perl_vendorarch
+#   directories; dependency on libperl.so.* often doesn't exist)
+#   (should this be done on Ra-branch, too?)
 #
 
 %if 0%(if [ %{__perl_requires} ]; then echo 1; fi)
@@ -57,7 +65,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.35%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.36%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -78,6 +86,7 @@ URL:		http://www.perl.com/
 Requires:	%{name}-base = %{version}
 Requires:	%{name}-modules = %{version}
 Requires:	perldoc
+Requires:	perl-doc-reference
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
