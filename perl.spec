@@ -55,7 +55,6 @@ Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
-Provides:	perl-tools-pod
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-File-Spec
 Obsoletes:	perl-IO
@@ -244,6 +243,7 @@ Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	%{name}-modules = %{version}
+Provides:	perl-tools-pod
 Obsoletes:	perl-lib-devel
 
 %description devel
