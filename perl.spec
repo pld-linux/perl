@@ -34,10 +34,12 @@ Provides:	perl-ANSIColor
 Provides:	perl-Devel-Peek
 Provides:	perl-DProf
 Provides:	perl-PodParser
+Provides:	perl-CGI
 Obsoletes:	perl-ANSIColor
 Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-DProf
 Obsoletes:	perl-PodParser
+Obsoletes:	perl-CGI
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
