@@ -156,9 +156,9 @@ Practical Extraction and Report Language - dokumentacja w formacie POD
 %patch12 -p1
 
 for i in find-* ; do
-	mv -f $i $i.old
-	sed "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
-	chmod 755 $i; rm -f $i.old
+	%{__mv} -f $i $i.old
+	%{__sed} "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
+	%{__chmod} 755 $i; %{__rm} -f $i.old
 done
 
 %build
@@ -204,18 +204,18 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid 
 
-mv Makefile Makefile.bak
-sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
+%{__mv} Makefile Makefile.bak
+%{__sed} -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
 	Makefile.bak > Makefile
 
 %{__make}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
+%{__install} -d $RPM_BUILD_ROOT
 
 %{__make} install
-install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
+%{__install} utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
 
@@ -250,10 +250,10 @@ EOF
 ## Fix paths
 (
 cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
-sed -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
-mv -f Config.pm.new Config.pm
-sed -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
-mv -f .packlist.new .packlist
+%{__sed} -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
+%{__mv} -f Config.pm.new Config.pm
+%{__sed} -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
+%{__mv} -f .packlist.new .packlist
 )
 
 ## Fix permissions
@@ -261,19 +261,19 @@ find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.ph -exec chmod 444 {} \;
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
 
 ## Fix lib
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
-install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
-ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+%{__rm} -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
+%{__install} libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
+%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix installed man pages list
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
+%{__rm} -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
 
-gzip -9nf README Changes
+%{__gzip} -9nf README Changes
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -367,7 +367,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
-
 
 %files devel
 %defattr(644,root,root,755)
@@ -479,7 +478,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/DynaLoader.a
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/autosplit.ix
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_expandspec.al
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_find_symbol_anywhere.al
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/extralibs.ld
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File
