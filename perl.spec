@@ -396,6 +396,7 @@ Provides:	perl-UNIVERSAL = 1.01
 Provides:	perl-Unicode-Collate = 0.33
 Provides:	perl-Unicode-Normalize = 0.28
 Provides:	perl-libnet = 1.1.1
+Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
 
 %description modules
