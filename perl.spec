@@ -62,7 +62,6 @@ Release:	1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
-# rsync://ftp.linux.activestate.com/perl-5.8.x
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
 # Source0-md5:	fa356b74f99166b63a68a322c3c68f91
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
