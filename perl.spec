@@ -1,9 +1,7 @@
 %define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?_with_perl_threads:-thread-multi}
-Summary:	Practical Extraction and Report Language
+Summary:	Practical Extraction and Report Language (Perl)
 Summary(de):	Praktische Extraktions- und Berichtsprache
-Summary(fr):	Practical Extraction and Report Language (Perl)
-Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
@@ -80,7 +78,7 @@ eksiksiz) olarak tasarlanmýþtýr.
 
 %package devel
 Summary:	Perl development files
-Summary(pl):	Pliki developerskie perla
+Summary(pl):	Pliki deweloperskie perla
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(es):	Desarrollo/Bibliotecas
@@ -101,7 +99,7 @@ Pliki do tworzenia aplikacji opartych na perlu.
 
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
-Summary(pl):	Practical Extraction and Report Language (binarka SUID root)
+Summary(pl):	Practical Extraction and Report Language (binaria SUID root)
 Group:		Applications/Text
 Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
@@ -112,7 +110,7 @@ Requires:	%{name} = %{version}
 Practical Extraction and Report Language (SUID root binary).
 
 %description -n sperl -l pl
-Practical Extraction and Report Language (binarka SUID root).
+Practical Extraction and Report Language (binaria SUID root).
 
 %package modules
 Summary:	Practical Extraction and Report Language - modules
