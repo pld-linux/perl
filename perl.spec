@@ -629,7 +629,8 @@ sh Configure \
 # %endif
 
 %{__make}
-%{__make} -f Makefile.micro
+%{__make} -f Makefile.micro \
+	OPTIMIZE="%{rpmcflags}"
 
 %{?!_without_tests:%{__make} test}
 #%{?!_without_tests:%{__make} minitest}
