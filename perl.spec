@@ -1,7 +1,7 @@
 %define		perlver 5.005
 %define		perlrel 03
 %define		perlthread -thread
-
+%define 	__find_provides	%{_builddir}/%{name}%{version}/find-perl-provides
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache 
 Summary(fr):	Practical Extraction and Report Language (Perl)
@@ -9,7 +9,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	11
+Release:	12
 Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
@@ -18,6 +18,7 @@ Patch0:		perl-noroot_install.patch
 Patch1:		perl-DESTDIR.patch
 Patch2:		perl-File-Spec-0.7.patch
 Patch3:		perl-CPAN-1.50.patch
+Patch4:		perl-find-provides.patch
 URL:		http://www.perl.org/
 Requires:	csh
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -79,6 +80,13 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+
+for i in find-* ; do
+  mv $i $i.old
+  sed "s|FPPATH|%{_builddir}/%{name}%{version}|g" < $i.old > $i
+  chmod 755 $i; rm -f $i.old
+done
 
 %build
 # this is gross
