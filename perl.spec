@@ -829,7 +829,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{perl_archlib}/CORE
 %attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{version}
-%attr(755,root,root) %{_libdir}/libperl.so*
+%attr(755,root,root) %{_libdir}/libperl.so.*
 
 %dir %{_libdir}/perl5/vendor_perl
 %dir %{_libdir}/perl5/vendor_perl/%{version}
