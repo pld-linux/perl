@@ -307,9 +307,9 @@ Summary:	Perl development files
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
-Requires:	%{name}-base = %{epoch}:%{version}
-Requires:	%{name}-modules = %{epoch}:%{version}
-Requires:	%{name}-tools-pod = %{epoch}:%{version}
+Requires:	%{name}-base = %{epoch}:%{version}-%{release}
+Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
+Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
 Provides:	perl-CPAN = 1.76_01
 Provides:	perl-Devel-DProf = 20030813.00
 Provides:	perl-Devel-PPPort = 2.011
