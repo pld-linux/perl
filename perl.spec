@@ -25,12 +25,12 @@
 %define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
-%define		perl_privlib	%{_libdir}/perl5/%{version}
-%define		perl_archlib	%{perl_privlib}/%{_target_platform}%{perlthread}
-%define		perl_sitelib	%{_libdir}/perl5/site_perl/%{version}
-%define		perl_sitearch	%{perl_sitelib}/%{_target_platform}%{perlthread}
-%define		perl_vendorlib	%{_libdir}/perl5/pld_perl/%{version}
-%define		perl_vendorarch	%{perl_vendorlib}/%{_target_platform}%{perlthread}
+%define		perl_privlib	%{_datadir}/perl5/%{version}
+%define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_sitelib	%{_usr}/local/share/perl5/
+%define		perl_sitearch	%{_usr}/local/lib/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_vendorlib	%{_datadir}/perl5/pld_perl/
+%define		perl_vendorarch	%{_libdir}/perl5/pld_perl/%{version}/%{_target_platform}%{perlthread}
 
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	ProgramovacÌ jazyk Perl
@@ -55,7 +55,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.07%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.08%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -64,12 +64,7 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
 Patch0:		%{name}_580-noroot_install.patch
-# mostly obsolete and i just don't like it
-#Patch1:		%{name}-nodb.patch
-# weird one...
-#Patch2:	%{name}-DESTDIR.patch
-# applied in a similar way
-#Patch4:	%{name}-prereq.patch
+Patch2:		%{name}_580-MakeMaker.patch
 # failed
 #Patch5:	%{name}-syslog.patch
 # failed
@@ -524,8 +519,7 @@ you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
+%patch2 -p0
 #%patch4 -p1
 #%patch5 -p1
 #%patch6 -p1
@@ -553,8 +547,12 @@ sh Configure \
 	-Duseshrplib \
 	-Dd_dosuid \
 	-Dman1dir=%{_mandir}/man1 -Dman1ext=1 \
-	-Dman3dir=%{_mandir}/man3 -Dman3ext=3perl \
-	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_prefix} \
+	-Dman3dir=%{_mandir}/manp -Dman3ext=3perl \
+	-Dvendorman1=%{_mandir}/man1 -Dvendorman3ext=1p \
+	-Dvendorman3=%{_mandir}/manp -Dvendorman3ext=3pm \
+	-Dsiteman1=%{_usr}/local/share/man/man1 -Dsiteman3ext=1p \
+	-Dsiteman3=%{_usr}/local/share/man/manp -Dsiteman3ext=3pm \
+	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_usr}/local \
 	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
 	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
@@ -598,10 +596,10 @@ install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 %{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 
-%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="$RPM_BUILD_ROOT%{perl_privlib}" $RPM_BUILD_ROOT%{_bindir}/perl
+%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}" %{buildroot}/%{_bindir}/perl
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
-%{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi.bak -e 's,%{buildroot}/*,/,g'          $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 %{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 %{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
 
@@ -635,7 +633,7 @@ rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin
 
 ## These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
+rm -f $RPM_BUILD_ROOT%{_mandir}/manp/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
 ## We already have these *.pod files as man pages
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
@@ -731,46 +729,46 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/[a-z]*/*/*.so
 %{perl_archlib}/auto/[a-z]*/*.bs
 %{perl_archlib}/auto/[a-z]*/*/*.bs
-%{_mandir}/man3/[a-z]*
+%{_mandir}/manp/[a-z]*
 
 # arch-_IN_dependent modules
 %{perl_privlib}/Auto*
-%{_mandir}/man3/Auto*
+%{_mandir}/manp/Auto*
 %{perl_privlib}/Carp*
-%{_mandir}/man3/Carp*
+%{_mandir}/manp/Carp*
 %{perl_privlib}/Exporter*
-%{_mandir}/man3/Exporter*
+%{_mandir}/manp/Exporter*
 %{perl_privlib}/English*
-%{_mandir}/man3/English*
+%{_mandir}/manp/English*
 %{perl_privlib}/Getopt*
-%{_mandir}/man3/Getopt*
+%{_mandir}/manp/Getopt*
 %{perl_privlib}/IPC
-%{_mandir}/man3/IPC::Open*
+%{_mandir}/manp/IPC::Open*
 
 # arch-dependent modules
 %{perl_archlib}/Config*
-%{_mandir}/man3/Config*
+%{_mandir}/manp/Config*
 %{perl_archlib}/DynaLoader*
 %{perl_archlib}/auto/DynaLoader
-%{_mandir}/man3/DynaLoader*
+%{_mandir}/manp/DynaLoader*
 %{perl_archlib}/Errno*
-%{_mandir}/man3/Errno*
+%{_mandir}/manp/Errno*
 %{perl_archlib}/Safe*
-%{_mandir}/man3/Safe*
+%{_mandir}/manp/Safe*
 %{perl_archlib}/XSLoader*
-%{_mandir}/man3/XSLoader*
+%{_mandir}/manp/XSLoader*
 
 %{perl_archlib}/Cwd.*
 %dir %{perl_archlib}/auto/Cwd
 %attr(755,root,root) %{perl_archlib}/auto/Cwd/*.so
 %{perl_archlib}/auto/Cwd/*.bs
-%{_mandir}/man3/Cwd.*
+%{_mandir}/manp/Cwd.*
 
 %{perl_archlib}/Fcntl.*
 %dir %{perl_archlib}/auto/Fcntl
 %attr(755,root,root) %{perl_archlib}/auto/Fcntl/*.so
 %{perl_archlib}/auto/Fcntl/*.bs
-%{_mandir}/man3/Fcntl.*
+%{_mandir}/manp/Fcntl.*
 
 %{perl_privlib}/File*
 %{perl_archlib}/File
@@ -778,13 +776,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/File/*/
 %attr(755,root,root) %{perl_archlib}/auto/File/*/*.so
 %{perl_archlib}/auto/File/*/*.bs
-%{_mandir}/man3/File*
+%{_mandir}/manp/File*
 
 %{perl_archlib}/Opcode.*
 %dir %{perl_archlib}/auto/Opcode
 %attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
 %{perl_archlib}/auto/Opcode/*.bs
-%{_mandir}/man3/Opcode.*
+%{_mandir}/manp/Opcode.*
 
 %{perl_privlib}/PerlIO.*
 %{perl_archlib}/PerlIO
@@ -792,7 +790,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/PerlIO/*/
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
 %{perl_archlib}/auto/PerlIO/*/*.bs
-%{_mandir}/man3/PerlIO*
+%{_mandir}/manp/PerlIO*
 
 %{perl_archlib}/POSIX*
 %dir %{perl_archlib}/auto/POSIX
@@ -800,7 +798,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/POSIX/*.al
 %{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.ix
-%{_mandir}/man3/POSIX.*
+%{_mandir}/manp/POSIX.*
 
 %attr(755,root,root) %{_libdir}/lib*.so.%{version}
 
@@ -824,13 +822,13 @@ rm -rf $RPM_BUILD_ROOT
 
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
-%{_mandir}/man3/ExtUtils*
+%{_mandir}/manp/ExtUtils*
 %{perl_privlib}/CPAN*
-%{_mandir}/man3/CPAN*
+%{_mandir}/manp/CPAN*
 %{perl_privlib}/DB.*
-%{_mandir}/man3/DB.*
+%{_mandir}/manp/DB.*
 %{perl_archlib}/O.*
-%{_mandir}/man3/O.*
+%{_mandir}/manp/O.*
 
 %{perl_privlib}/B
 %{perl_archlib}/B
@@ -841,13 +839,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/B/C/*.so
 %{perl_archlib}/auto/B/*.bs
 %{perl_archlib}/auto/B/C/*.bs
-%{_mandir}/man3/B[.:]*
+%{_mandir}/manp/B[.:]*
 
 %{perl_archlib}/ByteLoader.*
 %dir %{perl_archlib}/auto/ByteLoader
 %attr(755,root,root) %{perl_archlib}/auto/ByteLoader/*.so
 %{perl_archlib}/auto/ByteLoader/*.bs
-%{_mandir}/man3/ByteLoader.*
+%{_mandir}/manp/ByteLoader.*
 
 %{perl_privlib}/Devel
 %{perl_archlib}/Devel
@@ -855,14 +853,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Devel/*/
 %attr(755,root,root) %{perl_archlib}/auto/Devel/*/*.so
 %{perl_archlib}/auto/Devel/*/*.bs
-%{_mandir}/man3/Devel::*
+%{_mandir}/manp/Devel::*
 
 %{perl_archlib}/XS
 %dir %{perl_archlib}/auto/XS
 %dir %{perl_archlib}/auto/XS/*/
 %attr(755,root,root) %{perl_archlib}/auto/XS/*/*.so
 %{perl_archlib}/auto/XS/*/*.bs
-%{_mandir}/man3/XS::*
+%{_mandir}/manp/XS::*
 
 
 %files doc-pod
@@ -904,7 +902,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Data/Dumper
 %attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
 %{perl_archlib}/auto/Data/Dumper/*.bs
-%{_mandir}/man3/Data*
+%{_mandir}/manp/Data*
 
 %{perl_privlib}/Digest.pm
 %{perl_archlib}/Digest
@@ -912,7 +910,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Digest/MD5
 %attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/*.so
 %{perl_archlib}/auto/Digest/MD5/*.bs
-%{_mandir}/man3/Digest*
+%{_mandir}/manp/Digest*
 
 ## shouldn't this be in perl-base?
 ## FIXME: *.h to devel(?), check out the use for *.e2x files
@@ -922,7 +920,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Encode/*/
 %attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
 %{perl_archlib}/auto/Encode/*/*.bs
-%{_mandir}/man3/Encode*
+%{_mandir}/manp/Encode*
 
 # FIXME: README and Changes files
 %{perl_privlib}/Filter
@@ -932,7 +930,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Filter/Util/Call
 %attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
 %{perl_archlib}/auto/Filter/Util/Call/*.bs
-%{_mandir}/man3/Filter*
+%{_mandir}/manp/Filter*
 
 %{perl_privlib}/I18N
 %{perl_archlib}/I18N
@@ -941,21 +939,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/I18N/*/*.so
 %{perl_archlib}/auto/I18N/*/*.bs
 %{perl_archlib}/auto/I18N/*/*.ix
-%{_mandir}/man3/I18N::*
+%{_mandir}/manp/I18N::*
 
 %{perl_privlib}/IO
 %{perl_archlib}/IO*
 %dir %{perl_archlib}/auto/IO
 %attr(755,root,root) %{perl_archlib}/auto/IO/*.so
 %{perl_archlib}/auto/IO/*.bs
-%{_mandir}/man3/IO*
+%{_mandir}/manp/IO*
 
 %{perl_archlib}/IPC
 %dir %{perl_archlib}/auto/IPC
 %dir %{perl_archlib}/auto/IPC/*/
 %attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
 %{perl_archlib}/auto/IPC/*/*.bs
-%{_mandir}/man3/IPC::[MS]*
+%{_mandir}/manp/IPC::[MS]*
 
 # FIXME: List/Util.pm should be archlib; patch needed
 %{perl_privlib}/List
@@ -963,26 +961,26 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/List/*/
 %attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
 %{perl_archlib}/auto/List/*/*.bs
-%{_mandir}/man3/List::*
+%{_mandir}/manp/List::*
 
 %{perl_archlib}/MIME
 %dir %{perl_archlib}/auto/MIME
 %dir %{perl_archlib}/auto/MIME/Base64
 %attr(755,root,root) %{perl_archlib}/auto/MIME/Base64/*.so
 %{perl_archlib}/auto/MIME/Base64/*.bs
-%{_mandir}/man3/MIME::*
+%{_mandir}/manp/MIME::*
 
 %{perl_archlib}/SDBM_File.*
 %dir %{perl_archlib}/auto/SDBM_File
 %attr(755,root,root) %{perl_archlib}/auto/SDBM_File/*.so
 %{perl_archlib}/auto/SDBM_File/*.bs
-%{_mandir}/man3/SDBM_File.*
+%{_mandir}/manp/SDBM_File.*
 
 %{perl_archlib}/Socket.*
 %dir %{perl_archlib}/auto/Socket
 %attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
 %{perl_archlib}/auto/Socket/*.bs
-%{_mandir}/man3/Socket.*
+%{_mandir}/manp/Socket.*
 
 %{perl_archlib}/Storable.*
 %dir %{perl_archlib}/auto/Storable
@@ -990,7 +988,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Storable/*.al
 %{perl_archlib}/auto/Storable/*.bs
 %{perl_archlib}/auto/Storable/*.ix
-%{_mandir}/man3/Storable.*
+%{_mandir}/manp/Storable.*
 
 %{perl_archlib}/Sys
 %dir %{perl_archlib}/auto/Sys
@@ -998,14 +996,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
 %{perl_archlib}/auto/Sys/*/*.bs
 %{perl_archlib}/auto/Sys/*/*.ix
-%{_mandir}/man3/Sys::*
+%{_mandir}/manp/Sys::*
 
 %{perl_archlib}/Time
 %dir %{perl_archlib}/auto/Time
 %dir %{perl_archlib}/auto/Time/HiRes
 %attr(755,root,root) %{perl_archlib}/auto/Time/HiRes/*.so
 %{perl_archlib}/auto/Time/HiRes/*.bs
-%{_mandir}/man3/Time::HiRes*
+%{_mandir}/manp/Time::HiRes*
 
 %{perl_privlib}/Unicode
 %{perl_archlib}/Unicode
@@ -1014,85 +1012,85 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
 %{perl_archlib}/auto/Unicode/*/*.bs
 %{perl_archlib}/auto/Unicode/*/*.ix
-%{_mandir}/man3/Unicode::*
+%{_mandir}/manp/Unicode::*
 
 %{perl_privlib}/AnyDBM*
-%{_mandir}/man3/AnyDBM*
+%{_mandir}/manp/AnyDBM*
 # FIXME: move */demo to %_exapmlesdir or /dev/null
 %{perl_privlib}/Attribute
-%{_mandir}/man3/Attribute*
+%{_mandir}/manp/Attribute*
 %{perl_privlib}/Benchmark*
-%{_mandir}/man3/Benchmark*
+%{_mandir}/manp/Benchmark*
 # FIXME: move */eg to %_examplesdir or /dev/null
 %{perl_privlib}/CGI*
-%{_mandir}/man3/CGI*
+%{_mandir}/manp/CGI*
 # FIXME: move test.pl to %_examplesdir or /dev/null
 %{perl_privlib}/Class
-%{_mandir}/man3/Class::*
+%{_mandir}/manp/Class::*
 %{perl_privlib}/DirHandle*
-%{_mandir}/man3/DirHandle*
+%{_mandir}/manp/DirHandle*
 %{perl_privlib}/Dumpvalue.*
-%{_mandir}/man3/Dumpvalue.*
+%{_mandir}/manp/Dumpvalue.*
 %{perl_privlib}/Env.*
-%{_mandir}/man3/Env.*
+%{_mandir}/manp/Env.*
 %{perl_privlib}/Fatal.*
-%{_mandir}/man3/Fatal.*
+%{_mandir}/manp/Fatal.*
 %{perl_privlib}/FindBin.*
-%{_mandir}/man3/FindBin.*
+%{_mandir}/manp/FindBin.*
 %{perl_privlib}/Hash
-%{_mandir}/man3/Hash::*
+%{_mandir}/manp/Hash::*
 # FIXME: README and Changes files
 %{perl_privlib}/Locale
-%{_mandir}/man3/Locale::*
+%{_mandir}/manp/Locale::*
 %{perl_privlib}/Math
-%{_mandir}/man3/Math::*
+%{_mandir}/manp/Math::*
 %{perl_privlib}/Memoize*
-%{_mandir}/man3/Memoize*
+%{_mandir}/manp/Memoize*
 %{perl_privlib}/NEXT*
-%{_mandir}/man3/NEXT*
+%{_mandir}/manp/NEXT*
 # FIXME: README and Changes files, */demos to %_examplesdir or /dev/null
 %{perl_privlib}/Net
-%{_mandir}/man3/Net::*
+%{_mandir}/manp/Net::*
 %{perl_privlib}/PerlIO
-%{_mandir}/man3/PerlIO::via::*
+%{_mandir}/manp/PerlIO::via::*
 %{perl_privlib}/Pod
-%{_mandir}/man3/Pod::*
+%{_mandir}/manp/Pod::*
 %{perl_privlib}/Scalar
-%{_mandir}/man3/Scalar::*
+%{_mandir}/manp/Scalar::*
 %{perl_privlib}/Search
-%{_mandir}/man3/Search::*
+%{_mandir}/manp/Search::*
 %{perl_privlib}/SelectSaver.*
-%{_mandir}/man3/SelectSaver.*
+%{_mandir}/manp/SelectSaver.*
 %{perl_privlib}/SelfLoader.*
-%{_mandir}/man3/SelfLoader.*
+%{_mandir}/manp/SelfLoader.*
 %{perl_privlib}/Shell.*
-%{_mandir}/man3/Shell.*
+%{_mandir}/manp/Shell.*
 # FIXME: README and Changes files
 %{perl_privlib}/Switch.*
-%{_mandir}/man3/Switch.*
+%{_mandir}/manp/Switch.*
 %{perl_privlib}/Symbol.*
-%{_mandir}/man3/Symbol.*
+%{_mandir}/manp/Symbol.*
 # FIXME: README and Changes files
 %{perl_privlib}/Term
-%{_mandir}/man3/Term::*
+%{_mandir}/manp/Term::*
 # FIXME: README and Changes files
 %{perl_privlib}/Test*
-%{_mandir}/man3/Test*
+%{_mandir}/manp/Test*
 %{perl_privlib}/Text
-%{_mandir}/man3/Text::*
+%{_mandir}/manp/Text::*
 # XXX: to perl-base?
 %{perl_privlib}/Thread*
-%{_mandir}/man3/Thread*
+%{_mandir}/manp/Thread*
 %{perl_privlib}/Tie
-%{_mandir}/man3/Tie::*
+%{_mandir}/manp/Tie::*
 %{perl_privlib}/Time
-%{_mandir}/man3/Time::[La-z]*
+%{_mandir}/manp/Time::[La-z]*
 # XXX: to perl-base?
 %{perl_privlib}/UNIVERSAL.*
-%{_mandir}/man3/UNIVERSAL.*
+%{_mandir}/manp/UNIVERSAL.*
 # FIXME: README and Changes files
 %{perl_privlib}/User
-%{_mandir}/man3/User::*
+%{_mandir}/manp/User::*
 
 
 %files -n sperl
