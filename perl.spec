@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.4
-Release:	7%{!?with_threads:_nothr}
+Release:	8%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -274,13 +274,13 @@ Provides:	perl(largefiles)
 Obsoletes:	perl-SOAP
 Obsoletes:	perl-Sort-PolySort
 # for older modules, now included
-Obsoletes:	perl-File-Compare <= 1.1003
-Obsoletes:	perl-File-Spec <= 0.87
-Obsoletes:	perl-File-Temp <= 0.14
-Obsoletes:	perl-IO <= 1.21
-Obsoletes:	perl-Safe <= 2.10
-Obsoletes:	perl-Socket <= 1.77
-Obsoletes:	perl-Tie-File <= 0.97
+#Obsoletes:	perl-File-Compare <= 1.1003
+#Obsoletes:	perl-File-Spec <= 0.87
+#Obsoletes:	perl-File-Temp <= 0.14
+#Obsoletes:	perl-IO <= 1.21
+#Obsoletes:	perl-Safe <= 2.10
+#Obsoletes:	perl-Socket <= 1.77
+#Obsoletes:	perl-Tie-File <= 0.97
 
 %description base
 Base components, files, core modules, etc. -- a minimal usable perl
@@ -406,41 +406,41 @@ Provides:	perl-libnet = 1.1.1
 Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
 # for older modules included into perl
-Obsoletes:	perl-Attribute-Handlers <= 0.78_01
-Obsoletes:	perl-CGI <= 3.04
-Obsoletes:	perl-Class-ISA <= 0.32
-Obsoletes:	perl-Digest <= 1.06
-Obsoletes:	perl-Digest-MD5 <= 2.33
-Obsoletes:	perl-Filter-Simple <= 0.78
-Obsoletes:	perl-FindBin <= 1.44
-Obsoletes:	perl-I18N-LangTags <= 0.29
-Obsoletes:	perl-IPC-SysV <= 1.04
-Obsoletes:	perl-Locale-Codes <= 2.06
-Obsoletes:	perl-Locale-Maketext <= 1.08
-Obsoletes:	perl-MIME-Base64 <= 3.01
-Obsoletes:	perl-Math-BigInt <= 1.70
-Obsoletes:	perl-Math-BigRat <= 0.12
-Obsoletes:	perl-Math-Trig <= 1.02
-Obsoletes:	perl-Memoize <= 1.01
-Obsoletes:	perl-NEXT <= 0.60
-Obsoletes:	perl-PerlIO-via-QuotedPrint <= 0.06
-Obsoletes:	perl-Pod-LaTeX <= 0.55
-Obsoletes:	perl-Pod-Parser <= 1.14
-Obsoletes:	perl-Scalar-List-Utils <= 1.13
-Obsoletes:	perl-Storable <= 2.12
-Obsoletes:	perl-Term-ANSIColor <= 1.08
-Obsoletes:	perl-Term-Cap <= 1.08
-Obsoletes:	perl-Test <= 1.24
-Obsoletes:	perl-Test-Harness <= 2.40
-Obsoletes:	perl-Test-Simple <= 0.47
-Obsoletes:	perl-Text-Balanced <= 1.95
-Obsoletes:	perl-Text-ParseWords <= 3.21
-Obsoletes:	perl-Text-Soundex <= 1.01
-Obsoletes:	perl-Time-HiRes <= 1.59
-Obsoletes:	perl-UNIVERSAL <= 1.01
-Obsoletes:	perl-Unicode-Collate <= 0.33
-Obsoletes:	perl-Unicode-Normalize <= 0.28
-Obsoletes:	perl-libnet <= 1.1.1
+#Obsoletes:	perl-Attribute-Handlers <= 0.78_01
+#Obsoletes:	perl-CGI <= 3.04
+#Obsoletes:	perl-Class-ISA <= 0.32
+#Obsoletes:	perl-Digest <= 1.06
+#Obsoletes:	perl-Digest-MD5 <= 2.33
+#Obsoletes:	perl-Filter-Simple <= 0.78
+#Obsoletes:	perl-FindBin <= 1.44
+#Obsoletes:	perl-I18N-LangTags <= 0.29
+#Obsoletes:	perl-IPC-SysV <= 1.04
+#Obsoletes:	perl-Locale-Codes <= 2.06
+#Obsoletes:	perl-Locale-Maketext <= 1.08
+#Obsoletes:	perl-MIME-Base64 <= 3.01
+#Obsoletes:	perl-Math-BigInt <= 1.70
+#Obsoletes:	perl-Math-BigRat <= 0.12
+#Obsoletes:	perl-Math-Trig <= 1.02
+#Obsoletes:	perl-Memoize <= 1.01
+#Obsoletes:	perl-NEXT <= 0.60
+#Obsoletes:	perl-PerlIO-via-QuotedPrint <= 0.06
+#Obsoletes:	perl-Pod-LaTeX <= 0.55
+#Obsoletes:	perl-Pod-Parser <= 1.14
+#Obsoletes:	perl-Scalar-List-Utils <= 1.13
+#Obsoletes:	perl-Storable <= 2.12
+#Obsoletes:	perl-Term-ANSIColor <= 1.08
+#Obsoletes:	perl-Term-Cap <= 1.08
+#Obsoletes:	perl-Test <= 1.24
+#Obsoletes:	perl-Test-Harness <= 2.40
+#Obsoletes:	perl-Test-Simple <= 0.47
+#Obsoletes:	perl-Text-Balanced <= 1.95
+#Obsoletes:	perl-Text-ParseWords <= 3.21
+#Obsoletes:	perl-Text-Soundex <= 1.01
+#Obsoletes:	perl-Time-HiRes <= 1.59
+#Obsoletes:	perl-UNIVERSAL <= 1.01
+#Obsoletes:	perl-Unicode-Collate <= 0.33
+#Obsoletes:	perl-Unicode-Normalize <= 0.28
+#Obsoletes:	perl-libnet <= 1.1.1
 
 %description modules
 Practical Extraction and Report Language - modules from the core
