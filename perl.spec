@@ -804,11 +804,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
-%lang(cn) %doc README.cn
-%lang(jp) %doc README.jp
+%lang(zh_CN) %doc README.cn
+%lang(ja) %doc README.jp
 %lang(ko) %doc README.ko
-%lang(tw) %doc README.tw
-
+%lang(zh_TW) %doc README.tw
 
 %files base
 %defattr(644,root,root,755)
