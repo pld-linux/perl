@@ -7,7 +7,7 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	5.6.1
-Release:	15
+Release:	16
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -82,8 +82,12 @@ Summary:	Perl development files
 Summary(pl):	Pliki developerskie perla
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 Requires:	%{name}-modules = %{version}
 Obsoletes:	perl-lib-devel
@@ -142,7 +146,8 @@ Prereq:		%{name} = %{version}
 Practical Extraction and Report Language - POD docs.
 
 %description pod -l pl
-Practical Extraction and Report Language - dokumentacja w formacie POD.
+Practical Extraction and Report Language - dokumentacja w formacie
+POD.
 
 %prep
 %setup -q
@@ -280,7 +285,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 install -d B Date Devel ExtUtils File Font HTML HTTP I18N IO/Socket \
 	Mail News Net Parse RPC Text Tie Time XML auto/Mail
 cd %{_target_platform}*/%{version}
-install -d Apache BSD Compress Net auto/{Apache,BSD,Compress,Net}
+install -d Apache BSD Compress Net Term auto/{Apache,BSD,Compress,Net,Term}
 )
 
 gzip -9nf README Changes
@@ -288,8 +293,8 @@ gzip -9nf README Changes
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -328,10 +333,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Compress
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Term
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Net
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Term
 
 %{_libdir}/perl5/%{version}/AutoLoader.pm
 %{_libdir}/perl5/%{version}/Carp
@@ -340,21 +346,28 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/DirHandle.pm
 %{_libdir}/perl5/%{version}/Exporter
 %{_libdir}/perl5/%{version}/Exporter.pm
+%dir %{_libdir}/perl5/%{version}/File
 %{_libdir}/perl5/%{version}/File/Basename.pm
 %{_libdir}/perl5/%{version}/File/Find.pm
 %{_libdir}/perl5/%{version}/File/Path.pm
 %{_libdir}/perl5/%{version}/File/Spec.pm
 %{_libdir}/perl5/%{version}/File/stat.pm
+%dir %{_libdir}/perl5/%{version}/File/Spec
 %{_libdir}/perl5/%{version}/File/Spec/Unix.pm
 %{_libdir}/perl5/%{version}/FileHandle.pm
+%dir %{_libdir}/perl5/%{version}/IO
+%dir %{_libdir}/perl5/%{version}/IO/Socket
 %{_libdir}/perl5/%{version}/IO/Socket/INET.pm
 %{_libdir}/perl5/%{version}/IO/Socket/UNIX.pm
+%dir %{_libdir}/perl5/%{version}/IPC
 %{_libdir}/perl5/%{version}/IPC/Open2.pm
 %{_libdir}/perl5/%{version}/IPC/Open3.pm
 %{_libdir}/perl5/%{version}/SelectSaver.pm
 %{_libdir}/perl5/%{version}/Symbol.pm
+%dir %{_libdir}/perl5/%{version}/Text
 %{_libdir}/perl5/%{version}/Text/Tabs.pm
 %{_libdir}/perl5/%{version}/Text/Wrap.pm
+%dir %{_libdir}/perl5/%{version}/Time
 %{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/autouse.pm
@@ -368,39 +381,35 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/strict.pm
 %{_libdir}/perl5/%{version}/vars.pm
 %{_libdir}/perl5/%{version}/warnings.pm
+%dir %{_libdir}/perl5/%{version}/warnings
 %{_libdir}/perl5/%{version}/warnings/register.pm
 %dir %{_libdir}/perl5/%{version}/pod
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DynaLoader.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
+%{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO
 %{_libdir}/perl5/%{version}/%{_target_platform}*/POSIX.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Socket.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/XSLoader.pm
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_findfile.al
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl/Fcntl.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl/Fcntl.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tmpfile.al
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.so
-
-%dir %{_libdir}/perl5/%{version}/File
-%dir %{_libdir}/perl5/%{version}/File/Spec
-%dir %{_libdir}/perl5/%{version}/IO
-%dir %{_libdir}/perl5/%{version}/IO/Socket
-%dir %{_libdir}/perl5/%{version}/IPC
-%dir %{_libdir}/perl5/%{version}/Text
-%dir %{_libdir}/perl5/%{version}/Time
-%dir %{_libdir}/perl5/%{version}/warnings
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket
 
 %{_mandir}/man1/a2p.1*
 %{_mandir}/man1/dprofpp.1*
@@ -513,40 +522,78 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/File
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IPC
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Sys
-%defattr(-,root,root,755)
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B/B.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B/B.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/autosplit.ix
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper/Dumper.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper/Dumper.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/DProf
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/DProf/DProf.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/DProf/DProf.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/Peek
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/Peek/Peek.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/Peek/Peek.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/DynaLoader.a
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/autosplit.ix
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_expandspec.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_find_symbol_anywhere.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/extralibs.ld
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob/autosplit.ix
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob/Glob.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob/Glob.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File/autosplit.ix
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File/GDBM_File.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File/GDBM_File.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC/SysV
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC/SysV/SysV.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC/SysV/SysV.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File/NDBM_File.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File/NDBM_File.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tolower.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/toupper.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/*.ix
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File/SDBM_File.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File/SDBM_File.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname/autosplit.ix
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname/Hostname.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname/Hostname.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Syslog
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Syslog/Syslog.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Syslog/Syslog.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs/attrs.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs/attrs.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re/re.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re/re.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/sdbm
-
-%defattr(644,root,root,755)
 %{_libdir}/perl5/%{version}/%{_target_platform}*/B.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ByteLoader.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
