@@ -24,7 +24,7 @@
 #   (should this be done on Ra-branch, too?)
 #
 
-%define _abi	5.8.0
+%define _abi	5.8.1
 
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
