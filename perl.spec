@@ -77,11 +77,11 @@ Patch5:		%{name}_581-soname.patch
 URL:		http://www.perl.com/
 # versions [4.2, 4.3-0.20030610.20.1] are not supported
 BuildRequires:	rpm-build >= 4.3-0.20030610.20.2
+%{?!_without_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	perl-doc-reference
 Requires:	perldoc
-%{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" %{buildroot}%{_bindir}/perl
