@@ -92,22 +92,13 @@ Group:		Libraries
 %description lib
 Provides a shared library for programs which embed a Perl interpreter.
 
-%package lib-devel
-Summary:	Shared Perl library - development files
+%package devel
+Summary:	Perl development files
 Group:		Development/Libraries
 Requires:	%{name}-lib = %{version}
 
-%description lib-devel
+%description devel
 Files for developing applications which embed a Perl interpreter.
-
-%package doc
-Summary:	Perl documentation
-Group:		Applications/Text
-Requires:	%{name} = %{version}
-
-%description doc
-Perl manual pages and POD docs.  If you are writing Perl programs, you
-almost certainly need this.
 
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
@@ -289,6 +280,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/perl%{version}
 %attr(755,root,root) %{_bindir}/perlbug
 %attr(755,root,root) %{_bindir}/perlcc
+%attr(755,root,root) %{_bindir}/perldoc
 %attr(755,root,root) %{_bindir}/pl2pm
 %attr(755,root,root) %{_bindir}/pod2html
 %attr(755,root,root) %{_bindir}/pod2latex
@@ -312,19 +304,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr( - ,root,root) %{_libdir}/perl5/%{version}/unicode
 %attr( - ,root,root) %{_libdir}/perl5/%{version}/warnings
 
+%{_mandir}/man1/*
+
 %files lib
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
-%files lib-devel
+%files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
-
-%files doc
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/perldoc
-%{_mandir}/man[13]/*
-%{_libdir}/perl5/%{version}/pod/*
+%{_mandir}/man3/*
 
 %files -n sperl
 %defattr(644,root,root,755)
