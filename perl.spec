@@ -1,5 +1,5 @@
 %define		perlver 5.005
-%define		perlrel 61
+%define		perlrel 03
 %define		perlthread -thread
 
 Summary:	Practical Extraction and Report Language
@@ -74,7 +74,7 @@ Practical Extraction and Report Language (SUID root binaria).
 %prep
 %setup  -q -n %{name}%{version}
 %patch0 -p1
-%patch1 -p1
+%patch1 -p1 -b .wiget
 
 %build
 # this is gross
@@ -152,7 +152,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_bindir}/a2p
 %attr(755,root,root) %{_bindir}/c2ph
-%attr(755,root,root) %{_bindir}/dprofpp
 %attr(755,root,root) %{_bindir}/find2perl
 %attr(755,root,root) %{_bindir}/h2ph
 %attr(755,root,root) %{_bindir}/h2xs
@@ -166,17 +165,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pod2latex
 %attr(755,root,root) %{_bindir}/pod2man
 %attr(755,root,root) %{_bindir}/pod2text
-%attr(755,root,root) %{_bindir}/pod2usage
-%attr(755,root,root) %{_bindir}/podchecker
-%attr(755,root,root) %{_bindir}/podselect
 %attr(755,root,root) %{_bindir}/pstruct
 %attr(755,root,root) %{_bindir}/s2p
 %attr(755,root,root) %{_bindir}/splain
 
 %dir %{_libdir}/perl5
 %attr( - ,root,root) %{_libdir}/perl5/*
-%dir %{_libdir}/site_perl
-%attr( - ,root,root) %{_libdir}/site_perl/*
+#%dir %{_libdir}/site_perl
+#%attr( - ,root,root) %{_libdir}/site_perl/*
 %{_mandir}/man[13]/*
 
 %files -n sperl
