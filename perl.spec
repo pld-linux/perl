@@ -167,6 +167,7 @@ EOF
 
 ## Fix permissions
 find . -name \*.ph -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
 
 ## Fix paths
 mv .packlist .packlist.old
