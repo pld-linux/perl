@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	71
+Release:	72
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -64,6 +64,8 @@ Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
 Obsoletes:	perl-base
+# broken, kill it
+Obsoletes:	perl-SOAP
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
