@@ -25,11 +25,11 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	64
+Release:	65
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
-Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
+Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-noroot_install.patch
 Patch1:		%{name}-nodb.patch
@@ -45,9 +45,9 @@ Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
 Patch13:	%{name}-gcc3.patch
-Patch14:	%{name}-typemap-float.patch
-Patch15:	%{name}-Safe.patch
-Patch16:	%{name}-link.patch
+Patch14:	%{name}-link.patch
+Patch15:	%{name}-typemap-float.patch
+Patch16:	%{name}-Safe.patch
 URL:		http://www.perl.org/
 BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
@@ -491,10 +491,10 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
-	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
+	Convert Crypt DBD Data Date Devel Device Digest Error ExtUtils File \
 	Filesys Font Games Getopt GnuPG Graph HTML HTTP I18N IO/Socket IPC \
-	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
-	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
+	Image Inline Language Lingua/EN List Locale LockFile Log MIME Mail \
+	Math Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
 	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
@@ -763,7 +763,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/sys
 
 %{_mandir}/man1/a2p.1*
-%{_mandir}/man1/dprofpp.1*
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/perl[ae-z]*.1*
@@ -817,6 +816,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_mandir}/man1/c2ph.1*
+%{_mandir}/man1/dprofpp.1*
 %{_mandir}/man1/h2ph.1*
 %{_mandir}/man1/h2xs.1*
 %{_mandir}/man1/perlbug.1*
