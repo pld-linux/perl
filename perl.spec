@@ -121,9 +121,9 @@ install utils/pl2pm $RPM_BUILD_ROOT/usr/bin/pl2pm
 
 (cd /usr/include ;
 PERL5LIB=$RPM_BUILD_ROOT/usr/lib/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
-$RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${_target}%{perlthread} \
+$RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
 $RPM_BUILD_ROOT/usr/bin/h2ph \
--d $RPM_BUILD_ROOT/usr/lib/perl5/${_target}/%{perlver}%{perlrel}/ \
+-d $RPM_BUILD_ROOT/usr/lib/perl5/%{_target}/%{perlver}%{perlrel}/ \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
 ( cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread}/
