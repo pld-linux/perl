@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.5
-Release:	6%{!?with_threads:_nothr}
+Release:	7%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -817,7 +817,7 @@ install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 	Font Games Getopt GnuPG Graph Graphics HTML HTTP Hash I18N IO/Socket \
 	IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball} List \
 	Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
-	Modem Module Net/{IDN,SMTP} NetServer Netscape News Number Object \
+	Modem Module Net/{IDN,SMTP} NetAddr NetServer Netscape News Number Object \
 	OLE PAR PHP Parse PerlIO/via Pod PostScript Proc Quantum RADIUS RPC \
 	RPM RTF Regexp SNMP SOAP/Transport SQL SVN Schedule Set Sort Speech \
 	Spreadsheet Statistics String Sub Sys TeX Template \
