@@ -1,0 +1,40 @@
+--- perl-5.6.0/t/op/runlevel.t.pix	Wed Mar  1 01:28:41 2000
++++ perl-5.6.0/t/op/runlevel.t	Thu Dec 14 13:25:04 2000
+@@ -349,3 +349,18 @@
+ bar
+ B 2
+ bar
++########
++sub n { 0 }
++sub f { my $x = shift; d(); }
++f(n());
++f();
++
++sub d {
++    my $i = 0; my @a;
++    while (do { { package DB; @a = caller($i++) } } ) {
++        @a = @DB::args;
++        for (@a) { print "$_\n"; $_ = '' }
++    }
++}
++EXPECT
++0
+--- perl-5.6.0/cop.h.pix	Mon Mar 20 18:26:52 2000
++++ perl-5.6.0/cop.h	Thu Dec 14 13:25:50 2000
+@@ -105,13 +105,9 @@
+     } STMT_END
+ #endif /* USE_THREADS */
+ 
+-#ifdef USE_ITHREADS
+-   /* junk in @_ spells trouble when cloning CVs, so don't leave any */
+-#  define CLEAR_ARGARRAY()	av_clear(cx->blk_sub.argarray)
+-#else
+-#  define CLEAR_ARGARRAY()	NOOP
+-#endif /* USE_ITHREADS */
+-
++/* junk in @_ spells trouble when cloning CVs and in pp_caller(), so don't
++ * leave any */
++#define CLEAR_ARGARRAY()	av_clear(cx->blk_sub.argarray)
+ 
+ #define POPSUB(cx,sv)							\
+     STMT_START {							\
