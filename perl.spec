@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	52
+Release:	53
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -495,14 +495,14 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
-install -d Apache Archive Array Astro Audio Authen B Bundle Business CGI Class \
-	Config Convert Crypt DBD Data Date Devel Digest ExtUtils File \
+install -d AI Apache Archive Array Astro Audio Authen B Bundle Business \
+	CGI Class Config Convert Crypt DBD Data Date Devel Digest ExtUtils File \
 	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
 	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
 	Module Net/SMTP NetServer Netscape News Number Parse Pod PostScript \
 	Proc RADIUS RPC Regexp Set Sort Sub Statistics String Sys TeX \
 	Test Text/Query Tie Time Tree WWW XML \
-	auto/{Array,Crypt,Mail,Net,Statistics,Text,WWW}
+	auto/{AI,Array,Crypt,Mail,Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
 install -d Astro Audio Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest \
@@ -549,6 +549,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}
 
 %dir %{_libdir}/perl5/site_perl
+%{_libdir}/perl5/site_perl/AI
 %{_libdir}/perl5/site_perl/Apache
 %{_libdir}/perl5/site_perl/Audio
 %{_libdir}/perl5/site_perl/Astro
