@@ -302,6 +302,7 @@ interpreter and compiling perl modules.
 Summary:	Perl documentation in POD format
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Documentation
+Obsoletes:	%{name}-pod
 
 %description doc-pod
 Practical Extraction and Report Language - POD docs.
@@ -328,10 +329,12 @@ Summary:	Modules from the core perl distribution
 Summary(pl):	Modu³y z podstawowej dystrybucji perla
 Group:		Development/Libraries
 Requires:	%{name}-base = %{version}
-#Provides:	perl-ANSIColor
-#Provides:	perl-DProf
-#Provides:	perl-Devel-Peek
-#Provides:	perl-PodParser
+Provides:	perl-Attribute-Handlers = 0.77
+Provides:	perl-CGI = 2.81
+Provides:	perl-Class-ISA = 0.32
+Provides:	perl-Digest = 1.00
+Provides:	perl-Filter-Simple = 0.78
+# more to add...
 
 %description modules
 Practical Extraction and Report Language - modules from the core
@@ -950,20 +953,19 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Unicode/*/*.ix
 %{_mandir}/man3/Unicode::*
 
-
-
 %{perl_privlib}/AnyDBM*
 %{_mandir}/man3/AnyDBM*
-# FIXME: move */demo to %_exapmlesdir or remove it at all
+# FIXME: move */demo to %_exapmlesdir or /dev/null
 %{perl_privlib}/Attribute
 %{_mandir}/man3/Attribute*
 %{perl_privlib}/Benchmark*
 %{_mandir}/man3/Benchmark*
-# FIXME: move */eg to %_examplesdir or remove it at all
+# FIXME: move */eg to %_examplesdir or /dev/null
 %{perl_privlib}/CGI*
 %{_mandir}/man3/CGI*
+# FIXME: move test.pl to %_examplesdir or /dev/null
 %{perl_privlib}/Class
-%{_mandir}/man3/Class*
+%{_mandir}/man3/Class::*
 %{perl_privlib}/DirHandle*
 %{_mandir}/man3/DirHandle*
 %{perl_privlib}/Dumpvalue.*
