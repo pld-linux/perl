@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	66
+Release:	63
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -43,14 +43,12 @@ Patch8:		%{name}-errno_h-parsing.patch
 Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
 Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
-Patch12:	%{name}-db4.patch
+Patch12:	%{name}-db3.patch
 Patch13:	%{name}-gcc3.patch
-Patch14:	%{name}-link.patch
-Patch15:	%{name}-typemap-float.patch
 URL:		http://www.perl.org/
-BuildRequires:	db-devel > 4.1
+BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
-BuildRequires:	ed
+Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
@@ -171,6 +169,8 @@ aplicações mais comuns do Perl são utilitários de administração de
 sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
 são escritos em Perl. Você precisa do pacote perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
+
+%description -l no
 
 %description -l pt_BR
 Perl é uma linguagem interpretada, otimizada para tratar arquivos
@@ -329,8 +329,8 @@ Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - modu³y
 Summary(pt_BR):	Módulos do perl básicos
 Group:		Applications/Text
-Requires:	%{name} = %{version}
 Requires:	perl-Test-Harness
+Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
 Provides:	perl-DProf
 Provides:	perl-Devel-Peek
@@ -358,7 +358,7 @@ programas/ scripts.
 Summary:	Perl POD documentation
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Applications/Text
-Requires:	%{name} = %{version}
+Prereq:		%{name} = %{version}
 
 %description pod
 Practical Extraction and Report Language - POD docs.
@@ -383,8 +383,6 @@ POD.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
-%patch15 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
@@ -423,8 +421,7 @@ sh Configure \
 	-Dsitelib=%{_libdir}/perl5/site_perl \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
-	-Dman1ext=1 \
-	-Dman3ext=3perl \
+	-Dman3ext=3pm \
 	-Doptimize="%{rpmcflags}" \
 	${USETHREADS}usethreads \
 	-Uuselargefiles \
@@ -436,8 +433,11 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid
 
-%{__make} CCDLFLAGS=-rdynamic
+mv -f Makefile Makefile.bak
+sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
+	Makefile.bak > Makefile
 
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -511,29 +511,22 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 
 # These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 #
 # Newer Test::Harness is available as a separate package
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
 #
 # Newer DB_File is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
 #
 # Newer CGI is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-
-# why is it there...?
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE/sperl.o
-
-# documentation suffixes: .1/.3perl for core modules and .1p/.3pm for built from CPAN
-echo -e ",s/^man1ext='1'/man1ext='1p'/\n,s/^man3ext='3perl'/man3ext='3pm'/\nw" | ed \
-	$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -716,8 +709,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/autouse.pm
-%{_libdir}/perl5/%{version}/base.pm
-%{_libdir}/perl5/%{version}/fields.pm
+# newer versions are in perl-Class-Fields
+#%{_libdir}/perl5/%{version}/base.pm
+#%{_libdir}/perl5/%{version}/fields.pm
 %{_libdir}/perl5/%{version}/constant.pm
 %{_libdir}/perl5/%{version}/integer.pm
 %{_libdir}/perl5/%{version}/lib.pm
@@ -769,9 +763,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/perl[ae-z]*.1*
-%{_mandir}/man1/perlb[!u]*.1*
-%{_mandir}/man1/perlc[!c]*.1*
-%{_mandir}/man1/perld[!o]*.1*
+%{_mandir}/man1/perlb[^u]*.1*
+%{_mandir}/man1/perlc[^c]*.1*
+%{_mandir}/man1/perld[^o]*.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
 %lang(fi) %{_mandir}/fi/man1/perl*
@@ -794,8 +788,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/[Xivw]*
 %{_mandir}/man3/attri*
 %{_mandir}/man3/au*
-%{_mandir}/man3/base.*
-%{_mandir}/man3/fields.*
+# newer versions are in perl-Class-Fields
+#%{_mandir}/man3/base.*
+#%{_mandir}/man3/fields.*
 %{_mandir}/man3/co*
 %{_mandir}/man3/l[io]*
 %{_mandir}/man3/ov*
@@ -952,9 +947,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
-#%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
-#%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tolower.al
@@ -985,7 +977,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ops.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
@@ -1028,5 +1019,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pod
 %defattr(644,root,root,755)
-%{_libdir}/perl5/%{version}/pod/perl[!d]*
-%{_libdir}/perl5/%{version}/pod/perld[!i]*
+%{_libdir}/perl5/%{version}/pod/perl[^d]*
+%{_libdir}/perl5/%{version}/pod/perld[^i]*
