@@ -29,7 +29,6 @@ Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
 URL:		http://www.perl.org/
-#Requires:	csh
 Provides:	perl-ANSIColor
 Provides:	perl-Devel-Peek
 Provides:	perl-DProf
@@ -48,8 +47,6 @@ reports based on that information. It's also a good language for many
 system management tasks. The language is intended to be practical
 (easy to use, efficient, complete) rather than beautiful (tiny,
 elegant, minimal).
-
-#This version has support for threads compiled in.
 
 %description -l de
 Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger
@@ -84,18 +81,13 @@ yararlý yetenekleri vardýr. Perl, güzel (ufak, zarif, minimum)
 olmaktan çok, pratik olmaya yönelik (kullanýmý kolay, verimli,
 eksiksiz) olarak tasarlanmýþtýr.
 
-%package lib
-Summary:	Shared Perl library and other version dependant files
-Group:		Libraries
-
-%description lib
-Provides a shared library for programs which embed a Perl interpreter.
-
 %package devel
 Summary:	Perl development files
 Group:		Development/Libraries
-Requires:	%{name}-lib = %{version}
-Obsoletes:	%{name}-lib-devel
+Group(de):	Entwicklung/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Requires:	%{name} = %{version}
 
 %description devel
 Files for developing applications which embed a Perl interpreter.
@@ -122,15 +114,13 @@ Group:		Applications/Text
 Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Aplikacje/Tekst
-Prereq:		%{name}-lib = %{version}
+Prereq:		%{name} = %{version}
 
 %description modules
 Practical Extraction and Report Language - modu³y.
 
 %description -l pl modules
 Practical Extraction and Report Language - modu³y.
-dla systemów osadzonych.
-
 
 %prep
 %setup  -q
@@ -268,8 +258,8 @@ gzip -9nf README Changes
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   lib -p /sbin/ldconfig
-%postun lib -p /sbin/ldconfig
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -278,6 +268,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
 %attr(755,root,root) %{_bindir}/s2p
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
 %dir %{_libdir}/perl5
 %dir %{_libdir}/perl5/%{version}
@@ -354,9 +345,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
 
-%files lib
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
