@@ -272,7 +272,7 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 %package base
 Summary:	Base perl components for a minimal installation
 Summary(pl):	Podstawowe sk砤dniki potrzebne do minimalnej instalacji perla
-Group:		Text/Applications
+Group:		Development/Languages/Perl
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 0.86
 Provides:	perl-File-Temp = 0.14
