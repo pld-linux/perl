@@ -66,7 +66,7 @@ Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
-Patch7:		%{name}_584-microperl_uconfig.patch
+Patch7:		%{name}_585-microperl_uconfig.patch
 URL:		http://www.perl.com/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
