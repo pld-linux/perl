@@ -1,6 +1,6 @@
 #
 # Conditional build:
-# _without_tests      - do not perform "make test"
+# _with_tests         - do not perform "make test"
 # _without_threads    - build without support for threads
 # _without_largefiles - build without large file support
 # _without_gdbm       - build without the GDBM_File module
@@ -18,7 +18,7 @@
 # - *TESTING*
 #
 
-%define	_patch	19377
+%define	_patch	19400
 
 %if 0%(if [ %{__perl_requires} ]; then echo 1; fi)
 %undefine	__perl_requires
@@ -63,13 +63,14 @@ Release:	0.%{_patch}.1%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
+# rsync://ftp.linux.activestate.com/perl-5.8.x
 Source0:	%{name}-%{version}_%{_patch}.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
 Patch0:		%{name}_580-noroot_install.patch
-Patch1:		%{name}_580-INC.patch
-Patch2:		%{name}_580-MakeMaker.patch
+Patch1:		%{name}_581-INC.patch
+#Patch2:		%{name}_581-MakeMaker.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
 Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_580-soname.patch
@@ -490,6 +491,7 @@ Requires:	%{name}-base = %{version}
 Various tools from the core perl distribution:
 
  a2p       - Awk to Perl translator
+ cpan      - easily interact with CPAN from the command line
  find2perl - translate find command lines to Perl code
  piconv    - iconv(1), reinvented in perl
  psed, s2p - a stream editor
@@ -498,6 +500,7 @@ Various tools from the core perl distribution:
 Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 
  a2p       - translator skryptów Awka do Perla
+ cpan      - easily interact with CPAN from the command line
  find2perl - t³umaczenie linii poleceñ programu find na kod w Perlu
  piconv    - iconv(1) napisany w Perlu
  psed, s2p - edytor strumieniowy
@@ -598,7 +601,7 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p0
+%patch1 -p0
 #%patch2 -p0
 %patch3 -p1
 %patch4 -p1
@@ -670,8 +673,8 @@ rm -f uconfig.h
 	scriptdirexp=%{_bindir} \
 	OPTIMIZE="%{rpmcflags}"
 
-%{?!_without_tests:%{__make} test}
-#%{?!_without_tests:%{__make} minitest}
+%{?_with_tests:%{__make} test}
+#%{?_with_tests:%{__make} minitest}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -906,6 +909,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/POSIX/*.al
 %{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.ix
+%{perl_privlib}/auto/POSIX/
 %{_mandir}/man3/POSIX.*
 
 %attr(755,root,root) %{_libdir}/lib*.so.%{version}
@@ -1217,6 +1221,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/a2p
 %{_mandir}/man1/a2p.*
+%attr(755,root,root) %{_bindir}/cpan
+%{_mandir}/man1/cpan.*
 %attr(755,root,root) %{_bindir}/find2perl
 %{_mandir}/man1/find2perl.*
 %attr(755,root,root) %{_bindir}/libnetcfg
