@@ -86,18 +86,12 @@ Patch11:	%{name}_580-soname.patch
 # failed; is it still necessary?
 #Patch13:	%{name}-gcc3.patch
 Patch14:	%{name}_580-perluniintro.patch
+Patch15:	%{name}_580-Safe.patch
 URL:		http://www.perl.com/
 #BuildRequires:	db-devel > 4.1
 %{?!_without_largefiles:Provides:	perl(largefiles)}
-Provides:	perl-File-Spec = 0.82
-#Provides:	perl-IO = 1.20
-#Obsoletes:	perl-File-Spec
 Requires:	%{name}-base = %{version}
 Requires:	%{name}-modules = %{version}
-Obsoletes:	perl-IO
-Obsoletes:	perl-lib
-Obsoletes:	perl-mod-skel
-#Obsoletes:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -280,6 +274,10 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 Summary:	Base perl components for a minimal installation
 Summary(pl):	Podstawowe sk砤dniki potrzebne do minimalnej instalacji perla
 Group:		Text/Applications
+Provides:	perl-File-Compare = 1.1003
+Provides:	perl-File-Spec = 0.83
+Provides:	perl-File-Temp = 0.13
+Provides:	perl-Safe = 2.09
 
 %description base
 Base components, files, core modules, etc. -- a minimal usable perl
@@ -292,6 +290,12 @@ Summary(pl):	Pliki potrzebne przy tworzeniu w砤snych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabe鏰lhos para o perl
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Provides:	perl-CPAN = 1.61
+Provides:	perl-Devel-DProf = 20000000.00_01
+Provides:	perl-Devel-PPPort = 2.0002
+Provides:	perl-Devel-Peek = 1.00_03
+Provides:	perl-ExtUtils-MakeMaker = 6.03
+Provides:	perl-ExtUtils-Embed = 1.250601
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -302,7 +306,7 @@ interpreter and compiling perl modules.
 Summary:	Perl documentation in POD format
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Documentation
-Obsoletes:	%{name}-pod
+Obsoletes:	perl-pod
 
 %description doc-pod
 Practical Extraction and Report Language - POD docs.
@@ -334,7 +338,38 @@ Provides:	perl-CGI = 2.81
 Provides:	perl-Class-ISA = 0.32
 Provides:	perl-Digest = 1.00
 Provides:	perl-Filter-Simple = 0.78
-# more to add...
+Provides:	perl-FindBin = 1.43
+#Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
+Provides:	perl-IO = 1.20
+Provides:	perl-IPC-SysV = 1.03_00
+Provides:	perl-Locale-Maketext = 1.03
+Provides:	perl-MIME-Base64 = 2.12
+Provides:	perl-Math-BigInt = 1.60
+Provides:	perl-Math-BigRat = 0.07
+Provides:	perl-Math-Trig = 1.01
+Provides:	perl-Memoize = 1.01
+Provides:	perl-NEXT = 0.50
+Provides:	perl-PerlIO-via-QuotedPrint = 0.04
+Provides:	perl-Pod-LaTeX = 0.54
+Provides:	perl-Pod-Parser = 1.13
+Provides:	perl-Scalar-List-Utils = 1.07_00
+Provides:	perl-Socket = 1.75
+Provides:	perl-Storable = 2.04
+Provides:	perl-Term-ANSIColor = 1.05
+Provides:	perl-Term-Cap = 1.07
+Provides:	perl-Test = 1.20
+Provides:	perl-Test-Harness = 2.26
+Provides:	perl-Test-Simple = 0.45
+Provides:	perl-Text-Balanced = 1.89
+Provides:	perl-Text-ParseWords = 3.21
+Provides:	perl-Text-Soundex = 1.01
+Provides:	perl-Text-Tabs+Wrap = 2001.0929
+Provides:	perl-Tie-File = 0.93
+Provides:	perl-Time-HiRes = 1.20_00
+Provides:	perl-UNIVERSAL = 1.00
+Provides:	perl-Unicode-Collate = 0.12
+Provides:	perl-Unicode-Normalize = 0.17
+Obsoletes:	perl-lib
 
 %description modules
 Practical Extraction and Report Language - modules from the core
@@ -487,6 +522,7 @@ Tools for manipulating files in the POD (Plain Old Documentation) format:
 #%patch12 -p1
 #%patch13 -p1
 %patch14 -p0
+%patch15 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
 chmod 0755 find-perl-provides
