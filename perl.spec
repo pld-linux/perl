@@ -64,7 +64,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 # rsync://ftp.linux.activestate.com/perl-5.8.x
-Source0:	%{name}-%{version}_%{_patch}.tar.bz2
+Source0:	http://radek.karnet.pl/pld/%{name}-%{version}_%{_patch}.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
