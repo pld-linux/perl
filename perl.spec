@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	54
+Release:	55
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -500,15 +500,16 @@ install -d AI Apache Archive Array Astro Audio Authen B Bundle Business \
 	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
 	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
 	Module Net/SMTP NetServer Netscape News Number Parse Pod PostScript \
-	Proc RADIUS RPC Regexp Set Sort Sub Statistics String Sys TeX \
-	Test Text/Query Tie Time Tree WWW XML \
+	Proc RADIUS RPC Regexp SOAP/Transport Set Sort Speech Sub Statistics \
+	String Sys TeX Test Text/Query Tie Time Tree WWW XML \
 	auto/{AI,Array,Crypt,Mail,Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
 install -d Astro Audio Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest \
-	File IPC Locale Math Net String Term Text Unicode XML \
+	File IPC Locale Math Net Speech String Term Text Unicode XML \
 	auto/{Astro,Audio,Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel} \
-	auto/{Digest,File,IPC,Locale,Math,Net,String,Term,Text,Unicode,XML}
+	auto/{Digest,File,IPC,Locale,Math,Net,Speech,String,Term,Text} \
+	auto/{Unicode,XML}
 )
 
 # These File::Spec submodules are for non-Unix systems
@@ -603,6 +604,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Regexp
 %{_libdir}/perl5/site_perl/Set
 %{_libdir}/perl5/site_perl/Sort
+%{_libdir}/perl5/site_perl/Speech
 %{_libdir}/perl5/site_perl/Statistics
 %{_libdir}/perl5/site_perl/String
 %{_libdir}/perl5/site_perl/Sub
@@ -633,6 +635,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Locale
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Math
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Speech
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/String
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Term
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Text
@@ -654,6 +657,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Locale
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Math
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Net
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Speech
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/String
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Term
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Text
@@ -816,6 +820,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/B
 %{_libdir}/perl5/site_perl/NetServer
 %{_libdir}/perl5/site_perl/Netscape
+%{_libdir}/perl5/site_perl/SOAP
 %{_libdir}/perl5/%{version}/B
 %{_libdir}/perl5/%{version}/CPAN
 %{_libdir}/perl5/%{version}/Class
