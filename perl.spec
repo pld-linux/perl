@@ -56,7 +56,7 @@ Release:	0.20%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
+Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
@@ -195,8 +195,6 @@ sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
 são escritos em Perl. Você precisa do pacote perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
 
-%description -l no
-
 %description -l pt_BR
 Perl é uma linguagem interpretada, otimizada para tratar arquivos
 texto, extraindo informação desses arquivos e mostrando relatórios
@@ -274,6 +272,11 @@ Base components, files, core modules, etc. -- a minimal usable perl
 installation.  You are encouraged to install a full perl (the perl
 package) whenever possible.
 
+%description base -l pl
+Podstawowe sk³adniki, pliki, g³ówne modu³y itp. - minimalna u¿ywalna
+instalacja Perla. Zaleca siê instalacjê pe³nego Perla (pakietu perl)
+je¶li to tylko mo¿liwe.
+
 %package devel
 Summary:	Perl development files
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
@@ -291,8 +294,12 @@ Provides:	perl-ExtUtils-Embed = 1.250601
 Obsoletes:	perl-lib-devel
 
 %description devel
-Components, required for developing applications which embed a Perl
+Components required for developing applications which embed a Perl
 interpreter and compiling perl modules.
+
+%description devel -l pl
+Sk³adniki potrzebne do tworzenia aplikacji osadzaj±cych interpreter
+Perla oraz kompilowania modu³ów Perla.
 
 %package doc-pod
 Summary:	Perl documentation in POD format
@@ -304,7 +311,8 @@ Obsoletes:	perl-pod
 Practical Extraction and Report Language - POD docs.
 
 %description doc-pod -l pl
-Practical Extraction and Report Language - dokumentacja w formacie POD.
+Practical Extraction and Report Language - dokumentacja w formacie
+POD.
 
 %package doc-reference
 Summary:	Perl reference documentation
@@ -374,16 +382,22 @@ dystrybucji.
 
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
+Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Provides:	perldoc = 2.03@%{version}
 Requires:	%{name}-base
 Group:		Development/Tools
 
 %description perldoc
-perldoc perldoc looks up a piece of documentation in .pod format
-that is embedded in the perl installation tree or in a perl script,
-and displays it via "pod2man | nroff -man | $PAGER". (In addition, if
-running under HP-UX, "col -x" will be used.) This is primarily used for
-the documentation for the perl library modules.
+perldoc looks up a piece of documentation in .pod format that is
+embedded in the perl installation tree or in a perl script, and
+displays it via "pod2man | nroff -man | $PAGER". This is primarily
+used for the documentation for the perl library modules.
+
+%description perldoc -l pl
+perldoc wyszukuje fragment dokumentacji w formacie .pod osadzony w
+drzewie instalacji perla lub w skypcie perlowym i wy¶wietla go przez
+"pod2man | nroff -man | $PAGER". Program ten u¿ywany jest g³ównie do
+dokumentacji modu³ów z bibliotek Perla.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
@@ -466,12 +480,12 @@ Various tools from the core perl distribution:
  psed, s2p - a stream editor
 
 %description modules -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji perla:
+Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 
- a2p       - Awk to Perl translator
- find2perl - translate find command lines to Perl code
- piconv    - iconv(1), reinvented in perl
- psed, s2p - a stream editor
+ a2p       - translator skryptów Awka do Perla
+ find2perl - t³umaczenie linii poleceñ programu find na kod w Perlu
+ piconv    - iconv(1) napisany w Perlu
+ psed, s2p - edytor strumieniowy
 
 %package tools-devel
 Summary:	Developer's tools from the core perl distribution
@@ -493,6 +507,23 @@ Various tools from the core perl distribution:
  pl2pm         - Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
  splain        - force verbose warning diagnostics
 
+%description tools-devel -l pl
+Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
+
+ c2ph, pstruct - zrzucanie struktur C w postaci generowanej z tablic
+                 symboli z cc -g -S
+ dprofpp       - wy¶wietlanie perlowych danych profiluj±cych
+ enc2xs        - generator modu³ów koduj±cych w Perlu
+ h2ph          - konwerter plików nag³ówkowych .h z C na perlowe pliki
+                 nag³ówkowe .ph
+ h2xs          - konwerter plików nag³ówkowych .h z C na rozszerzenia
+                 Perla
+ perlcc        - generator binarek z programów w Perlu
+ perlivp       - procedura weryfikacji instalacji Perla
+ pl2pm         - zgrubne narzêdzie do t³umaczenia plików pl Perla 4 na
+                 modu³y .pm Perla 5
+ splain        - wymuszenie obszernych ostrze¿eñ diagnostycznych
+
 %package tools-pod
 Summary:	Tools for manipulating files in the POD format
 Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
@@ -500,30 +531,54 @@ Group:		Applications
 Requires:	%{name}-base = %{version}
 
 %description tools-pod
-Tools for manipulating files in the POD (Plain Old Documentation) format:
+Tools for manipulating files in the POD (Plain Old Documentation)
+format:
 
  pod2html   - convert .pod files to .html files
- pod2latex  - convert pod documentation to latex format
- pod2man    - Convert POD data to formatted *roff input
- pod2text   - Convert POD data to formatted ASCII text
+ pod2latex  - convert pod documentation to LaTeX format
+ pod2man    - convert POD data to formatted *roff input
+ pod2text   - convert POD data to formatted ASCII text
  pod2usage  - print usage messages from embedded pod docs in files
  podchecker - check the syntax of POD format documentation files
- podselect  - print selected sections of pod documentation on standard output
+ podselect  - print selected sections of pod documentation
+
+%description tools-pod
+Narzêdzia do przetwarzania plików w formacie POD (Plain Old
+Documentation):
+
+ pod2html   - konwerter plików .pod do plików .html
+ pod2latex  - konwerter dokumentacji pod do formatu LaTeX
+ pod2man    - konwerter danych POD na wej¶cie sformatowane dla *roffa
+ pod2text   - konwerter danych POD na sformatowany tekst ASCII
+ pod2usage  - wypisanie informacji o u¿ywaniu programu z dokumentacji
+              osadzonej w plikach
+ podchecker - kontrola sk³adni dokumentacji w formacie POD
+ podselect  - wypisanie wybranych sekcji z dokumentacji POD
 
 %package -n microperl
 Summary:	A really minimal perl, even more minimal than miniperl
+Summary(pl):	Naprawdê minimalny Perl, nawet bardziej minimalny ni¿ miniperl
 # XXX: is there a more appropiate group?
 Group:		Applications
 
 %description -n microperl
-microperl is supposed to be able a really minimal perl, even more minimal
-than miniperl.  No Configure is needed to build microperl, on the other
-hand this means that interfaces between Perl and your operating system
-are left very -- minimal.
+microperl is supposed to be able a really minimal perl, even more
+minimal than miniperl.  No Configure is needed to build microperl, on
+the other hand this means that interfaces between Perl and your
+operating system are left very -- minimal.
 
 All this is experimental.  If you don't know what to do with microperl
 you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
 
+%description -n microperl -l pl
+microperl ma byæ naprawdê minimalnym Perlem, nawet bardziej minimalnym
+od miniperla. Uruchamianie Configure nie jest potrzebne do zbudowania
+microperla, z drugiej strony oznacza to, ¿e interfejs miêdzy Perlem a
+systemem operacyjnym pozostaje bardzo minimalny.
+
+Ca³o¶æ jest eksperymentalna. Je¶li nie wiesz co zrobiæ z microperlem,
+prawdopodobnie nie powiniene¶ tego robiæ. Nie zg³aszaj b³êdów w
+microperlu - popraw je.
 
 %prep
 %setup -q
@@ -652,10 +707,10 @@ install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarc
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
-	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
+	Convert Crypt DBD Data Date Devel Device Digest Error ExtUtils File \
 	Filesys Font Games Getopt GnuPG Graph HTML HTTP I18N IO/Socket IPC \
-	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
-	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
+	Image Inline Language Lingua/EN List Locale LockFile Log MIME Mail \
+	Math Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
 	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
@@ -680,7 +735,6 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
@@ -694,11 +748,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_usr}/local/lib/perl5/%{version}
 %dir %{perl_sitearch}
 %dir %{perl_sitearch}/auto
-%dir %{perl_vendorlib}
+%{perl_vendorlib}
 %dir %{_libdir}/perl5/vendor_perl
 %dir %{_libdir}/perl5/vendor_perl/%{version}
-%dir %{perl_vendorarch}
-%dir %{perl_vendorarch}/auto
+%{perl_vendorarch}
+#%dir %{perl_vendorarch}/auto
 
 
 %files base
