@@ -1,0 +1,10 @@
+--- perl-5.6.1/lib/ExtUtils/typemap.orig	Fri Apr  6 06:38:46 2001
++++ perl-5.6.1/lib/ExtUtils/typemap	Wed Dec 25 01:37:07 2002
+@@ -38,6 +38,7 @@
+ U8			T_UV
+ Result			T_U_CHAR
+ Boolean			T_IV
++float			T_FLOAT
+ double			T_DOUBLE
+ SysRet			T_SYSRET
+ SysRetLong		T_SYSRET

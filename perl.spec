@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	65
+Release:	66
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -46,6 +46,7 @@ Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db4.patch
 Patch13:	%{name}-gcc3.patch
 Patch14:	%{name}-link.patch
+Patch15:	%{name}-typemap-float.patch
 URL:		http://www.perl.org/
 BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
@@ -383,6 +384,7 @@ POD.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
