@@ -121,13 +121,13 @@ install utils/pl2pm $RPM_BUILD_ROOT/usr/bin/pl2pm
 
 
 (cd /usr/include ;
-PERL5LIB=$RPM_BUILD_ROOT/usr/lib/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
-$RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
+PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
+$RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
 $RPM_BUILD_ROOT/usr/bin/h2ph \
--d $RPM_BUILD_ROOT/usr/lib/perl5/%{_target}/%{perlver}%{perlrel}/ \
+-d $RPM_BUILD_ROOT%{_libdir}/perl5/%{_target}/%{perlver}%{perlrel}/ \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
-( cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread}/
+( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread}/
 
 mv .packlist .packlist.old
 sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
@@ -140,7 +140,7 @@ rm -f Config.pm.old )
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README Change*
 
-find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-unneeded {} \;
+find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so -exec strip --strip-unneeded {} \;
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -168,8 +168,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/s2p
 %attr(755,root,root) /usr/bin/splain
 
-%dir /usr/lib/perl5
-%attr( - ,root,root) /usr/lib/perl5/*
+%dir %{_libdir}/perl5
+%attr( - ,root,root) %{_libdir}/perl5/*
 %{_mandir}/man[13]/*
 
 %files -n sperl
