@@ -18,7 +18,10 @@
 # - *TESTING*
 #
 
-%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
+%undefine	__perl_requires
+%define		__perl_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
+#%%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
+
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
@@ -51,7 +54,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.33%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.34%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
