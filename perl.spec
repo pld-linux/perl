@@ -683,9 +683,6 @@ rm -f uconfig.h
 	OPTIMIZE="%{rpmcflags}"
 %endif
 
-%{?with_tests:%{__make} test}
-#%{?with_tests:%{__make} minitest}
-
 cat > runperl <<EOF
 #!/bin/sh
 LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
@@ -693,6 +690,9 @@ PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
 exec %{buildroot}%{_bindir}/perl \$*
 EOF
 chmod a+x runperl
+
+%{?with_tests:%{__make} test}
+#%{?with_tests:%{__make} minitest}
 
 %install
 rm -rf $RPM_BUILD_ROOT
