@@ -117,13 +117,13 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 make install
-install utils/pl2pm $RPM_BUILD_ROOT/usr/bin/pl2pm
+install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 
 (cd /usr/include ;
-PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT/usr/bin/perl \
+PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
 $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
-$RPM_BUILD_ROOT/usr/bin/h2ph \
+$RPM_BUILD_ROOT%{_bindir}/h2ph \
 -d $RPM_BUILD_ROOT%{_libdir}/perl5/%{_target}/%{perlver}%{perlrel}/ \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
@@ -149,32 +149,32 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.gz Change*
 
-%attr(755,root,root) /usr/bin/a2p
-%attr(755,root,root) /usr/bin/c2ph
-%attr(755,root,root) /usr/bin/find2perl
-%attr(755,root,root) /usr/bin/h2ph
-%attr(755,root,root) /usr/bin/h2xs
-%attr(755,root,root) /usr/bin/perl
-%attr(755,root,root) /usr/bin/perl%{perlver}%{perlrel}
-%attr(755,root,root) /usr/bin/perlbug
-%attr(755,root,root) /usr/bin/perlcc
-%attr(755,root,root) /usr/bin/perldoc
-%attr(755,root,root) /usr/bin/pl2pm
-%attr(755,root,root) /usr/bin/pod2html
-%attr(755,root,root) /usr/bin/pod2latex
-%attr(755,root,root) /usr/bin/pod2man
-%attr(755,root,root) /usr/bin/pod2text
-%attr(755,root,root) /usr/bin/pstruct
-%attr(755,root,root) /usr/bin/s2p
-%attr(755,root,root) /usr/bin/splain
+%attr(755,root,root) %{_bindir}/a2p
+%attr(755,root,root) %{_bindir}/c2ph
+%attr(755,root,root) %{_bindir}/find2perl
+%attr(755,root,root) %{_bindir}/h2ph
+%attr(755,root,root) %{_bindir}/h2xs
+%attr(755,root,root) %{_bindir}/perl
+%attr(755,root,root) %{_bindir}/perl%{perlver}%{perlrel}
+%attr(755,root,root) %{_bindir}/perlbug
+%attr(755,root,root) %{_bindir}/perlcc
+%attr(755,root,root) %{_bindir}/perldoc
+%attr(755,root,root) %{_bindir}/pl2pm
+%attr(755,root,root) %{_bindir}/pod2html
+%attr(755,root,root) %{_bindir}/pod2latex
+%attr(755,root,root) %{_bindir}/pod2man
+%attr(755,root,root) %{_bindir}/pod2text
+%attr(755,root,root) %{_bindir}/pstruct
+%attr(755,root,root) %{_bindir}/s2p
+%attr(755,root,root) %{_bindir}/splain
 
 %dir %{_libdir}/perl5
 %attr( - ,root,root) %{_libdir}/perl5/*
 %{_mandir}/man[13]/*
 
 %files -n sperl
-%attr(4755,root,root) /usr/bin/sperl%{perlver}%{perlrel}
-%attr(4755,root,root) /usr/bin/suidperl
+%attr(4755,root,root) %{_bindir}/sperl%{perlver}%{perlrel}
+%attr(4755,root,root) %{_bindir}/suidperl
 
 %changelog
 * Sun May  9 1999 Piotr Czerwiñski <pius@pld.org.pl>
