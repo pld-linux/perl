@@ -58,7 +58,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.2
-Release:	4%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	5%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL or Artistic
 Group:		Development/Languages/Perl
@@ -85,16 +85,8 @@ Requires:	perl-doc-reference
 Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" %{buildroot}%{_bindir}/perl
-
-%if 0%{?_use_internal_dependency_generator:1}
-%define		_use_internal_dependency_generator 0
-# we can do it as there is no _noautoprov* in this spec
-%define		__find_provides /usr/bin/rpmdeps --define="__perl_provides /bin/sh -c '%{__perl} %{SOURCE2}'" --define="__perl_requires /bin/sh -c 'cat >/dev/null'" --provides
-%else
-# for rpm <= 4.1
-%define		__find_provides %{_builddir}/%{name}-%{version}/find-perl-provides.sh
-%endif
+%define		__perl	%{_builddir}/%{name}-%{version}/runperl
+%define		__perl_provides %{__perl} /usr/lib/rpm/perl.prov
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -692,6 +684,14 @@ rm -f uconfig.h
 
 %{?!_without_tests:%{__make} test}
 #%{?!_without_tests:%{__make} minitest}
+
+cat > runperl <<EOF
+#!/bin/sh
+LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" \
+	PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
+	exec %{buildroot}%{_bindir}/perl \$*
+EOF
+chmod a+x runperl
 
 %install
 rm -rf $RPM_BUILD_ROOT
