@@ -4,8 +4,22 @@
 # _without_threads    - build without support for threads
 # _without_largefiles - build without large file support
 #
+# TODO:
+# - Finish %%files.
+# - Think about unicore.  If uff8*.pm, encode.pm, charnamess.pm (and
+#   probably others) are in the perl-base package, unicore should also
+#   be there.  But it's 5MB...
+# - Think about the package separation.  Split between perl, perl-base
+#   and perl-modules is far from obvius.
+# - Paths defined below (perl_* macros) should probably be redefined,
+#   conforming to FHS.  Arch-independent modules should go to /usr/share/,
+#   not /usr/lib/.  And perl_site* should go to /usr/local/.
+# - Ankry said something about moving perl* manual pages to separate
+#   directory (/usr/share/man/manp/ ?).  This shoud be laid down...
+# - *TESTING*
+#
 
-#%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
+%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_libdir}/perl5/%{version}
@@ -38,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl 编程语言。
 Name:		perl
 Version:	5.8.0
-Release:	0.04%{?_without_threads:_nothr}
+Release:	0.04%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -71,14 +85,14 @@ Patch11:	%{name}_580-soname.patch
 Patch14:	%{name}_580-perluniintro.patch
 URL:		http://www.perl.com/
 #BuildRequires:	db-devel > 4.1
-#Provides:	perl(DynaLoader)
+%{?!_without_largefiles:Provides:	perl(largefiles)}
 Provides:	perl-File-Spec = 0.82
 #Provides:	perl-IO = 1.20
 #Obsoletes:	perl-File-Spec
 Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
-Obsoletes:	perl-base
+#Obsoletes:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -259,7 +273,7 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 
 %package base
 Summary:	Base Perl components
-# summaries needs fixup of course...
+# summary need fixup of course...
 Group:		Text/Applications
 
 %description base
@@ -365,10 +379,6 @@ Prereq:		%{name} = %{version}
 #Provides:	perl-DProf
 #Provides:	perl-Devel-Peek
 #Provides:	perl-PodParser
-#Obsoletes:	perl-ANSIColor
-#Obsoletes:	perl-DProf
-#Obsoletes:	perl-Devel-Peek
-#Obsoletes:	perl-PodParser
 
 %description modules
 Practical Extraction and Report Language - modules.
@@ -530,26 +540,11 @@ install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}}
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
-# # Test::Harness is available as a separate package
-# rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
-# rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
-# #
-# # DB_File is available as a separate package
-# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/DB_File
-# rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/DB_File.pm
-# rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
-# #
-# # CGI is available as a separate package
-# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
-# rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
-# #
-# # Attribute::Handlers is available as a separate package
-# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Attribute/Handlers*
-# #
-# # Time::HiRes is available as a separate package
-# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/Time/HiRes
-# rm $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/Time/HiRes.pm
+## We already have these *.pod files as man pages
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
+## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 
