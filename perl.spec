@@ -10,7 +10,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
-Release:	17
+Release:	28
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -379,8 +379,8 @@ PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
 	libpng-devel libtiff-devel ncurses-devel popt-devel \
 	zlib-devel binutils libelf e2fsprogs-devel pam-devel pwdb-devel \
 	rpm-devel
-STDH	= \$(filter /usr/include/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' \$(PKGS)))
-STDH	+= \$(wildcard /usr/include/linux/*.h) \$(wildcard /usr/include/asm/*.h) \$(wildcard /usr/include/scsi/*.h)
+STDH	= \$(filter %{_includedir}/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' \$(PKGS)))
+STDH	+= \$(wildcard %{_includedir}/linux/*.h) \$(wildcard %{_includedir}/asm/*.h) \$(wildcard %{_includedir}/scsi/*.h)
 GCCDIR	= \$(shell gcc --print-file-name include)
 GCCH	= \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
 
@@ -395,7 +395,7 @@ H2PH	= \$(PERL) \$(PHBIN) -d \$(PHDIR)/
 all: std-headers gcc-headers
 
 std-headers: \$(STDH)
-	cd /usr/include && \$(H2PH) \$(STDH:/usr/include/%%=%%)
+	cd %{_includedir} && \$(H2PH) \$(STDH:%{_includedir}/%%=%%)
 
 gcc-headers: \$(GCCH)
 	cd \$(GCCDIR) && \$(H2PH) \$(GCCH:\$(GCCDIR)/%%=%%)
