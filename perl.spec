@@ -12,7 +12,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
-Release:	35
+Release:	36
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
@@ -338,13 +338,9 @@ sed -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
 mv -f .packlist.new .packlist
 )
 
-## Fix permissions
-find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.ph -exec chmod 444 {} \;
-find $RPM_BUILD_ROOT%{_libdir}/perl5 -type d -exec chmod 755 {} \;
-
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
-install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/
+install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix installed man pages list
@@ -355,9 +351,9 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 # dir tree for other perl modules
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
 install -d B Class Crypt Date Devel ExtUtils File Font HTML HTTP I18N \
-	IO/Socket Mail News Net Parse RPC Text Tie Time XML auto/Mail
+	IO/Socket Image Mail News Net Parse RPC Text Tie Time XML auto/Mail
 cd %{_target_platform}*/%{version}
-install -d Apache BSD Compress Digest Net Term \
+install -d Apache BSD Compress Digest Net Term XML \
 	auto/{Apache,BSD,Compress,Digest,Net,Term,XML}
 )
 
@@ -393,6 +389,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/HTTP
 %{_libdir}/perl5/site_perl/I18N
 %{_libdir}/perl5/site_perl/IO
+%{_libdir}/perl5/site_perl/Image
 %{_libdir}/perl5/site_perl/Mail
 %{_libdir}/perl5/site_perl/News
 %{_libdir}/perl5/site_perl/Net
@@ -410,6 +407,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Digest
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Term
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/XML
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
