@@ -85,8 +85,8 @@ Patch6:		%{name}_580-perluniintro.patch
 Patch7:		%{name}_580-Safe.patch
 Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
-Requires:	%{name}-base = %{version}
-Requires:	%{name}-modules = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	perldoc
 Requires:	perl-doc-reference
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
@@ -289,7 +289,7 @@ Perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
 %package GDBM_File
 Summary:	GDBM_File - Perl5 access to the gdbm library
 Group:		Libraries
-Requires:	%{name}-base = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
 # FIXME: Set Version: 1.06 and Release: 1 instead of inheriting
 #        values from the main package.  Why this causes setting
 #        version and release macros up to the end of this spec?
@@ -307,8 +307,8 @@ Summary:	Perl development files
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
-Requires:	%{name}-base = %{version}
-Requires:	%{name}-modules = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	%{name}-tools-pod
 Provides:	perl-CPAN = 1.61
 Provides:	perl-Devel-DProf = 20000000.00_01
@@ -358,7 +358,7 @@ Extraction and Report Language) i jego interpretera.
 Summary:	Modules from the core perl distribution
 Summary(pl):	Modu³y z podstawowej dystrybucji perla
 Group:		Libraries
-Requires:	%{name}-base = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
 Provides:	perl-Attribute-Handlers = 0.77
 Provides:	perl-CGI = 2.81
 Provides:	perl-Class-ISA = 0.32
@@ -440,7 +440,7 @@ Summary(sv):	sperl, att användas med setuid perlskript
 Summary(uk):	SUID-×ÅÒÓ¦Ñ ÍÏ×É Perl
 Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid perl ½Å±¾Ò»ÆðÊ¹ÓÃ
 Group:		Development/Languages/Perl
-Requires:	%{name}-base = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
@@ -495,7 +495,7 @@ setuid perl ½Å±¾¡£
 Summary:	Various tools from the core perl distribution
 Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji perla
 Group:		Applications
-Requires:	%{name}-base = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
 
 %description tools
 Various tools from the core perl distribution:
@@ -517,8 +517,8 @@ Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 Summary:	Developer's tools from the core perl distribution
 Summary(pl):	Narzêdzia z podstawowej dystrybucji perla, przeznaczone dla programistów
 Group:		Development/Tools
-Requires:	%{name}-base = %{version}
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description tools-devel
 Various tools from the core perl distribution:
@@ -554,7 +554,7 @@ Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
 Summary:	Tools for manipulating files in the POD format
 Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
 Group:		Applications
-Requires:	%{name}-base = %{version}
+Requires:	%{name}-base = %{epoch}:%{version}
 
 %description tools-pod
 Tools for manipulating files in the POD (Plain Old Documentation)
