@@ -173,6 +173,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4711,root,root) /usr/bin/suidperl
 
 %changelog
+* Tue Apr 20 1999 Artur Frysiak <wiget@pld.org.pl>
+  [5.005_03-2]
+- updated to 5.005_03
+- changed source URL
+- added -Dman3dir=/usr/man/man3 -Dman3ext=3pm to Configure
+- corrected .packlist
+- changed --strip-debug to --strip-unneeded
+- gzipped %doc (instead bzipping2)
+- commpiled on rpm 3
+
 * Mon Oct 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [5.005_02-2]
 - added using $RPM_OPT_FLAGS during compile,
