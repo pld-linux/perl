@@ -18,7 +18,7 @@
 # - *TESTING*
 #
 
-%define	_patch	19400
+%define	_patch	19408
 
 %if 0%(if [ %{__perl_requires} ]; then echo 1; fi)
 %undefine	__perl_requires
