@@ -1040,10 +1040,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
 %{_mandir}/man1/perli[!v]*
-%lang(zh_CN) %{_mandir}/man1/perlcn.*
-%lang(ja) %{_mandir}/man1/perljp.*
-%lang(ko) %{_mandir}/man1/perlko.*
-#%lang(zh_TW) %{_mandir}/man1/perltw.*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/perlcn.*
+%lang(ja) %{_mandir}/ja/man1/perljp.*
+%lang(ko) %{_mandir}/ko/man1/perlko.*
+#%lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.*
 
 %files modules
 %defattr(644,root,root,755)
