@@ -13,7 +13,7 @@
 +
 --- perl5.005_03/find-perl.prov	Thu Jan  1 01:00:00 1970
 +++ perl5.005_03.new/find-perl.prov	Fri Oct 22 17:44:18 1999
-@@ -0,0 +1,112 @@
+@@ -0,0 +1,116 @@
 +#!FPPATH/perl
 +
 +# a simple script to print the proper name for perl libraries.
@@ -29,7 +29,9 @@
 +
 +if ("@ARGV") {
 +  foreach (@ARGV) {
-+    process_file($_);
++    if (! m=\.(so|gz|ph|pod)$=) {
++      process_file($_);
++    }
 +  }
 +} else {
 +
@@ -37,7 +39,9 @@
 +  # contents of the file.
 +
 +  foreach (<>) {
++    if (! m=\.(so|gz|ph|pod)$=) {
 +    process_file($_);
++    }
 +  }
 +}
 +
