@@ -26,17 +26,6 @@
 #   (should this be done on Ra-branch, too?)
 #
 
-%if 0%(if [ "%{__perl_requires}" != "%%{__perl_requires}" ]; then echo 1; fi)
-%undefine	__perl_requires
-%define		__perl_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
-%else
-%define		__find_provides %{_builddir}/%{name}-%{version}/find-perl-provides.sh
-%endif
-
-# temporary (I hope) hack, the above doesn't work with rpm-4.3-0.20030610
-%define _noautoreq 'perl(.*)' 'perl-base .*'
-
-
 %define		perlthread	%{?!_without_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
@@ -89,12 +78,25 @@ Patch6:		%{name}_580-perluniintro.patch
 Patch7:		%{name}_580-Safe.patch
 Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
+# versions [4.2, 4.3-0.20030610.20.1] are not supported
+BuildRequires:	rpm-build >= 4.3-0.20030610.20.2
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
 Requires:	perl-doc-reference
 Requires:	perldoc
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" %{buildroot}%{_bindir}/perl
+
+%if 0%{?_use_internal_dependency_generator:1}
+%define		_use_internal_dependency_generator 0
+# we can do it as there is no _noautoprov* in this spec
+%define		__find_provides /usr/bin/rpmdeps --define="__perl_provides /bin/sh -c '%{__perl} %{SOURCE2}'" --define="__perl_requires /bin/sh -c 'cat >/dev/null'" --provides
+%else
+# for rpm <= 4.1
+%define		__find_provides %{_builddir}/%{name}-%{version}/find-perl-provides.sh
+%endif
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -703,8 +705,6 @@ install microperl $RPM_BUILD_ROOT%{_bindir}
 %{__ln_s} -f sperl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
 %{__ln_s} -f  c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
 %{__ln_s} -f  psed           $RPM_BUILD_ROOT%{_bindir}/s2p
-
-%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}:%{buildroot}/%{perl_archlib}" %{buildroot}/%{_bindir}/perl
 
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
