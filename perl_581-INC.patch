@@ -1,9 +1,12 @@
---- perl.c~	Mon Apr 21 16:41:33 2003
-+++ perl.c	Sun May  4 16:07:42 2003
-@@ -3755,35 +3755,6 @@
- #ifdef ARCHLIB_EXP
-     incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE);
+--- perl.c.orig	Sun May  4 09:47:04 2003
++++ perl.c	Wed May  7 06:31:58 2003
+@@ -3753,39 +3753,6 @@
+     incpush(APPLLIB_EXP, TRUE, TRUE, TRUE);
  #endif
+ 
+-#ifdef ARCHLIB_EXP
+-    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE);
+-#endif
 -#ifdef MACOS_TRADITIONAL
 -    {
 -	Stat_t tmpstatbuf;
@@ -33,10 +36,11 @@
 -#else
 -    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE);
 -#endif
- 
+-
  #ifdef SITEARCH_EXP
      /* sitearch is always relative to sitelib on Windows for
-@@ -3803,7 +3774,7 @@
+      * DLL-based path intuition to work correctly */
+@@ -3804,7 +3771,7 @@
  #endif
  
  #ifdef SITELIB_STEM /* Search for version-specific dirs below here */
@@ -45,12 +49,16 @@
  #endif
  
  #ifdef PERL_VENDORARCH_EXP
-@@ -3823,7 +3794,37 @@
+@@ -3824,7 +3791,41 @@
  #endif
  
  #ifdef PERL_VENDORLIB_STEM /* Search for version-specific dirs below here */
 -    incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE);
 +/*  incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE); */
++#endif
++
++#ifdef ARCHLIB_EXP
++    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE);
 +#endif
 +
 +#ifdef MACOS_TRADITIONAL
