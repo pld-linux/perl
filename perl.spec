@@ -120,7 +120,7 @@ make install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 
-(cd /usr/include ;
+(cd %{_includedir} ;
 PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
 $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target}%{perlthread} \
 $RPM_BUILD_ROOT%{_bindir}/h2ph \
