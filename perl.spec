@@ -1214,7 +1214,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Unicode/*/
 %attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
 %{perl_archlib}/auto/Unicode/*/*.bs
-%{perl_archlib}/auto/Unicode/*/*.ix
 %{_mandir}/man3/Unicode::*
 
 %{perl_privlib}/AnyDBM*
