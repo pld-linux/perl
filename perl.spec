@@ -860,7 +860,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/File/Copy.pm
 %{_libdir}/perl5/%{version}/File/DosGlob.pm
 %{_libdir}/perl5/%{version}/File/Temp.pm
-#%{_libdir}/perl5/%{version}/File/Spec/[A-OV-Z]*.pm
+#%%{_libdir}/perl5/%{version}/File/Spec/[A-OV-Z]*.pm
 %{_libdir}/perl5/%{version}/Getopt
 %{_libdir}/perl5/%{version}/I18N
 %{_libdir}/perl5/%{version}/Math
@@ -868,7 +868,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Pod
 %{_libdir}/perl5/%{version}/Search
 %{_libdir}/perl5/%{version}/Term
-#%{_libdir}/perl5/%{version}/Test
+#%%{_libdir}/perl5/%{version}/Test
 %{_libdir}/perl5/%{version}/Text/Abbrev.pm
 %{_libdir}/perl5/%{version}/Text/ParseWords.pm
 %{_libdir}/perl5/%{version}/Text/Soundex.pm
@@ -918,8 +918,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.so
 # we have newer DB_File in a separate package
 #%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/autosplit.ix
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.bs
+#%%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/autosplit.ix
+#%%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.bs
 #%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.so
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper
@@ -957,7 +957,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
 #%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
+#%%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
 #%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
@@ -984,12 +984,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/sdbm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/B.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ByteLoader.pm
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
+#%%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
+#%%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ops.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
