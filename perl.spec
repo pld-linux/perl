@@ -691,7 +691,7 @@ rm -f uconfig.h
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 %{__make} install
 install microperl $RPM_BUILD_ROOT%{_bindir}
