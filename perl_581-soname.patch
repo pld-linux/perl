@@ -1,0 +1,22 @@
+--- perl-5.8.1/Makefile.SH.orig	Tue Aug 19 18:42:51 2003
++++ perl-5.8.1/Makefile.SH	Fri Aug 22 14:33:39 2003
+@@ -494,13 +489,15 @@
+ Makefile: $Makefile_s
+ !GROK!THIS!
+ else
+-	$spitshell >>Makefile <<'!NO!SUBS!'
+-$(LIBPERL): $& perl$(OBJ_EXT) $(obj) $(LIBPERLEXPORT)
++	$spitshell >>Makefile <<!NO!SUBS!
++LIBPERL_SONAME=\$(LIBPERL).$version
++\$(LIBPERL): \$& perl\$(OBJ_EXT) \$(obj) \$(LIBPERLEXPORT)
+ !NO!SUBS!
+ 	case "$useshrplib" in
+ 	true)
+-		$spitshell >>Makefile <<'!NO!SUBS!'
+-	$(LD) -o $@ $(SHRPLDFLAGS) perl$(OBJ_EXT) $(obj) $(libs)
++		$spitshell >>Makefile <<!NO!SUBS!
++	\$(LD) -o \$(LIBPERL_SONAME) \$(SHRPLDFLAGS) -Wl,-soname,\$(LIBPERL_SONAME) perl\$(OBJ_EXT) \$(obj) \$(libs)
++	ln -sf \$(LIBPERL_SONAME) \$@
+ !NO!SUBS!
+ 		case "$osname" in
+ 		aix)
