@@ -51,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.5
-Release:	0.1%{!?with_threads:_nothr}
+Release:	0.2%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -831,7 +831,7 @@ mv -f $RPM_BUILD_ROOT%{perl_privlib}/Memoize/{README,TODO} \
 	doc-modules/Memoize
 mv -f $RPM_BUILD_ROOT%{perl_privlib}/NEXT/{Changes,README} \
 	doc-modules/NEXT
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/{ChangeLog.libnet,README.libnet} \
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/{Changes.libnet,README.libnet} \
 	doc-modules/Net
 mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/Ping/Changes \
 	doc-modules/Net/Ping
