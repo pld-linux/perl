@@ -55,6 +55,7 @@ Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
+Provides:	perl-tools-pod
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-File-Spec
 Obsoletes:	perl-IO
