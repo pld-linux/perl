@@ -21,6 +21,7 @@ Patch1:		perl-DESTDIR.patch
 Patch2:		perl-File-Spec-0.7.patch
 Patch3:		perl-CPAN-1.50.patch
 Patch4:		perl-find-provides.patch
+Patch5:		perl-syslog.patch
 URL:		http://www.perl.org/
 Requires:	csh
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -89,6 +90,7 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 for i in find-* ; do
 	mv $i $i.old
