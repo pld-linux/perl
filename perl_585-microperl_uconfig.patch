@@ -1,0 +1,64 @@
+--- perl-5.8.5/uconfig.sh	2004-07-04 23:43:22.000000000 +0200
++++ perl-5.8.5/uconfig.sh	2004-07-21 20:26:34.639594224 +0200
+@@ -4,11 +4,7 @@
+ afs='false'
+ afsroot='/afs'
+ alignbytes='4'
+-archlib='/usr/local/lib/perl5/5.9/unknown'
+-archlibexp='/usr/local/lib/perl5/5.9/unknown'
+-archname='unknown'
+ asctime_r_proto='0'
+-bin='/usr/local/bin'
+ byteorder='1234'
+ castflags='0'
+ charsize='1'
+@@ -36,7 +32,7 @@
+ d_accessx='undef'
+ d_aintl='undef'
+ d_alarm='undef'
+-d_archlib='undef'
++d_archlib='define'
+ d_asctime_r='undef'
+ d_atolf='undef'
+ d_atoll='undef'
+@@ -594,11 +590,8 @@
+ obj_ext='.o'
+ optimize='-O2'
+ orderlib='false'
+-osname='unknown'
+ phostname='hostname'
+ pidtype=int
+-privlib='/usr/local/lib/perl5/5.9'
+-privlibexp='/usr/local/lib/perl5/5.9'
+ procselfexe=''
+ prototype='undef'
+ ptrsize='4'
+@@ -625,8 +618,6 @@
+ sPRIx64='"Lx"'
+ sSCNfldbl='"llf"'
+ sched_yield='sched_yield()'
+-scriptdir='/usr/local/bin'
+-scriptdirexp='/usr/local/bin'
+ seedfunc='srand'
+ selectminbits='32'
+ selecttype=int
+--- perl-5.8.5/Makefile.micro	2004-07-04 23:43:19.000000000 +0200
++++ perl-5.8.5/Makefile.micro	2004-07-21 20:28:23.168095384 +0200
+@@ -34,10 +34,16 @@
+ 
+ distclean:	clean
+ 
++# not really autoconfigured variables (PLD hack, requires patched uconfig.sh)
++NRACV = archlib=$(archlib) archlibexp=$(archlibexp) privlib=$(privlib) \
++	privlibexp=$(privlibexp) archname=$(archname) osname=$(osname) \
++	bin=$(bin) scriptdir=$(scriptdir) scriptdirexp=$(scriptdirexp) \
++	usemallocwrap=$(usemallocwrap)
++
+ # The microconfiguration.
+ 
+ regen_uconfig:
+-	$(ENV) CONFIG_SH=uconfig.sh CONFIG_H=uconfig.h sh ./config_h.SH
++	$(ENV) CONFIG_SH=uconfig.sh CONFIG_H=uconfig.h $(NRACV) sh ./config_h.SH
+ 
+ # Do not regenerate perly.c and perly.h.
+ 
