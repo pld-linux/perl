@@ -6,11 +6,7 @@
 %bcond_without	microperl	# don't build microperl
 #
 # TODO:
-# - Think about unicore.  If uf8*.pm, encode.pm, charnames.pm (and
-#   probably others) are in the perl-base package, unicore should also
-#   be there.  But it's 5MB...
 # - fix "FIXME"s, review "XXX"s
-# - fix perl.prov's handling in rpm -- it should use the __perl macro
 # - add the {O,N}DBM_File modules
 # - review the perldiag.pod issue
 # - consider disabling ithreads by default
@@ -19,10 +15,6 @@
 #
 # TODO for perl-dependent packages:
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
-# - use the requires_eq(perl-base) for all packages strictly depending
-#   on the perl version used for building (files in perl_vendorarch
-#   directories; dependency on libperl.so.* often doesn't exist)
-#   (should this be done on Ra-branch, too?)
 #
 
 %define _abi	5.8.0
