@@ -185,10 +185,10 @@ find . -name \*.ph -exec chmod 644 {} \;
 find . -type d -exec chmod 755 {} \;
 
 ## Fix paths
-sed -e "s|\$(RPM_BUILD_ROOT)||g" < Config.pm > Config.pm.new
+sed -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
 mv -f Config.pm.new Config.pm
 
-sed -e "s|\$(RPM_BUILD_ROOT)||g" < .packlist > .packlist.new
+sed -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
 mv -f .packlist.new .packlist
 )
 
