@@ -48,6 +48,7 @@ Patch13:	%{name}-gcc3.patch
 URL:		http://www.perl.org/
 BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
+BuildRequires:	ed
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
@@ -949,9 +950,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
+#%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
+#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
+#%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tolower.al
@@ -982,7 +983,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
+#%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ops.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
