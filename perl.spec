@@ -358,7 +358,7 @@ install -d B Crypt Date Devel ExtUtils File Font HTML HTTP I18N IO/Socket \
 	Mail News Net Parse RPC Text Tie Time XML auto/Mail
 cd %{_target_platform}*/%{version}
 install -d Apache BSD Compress Digest Net Term \
-	auto/{Apache,BSD,Compress,Net,Term,XML}
+	auto/{Apache,BSD,Compress,Digest,Net,Term,XML}
 )
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -412,6 +412,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
+%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Digest
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Term
 %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/XML
 
