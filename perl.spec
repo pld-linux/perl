@@ -130,6 +130,7 @@ sh Configure \
 	-Doptimize="$RPM_OPT_FLAGS" \
 	-Duseshrplib \
 	-Dusethreads \
+	-Uuselargefiles \
 	-Dd_dosuid \
 	-Ud_setresuid \
 	-Ud_setresgid 
