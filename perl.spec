@@ -1,6 +1,33 @@
+#
+# Conditional build:
+# _without_tests      - do not perform "make test"
+# _without_threads    - build without support for threads
+# _without_largefiles - build without large file support
+#
+# TODO:
+# - Think about unicore.  If uf8*.pm, encode.pm, charnamess.pm (and
+#   probably others) are in the perl-base package, unicore should also
+#   be there.  But it's 5MB...
+# - Think about the package separation.  Split between perl, perl-base
+#   and perl-modules is far from obvius.
+# - find out why *.so and *.bs files for some pragmas are ,,listed twice''
+# - merge some fixes from 5.6.1 on HEAD
+# - fix "FIXME"s, review "XXX"s
+# - fix perl.prov's handling in rpm -- it should use the __perl macro
+# - include gdbm-dependent modules, they aren't distributed standalone
+#   anymore
+# - *TESTING*
+#
 
-%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{?_with_perl_threads:-thread-multi}
+%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides.sh
+%define		perlthread	%{?!_without_threads:-thread-multi}
+
+%define		perl_privlib	%{_datadir}/perl5/%{version}
+%define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_sitelib	%{_usr}/local/share/perl5/
+%define		perl_sitearch	%{_usr}/local/lib/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_vendorlib	%{_datadir}/perl5/vendor_perl/
+%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{version}/%{_target_platform}%{perlthread}
 
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
@@ -24,43 +51,38 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.6.1
-Release:	67
+Version:	5.8.0
+Release:	0.20%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
-License:	GPL/Artistic
-Group:		Applications/Text
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
+License:	GPL v1+ or Artistic
+Group:		Development/Languages/Perl
+Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
-Patch0:		%{name}-noroot_install.patch
-Patch1:		%{name}-nodb.patch
-Patch2:		%{name}-DESTDIR.patch
-Patch3:		%{name}-find-provides.patch
-Patch4:		%{name}-prereq.patch
-Patch5:		%{name}-syslog.patch
-Patch6:		%{name}-CGI-upload-tmpdir.patch
-Patch7:		%{name}-LD_RUN_PATH.patch
-Patch8:		%{name}-errno_h-parsing.patch
-Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
-Patch10:	%{name}-sitearch.patch
-Patch11:	%{name}-soname.patch
-Patch12:	%{name}-db4.patch
-Patch13:	%{name}-gcc3.patch
-Patch14:	%{name}-link.patch
-Patch15:	%{name}-typemap-float.patch
-Patch16:	%{name}-Safe.patch
-URL:		http://www.perl.org/
-BuildRequires:	db-devel > 4.1
-BuildRequires:	gdbm-devel
-BuildRequires:	ed
-Provides:	perl(DynaLoader)
-Provides:	perl-File-Spec = 0.82
-Provides:	perl-IO = 1.20
-Obsoletes:	perl-File-Spec
+Source2:	%{name}.prov
+Source3:	find-perl-provides.sh
+Patch0:		%{name}_580-noroot_install.patch
+Patch2:		%{name}_580-MakeMaker.patch
+# failed
+#Patch5:	%{name}-syslog.patch
+# failed
+#Patch6:	%{name}-CGI-upload-tmpdir.patch
+# what is this f* one for?!
+#Patch7:	%{name}-LD_RUN_PATH.patch
+Patch8:		%{name}_580-errno_h-parsing.patch
+Patch9:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
+# *weird*
+#Patch10:	%{name}-sitearch.patch
+Patch11:	%{name}_580-soname.patch
+# failed; is it still necessary?
+#Patch13:	%{name}-gcc3.patch
+Patch14:	%{name}_580-perluniintro.patch
+Patch15:	%{name}_580-Safe.patch
+URL:		http://www.perl.com/
+%{?!_without_largefiles:Provides:	perl(largefiles)}
+Requires:	%{name}-base = %{version}
+Requires:	%{name}-modules = %{version}
+Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	perl-IO
-Obsoletes:	perl-lib
-Obsoletes:	perl-mod-skel
-Obsoletes:	perl-base
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -173,6 +195,8 @@ sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
 são escritos em Perl. Você precisa do pacote perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
 
+%description -l no
+
 %description -l pt_BR
 Perl é uma linguagem interpretada, otimizada para tratar arquivos
 texto, extraindo informação desses arquivos e mostrando relatórios
@@ -236,27 +260,130 @@ Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆðÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
 ±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
 ÓïÑÔ½øÐÐ±àÐ´¡£Äú±ØÐëÔÚÏµÍ³ÖÐ°²×° perl Èí¼þ°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
+%package base
+Summary:	Base perl components for a minimal installation
+Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji perla
+Group:		Text/Applications
+Provides:	perl-File-Compare = 1.1003
+Provides:	perl-File-Spec = 0.83
+Provides:	perl-File-Temp = 0.13
+Provides:	perl-Safe = 2.09
+
+%description base
+Base components, files, core modules, etc. -- a minimal usable perl
+installation.  You are encouraged to install a full perl (the perl
+package) whenever possible.
+
 %package devel
 Summary:	Perl development files
-Summary(es):	Development and include files for perl
 Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name}-base = %{version}
 Requires:	%{name}-modules = %{version}
+Requires:	%{name}-tools-pod
+Provides:	perl-CPAN = 1.61
+Provides:	perl-Devel-DProf = 20000000.00_01
+Provides:	perl-Devel-PPPort = 2.0002
+Provides:	perl-Devel-Peek = 1.00_03
+Provides:	perl-ExtUtils-MakeMaker = 6.03
+Provides:	perl-ExtUtils-Embed = 1.250601
 Obsoletes:	perl-lib-devel
 
 %description devel
-Files for developing applications which embed a Perl interpreter.
+Components, required for developing applications which embed a Perl
+interpreter and compiling perl modules.
 
-%description devel -l es
-Development and include files for perl.
+%package doc-pod
+Summary:	Perl documentation in POD format
+Summary(pl):	Dokumentacja Perla w formacie POD
+Group:		Documentation
+Obsoletes:	perl-pod
 
-%description devel -l pl
-Pliki potrzebne przy tworzeniu w³asnych aplikacji w perlu.
+%description doc-pod
+Practical Extraction and Report Language - POD docs.
 
-%description devel -l pt_BR
-Arquivos de desenvolvimento e cabeçalhos para o perl.
+%description doc-pod -l pl
+Practical Extraction and Report Language - dokumentacja w formacie POD.
+
+%package doc-reference
+Summary:	Perl reference documentation
+Summary(pl):	Dokumentacja Perla
+Group:		Documentation
+Requires:	man
+
+%description doc-reference
+Reference documentation for the Practical Extraction and Report Language
+and it's interpreter in the man(1) format.
+
+%description doc-reference -l pl
+Dokumentacja referencyjna w formacie man do jêzyka Perl (Practical
+Extraction and Report Language) i jego interpretera.
+
+%package modules
+Summary:	Modules from the core perl distribution
+Summary(pl):	Modu³y z podstawowej dystrybucji perla
+Group:		Development/Libraries
+Requires:	%{name}-base = %{version}
+Provides:	perl-Attribute-Handlers = 0.77
+Provides:	perl-CGI = 2.81
+Provides:	perl-Class-ISA = 0.32
+Provides:	perl-Digest = 1.00
+Provides:	perl-Digest-MD5 = 2.20
+Provides:	perl-Filter-Simple = 0.78
+Provides:	perl-FindBin = 1.43
+#Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
+Provides:	perl-IO = 1.20
+Provides:	perl-IPC-SysV = 1.03_00
+Provides:	perl-Locale-Maketext = 1.03
+Provides:	perl-MIME-Base64 = 2.12
+Provides:	perl-Math-BigInt = 1.60
+Provides:	perl-Math-BigRat = 0.07
+Provides:	perl-Math-Trig = 1.01
+Provides:	perl-Memoize = 1.01
+Provides:	perl-NEXT = 0.50
+Provides:	perl-PerlIO-via-QuotedPrint = 0.04
+Provides:	perl-Pod-LaTeX = 0.54
+Provides:	perl-Pod-Parser = 1.13
+Provides:	perl-Scalar-List-Utils = 1.07_00
+Provides:	perl-Socket = 1.75
+Provides:	perl-Storable = 2.04
+Provides:	perl-Term-ANSIColor = 1.05
+Provides:	perl-Term-Cap = 1.07
+Provides:	perl-Test = 1.20
+Provides:	perl-Test-Harness = 2.26
+Provides:	perl-Test-Simple = 0.45
+Provides:	perl-Text-Balanced = 1.89
+Provides:	perl-Text-ParseWords = 3.21
+Provides:	perl-Text-Soundex = 1.01
+Provides:	perl-Text-Tabs+Wrap = 2001.0929
+Provides:	perl-Tie-File = 0.93
+Provides:	perl-Time-HiRes = 1.20_00
+Provides:	perl-UNIVERSAL = 1.00
+Provides:	perl-Unicode-Collate = 0.12
+Provides:	perl-Unicode-Normalize = 0.17
+Obsoletes:	perl-lib
+
+%description modules
+Practical Extraction and Report Language - modules from the core
+distribution.
+
+%description modules -l pl
+Practical Extraction and Report Language - modu³y z podstawowej
+dystrybucji.
+
+%package perldoc
+Summary:	perldoc - Look up Perl documentation in pod format
+Provides:	perldoc = 2.03@%{version}
+Requires:	%{name}-base
+Group:		Development/Tools
+
+%description perldoc
+perldoc perldoc looks up a piece of documentation in .pod format
+that is embedded in the perl installation tree or in a perl script,
+and displays it via "pod2man | nroff -man | $PAGER". (In addition, if
+running under HP-UX, "col -x" will be used.) This is primarily used for
+the documentation for the perl library modules.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
@@ -272,8 +399,8 @@ Summary(ru):	SUID ×ÅÒÓÉÑ ÑÚÙËÁ Perl
 Summary(sv):	sperl, att användas med setuid perlskript
 Summary(uk):	SUID-×ÅÒÓ¦Ñ ÍÏ×É Perl
 Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid perl ½Å±¾Ò»ÆðÊ¹ÓÃ
-Group:		Applications/Text
-Requires:	%{name} = %{version}
+Group:		Development/Languages/Perl
+Requires:	%{name}-base = %{version}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
@@ -324,137 +451,169 @@ suidperl är en setuid binärkopia av pers som tillåter
 suidperl ÊÇ perl µÄ setuid ¶þ½øÖÆ¸±±¾¡£ËüÔÊÐí£¨Ï£ÍûÈç´Ë£© ¸ü°²È«µØÔËÐÐ
 setuid perl ½Å±¾¡£
 
-%package modules
-Summary:	Practical Extraction and Report Language - modules
-Summary(es):	Perl's base modules
-Summary(pl):	Practical Extraction and Report Language - modu³y
-Summary(pt_BR):	Módulos do perl básicos
-Group:		Applications/Text
-Requires:	%{name} = %{version}
-Requires:	perl-Test-Harness
-Provides:	perl-ANSIColor
-Provides:	perl-DProf
-Provides:	perl-Devel-Peek
-Provides:	perl-PodParser
-Obsoletes:	perl-ANSIColor
-Obsoletes:	perl-DProf
-Obsoletes:	perl-Devel-Peek
-Obsoletes:	perl-PodParser
+%package tools
+Summary:	Various tools from the core perl distribution
+Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji perla
+Group:		Applications
+Requires:	%{name}-base = %{version}
 
-%description modules
-Practical Extraction and Report Language - modules.
+%description tools
+Various tools from the core perl distribution:
 
-%description modules -l es
-This package contains standard perl modules needed by some
-application/scripts.
+ a2p       - Awk to Perl translator
+ find2perl - translate find command lines to Perl code
+ piconv    - iconv(1), reinvented in perl
+ psed, s2p - a stream editor
 
 %description modules -l pl
-Practical Extraction and Report Language - modu³y.
+Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 
-%description modules -l pt_BR
-Este pacote contém módulos perl básicos necessários por alguns
-programas/ scripts.
+ a2p       - Awk to Perl translator
+ find2perl - translate find command lines to Perl code
+ piconv    - iconv(1), reinvented in perl
+ psed, s2p - a stream editor
 
-%package pod
-Summary:	Perl POD documentation
-Summary(pl):	Dokumentacja Perla w formacie POD
-Group:		Applications/Text
-Requires:	%{name} = %{version}
+%package tools-devel
+Summary:	Developer's tools from the core perl distribution
+Summary(pl):	Narzêdzia z podstawowej dystrybucji perla, przeznaczone dla programistów
+Group:		Development/Tools
+Requires:	%{name}-base = %{version}
+Requires:	%{name}-devel = %{version}
 
-%description pod
-Practical Extraction and Report Language - POD docs.
+%description tools-devel
+Various tools from the core perl distribution:
 
-%description pod -l pl
-Practical Extraction and Report Language - dokumentacja w formacie
-POD.
+ c2ph, pstruct - Dump C structures as generated from C<cc -g -S> stabs
+ dprofpp       - display perl profile data
+ enc2xs        - Perl Encode Module Generator
+ h2ph          - convert .h C header files to .ph Perl header files
+ h2xs          - convert .h C header files to Perl extensions
+ perlcc        - generate executables from Perl programs
+ perlivp       - Perl Installation Verification Procedure
+ pl2pm         - Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
+ splain        - force verbose warning diagnostics
+
+%package tools-pod
+Summary:	Tools for manipulating files in the POD format
+Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
+Group:		Applications
+Requires:	%{name}-base = %{version}
+
+%description tools-pod
+Tools for manipulating files in the POD (Plain Old Documentation) format:
+
+ pod2html   - convert .pod files to .html files
+ pod2latex  - convert pod documentation to latex format
+ pod2man    - Convert POD data to formatted *roff input
+ pod2text   - Convert POD data to formatted ASCII text
+ pod2usage  - print usage messages from embedded pod docs in files
+ podchecker - check the syntax of POD format documentation files
+ podselect  - print selected sections of pod documentation on standard output
+
+%package -n microperl
+Summary:	A really minimal perl, even more minimal than miniperl
+# XXX: is there a more appropiate group?
+Group:		Applications
+
+%description -n microperl
+microperl is supposed to be able a really minimal perl, even more minimal
+than miniperl.  No Configure is needed to build microperl, on the other
+hand this means that interfaces between Perl and your operating system
+are left very -- minimal.
+
+All this is experimental.  If you don't know what to do with microperl
+you probably shouldn't.  Do not report bugs in microperl; fix the bugs.
+
 
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%patch2 -p0
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
+%patch14 -p0
 %patch15 -p1
-%patch16 -p1
 
-for i in find-* ; do
-	mv -f $i $i.old
-	sed "s|FPPATH|%{_builddir}/%{name}-%{version}|g" < $i.old > $i
-	chmod 755 $i; rm -f $i.old
-done
+install -m 0755 %{SOURCE2} $PWD/find-perl.prov
+install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
 
 %build
-# this is gross
-# i added more ugly stuff here
-# i know that is ugly way to set that but i dont know how do it better
-cat > config.over <<EOF
-installprefix=$RPM_BUILD_ROOT%{_prefix}
-test -d \$installprefix || mkdir -p \$installprefix
-test -d \$installprefix/bin || mkdir -p \$installprefix/bin
-installarchlib=\`echo \$installarchlib | sed "s!\$prefix!\$installprefix!"\`
-installbin=\`echo \$installbin | sed "s!\$prefix!\$installprefix!"\`
-installman1dir=\`echo \$installman1dir | sed "s!\$prefix!\$installprefix!"\`
-installman3dir=\`echo \$installman3dir | sed "s!\$prefix!\$installprefix!"\`
-installprivlib=\`echo \$installprivlib | sed "s!\$prefix!\$installprefix!"\`
-installscript=\`echo \$installscript | sed "s!\$prefix!\$installprefix!"\`
-installsitelib=\`echo \$installsitelib | sed "s!\$prefix!\$installprefix!"\`
-installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
-dynamic_ext=\`echo \$dynamic_ext GDBM_File NDBM_File\`
-EOF
-
-USETHREADS=%{!?_with_perl_threads:-U}%{?_with_perl_threads:-D}
 sh Configure \
 	-des \
 	-Dcc=%{__cc} \
 	-Darchname=%{_target_platform} \
 	-Dcccdlflags='-fPIC' \
 	-Dccdlflags='-rdynamic' \
-	-Dprefix=%{_prefix} \
-	-Dscriptdir=%{_bindir} \
-	-Dsitelib=%{_libdir}/perl5/site_perl \
-	-Dman1dir=%{_mandir}/man1 \
-	-Dman3dir=%{_mandir}/man3 \
-	-Dman1ext=1 \
-	-Dman3ext=3perl \
 	-Doptimize="%{rpmcflags}" \
-	${USETHREADS}usethreads \
-	-Uuselargefiles \
-%ifarch sparc sparc64
-	-Ud_longdbl \
-%endif
 	-Duseshrplib \
 	-Dd_dosuid \
-	-Ud_setresuid \
-	-Ud_setresgid
+	-Dman1dir=%{_mandir}/man1 -Dman1ext=1 \
+	-Dman3dir=%{_mandir}/man3 -Dman3ext=3perl \
+	-Dvendorman1=%{_mandir}/man1 -Dvendorman1ext=1p \
+	-Dvendorman3=%{_mandir}/man3 -Dvendorman3ext=3pm \
+	-Dsiteman1=%{_usr}/local/share/man/man1 -Dsiteman1ext=1p \
+	-Dsiteman3=%{_usr}/local/share/man/man3p -Dsiteman3ext=3pm \
+	-Dprefix=%{_prefix} -Dvendorprefix=%{_prefix} -Dsiteprefix=%{_usr}/local \
+	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
+	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
+	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
+	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
+	-Ui_dbm -Ui_gdbm -Ui_ndbm -Ui_db \
+	-Dlibswanted="nsl dl m c crypt util" \
+	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
+	-%{?_without_largefiles:U}%{?!_without_largefiles:D}uselargefiles
 
-%{__make} CCDLFLAGS=-rdynamic
+## why were these three undefined?
+#	-Ud_setresgid \
+#	-Ud_setresuid \
+## what's the problem with this one?
+# %ifarch sparc sparc64
+#	-Ud_longdbl
+# %endif
 
+%{__make}
+%{__make} -f Makefile.micro
+
+%{?!_without_tests:%{__make} test}
+#%{?!_without_tests:%{__make} minitest}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install
-install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
+install miniperl  $RPM_BUILD_ROOT%{_bindir}
+install microperl $RPM_BUILD_ROOT%{_bindir}
 
-## Generate *.ph files (based on MDK, which based on Debian ;-)
+## use symlinks instead of hardlinks
+%{__ln_s} -f  perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f sperl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
+%{__ln_s} -f  c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
+%{__ln_s} -f  psed           $RPM_BUILD_ROOT%{_bindir}/s2p
+
+## Fix lib
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
+install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
+%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+
+
+%define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}" %{buildroot}/%{_bindir}/perl
+
+## Fix Config.pm: remove buildroot path and change man pages extensions
+%{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"      $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm'," $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+
+## prepare scripts for finding provides
+%{__perl} -pi -e 's,\@perl_build_dir\@,%{_builddir}/%{name}-%{version},g' find-perl-provides.sh
+%{__perl} -pi -e 's,\@perl\@,%{__perl},g' find-perl-provides.sh
+
+## Generate the *.ph files
 (
-LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
-PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
-PERL=$RPM_BUILD_ROOT%{_bindir}/perl
+cd /usr/include
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
-PHDIR=$PERL5LIB/%{_target_platform}*
+PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
 WANTED='
 	syscall.h
 	syslog.h
@@ -466,43 +625,43 @@ WANTED='
 	sys/syscall.h
 	sys/time.h
 '
-cd /usr/include
-$PERL $H2PH -a -d $PHDIR $WANTED
+%{__perl} $H2PH -a -d $PHDIR $WANTED
 )
 
-## Fix paths
+## remove man pages for other operating systems
+rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
+
+## These File::Spec submodules are for non-Unix systems
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
+
+## We already have these *.pod files as man pages
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/*.pod
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+
+
+## directories for modules installed using CPAN.pm
+install -d $RPM_BUILD_ROOT{%{perl_sitelib},%{perl_sitearch}/auto}
+
+## dir tree for other perl modules
+install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
 (
-cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
-sed -e "s|$RPM_BUILD_ROOT||g" < Config.pm > Config.pm.new
-mv -f Config.pm.new Config.pm
-sed -e "s|$RPM_BUILD_ROOT||g" < .packlist > .packlist.new
-mv -f .packlist.new .packlist
-)
-
-## Fix lib
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
-install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
-ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
-
-## Fix installed man pages list
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}* \
-	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
-	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
-
-# dir tree for other perl modules
-(cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
+cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
-	Convert Crypt DBD Data Date Devel Device Digest Error ExtUtils File \
+	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
 	Filesys Font Games Getopt GnuPG Graph HTML HTTP I18N IO/Socket IPC \
-	Image Inline Language Lingua/EN List Locale LockFile Log MIME Mail \
-	Math Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
+	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
+	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
 	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
-cd %{_target_platform}*/%{version}
+cd $RPM_BUILD_ROOT%{perl_vendorarch}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
 	Text Unicode XML \
@@ -511,31 +670,9 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	auto/{Term,Text,Unicode,XML}
 )
 
-# These File::Spec submodules are for non-Unix systems
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3p*
-#
-# Newer Test::Harness is available as a separate package
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3p*
-#
-# Newer DB_File is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3p*
-#
-# Newer CGI is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3p*
+## non-english man pages
+%{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-
-# why is it there...?
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE/sperl.o
-
-# documentation suffixes: .1/.3perl for core modules and .1p/.3pm for built from CPAN
-echo -e ",s/^man1ext='1'/man1ext='1p'/\n,s/^man3ext='3perl'/man3ext='3pm'/\nw" | ed \
-	$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -543,494 +680,475 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/a2p
-%attr(755,root,root) %{_bindir}/find2perl
+%doc README AUTHORS
+%lang(cn) %doc README.cn
+%lang(jp) %doc README.jp
+%lang(ko) %doc README.ko
+%lang(tw) %doc README.tw
+
+%dir %{perl_sitelib}
+%dir %{perl_sitearch}
+%dir %{perl_sitearch}/auto
+%dir %{perl_vendorlib}
+%dir %{perl_vendorarch}
+%dir %{perl_vendorarch}/auto
+
+
+%files base
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
-%attr(755,root,root) %{_bindir}/s2p
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
-
-%dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{version}
-
-%dir %{_libdir}/perl5/site_perl
-%{_libdir}/perl5/site_perl/AI
-%{_libdir}/perl5/site_perl/Algorithm
-%{_libdir}/perl5/site_perl/Apache
-%{_libdir}/perl5/site_perl/Archive
-%{_libdir}/perl5/site_perl/Array
-%{_libdir}/perl5/site_perl/Astro
-%{_libdir}/perl5/site_perl/Attribute
-%{_libdir}/perl5/site_perl/Audio
-%{_libdir}/perl5/site_perl/Authen
-%{_libdir}/perl5/site_perl/Bundle
-%{_libdir}/perl5/site_perl/Business
-%{_libdir}/perl5/site_perl/CGI
-%{_libdir}/perl5/site_perl/Cache
-%{_libdir}/perl5/site_perl/Chart
-%{_libdir}/perl5/site_perl/Class
-%{_libdir}/perl5/site_perl/Config
-%{_libdir}/perl5/site_perl/Convert
-%{_libdir}/perl5/site_perl/Crypt
-%{_libdir}/perl5/site_perl/DBD
-%{_libdir}/perl5/site_perl/Data
-%{_libdir}/perl5/site_perl/Date
-%{_libdir}/perl5/site_perl/Devel
-%{_libdir}/perl5/site_perl/Device
-%{_libdir}/perl5/site_perl/Digest
-%{_libdir}/perl5/site_perl/Error
-%{_libdir}/perl5/site_perl/ExtUtils
-%{_libdir}/perl5/site_perl/File
-%{_libdir}/perl5/site_perl/Filesys
-%{_libdir}/perl5/site_perl/Font
-%{_libdir}/perl5/site_perl/Games
-%{_libdir}/perl5/site_perl/Getopt
-%{_libdir}/perl5/site_perl/GnuPG
-%{_libdir}/perl5/site_perl/Graph
-%{_libdir}/perl5/site_perl/HTML
-%{_libdir}/perl5/site_perl/HTTP
-%{_libdir}/perl5/site_perl/I18N
-%{_libdir}/perl5/site_perl/IO
-%{_libdir}/perl5/site_perl/IPC
-%{_libdir}/perl5/site_perl/Image
-%{_libdir}/perl5/site_perl/Inline
-%{_libdir}/perl5/site_perl/Language
-%{_libdir}/perl5/site_perl/Lingua
-%{_libdir}/perl5/site_perl/List
-%{_libdir}/perl5/site_perl/Locale
-%{_libdir}/perl5/site_perl/Log
-%{_libdir}/perl5/site_perl/MIME
-%{_libdir}/perl5/site_perl/Mail
-%{_libdir}/perl5/site_perl/Math
-%{_libdir}/perl5/site_perl/Module
-%{_libdir}/perl5/site_perl/Net
-%{_libdir}/perl5/site_perl/News
-%{_libdir}/perl5/site_perl/Number
-%{_libdir}/perl5/site_perl/OLE
-%{_libdir}/perl5/site_perl/Parse
-%{_libdir}/perl5/site_perl/Pod
-%{_libdir}/perl5/site_perl/PostScript
-%{_libdir}/perl5/site_perl/Proc
-%{_libdir}/perl5/site_perl/RADIUS
-%{_libdir}/perl5/site_perl/RPC
-%{_libdir}/perl5/site_perl/RPM
-%{_libdir}/perl5/site_perl/Regexp
-%{_libdir}/perl5/site_perl/SQL
-%{_libdir}/perl5/site_perl/Schedule
-%{_libdir}/perl5/site_perl/Set
-%{_libdir}/perl5/site_perl/Sort
-%{_libdir}/perl5/site_perl/Speech
-%{_libdir}/perl5/site_perl/Spreadsheet
-%{_libdir}/perl5/site_perl/Statistics
-%{_libdir}/perl5/site_perl/String
-%{_libdir}/perl5/site_perl/Sub
-%{_libdir}/perl5/site_perl/Sys
-%{_libdir}/perl5/site_perl/TeX
-%{_libdir}/perl5/site_perl/Test
-%{_libdir}/perl5/site_perl/Text
-%{_libdir}/perl5/site_perl/Tie
-%{_libdir}/perl5/site_perl/Time
-%{_libdir}/perl5/site_perl/Tree
-%{_libdir}/perl5/site_perl/Unicode
-%{_libdir}/perl5/site_perl/WWW
-%{_libdir}/perl5/site_perl/XML
-%{_libdir}/perl5/site_perl/auto
-%dir %{_libdir}/perl5/site_perl/%{_target_platform}*
-%dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Astro
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Audio
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Authen
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/BSD
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Bit
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Compress
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Crypt
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Data
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Devel
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Digest
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/File
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/IPC
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Inline
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Locale
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Math
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Net
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Speech
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/String
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Term
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Text
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/Unicode
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/XML
-%dir %{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Astro
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Audio
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Authen
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/BSD
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Bit
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Compress
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Crypt
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Data
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Devel
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Digest
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/File
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/IPC
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Inline
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Locale
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Math
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Net
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Speech
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/String
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Term
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Text
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/Unicode
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/auto/XML
-
-%{_libdir}/perl5/%{version}/AutoLoader.pm
-%{_libdir}/perl5/%{version}/Carp
-%{_libdir}/perl5/%{version}/Carp.pm
-%{_libdir}/perl5/%{version}/Class
-%{_libdir}/perl5/%{version}/Cwd.pm
-%{_libdir}/perl5/%{version}/DirHandle.pm
-%{_libdir}/perl5/%{version}/Exporter
-%{_libdir}/perl5/%{version}/Exporter.pm
-%dir %{_libdir}/perl5/%{version}/File
-%{_libdir}/perl5/%{version}/File/Basename.pm
-%{_libdir}/perl5/%{version}/File/Find.pm
-%{_libdir}/perl5/%{version}/File/Path.pm
-%{_libdir}/perl5/%{version}/File/Spec.pm
-%{_libdir}/perl5/%{version}/File/Spec/Functions.pm
-%{_libdir}/perl5/%{version}/File/stat.pm
-%dir %{_libdir}/perl5/%{version}/File/Spec
-%{_libdir}/perl5/%{version}/File/Spec/Unix.pm
-%{_libdir}/perl5/%{version}/FileHandle.pm
-%dir %{_libdir}/perl5/%{version}/IO
-%dir %{_libdir}/perl5/%{version}/IO/Socket
-%{_libdir}/perl5/%{version}/IO/Socket/INET.pm
-%{_libdir}/perl5/%{version}/IO/Socket/UNIX.pm
-%dir %{_libdir}/perl5/%{version}/IPC
-%{_libdir}/perl5/%{version}/IPC/Open2.pm
-%{_libdir}/perl5/%{version}/IPC/Open3.pm
-%{_libdir}/perl5/%{version}/SelectSaver.pm
-%{_libdir}/perl5/%{version}/Symbol.pm
-%dir %{_libdir}/perl5/%{version}/Text
-%{_libdir}/perl5/%{version}/Text/Tabs.pm
-%{_libdir}/perl5/%{version}/Text/Wrap.pm
-%dir %{_libdir}/perl5/%{version}/Time
-%{_libdir}/perl5/%{version}/Time/Local.pm
-%{_libdir}/perl5/%{version}/attributes.pm
-%{_libdir}/perl5/%{version}/autouse.pm
-%{_libdir}/perl5/%{version}/base.pm
-%{_libdir}/perl5/%{version}/fields.pm
-%{_libdir}/perl5/%{version}/constant.pm
-%{_libdir}/perl5/%{version}/integer.pm
-%{_libdir}/perl5/%{version}/lib.pm
-%{_libdir}/perl5/%{version}/locale.pm
-%{_libdir}/perl5/%{version}/overload.pm
-%{_libdir}/perl5/%{version}/strict.pm
-%{_libdir}/perl5/%{version}/vars.pm
-%{_libdir}/perl5/%{version}/warnings.pm
-%dir %{_libdir}/perl5/%{version}/warnings
-%{_libdir}/perl5/%{version}/warnings/register.pm
-%dir %{_libdir}/perl5/%{version}/pod
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/DynaLoader.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Errno.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Fcntl.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/IO
-%{_libdir}/perl5/%{version}/%{_target_platform}*/POSIX.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Socket.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/XSLoader.pm
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_findfile.al
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl/Fcntl.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Fcntl/Fcntl.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IO/IO.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/POSIX.so
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tmpfile.al
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Socket/Socket.so
-
-# *.ph files
-%{_libdir}/perl5/%{version}/%{_target_platform}*/*.ph
-%{_libdir}/perl5/%{version}/%{_target_platform}*/asm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/bits
-%{_libdir}/perl5/%{version}/%{_target_platform}*/gnu
-%{_libdir}/perl5/%{version}/%{_target_platform}*/linux
-%{_libdir}/perl5/%{version}/%{_target_platform}*/sys
-
-%{_mandir}/man1/a2p.1*
-%{_mandir}/man1/find2perl.1*
-%{_mandir}/man1/perl.1*
-%{_mandir}/man1/perl[ae-z]*.1*
-%{_mandir}/man1/perlb[!u]*.1*
-%{_mandir}/man1/perlc[!c]*.1*
-%{_mandir}/man1/perld[!o]*.1*
-%{_mandir}/man1/s2p.1*
-%{_mandir}/man1/xsubpp.1*
+%{_mandir}/man1/perl.*
 %lang(fi) %{_mandir}/fi/man1/perl*
 %lang(pl) %{_mandir}/pl/man1/perl*
-%{_mandir}/man3/AutoL*
-%{_mandir}/man3/C[aow]*
-%{_mandir}/man3/D[iy]*
-%{_mandir}/man3/Exp*
-%{_mandir}/man3/Fcntl*
-%{_mandir}/man3/File::[BFPSs]*
-%{_mandir}/man3/FileH*
-%{_mandir}/man3/IO*
-%{_mandir}/man3/IPC::O*
-%{_mandir}/man3/PO*
-%{_mandir}/man3/Sele*
-%{_mandir}/man3/So*
-%{_mandir}/man3/Sym*
-%{_mandir}/man3/Text::[TW]*
-%{_mandir}/man3/Time::L*
-%{_mandir}/man3/[Xivw]*
-%{_mandir}/man3/attri*
-%{_mandir}/man3/au*
-%{_mandir}/man3/base.*
-%{_mandir}/man3/fields.*
-%{_mandir}/man3/co*
-%{_mandir}/man3/l[io]*
-%{_mandir}/man3/ov*
-%{_mandir}/man3/st*
+
+%dir %{perl_privlib}
+%dir %{perl_archlib}
+%dir %{perl_archlib}/auto
+
+# pragmas
+%{perl_privlib}/[a-z]*.pm
+%{perl_privlib}/[a-z]*.pl
+%{perl_privlib}/warnings
+%{perl_archlib}/[a-z]*.pm
+%{perl_archlib}/threads
+%dir %{perl_archlib}/auto/attrs
+%dir %{perl_archlib}/auto/re
+%dir %{perl_archlib}/auto/threads
+%dir %{perl_archlib}/auto/threads/shared
+%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
+%attr(755,root,root) %{perl_archlib}/auto/re/*.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
+%{perl_archlib}/auto/attrs/*.bs
+%{perl_archlib}/auto/re/*.bs
+%{perl_archlib}/auto/threads/*.bs
+%{perl_archlib}/auto/threads/shared/*.bs
+%{_mandir}/man3/[a-z]*
+
+# arch-_IN_dependent modules
+%{perl_privlib}/Auto*
+%{_mandir}/man3/Auto*
+%{perl_privlib}/Carp*
+%{_mandir}/man3/Carp*
+%{perl_privlib}/Exporter*
+%{_mandir}/man3/Exporter*
+%{perl_privlib}/English*
+%{_mandir}/man3/English*
+%{perl_privlib}/Getopt*
+%{_mandir}/man3/Getopt*
+%{perl_privlib}/IPC
+%{_mandir}/man3/IPC::Open*
+
+# arch-dependent modules
+%{perl_archlib}/Config*
+%{_mandir}/man3/Config*
+%{perl_archlib}/DynaLoader*
+%{perl_archlib}/auto/DynaLoader
+%{_mandir}/man3/DynaLoader*
+%{perl_archlib}/Errno*
+%{_mandir}/man3/Errno*
+%{perl_archlib}/Safe*
+%{_mandir}/man3/Safe*
+%{perl_archlib}/XSLoader*
+%{_mandir}/man3/XSLoader*
+
+%{perl_archlib}/Cwd.*
+%dir %{perl_archlib}/auto/Cwd
+%attr(755,root,root) %{perl_archlib}/auto/Cwd/*.so
+%{perl_archlib}/auto/Cwd/*.bs
+%{_mandir}/man3/Cwd.*
+
+%{perl_archlib}/Fcntl.*
+%dir %{perl_archlib}/auto/Fcntl
+%attr(755,root,root) %{perl_archlib}/auto/Fcntl/*.so
+%{perl_archlib}/auto/Fcntl/*.bs
+%{_mandir}/man3/Fcntl.*
+
+%{perl_privlib}/File*
+%{perl_archlib}/File
+%dir %{perl_archlib}/auto/File
+%dir %{perl_archlib}/auto/File/*/
+%attr(755,root,root) %{perl_archlib}/auto/File/*/*.so
+%{perl_archlib}/auto/File/*/*.bs
+%{_mandir}/man3/File*
+
+%{perl_archlib}/Opcode.*
+%dir %{perl_archlib}/auto/Opcode
+%attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
+%{perl_archlib}/auto/Opcode/*.bs
+%{_mandir}/man3/Opcode.*
+
+%{perl_privlib}/PerlIO.*
+%{perl_archlib}/PerlIO
+%dir %{perl_archlib}/auto/PerlIO
+%dir %{perl_archlib}/auto/PerlIO/*/
+%attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
+%{perl_archlib}/auto/PerlIO/*/*.bs
+%{_mandir}/man3/PerlIO*
+
+%{perl_archlib}/POSIX*
+%dir %{perl_archlib}/auto/POSIX
+%attr(755,root,root) %{perl_archlib}/auto/POSIX/*.so
+%{perl_archlib}/auto/POSIX/*.al
+%{perl_archlib}/auto/POSIX/*.bs
+%{perl_archlib}/auto/POSIX/*.ix
+%{_mandir}/man3/POSIX.*
+
+%attr(755,root,root) %{_libdir}/lib*.so.%{version}
+
 
 %files devel
 %defattr(644,root,root,755)
-%doc README Changes
-%attr(755,root,root) %{_bindir}/c2ph
-%attr(755,root,root) %{_bindir}/dprofpp
-%attr(755,root,root) %{_bindir}/h2ph
-%attr(755,root,root) %{_bindir}/h2xs
-%attr(755,root,root) %{_bindir}/perlbug
+%attr(755,root,root) %{_bindir}/[acdefh]*
 %attr(755,root,root) %{_bindir}/perlcc
-%attr(755,root,root) %{_bindir}/perldoc
 %attr(755,root,root) %{_bindir}/pl2pm
-%attr(755,root,root) %{_bindir}/pod*
 %attr(755,root,root) %{_bindir}/pstruct
-%attr(755,root,root) %{_bindir}/splain
+%attr(755,root,root) %{_bindir}/[sx]*
+%{_mandir}/man1/[acdefh]*
+%{_mandir}/man1/perlcc.*
+%{_mandir}/man1/perldebguts.*
+%{_mandir}/man1/pl2pm.*
+%{_mandir}/man1/pstruct.*
+%{_mandir}/man1/[sx]*
 
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_mandir}/man1/c2ph.1*
-%{_mandir}/man1/dprofpp.1*
-%{_mandir}/man1/h2ph.1*
-%{_mandir}/man1/h2xs.1*
-%{_mandir}/man1/perlbug.1*
-%{_mandir}/man1/perlcc.1*
-%{_mandir}/man1/perldoc.1*
-%{_mandir}/man1/pl2pm.1*
-%{_mandir}/man1/pod2html.1*
-%{_mandir}/man1/pod2man.1*
-%{_mandir}/man1/pod2text.1*
-%{_mandir}/man1/pod2usage.1*
-%{_mandir}/man1/podchecker.1*
-%{_mandir}/man1/podselect.1*
-%{_mandir}/man1/pstruct.1*
-%{_mandir}/man1/splain.1*
+%{perl_archlib}/CORE
 
-%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE
+# FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
+%{perl_privlib}/ExtUtils
+%{_mandir}/man3/ExtUtils*
+%{perl_privlib}/CPAN*
+%{_mandir}/man3/CPAN*
+%{perl_privlib}/DB.*
+%{_mandir}/man3/DB.*
+%{perl_archlib}/O.*
+%{_mandir}/man3/O.*
+
+%{perl_privlib}/B
+%{perl_archlib}/B
+%{perl_archlib}/B.pm
+%dir %{perl_archlib}/auto/B
+%dir %{perl_archlib}/auto/B/C
+%attr(755,root,root) %{perl_archlib}/auto/B/*.so
+%attr(755,root,root) %{perl_archlib}/auto/B/C/*.so
+%{perl_archlib}/auto/B/*.bs
+%{perl_archlib}/auto/B/C/*.bs
+%{_mandir}/man3/B[.:]*
+
+%{perl_archlib}/ByteLoader.*
+%dir %{perl_archlib}/auto/ByteLoader
+%attr(755,root,root) %{perl_archlib}/auto/ByteLoader/*.so
+%{perl_archlib}/auto/ByteLoader/*.bs
+%{_mandir}/man3/ByteLoader.*
+
+%{perl_privlib}/Devel
+%{perl_archlib}/Devel
+%dir %{perl_archlib}/auto/Devel
+%dir %{perl_archlib}/auto/Devel/*/
+%attr(755,root,root) %{perl_archlib}/auto/Devel/*/*.so
+%{perl_archlib}/auto/Devel/*/*.bs
+%{_mandir}/man3/Devel::*
+
+%{perl_archlib}/XS
+%dir %{perl_archlib}/auto/XS
+%dir %{perl_archlib}/auto/XS/*/
+%attr(755,root,root) %{perl_archlib}/auto/XS/*/*.so
+%{perl_archlib}/auto/XS/*/*.bs
+%{_mandir}/man3/XS::*
+
+
+%files doc-pod
+%defattr(644,root,root,755)
+%{perl_privlib}/pod/perl.pod
+%{perl_privlib}/pod/perl[5abceghijklmnopqrstuvwx]*.pod
+%{perl_privlib}/pod/perld[^i]*.pod
+%{perl_privlib}/pod/perlf[^au]*.pod
+
+
+%files doc-reference
+%defattr(644,root,root,755)
+%{_mandir}/man1/perl[5adefghilmnoprstuvwx]*
+%{_mandir}/man1/perlbo*
+%{_mandir}/man1/perlcall.*
+%{_mandir}/man1/perlclib.*
+%{_mandir}/man1/perlcompile.*
+%lang(cn) %{_mandir}/man1/perlcn.*
+%lang(jp) %{_mandir}/man1/perljp.*
+%lang(ko) %{_mandir}/man1/perlko.*
+
+
+%files modules
+%defattr(644,root,root,755)
+# XXX: should it really be in this package?
+%{perl_privlib}/unicore
+
+# *.ph files (could be made a separate package, but an autohelper's support is needed)
+%{perl_archlib}/*.ph
+%{perl_archlib}/asm
+%{perl_archlib}/bits
+%{perl_archlib}/gnu
+%{perl_archlib}/linux
+%{perl_archlib}/sys
+
+%{perl_archlib}/Data
+%dir %{perl_archlib}/auto/Data
+%dir %{perl_archlib}/auto/Data/Dumper
+%attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
+%{perl_archlib}/auto/Data/Dumper/*.bs
+%{_mandir}/man3/Data*
+
+%{perl_privlib}/Digest.pm
+%{perl_archlib}/Digest
+%dir %{perl_archlib}/auto/Digest
+%dir %{perl_archlib}/auto/Digest/MD5
+%attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/*.so
+%{perl_archlib}/auto/Digest/MD5/*.bs
+%{_mandir}/man3/Digest*
+
+## FIXME: *.h to devel(?), check out the use for *.e2x files
+%{perl_privlib}/Encode
+%{perl_archlib}/Encode*
+%dir %{perl_archlib}/auto/Encode
+%dir %{perl_archlib}/auto/Encode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
+%{perl_archlib}/auto/Encode/*/*.bs
+%{_mandir}/man3/Encode*
+
+# FIXME: README and Changes files
+%{perl_privlib}/Filter
+%{perl_archlib}/Filter
+%dir %{perl_archlib}/auto/Filter
+%dir %{perl_archlib}/auto/Filter/Util
+%dir %{perl_archlib}/auto/Filter/Util/Call
+%attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
+%{perl_archlib}/auto/Filter/Util/Call/*.bs
+%{_mandir}/man3/Filter*
+
+%{perl_privlib}/I18N
+%{perl_archlib}/I18N
+%dir %{perl_archlib}/auto/I18N
+%dir %{perl_archlib}/auto/I18N/*/
+%attr(755,root,root) %{perl_archlib}/auto/I18N/*/*.so
+%{perl_archlib}/auto/I18N/*/*.bs
+%{perl_archlib}/auto/I18N/*/*.ix
+%{_mandir}/man3/I18N::*
+
+%{perl_privlib}/IO
+%{perl_archlib}/IO*
+%dir %{perl_archlib}/auto/IO
+%attr(755,root,root) %{perl_archlib}/auto/IO/*.so
+%{perl_archlib}/auto/IO/*.bs
+%{_mandir}/man3/IO*
+
+%{perl_archlib}/IPC
+%dir %{perl_archlib}/auto/IPC
+%dir %{perl_archlib}/auto/IPC/*/
+%attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
+%{perl_archlib}/auto/IPC/*/*.bs
+%{_mandir}/man3/IPC::[MS]*
+
+# FIXME: List/Util.pm should be archlib; patch needed
+%{perl_privlib}/List
+%dir %{perl_archlib}/auto/List
+%dir %{perl_archlib}/auto/List/*/
+%attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
+%{perl_archlib}/auto/List/*/*.bs
+%{_mandir}/man3/List::*
+
+%{perl_archlib}/MIME
+%dir %{perl_archlib}/auto/MIME
+%dir %{perl_archlib}/auto/MIME/Base64
+%attr(755,root,root) %{perl_archlib}/auto/MIME/Base64/*.so
+%{perl_archlib}/auto/MIME/Base64/*.bs
+%{_mandir}/man3/MIME::*
+
+%{perl_archlib}/SDBM_File.*
+%dir %{perl_archlib}/auto/SDBM_File
+%attr(755,root,root) %{perl_archlib}/auto/SDBM_File/*.so
+%{perl_archlib}/auto/SDBM_File/*.bs
+%{_mandir}/man3/SDBM_File.*
+
+%{perl_archlib}/Socket.*
+%dir %{perl_archlib}/auto/Socket
+%attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
+%{perl_archlib}/auto/Socket/*.bs
+%{_mandir}/man3/Socket.*
+
+%{perl_archlib}/Storable.*
+%dir %{perl_archlib}/auto/Storable
+%attr(755,root,root) %{perl_archlib}/auto/Storable/*.so
+%{perl_archlib}/auto/Storable/*.al
+%{perl_archlib}/auto/Storable/*.bs
+%{perl_archlib}/auto/Storable/*.ix
+%{_mandir}/man3/Storable.*
+
+%{perl_archlib}/Sys
+%dir %{perl_archlib}/auto/Sys
+%dir %{perl_archlib}/auto/Sys/*/
+%attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
+%{perl_archlib}/auto/Sys/*/*.bs
+%{perl_archlib}/auto/Sys/*/*.ix
+%{_mandir}/man3/Sys::*
+
+%{perl_archlib}/Time
+%dir %{perl_archlib}/auto/Time
+%dir %{perl_archlib}/auto/Time/HiRes
+%attr(755,root,root) %{perl_archlib}/auto/Time/HiRes/*.so
+%{perl_archlib}/auto/Time/HiRes/*.bs
+%{_mandir}/man3/Time::HiRes*
+
+%{perl_privlib}/Unicode
+%{perl_archlib}/Unicode
+%dir %{perl_archlib}/auto/Unicode
+%dir %{perl_archlib}/auto/Unicode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
+%{perl_archlib}/auto/Unicode/*/*.bs
+%{perl_archlib}/auto/Unicode/*/*.ix
+%{_mandir}/man3/Unicode::*
+
+%{perl_privlib}/AnyDBM*
+%{_mandir}/man3/AnyDBM*
+# FIXME: move */demo to %_exapmlesdir or /dev/null
+%{perl_privlib}/Attribute
+%{_mandir}/man3/Attribute*
+%{perl_privlib}/Benchmark*
+%{_mandir}/man3/Benchmark*
+# FIXME: move */eg to %_examplesdir or /dev/null
+%{perl_privlib}/CGI*
+%{_mandir}/man3/CGI*
+# FIXME: move test.pl to %_examplesdir or /dev/null
+%{perl_privlib}/Class
+%{_mandir}/man3/Class::*
+%{perl_privlib}/DirHandle*
+%{_mandir}/man3/DirHandle*
+%{perl_privlib}/Dumpvalue.*
+%{_mandir}/man3/Dumpvalue.*
+%{perl_privlib}/Env.*
+%{_mandir}/man3/Env.*
+%{perl_privlib}/Fatal.*
+%{_mandir}/man3/Fatal.*
+%{perl_privlib}/FindBin.*
+%{_mandir}/man3/FindBin.*
+%{perl_privlib}/Hash
+%{_mandir}/man3/Hash::*
+# FIXME: README and Changes files
+%{perl_privlib}/Locale
+%{_mandir}/man3/Locale::*
+%{perl_privlib}/Math
+%{_mandir}/man3/Math::*
+%{perl_privlib}/Memoize*
+%{_mandir}/man3/Memoize*
+%{perl_privlib}/NEXT*
+%{_mandir}/man3/NEXT*
+# FIXME: README and Changes files, */demos to %_examplesdir or /dev/null
+%{perl_privlib}/Net
+%{_mandir}/man3/Net::*
+%{perl_privlib}/PerlIO
+%{_mandir}/man3/PerlIO::via::*
+%{perl_privlib}/Pod
+%{_mandir}/man3/Pod::*
+%{perl_privlib}/Scalar
+%{_mandir}/man3/Scalar::*
+%{perl_privlib}/Search
+%{_mandir}/man3/Search::*
+%{perl_privlib}/SelectSaver.*
+%{_mandir}/man3/SelectSaver.*
+%{perl_privlib}/SelfLoader.*
+%{_mandir}/man3/SelfLoader.*
+%{perl_privlib}/Shell.*
+%{_mandir}/man3/Shell.*
+# FIXME: README and Changes files
+%{perl_privlib}/Switch.*
+%{_mandir}/man3/Switch.*
+%{perl_privlib}/Symbol.*
+%{_mandir}/man3/Symbol.*
+# FIXME: README and Changes files
+%{perl_privlib}/Term
+%{_mandir}/man3/Term::*
+# FIXME: README and Changes files
+%{perl_privlib}/Test*
+%{_mandir}/man3/Test*
+%{perl_privlib}/Text
+%{_mandir}/man3/Text::*
+# XXX: to perl-base?
+%{perl_privlib}/Thread*
+%{_mandir}/man3/Thread*
+%{perl_privlib}/Tie
+%{_mandir}/man3/Tie::*
+%{perl_privlib}/Time
+%{_mandir}/man3/Time::[La-z]*
+# XXX: to perl-base?
+%{perl_privlib}/UNIVERSAL.*
+%{_mandir}/man3/UNIVERSAL.*
+# FIXME: README and Changes files
+%{perl_privlib}/User
+%{_mandir}/man3/User::*
+
+
+%files perldoc
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/perldoc
+%{perl_privlib}/pod/perldiag.pod
+%{perl_privlib}/pod/perlfaq*.pod
+%{perl_privlib}/pod/perlfunc.pod
+%{_mandir}/man1/perldoc.*
+
 
 %files -n sperl
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
 
-%files modules
+%files tools
 %defattr(644,root,root,755)
-%{_libdir}/perl5/site_perl/B
-%{_libdir}/perl5/site_perl/LockFile
-%{_libdir}/perl5/site_perl/NetServer
-%{_libdir}/perl5/site_perl/Netscape
-%{_libdir}/perl5/site_perl/SOAP
-%{_libdir}/perl5/site_perl/%{_target_platform}*/%{version}/B
-%{_libdir}/perl5/%{version}/B
-%{_libdir}/perl5/%{version}/CPAN
-%{_libdir}/perl5/%{version}/Devel
-%{_libdir}/perl5/%{version}/ExtUtils
-%{_libdir}/perl5/%{version}/File/CheckTree.pm
-%{_libdir}/perl5/%{version}/File/Compare.pm
-%{_libdir}/perl5/%{version}/File/Copy.pm
-%{_libdir}/perl5/%{version}/File/DosGlob.pm
-%{_libdir}/perl5/%{version}/File/Temp.pm
-#%%{_libdir}/perl5/%{version}/File/Spec/[A-OV-Z]*.pm
-%{_libdir}/perl5/%{version}/Getopt
-%{_libdir}/perl5/%{version}/I18N
-%{_libdir}/perl5/%{version}/Math
-%{_libdir}/perl5/%{version}/Net
-%{_libdir}/perl5/%{version}/Pod
-%{_libdir}/perl5/%{version}/Search
-%{_libdir}/perl5/%{version}/Term
-#%%{_libdir}/perl5/%{version}/Test
-%{_libdir}/perl5/%{version}/Text/Abbrev.pm
-%{_libdir}/perl5/%{version}/Text/ParseWords.pm
-%{_libdir}/perl5/%{version}/Text/Soundex.pm
-%{_libdir}/perl5/%{version}/Tie
-%{_libdir}/perl5/%{version}/Time/[!L]*
-%{_libdir}/perl5/%{version}/User
-%{_libdir}/perl5/%{version}/auto
-%{_libdir}/perl5/%{version}/pod/perldiag.pod
-%{_libdir}/perl5/%{version}/unicode
-%{_libdir}/perl5/%{version}/*.pl
-%{_libdir}/perl5/%{version}/AnyDBM_File.pm
-%{_libdir}/perl5/%{version}/AutoSplit.pm
-%{_libdir}/perl5/%{version}/Benchmark.pm
-%{_libdir}/perl5/%{version}/blib.pm
-%{_libdir}/perl5/%{version}/bytes.pm
-%{_libdir}/perl5/%{version}/charnames.pm
-%{_libdir}/perl5/%{version}/CPAN.pm
-%{_libdir}/perl5/%{version}/DB.pm
-%{_libdir}/perl5/%{version}/diagnostics.pm
-%{_libdir}/perl5/%{version}/Dumpvalue.pm
-%{_libdir}/perl5/%{version}/English.pm
-%{_libdir}/perl5/%{version}/Env.pm
-%{_libdir}/perl5/%{version}/Fatal.pm
-%{_libdir}/perl5/%{version}/FileCache.pm
-%{_libdir}/perl5/%{version}/filetest.pm
-%{_libdir}/perl5/%{version}/FindBin.pm
-%{_libdir}/perl5/%{version}/less.pm
-%{_libdir}/perl5/%{version}/open.pm
-%{_libdir}/perl5/%{version}/SelfLoader.pm
-%{_libdir}/perl5/%{version}/Shell.pm
-%{_libdir}/perl5/%{version}/sigtrap.pm
-%{_libdir}/perl5/%{version}/subs.pm
-%{_libdir}/perl5/%{version}/Test.pm
-%{_libdir}/perl5/%{version}/UNIVERSAL.pm
-%{_libdir}/perl5/%{version}/utf8.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/B
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Data
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Devel
-%{_libdir}/perl5/%{version}/%{_target_platform}*/File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/IPC
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Sys
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B/B.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/B/B.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ByteLoader/ByteLoader.so
-# we have newer DB_File in a separate package
-#%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
-#%%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/autosplit.ix
-#%%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.bs
-#%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File/DB_File.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper/Dumper.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Data/Dumper/Dumper.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/DProf
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/DProf/DProf.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/DProf/DProf.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/Peek
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/Peek/Peek.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Devel/Peek/Peek.so
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/DynaLoader.a
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/autosplit.ix
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_expandspec.al
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/dl_find_symbol_anywhere.al
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DynaLoader/extralibs.ld
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob/autosplit.ix
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob/Glob.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/File/Glob/Glob.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File/autosplit.ix
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File/GDBM_File.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/GDBM_File/GDBM_File.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC/SysV
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC/SysV/SysV.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/IPC/SysV/SysV.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File/NDBM_File.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/NDBM_File/NDBM_File.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
-#%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
-#%%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
-#%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tolower.al
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/toupper.al
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/*.ix
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File/SDBM_File.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/SDBM_File/SDBM_File.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname/autosplit.ix
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname/Hostname.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Hostname/Hostname.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Syslog
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Syslog/Syslog.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Sys/Syslog/Syslog.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs/attrs.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/attrs/attrs.so
-%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re/re.bs
-%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/re/re.so
-%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/sdbm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/B.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/ByteLoader.pm
-#%%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/attrs.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
-#%%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/ops.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/Safe.pm
-%{_libdir}/perl5/%{version}/%{_target_platform}*/SDBM_File.pm
+%attr(755,root,root) %{_bindir}/a2p
+%{_mandir}/man1/a2p.*
+%attr(755,root,root) %{_bindir}/find2perl
+%{_mandir}/man1/find2perl.*
+%attr(755,root,root) %{_bindir}/libnetcfg
+%{_mandir}/man1/libnetcfg.*
+%attr(755,root,root) %{_bindir}/piconv
+%{_mandir}/man1/piconv.*
+%attr(755,root,root) %{_bindir}/psed
+%attr(755,root,root) %{_bindir}/s2p
+%{_mandir}/man1/psed.*
+%{_mandir}/man1/s2p.*
 
-%{_mandir}/man3/An*
-%{_mandir}/man3/AutoS*
-%{_mandir}/man3/[BMNOU]*
-%{_mandir}/man3/C[Pl]*
-%{_mandir}/man3/D[Baeu]*
-%{_mandir}/man3/E[nr]*
-%{_mandir}/man3/Ext*
-%{_mandir}/man3/Fa*
-%{_mandir}/man3/File::[CDGT]*
-%{_mandir}/man3/FileC*
-%{_mandir}/man3/Fin*
-%{_mandir}/man3/G[De]*
-%{_mandir}/man3/I1*
-%{_mandir}/man3/IPC::[MS]*
-%{_mandir}/man3/Po*
-%{_mandir}/man3/S[Dah]*
-%{_mandir}/man3/Sea*
-%{_mandir}/man3/Self*
-%{_mandir}/man3/Sys*
-%{_mandir}/man3/Te[rs]*
-%{_mandir}/man3/Text::[APS]*
-%{_mandir}/man3/Tie*
-%{_mandir}/man3/Time::[glt]*
-%{_mandir}/man3/attrs*
-%{_mandir}/man3/b[ly]*
-%{_mandir}/man3/ch*
-%{_mandir}/man3/d*
-%{_mandir}/man3/fil*
-%{_mandir}/man3/le*
-%{_mandir}/man3/op*
-%{_mandir}/man3/re*
-%{_mandir}/man3/s[iu]*
-%{_mandir}/man3/u*
-
-%files pod
+%files tools-devel
 %defattr(644,root,root,755)
-%{_libdir}/perl5/%{version}/pod/perl[!d]*
-%{_libdir}/perl5/%{version}/pod/perld[!i]*
+%attr(755,root,root) %{_bindir}/perlbug
+%{_mandir}/man1/perlbug.*
+%attr(755,root,root) %{_bindir}/c2ph
+%attr(755,root,root) %{_bindir}/pstruct
+%{_mandir}/man1/c2ph.*
+%{_mandir}/man1/pstruct.*
+%attr(755,root,root) %{_bindir}/dprofpp
+%{_mandir}/man1/dprofpp.*
+%attr(755,root,root) %{_bindir}/enc2xs
+%{_mandir}/man1/enc2xs.*
+%attr(755,root,root) %{_bindir}/h2ph
+%{_mandir}/man1/h2ph.*
+%attr(755,root,root) %{_bindir}/h2xs
+%{_mandir}/man1/h2xs.*
+%attr(755,root,root) %{_bindir}/perlcc
+%{_mandir}/man1/perlcc.*
+%attr(755,root,root) %{_bindir}/perlivp
+%{_mandir}/man1/perlivp.*
+%attr(755,root,root) %{_bindir}/pl2pm
+%{_mandir}/man1/pl2pm.*
+%attr(755,root,root) %{_bindir}/splain
+%{_mandir}/man1/splain.*
+
+%files tools-pod
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/pod*
+%{_mandir}/man1/pod*
+
+%files -n microperl
+%defattr(644,root,root,755)
+%doc README.micro Todo.micro
+%attr(755,root,root) %{_bindir}/microperl
