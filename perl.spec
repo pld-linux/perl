@@ -99,8 +99,8 @@ Practical Extraction and Report Language (SUID root binary).
 Practical Extraction and Report Language (SUID root binaria).
 
 %package -n perl-GDBM_File
-Summary:	Practical Extraction and Report Language (SUID root binary)
-Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
+Summary:	Practical Extraction and Report Language
+Summary(pl):	Practical Extraction and Report Language
 Group:		Applications/Text
 Group(de):	Applikationen/Text
 Group(fr):	Utilitaires/Texte
@@ -112,6 +112,22 @@ Practical Extraction and Report Language GDBM_File module.
 
 %description -n perl-GDBM_File -l pl
 Practical Extraction and Report Language modu³ GDBM_File.
+
+%package -n perl-NDBM_File
+Summary:	Practical Extraction and Report Language
+Summary(pl):	Practical Extraction and Report Language
+Group:		Applications/Text
+Group(de):	Applikationen/Text
+Group(fr):	Utilitaires/Texte
+Group(pl):	Aplikacje/Tekst
+Requires:	%{name} = %{version}
+
+%description -n perl-NDBM_File
+Practical Extraction and Report Language NDBM_File module.
+
+%description -n perl-NDBM_File -l pl
+Practical Extraction and Report Language modu³ NDBM_File.
+
 
 
 %prep
@@ -182,8 +198,13 @@ sh Configure \
 cd ext/GDBM_File
 ../../perl Makefile.PL
 )
-
+(
+cd ext/NDBM_File
+../../perl Makefile.PL
+)
 %{__make} -C ext/GDBM_File
+%{__make} -C ext/NDBM_File
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -191,6 +212,7 @@ install -d $RPM_BUILD_ROOT
 
 %{__make} install
 %{__make} -C ext/GDBM_File install DESTDIR=$RPM_BUILD_ROOT
+%{__make} -C ext/NDBM_File install DESTDIR=$RPM_BUILD_ROOT
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
@@ -280,3 +302,8 @@ rm -rf $RPM_BUILD_ROOT
 %files -n perl-GDBM_File
 %{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/GDBM_File.pm
 %{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/auto/GDBM_File/*
+
+
+%files -n perl-NDBM_File
+%{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/NDBM_File.pm
+%{_libdir}/perl5/site_perl/%{version}/%{_target_platform}%{perlthread}/auto/NDBM_File/*
