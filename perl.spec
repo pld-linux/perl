@@ -14,7 +14,8 @@
 # - fix "FIXME"s, review "XXX"s
 # - fix perl.prov's handling in rpm -- it should use the __perl macro
 # - fix some duplicate files
-# - add the {O,N}DBM_File modules
+# - add the {O,N}DBM_File modules (?)
+# - rethink ownership of the perl_vendorlib directories
 # - *TESTING*
 #
 
@@ -80,6 +81,8 @@ Requires:	%{name}-base = %{version}
 Requires:	%{name}-modules = %{version}
 Requires:	perldoc
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
+%{?_with_tests:BuildRequires:	procps}
+Conflicts:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
