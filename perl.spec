@@ -808,13 +808,14 @@ owd="`pwd`"
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
-	Convert Crypt DBD Data Date Devel Device Digest Email Error ExtUtils \
-	File Filesys Font Games Getopt GnuPG Graph Graphics HTML HTTP I18N \
-	IO/Socket IPC Image Inline Language Lingua/{EN,Stem/Snowball} \
-	List Locale LockFile Log MIME Mail Math/{BigInt,Fractal} Modem Module \
-	Net/SMTP NetServer Netscape News Number OLE Parse Pod PostScript Proc \
-	RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule Set Sort \
-	Speech Spreadsheet Statistics String Sub Sys TeX Test \
+	Convert Crypt DBD Data Date Devel Device Digest Email Error \
+	Exporter ExtUtils File Filesys Font Games Getopt GnuPG Graph \
+	Graphics HTML HTTP I18N IO/Socket IPC Image Inline Language \
+	Lingua/{EN,Stem/Snowball} List Locale LockFile Log MIME Mail \
+	Math/{BigInt,Fractal} Modem Module Net/SMTP NetServer Netscape \
+	News Number Object OLE Parse Pod PostScript Proc RADIUS RPC \
+	RPM Regexp SOAP/Transport SQL Schedule Set Sort Speech \
+	Spreadsheet Statistics String Sub Sys Template TeX Test \
 	Text/Query Tie Time Tree UNIVERSAL Unicode WWW \
 	XML/{Filter,Handler,Parser,XPath} \
 	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
