@@ -8,6 +8,11 @@
 #%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?_with_threads:-thread-multi}
 
+%define		perl_sitelib	%{_libdir}/perl5/site_perl
+%define		perl_sitearch	%{perl_sitelib}/%{version}/%{_target_platform}%{perlthread}
+%define		perl_privlib	%{_libdir}/perl5/%{version}
+%define		perl_archlib	%{perl_privlib}/%{version}/%{_target_platform}%{perlthread}
+
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -31,18 +36,19 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.03
+Release:	0.03%{?_with_threads:_thr}
 Epoch:		1
-License:	GPL/Artistic
+License:	GPL v1+ or Artistic
 Group:		Applications/Text
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
-Patch0:		%{name}-noroot_install.patch
-Patch1:		%{name}-nodb.patch
+Patch0:		%{name}_580-noroot_install.patch
+# mostly obsolete and i just don't like it
+#Patch1:		%{name}-nodb.patch
 # weird one...
 #Patch2:	%{name}-DESTDIR.patch
-Patch3:		%{name}-find-provides.patch
+Patch3:		%{name}_580-find_provides.patch
 # applied in a similar way
 #Patch4:	%{name}-prereq.patch
 # failed
@@ -51,31 +57,27 @@ Patch3:		%{name}-find-provides.patch
 #Patch6:	%{name}-CGI-upload-tmpdir.patch
 # what is this f* one for?!
 #Patch7:	%{name}-LD_RUN_PATH.patch
-Patch8:		%{name}-errno_h-parsing.patch
-Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
+Patch8:		%{name}_580-errno_h-parsing.patch
+Patch9:		%{name}_580-use-LD_PRELOAD-for-lib%{name}.so.patch
 # *weird*
 #Patch10:	%{name}-sitearch.patch
-Patch11:	%{name}-soname.patch
+Patch11:	%{name}_580-soname.patch
 # is this one really needed?
 #Patch12:	%{name}-db4.patch
 # failed; is it still necessary?
 #Patch13:	%{name}-gcc3.patch
+Patch14:	%{name}_580-perluniintro.patch
 URL:		http://www.perl.org/
 #BuildRequires:	db-devel > 4.1
-BuildRequires:	gdbm-devel
-#Requires:	perl-Class-Fields
-Requires:	perl-Attribute-Handlers
-Requires:	perl-Test-Harness
-Requires:	perl-Time-HiRes
 #Provides:	perl(DynaLoader)
 #Provides:	perl-File-Spec = 0.82
 #Provides:	perl-IO = 1.20
 #Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-#Obsoletes:	perl-IO
-#Obsoletes:	perl-lib
-#Obsoletes:	perl-mod-skel
-#Obsoletes:	perl-base
+Obsoletes:	perl-IO
+Obsoletes:	perl-lib
+Obsoletes:	perl-mod-skel
+Obsoletes:	perl-base
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -396,7 +398,7 @@ POD.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 #%patch2 -p1
 %patch3 -p1
 #%patch4 -p1
@@ -409,6 +411,7 @@ POD.
 %patch11 -p1
 #%patch12 -p1
 #%patch13 -p1
+%patch14 -p0
 
 %{__install} -m 0755 %{SOURCE2} $PWD
 %{__chmod} +x find-perl-provides
@@ -429,6 +432,11 @@ sh Configure \
 	-Doptimize="%{rpmcflags}" \
 	-Dprefix=%{_prefix} \
 	-Duseshrplib \
+	-Ui_dbm \
+	-Ui_gdbm \
+	-Ui_ndbm \
+	-Ui_db \
+	-Dlibswanted="nsl db dl m c crypt util" \
 	-%{?_with_threads:D}%{?!_with_threads:U}usethreads \
 	-%{?_with_largefiles:D}%{?!_with_largefiles:U}uselargefiles
 
@@ -451,10 +459,10 @@ install -d $RPM_BUILD_ROOT
 ## Generate the *.ph files
 (
 LD_LIBRARY_PATH=%{_builddir}/%{name}-%{version}
-PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}
+PERL5LIB=$RPM_BUILD_ROOT%{perl_privlib}
 PERL=$RPM_BUILD_ROOT%{_bindir}/perl
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
-PHDIR=$PERL5LIB/%{_target_platform}%{perlthread}
+PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
 WANTED='
 	syscall.h
 	syslog.h
@@ -471,7 +479,7 @@ $PERL $H2PH -a -d $PHDIR $WANTED
 )
 
 ## Fix lib
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/*/CORE/libperl.so*
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
@@ -506,26 +514,26 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 # These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
-#
-# Test::Harness is available as a separate package
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
-#
-# DB_File is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/DB_File
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/DB_File.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
-#
-# CGI is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
-#
-# Attribute::Handlers is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Attribute/Handlers*
-#
-# Time::HiRes is available as a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/Time/HiRes
-rm $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/Time/HiRes.pm
+
+# # Test::Harness is available as a separate package
+# rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
+# rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
+# #
+# # DB_File is available as a separate package
+# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/DB_File
+# rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/DB_File.pm
+# rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
+# #
+# # CGI is available as a separate package
+# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
+# rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
+# #
+# # Attribute::Handlers is available as a separate package
+# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Attribute/Handlers*
+# #
+# # Time::HiRes is available as a separate package
+# rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/Time/HiRes
+# rm $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/Time/HiRes.pm
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
@@ -539,24 +547,30 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README AUTHORS
 
+%attr(755,root,root) %{_bindir}/libnetcfg
+%{_mandir}/man1/libnetcfg.*
+
+%attr(755,root,root) %{_bindir}/perlbug
+%{_mandir}/man1/perlbug.*
+
+%attr(755,root,root) %{_bindir}/piconv
+%{_mandir}/man1/piconv.*
+
+%attr(755,root,root) %{_bindir}/psed
+%{_mandir}/man1/psed.*
+
+%attr(755,root,root) %{_bindir}/perldoc
+%{_libdir}/perl5/%{version}/pod/perlfaq*.pod
+%{_libdir}/perl5/%{version}/pod/perlfunc*.pod
+%{_mandir}/man1/perldoc.*
+
 
 %files base
 %defattr(644,root,root,755)
 
-%attr(755,root,root) %{_bindir}/libnetcfg
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
-%attr(755,root,root) %{_bindir}/perlbug
-%attr(755,root,root) %{_bindir}/perldoc
-%attr(755,root,root) %{_bindir}/piconv
-%attr(755,root,root) %{_bindir}/psed
-
-%{_mandir}/man1/libnetcfg.*
 %{_mandir}/man1/perl.*
-%{_mandir}/man1/perlbug.*
-%{_mandir}/man1/perldoc.*
-%{_mandir}/man1/piconv.*
-%{_mandir}/man1/psed.*
 %lang(fi) %{_mandir}/fi/man1/perl*
 %lang(pl) %{_mandir}/pl/man1/perl*
 
@@ -589,13 +603,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/suidperl
 
 
-%files modules
-%defattr(644,root,root,755)
 
 
 %files pod
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pod2*
-%{_libdir}/perl5/%{version}/pod/perl[^d]*
-%{_libdir}/perl5/%{version}/pod/perld[^i]*
+%{_libdir}/perl5/%{version}/pod/perl.pod
+%{_libdir}/perl5/%{version}/pod/perl[5abcdeghijklmnopqrstuvwx]*.pod
+%{_libdir}/perl5/%{version}/pod/perlf[^au]*.pod
 %{_mandir}/man1/pod*
