@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	63
+Release:	64
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -48,7 +48,6 @@ Patch13:	%{name}-gcc3.patch
 URL:		http://www.perl.org/
 BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
-Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
@@ -421,7 +420,8 @@ sh Configure \
 	-Dsitelib=%{_libdir}/perl5/site_perl \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
-	-Dman3ext=3pm \
+	-Dman1ext=1 \
+	-Dman3ext=3perl \
 	-Doptimize="%{rpmcflags}" \
 	${USETHREADS}usethreads \
 	-Uuselargefiles \
@@ -438,6 +438,8 @@ sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdyna
 	Makefile.bak > Makefile
 
 %{__make}
+
+echo -e ",s/^man1ext='1'/man1ext='1p'/\n,s/^man3ext='3perl'/man3ext='3pm'/\nw" | ed lib/Config.pm
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -511,22 +513,25 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 
 # These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3p*
 #
 # Newer Test::Harness is available as a separate package
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3p*
 #
 # Newer DB_File is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3p*
 #
 # Newer CGI is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3p*
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+
+# why is it there...?
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE/sperl.o
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -709,9 +714,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/autouse.pm
-# newer versions are in perl-Class-Fields
-#%{_libdir}/perl5/%{version}/base.pm
-#%{_libdir}/perl5/%{version}/fields.pm
+%{_libdir}/perl5/%{version}/base.pm
+%{_libdir}/perl5/%{version}/fields.pm
 %{_libdir}/perl5/%{version}/constant.pm
 %{_libdir}/perl5/%{version}/integer.pm
 %{_libdir}/perl5/%{version}/lib.pm
@@ -788,9 +792,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/[Xivw]*
 %{_mandir}/man3/attri*
 %{_mandir}/man3/au*
-# newer versions are in perl-Class-Fields
-#%{_mandir}/man3/base.*
-#%{_mandir}/man3/fields.*
+%{_mandir}/man3/base.*
+%{_mandir}/man3/fields.*
 %{_mandir}/man3/co*
 %{_mandir}/man3/l[io]*
 %{_mandir}/man3/ov*
