@@ -53,7 +53,7 @@ Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.6
 Release:	1%{!?with_threads:_nothr}
-Epoch:		1
+Epoch:		2
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
@@ -817,24 +817,25 @@ install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 	Font Games Getopt GnuPG Graph Graphics HTML HTTP Hash I18N IO/Socket \
 	IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball} List \
 	Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
-	Modem Module Net/{IDN,SMTP} NetAddr NetServer Netscape News Number Object \
-	OLE PAR PHP Parse PerlIO/via Pod PostScript Proc Quantum RADIUS RPC \
+	Modem Module Net/{IDN,SMTP} NetAddr NetServer Netscape News Number \
+	Object OLE PAR PHP Parse PerlIO/via Pod PostScript Proc Quantum RADIUS RPC \
 	RPM RTF Regexp SNMP SOAP/Transport SQL SVN Schedule Set Sort Speech \
 	Spreadsheet Statistics String Sub Sys TeX Template \
 	Term/{ReadLine,Screen} Test Text/Query Tie Time Tree UNIVERSAL \
 	Unicode Unix WWW/Google X500 XML/{Filter,Handler,Parser,RSS,XPath} \
 	auto/{AI,Array,Config,Crypt,Data,Devel,GnuPG,Mail,Math,Net,Schedule} \
-	auto/Statistics,Text,WWW}
+	auto/{Statistics,Text,WWW}
 
 cd $RPM_BUILD_ROOT%{perl_vendorarch}
 install -d AI Algorithm Astro Audio Authen B BSD Bit Chemistry Class \
 	Compress Convert Crypt/OpenSSL Data Devel Device Digest File IPC \
-	Image Inline Linux Locale Math/BigInt Net Ogg/Vorbis Speech/Recognizer \
-	String Sys Template Term Text Time Unicode WWW XML \
+	Image Inline Linux Locale Math/BigInt Net Ogg/Vorbis PerlIO \
+	Speech/Recognizer String Sys Template Term Text Time Unicode WWW XML \
 	auto/{AI,Algorithm,Astro,Audio,Authen,BSD,Bit,Chemistry,Class,Clone} \
 	auto/{Compress,Convert,Crypt/OpenSSL,Data,Devel,Device,Digest,File} \
-	auto/{IPC,Image,Inline,Locale,Linux,Math/BigInt,Net,Ogg/Vorbis,Regexp} \
-	auto/{Speech/Recognizer,String,Sys,Term,Text,Time,Unicode,WWW,XML}
+	auto/{IPC,Image,Inline,Locale,Linux,Math/BigInt,Net,Ogg/Vorbis} \
+	auto/{PerlIO,Regexp,Speech/Recognizer,String,Sys,Term,Text,Time} \
+	auto/{Unicode,WWW,XML}
 
 cd "$owd"
 
