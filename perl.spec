@@ -1,17 +1,19 @@
 #
 # Conditional build:
 # _without_tests   - do not perform "make test"
-# _with_threads    - build with support for threads
+# _without_threads - build with support for threads
 # _with_largefiles - build with large file support (think before turning it on)
 #
 
 #%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
-%define		perlthread %{?_with_threads:-thread-multi}
+%define		perlthread %{?!_without_threads:-thread-multi}
 
-%define		perl_sitelib	%{_libdir}/perl5/site_perl
-%define		perl_sitearch	%{perl_sitelib}/%{version}/%{_target_platform}%{perlthread}
 %define		perl_privlib	%{_libdir}/perl5/%{version}
-%define		perl_archlib	%{perl_privlib}/%{version}/%{_target_platform}%{perlthread}
+%define		perl_archlib	%{perl_privlib}/%{_target_platform}%{perlthread}
+%define		perl_sitelib	%{_libdir}/perl5/site_perl/%{version}
+%define		perl_sitearch	%{perl_sitelib}/%{_target_platform}%{perlthread}
+%define		perl_vendorlib	%{_libdir}/perl5/pld_perl/%{version}
+%define		perl_vendorarch	%{perl_vendorlib}/%{_target_platform}%{perlthread}
 
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
@@ -36,10 +38,10 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.03%{?_with_threads:_thr}
+Release:	0.04%{?_without_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
-Group:		Applications/Text
+Group:		Development/Languages/Perl
 Source0:	ftp://ftp.cpan.org/pub/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	%{name}.prov
@@ -67,17 +69,17 @@ Patch11:	%{name}_580-soname.patch
 # failed; is it still necessary?
 #Patch13:	%{name}-gcc3.patch
 Patch14:	%{name}_580-perluniintro.patch
-URL:		http://www.perl.org/
+URL:		http://www.perl.com/
 #BuildRequires:	db-devel > 4.1
 #Provides:	perl(DynaLoader)
-#Provides:	perl-File-Spec = 0.82
+Provides:	perl-File-Spec = 0.82
 #Provides:	perl-IO = 1.20
 #Obsoletes:	perl-File-Spec
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
 Obsoletes:	perl-base
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -357,16 +359,16 @@ Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - modu³y
 Summary(pt_BR):	Módulos do perl básicos
 Group:		Applications/Text
-Requires:	perl-Test-Harness
+#Requires:	perl-Test-Harness
 Prereq:		%{name} = %{version}
-Provides:	perl-ANSIColor
-Provides:	perl-DProf
-Provides:	perl-Devel-Peek
-Provides:	perl-PodParser
-Obsoletes:	perl-ANSIColor
-Obsoletes:	perl-DProf
-Obsoletes:	perl-Devel-Peek
-Obsoletes:	perl-PodParser
+#Provides:	perl-ANSIColor
+#Provides:	perl-DProf
+#Provides:	perl-Devel-Peek
+#Provides:	perl-PodParser
+#Obsoletes:	perl-ANSIColor
+#Obsoletes:	perl-DProf
+#Obsoletes:	perl-Devel-Peek
+#Obsoletes:	perl-PodParser
 
 %description modules
 Practical Extraction and Report Language - modules.
@@ -413,8 +415,8 @@ POD.
 #%patch13 -p1
 %patch14 -p0
 
-%{__install} -m 0755 %{SOURCE2} $PWD
-%{__chmod} +x find-perl-provides
+install -m 0755 %{SOURCE2} $PWD/find-perl.prov
+chmod 0755 find-perl-provides
 
 %build
 sh Configure \
@@ -431,13 +433,13 @@ sh Configure \
 	-Dman3ext=3pm \
 	-Doptimize="%{rpmcflags}" \
 	-Dprefix=%{_prefix} \
+	-Dprivlib=%{perl_privlib}     -Darchlib=%{perl_archlib} \
+	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
+	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
 	-Duseshrplib \
-	-Ui_dbm \
-	-Ui_gdbm \
-	-Ui_ndbm \
-	-Ui_db \
-	-Dlibswanted="nsl db dl m c crypt util" \
-	-%{?_with_threads:D}%{?!_with_threads:U}usethreads \
+	-Ui_dbm -Ui_gdbm -Ui_ndbm -Ui_db \
+	-Dlibswanted="nsl dl m c crypt util" \
+	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
 	-%{?_with_largefiles:D}%{?!_with_largefiles:U}uselargefiles
 
 ## why were these three undefined?
@@ -450,11 +452,16 @@ sh Configure \
 
 %{__make}
 
+%{?!_without_tests:%{__make} test}
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install
+
+%{__ln_s} -f  perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f sperl%{version} $RPM_BUILD_ROOT%{_bindir}/suidperl
 
 ## Generate the *.ph files
 (
@@ -474,6 +481,10 @@ WANTED='
 	sys/syscall.h
 	sys/time.h
 '
+
+# just using the occasion, prepare scripts for finding provides
+$PERL -pi -e 's|FPPATH|%{_builddir}/%{name}-%{version}|' find-perl-provides find-perl.prov
+
 cd /usr/include
 $PERL $H2PH -a -d $PHDIR $WANTED
 )
@@ -481,7 +492,7 @@ $PERL $H2PH -a -d $PHDIR $WANTED
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
 install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
-ln -sf libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix installed man pages list
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000}* \
@@ -490,7 +501,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000}* \
 
 # dir tree for other perl modules
 (
-cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl/%{version}
+cd $RPM_BUILD_ROOT%{perl_sitelib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
 	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
@@ -502,7 +513,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
 	auto/{AI,Array,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
-cd %{_target_platform}%{perlthread}/%{version}
+cd $RPM_BUILD_ROOT%{perl_sitearch}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 	Digest File IPC Inline Locale Math Net Speech/Recognizer String Term \
 	Text Unicode XML \
@@ -512,7 +523,7 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 )
 
 # These File::Spec submodules are for non-Unix systems
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
 # # Test::Harness is available as a separate package
@@ -535,7 +546,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 # rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/auto/Time/HiRes
 # rm $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/Time/HiRes.pm
 
-bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+%{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -560,9 +571,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/psed.*
 
 %attr(755,root,root) %{_bindir}/perldoc
-%{_libdir}/perl5/%{version}/pod/perlfaq*.pod
-%{_libdir}/perl5/%{version}/pod/perlfunc*.pod
-%{_mandir}/man1/perldoc.*
+%{perl_privlib}/pod/perldiag.pod
+%{perl_privlib}/pod/perlfaq*.pod
+%{perl_privlib}/pod/perlfunc.pod
+%{_mandir}/man1/perld[io]*
+%{_mandir}/man1/perlfaq*.*
+%{_mandir}/man1/perlfunc.*
 
 
 %files base
@@ -573,6 +587,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perl.*
 %lang(fi) %{_mandir}/fi/man1/perl*
 %lang(pl) %{_mandir}/pl/man1/perl*
+
 
 %{_mandir}/man3/[a-z]*
 %{_mandir}/man3/English.*
@@ -587,14 +602,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pl2pm
 %attr(755,root,root) %{_bindir}/pstruct
 %attr(755,root,root) %{_bindir}/[sx]*
-%{_mandir}/man1/[acdefh]*
+%{_mandir}/man1/[acefh]*
 %{_mandir}/man1/perlcc.*
+%{_mandir}/man1/perld[^io]*
 %{_mandir}/man1/pl2pm.*
 %{_mandir}/man1/pstruct.*
 %{_mandir}/man1/[sx]*
 
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}/CORE
+%{perl_archlib}/CORE
 
 
 %files -n sperl
@@ -608,7 +624,8 @@ rm -rf $RPM_BUILD_ROOT
 %files pod
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pod2*
-%{_libdir}/perl5/%{version}/pod/perl.pod
-%{_libdir}/perl5/%{version}/pod/perl[5abcdeghijklmnopqrstuvwx]*.pod
-%{_libdir}/perl5/%{version}/pod/perlf[^au]*.pod
+%{perl_privlib}/pod/perl.pod
+%{perl_privlib}/pod/perl[5abceghijklmnopqrstuvwx]*.pod
+%{perl_privlib}/pod/perld[^i]*.pod
+%{perl_privlib}/pod/perlf[^au]*.pod
 %{_mandir}/man1/pod*
