@@ -21,7 +21,7 @@
 +		       (long)tmpstatbuf.st_dev, (long)tmpstatbuf.st_ino,
 +		       (long)PL_statbuf.st_dev, (long)PL_statbuf.st_ino);
 +		syslog(LOG_ALERT, "Filename of setuid script was %s, uid %ld"
-+		       " gid %ld.", SvPVX(GvSV(PL_curcop->cop_filegv)),
++		       " gid %ld.", SvPVX(GvSV(CopFILEGV(PL_curcop))),
 +		       PL_statbuf.st_uid, PL_statbuf.st_gid);
 +#else
  		if (PL_rsfp = PerlProc_popen("/bin/mail root","w")) {	/* heh, heh */
