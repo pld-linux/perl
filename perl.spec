@@ -58,7 +58,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.43%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.44%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -765,7 +765,7 @@ install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarc
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
-	Convert Crypt DBD Data Date Devel Device Digest Error ExtUtils \
+	Convert Crypt DBD Data Date Devel Device Digest Email Error ExtUtils \
 	File Filesys Font Games Getopt GnuPG Graph Graphics HTML HTTP I18N \
 	IO/Socket IPC Image Inline Language Lingua/{EN,Stem/Snowball} \
 	List Locale LockFile Log MIME Mail Math/BigInt Modem Module Net/SMTP \
