@@ -1,4 +1,4 @@
-%define 	__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
+%define		__find_provides	%{_builddir}/%{name}-%{version}/find-perl-provides
 %define		perlthread %{?_with_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language
 Summary(de):	Praktische Extraktions- und Berichtsprache
@@ -169,7 +169,7 @@ done
 %build
 # this is gross
 # i added more ugly stuff here
-# i know that is ugly way to set that but i dont know how do it better	
+# i know that is ugly way to set that but i dont know how do it better
 cat > config.over <<EOF
 installprefix=$RPM_BUILD_ROOT%{_prefix}
 test -d \$installprefix || mkdir -p \$installprefix
