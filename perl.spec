@@ -87,6 +87,8 @@ Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
+Requires:	perl-doc-reference
+Requires:	perldoc
 %{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
