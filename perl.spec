@@ -3,6 +3,7 @@
 # _without_tests      - do not perform "make test"
 # _without_threads    - build without support for threads
 # _without_largefiles - build without large file support
+# _without_gdbm       - build without the GDBM_File module
 #
 # TODO:
 # - Think about unicore.  If uf8*.pm, encode.pm, charnamess.pm (and
@@ -10,13 +11,10 @@
 #   be there.  But it's 5MB...
 # - Think about the package separation.  Split between perl, perl-base
 #   and perl-modules is far from obvius.
-# - find out why *.so and *.bs files for some pragmas are ,,listed twice''
-# - merge some fixes from 5.6.1 on HEAD
 # - fix "FIXME"s, review "XXX"s
 # - fix perl.prov's handling in rpm -- it should use the __perl macro
-# - include gdbm-dependent modules, they aren't distributed standalone
-#   anymore
 # - fix some duplicate files
+# - add the {O,N}DBM_File modules
 # - *TESTING*
 #
 
@@ -53,7 +51,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.23%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.30%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -64,26 +62,17 @@ Source3:	find-perl-provides.sh
 Patch0:		%{name}_580-noroot_install.patch
 Patch1:		%{name}_580-INC.patch
 Patch2:		%{name}_580-MakeMaker.patch
-# failed
-#Patch5:	%{name}-syslog.patch
-# failed
-#Patch6:	%{name}-CGI-upload-tmpdir.patch
-# what is this f* one for?!
-#Patch7:	%{name}-LD_RUN_PATH.patch
-Patch8:		%{name}_580-errno_h-parsing.patch
-Patch9:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
-# *weird*
-#Patch10:	%{name}-sitearch.patch
-Patch11:	%{name}_580-soname.patch
-# failed; is it still necessary?
-#Patch13:	%{name}-gcc3.patch
-Patch14:	%{name}_580-perluniintro.patch
-Patch15:	%{name}_580-Safe.patch
+Patch3:		%{name}_580-errno_h-parsing.patch
+Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
+Patch5:		%{name}_580-soname.patch
+Patch6:		%{name}_580-perluniintro.patch
+Patch7:		%{name}_580-Safe.patch
+Patch8:		%{name}_580-microperl_uconfig.patch
 URL:		http://www.perl.com/
-%{?!_without_largefiles:Provides:	perl(largefiles)}
 Requires:	%{name}-base = %{version}
 Requires:	%{name}-modules = %{version}
 Requires:	perldoc
+%{?!_without_gdbm:BuildRequires:	gdbm-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -268,6 +257,7 @@ Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 0.83
 Provides:	perl-File-Temp = 0.13
 Provides:	perl-Safe = 2.09
+%{?!_without_largefiles:Provides:	perl(largefiles)}
 
 %description base
 Base components, files, core modules, etc. -- a minimal usable perl
@@ -275,9 +265,21 @@ installation.  You are encouraged to install a full perl (the perl
 package) whenever possible.
 
 %description base -l pl
-Podstawowe sk³adniki, pliki, g³ówne modu³y itp. - minimalna u¿ywalna
-instalacja Perla. Zaleca siê instalacjê pe³nego Perla (pakietu perl)
-je¶li to tylko mo¿liwe.
+Podstawowe sk³adniki, pliki, g³ówne modu³y itp. - minimalna instalacja
+Perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
+(pakietu perl), je¶li to tylko mo¿liwe.
+
+%package GDBM_File
+Summary:	GDBM_File - Perl5 access to the gdbm library
+Group:		Libraries
+Requires:	%{name}-base = %{version}
+# FIXME: Set Version: 1.06 and Release: 1 instead of inheriting
+#        values from the main package.  Why this causes setting
+#        version and release macros up to the end of this spec?
+
+%description GDBM_File
+GDBM_File is a module which allows Perl programs to make use of the
+facilities provided by the GNU gdbm library.
 
 %package devel
 Summary:	Perl development files
@@ -333,7 +335,7 @@ Extraction and Report Language) i jego interpretera.
 %package modules
 Summary:	Modules from the core perl distribution
 Summary(pl):	Modu³y z podstawowej dystrybucji perla
-Group:		Development/Libraries
+Group:		Libraries
 Requires:	%{name}-base = %{version}
 Provides:	perl-Attribute-Handlers = 0.77
 Provides:	perl-CGI = 2.81
@@ -587,11 +589,12 @@ microperlu - popraw je.
 %patch0 -p1
 %patch1 -p0
 %patch2 -p0
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p0
+%patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch11 -p1
-%patch14 -p0
-%patch15 -p1
 
 install -m 0755 %{SOURCE2} $PWD/find-perl.prov
 install -m 0755 %{SOURCE3} $PWD/find-perl-provides.sh
@@ -617,8 +620,10 @@ sh Configure \
 	-Dsitelib=%{perl_sitelib}     -Dsitearch=%{perl_sitearch} \
 	-Dvendorlib=%{perl_vendorlib} -Dvendorarch=%{perl_vendorarch} \
 	-Dinstallprefix=$RPM_BUILD_ROOT%{_prefix} \
-	-Ui_dbm -Ui_gdbm -Ui_ndbm -Ui_db \
-	-Dlibswanted="dl m c crypt" \
+	-Ui_db \
+	%{?_without_gdbm:  -Ui_dbm -Ui_gdbm -Ui_ndbm} \
+	%{?!_without_gdbm: -Ui_dbm -Di_gdbm -Ui_ndbm} \
+	-Dlibswanted="dl m c crypt %{?!_without_dbm:gdbm}" \
 	-%{?_without_threads:U}%{?!_without_threads:D}usethreads \
 	-%{?_without_largefiles:U}%{?!_without_largefiles:D}uselargefiles
 
@@ -630,8 +635,29 @@ sh Configure \
 #	-Ud_longdbl
 # %endif
 
+## {Scalar,List}::Util should be in perl_archlib (it's a bit tricky and should
+## probably be done in %%prep, but then Configure would complain (->MANIFEST))
+mv ext/List/Util/lib/List/Util.pm ext/List/Util
+rm -f ext/List/Util/Makefile.PL
+cat <<EOF > ext/List/Util/Makefile.PL
+use ExtUtils::MakeMaker;
+WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm");
+EOF
+
 %{__make}
+
+## microperl
+rm -f uconfig.h
 %{__make} -f Makefile.micro \
+	archlib=%{perl_archlib} \
+	archlibexp=%{perl_archlib} \
+	privlib=%{perl_privlib} \
+	privlibexp=%{perl_privlib} \
+	archname=%{_target_platform}%{perlthread} \
+	osname=%{_host} \
+	bin=%{_bindir} \
+	scriptdir=%{_bindir} \
+	scriptdirexp=%{_bindir} \
 	OPTIMIZE="%{rpmcflags}"
 
 %{?!_without_tests:%{__make} test}
@@ -732,6 +758,18 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 
+## examples and demos
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
+mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/CGI
+mv $RPM_BUILD_ROOT%{perl_privlib}/Attribute/Handlers/demo \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Attribute-Handlers
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Attribute::Handlers::demo*
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA/test.pl
+rmdir $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA
+mv $RPM_BUILD_ROOT%{perl_privlib}/Net/demos \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Net
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -746,10 +784,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ko) %doc README.ko
 %lang(tw) %doc README.tw
 
-%{perl_vendorlib}
 %dir %{_libdir}/perl5/vendor_perl
 %dir %{_libdir}/perl5/vendor_perl/%{version}
 %{perl_vendorarch}
+%{perl_vendorlib}
 #%dir %{perl_vendorarch}/auto
 
 
@@ -862,6 +900,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so.%{version}
 
 
+%if %{?!_without_gdbm:1}0
+%files GDBM_File
+%defattr(644,root,root,755)
+%{perl_archlib}/GDBM_File.*
+%dir %{perl_archlib}/auto/GDBM_File
+%attr(755,root,root) %{perl_archlib}/auto/GDBM_File/*.so
+%{perl_archlib}/auto/GDBM_File/*.bs
+%{_mandir}/man3/GDBM_File.*
+%endif
+
+
 %files devel
 %defattr(644,root,root,755)
 %{_mandir}/man1/perldebguts.*
@@ -934,10 +983,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files modules
 %defattr(644,root,root,755)
+%{_examplesdir}/%{name}-modules-%{version}
+
 # XXX: should it really be in this package?
 %{perl_privlib}/unicore
 
-# *.ph files (could be made a separate package, but an autohelper's support is needed)
+## *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
 %{perl_archlib}/asm
 %{perl_archlib}/bits
@@ -960,7 +1011,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Digest/MD5/*.bs
 %{_mandir}/man3/Digest*
 
-## FIXME: *.h to devel(?), check out the use for *.e2x files
+# FIXME: *.h to devel(?), check out the use for *.e2x files
 %{perl_privlib}/Encode
 %{perl_archlib}/Encode*
 %dir %{perl_archlib}/auto/Encode
@@ -1002,8 +1053,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/IPC/*/*.bs
 %{_mandir}/man3/IPC::[MS]*
 
-# FIXME: List/Util.pm should be archlib; patch needed
-%{perl_privlib}/List
+%{perl_archlib}/List
 %dir %{perl_archlib}/auto/List
 %dir %{perl_archlib}/auto/List/*/
 %attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
@@ -1063,15 +1113,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %{perl_privlib}/AnyDBM*
 %{_mandir}/man3/AnyDBM*
-# FIXME: move */demo to %_exapmlesdir or /dev/null
 %{perl_privlib}/Attribute
 %{_mandir}/man3/Attribute*
 %{perl_privlib}/Benchmark*
 %{_mandir}/man3/Benchmark*
-# FIXME: move */eg to %_examplesdir or /dev/null
 %{perl_privlib}/CGI*
 %{_mandir}/man3/CGI*
-# FIXME: move test.pl to %_examplesdir or /dev/null
 %{perl_privlib}/Class
 %{_mandir}/man3/Class::*
 %{perl_privlib}/DirHandle*
@@ -1095,7 +1142,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Memoize*
 %{perl_privlib}/NEXT*
 %{_mandir}/man3/NEXT*
-# FIXME: README and Changes files, */demos to %_examplesdir or /dev/null
+# FIXME: README and Changes files
 %{perl_privlib}/Net
 %{_mandir}/man3/Net::*
 %{perl_privlib}/PerlIO
