@@ -204,7 +204,7 @@ Practical Extraction and Report Language (SUID root binary).
 %description -n sperl -l pl
 Practical Extraction and Report Language (binaria SUID root).
 
-%description suid -l ru
+%description -n sperl -l ru
 Perl - это интерпретируемый язык программирования, уходящий корнями в
 C, sed, awk и языки командных оболочек (shell). Perl хорош для работы
 с процессами и файлами, а особенно хорош для задач обработки текстов.
