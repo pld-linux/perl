@@ -70,7 +70,9 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
+# Source0-md5: d9bdb180620306023fd35901a2878b62
 Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5: de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
 Source3:	find-perl-provides.sh
 Patch0:		%{name}_580-noroot_install.patch
