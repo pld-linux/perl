@@ -9,12 +9,12 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	17
+Release:	18
+Epoch:		1
 License:	GPL
 Group:		Utilities/Text
 Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
-Epoch:		1
 Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Source1:	%{name}-db3.tar.gz
 Patch0:		perl-noroot_install.patch
@@ -23,6 +23,8 @@ Patch2:		perl-File-Spec-0.7.patch
 Patch3:		perl-CPAN-1.50.patch
 Patch4:		perl-find-provides.patch
 Patch5:		perl-syslog.patch
+BuildRequires:	db3-devel
+BuildRequires:	gdbm-devel
 URL:		http://www.perl.org/
 Requires:	csh
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -124,7 +126,7 @@ sh Configure \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
-	-Doptimize="$RPM_OPT_FLAGS" \
+	-Doptimize="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" \
 	-Duseshrplib \
 	-Dusethreads \
 	-Dd_dosuid \
@@ -132,10 +134,6 @@ sh Configure \
 	-Ud_setresgid 
 
 %{__make}
-
-# Strip binaries (done now rather than at install)
-
-strip {perl,suidperl,x2p/a2p}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -189,8 +187,7 @@ mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
 rm -f Config.pm.old )
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	README Change*
+gzip -9nf README Change*
 
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so -exec strip --strip-unneeded {} \;
 
