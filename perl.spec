@@ -23,6 +23,10 @@ Patch4:		perl-CPAN-1.54.patch
 Patch5:		perl-find-provides.patch
 URL:		http://www.perl.org/
 #Requires:	csh
+Obsoletes:	perl-ANSIColor
+Obsoletes:	perl-Devel-Peek
+Obsoletes:	perl-DProf
+Obsoletes:	perl-PodParser
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
