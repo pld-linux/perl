@@ -18,7 +18,7 @@
      NAME	=> 'NDBM_File',
 -    LIBS => ["-L/usr/local/lib -lndbm", "-ldbm -lucb"],
 -    CCFLAGS => '-I/usr/include/db1 -Dbool=char -DHAS_BOOL',
-+    LIBS => ["-L/usr/local/lib -ldb4.1"],
++    LIBS => ["-L/usr/local/lib -ldb-4.1"],
 +    CCFLAGS => '-Dbool=char -DHAS_BOOL',
      MAN3PODS 	=> {}, 	# Pods will be built by installman.
      XSPROTOARG => '-noprototypes', 		# XXX remove later?

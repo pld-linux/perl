@@ -45,6 +45,7 @@ Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db4.patch
 Patch13:	%{name}-gcc3.patch
+Patch14:	%{name}-link.patch
 URL:		http://www.perl.org/
 BuildRequires:	db-devel > 4.1
 BuildRequires:	gdbm-devel
@@ -169,8 +170,6 @@ aplicações mais comuns do Perl são utilitários de administração de
 sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
 são escritos em Perl. Você precisa do pacote perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
-
-%description -l no
 
 %description -l pt_BR
 Perl é uma linguagem interpretada, otimizada para tratar arquivos
@@ -329,8 +328,8 @@ Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - modu³y
 Summary(pt_BR):	Módulos do perl básicos
 Group:		Applications/Text
+Requires:	%{name} = %{version}
 Requires:	perl-Test-Harness
-Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
 Provides:	perl-DProf
 Provides:	perl-Devel-Peek
@@ -358,7 +357,7 @@ programas/ scripts.
 Summary:	Perl POD documentation
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Applications/Text
-Prereq:		%{name} = %{version}
+Requires:	%{name} = %{version}
 
 %description pod
 Practical Extraction and Report Language - POD docs.
@@ -383,6 +382,7 @@ POD.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
@@ -767,9 +767,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/perl[ae-z]*.1*
-%{_mandir}/man1/perlb[^u]*.1*
-%{_mandir}/man1/perlc[^c]*.1*
-%{_mandir}/man1/perld[^o]*.1*
+%{_mandir}/man1/perlb[!u]*.1*
+%{_mandir}/man1/perlc[!c]*.1*
+%{_mandir}/man1/perld[!o]*.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
 %lang(fi) %{_mandir}/fi/man1/perl*
@@ -1026,5 +1026,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pod
 %defattr(644,root,root,755)
-%{_libdir}/perl5/%{version}/pod/perl[^d]*
-%{_libdir}/perl5/%{version}/pod/perld[^i]*
+%{_libdir}/perl5/%{version}/pod/perl[!d]*
+%{_libdir}/perl5/%{version}/pod/perld[!i]*
