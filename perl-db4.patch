@@ -23,3 +23,22 @@
      MAN3PODS 	=> {}, 	# Pods will be built by installman.
      XSPROTOARG => '-noprototypes', 		# XXX remove later?
      VERSION_FROM => 'NDBM_File.pm',
+--- perl-5.6.1/ext/DB_File/DB_File.xs~	Fri Feb 23 02:57:54 2001
++++ perl-5.6.1/ext/DB_File/DB_File.xs	Thu Oct 17 18:55:01 2002
+@@ -1318,6 +1318,7 @@
+     {
+         int	 	Flags = 0 ;
+         int		status ;
++		DB_TXN * txnid = NULL;
+ 
+         /* Map 1.x flags to 3.x flags */
+         if ((flags & O_CREAT) == O_CREAT)
+@@ -1335,7 +1336,7 @@
+             Flags |= DB_TRUNCATE ;
+ #endif
+ 
+-        status = (RETVAL->dbp->open)(RETVAL->dbp, name, NULL, RETVAL->type, 
++        status = (RETVAL->dbp->open)(RETVAL->dbp, txnid, name, NULL, RETVAL->type, 
+ 	    			Flags, mode) ; 
+ 	/* printf("open returned %d %s\n", status, db_strerror(status)) ; */
+ 
