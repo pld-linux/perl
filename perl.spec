@@ -70,9 +70,9 @@ URL:		http://www.perl.com/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
 %{?with_gdbm:BuildRequires:	gdbm-devel}
-Requires:	%{name}-base = %{epoch}:%{version}
-Requires:	%{name}-modules = %{epoch}:%{version}
-Requires:	perl-doc-reference
+Requires:	%{name}-base = %{epoch}:%{version}-%{release}
+Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
+Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
 Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -288,7 +288,7 @@ perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
 Summary:	GDBM_File - Perl5 access to the gdbm library
 Summary(pl):	GDBM_File - dostêp do biblioteki gdbm w Perlu
 Group:		Libraries
-Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 # FIXME: Set Version: 1.06 and Release: 1 instead of inheriting
 #        values from the main package.  Why this causes setting
 #        version and release macros up to the end of this spec?
@@ -308,7 +308,7 @@ Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o perl
 Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 Requires:	%{name}-modules = %{epoch}:%{version}
-Requires:	%{name}-tools-pod
+Requires:	%{name}-tools-pod = %{epoch}:%{version}
 Provides:	perl-CPAN = 1.76_01
 Provides:	perl-Devel-DProf = 20030813.00
 Provides:	perl-Devel-PPPort = 2.011
@@ -356,7 +356,7 @@ Extraction and Report Language) i jego interpretera.
 Summary:	Modules from the core perl distribution
 Summary(pl):	Modu³y z podstawowej dystrybucji perla
 Group:		Libraries
-Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Provides:	perl-Attribute-Handlers = 0.78_01
 Provides:	perl-CGI = 3.04
 Provides:	perl-Class-ISA = 0.32
@@ -409,10 +409,10 @@ dystrybucji.
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
-Provides:	perldoc = 3.12@%{version}
-Requires:	%{name}-modules
-Requires:	%{name}-tools-pod
 Group:		Development/Tools
+Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
+Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
+Provides:	perldoc = 3.12@%{version}
 
 %description perldoc
 perldoc looks up a piece of documentation in .pod format that is
@@ -441,7 +441,7 @@ Summary(sv):	sperl, att användas med setuid perlskript
 Summary(uk):	SUID-×ÅÒÓ¦Ñ ÍÏ×É Perl
 Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid perl ½Å±¾Ò»ÆðÊ¹ÓÃ
 Group:		Development/Languages/Perl
-Requires:	%{name}-base = %{epoch}:%{version}
+Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
@@ -496,7 +496,7 @@ setuid perl ½Å±¾¡£
 Summary:	Various tools from the core perl distribution
 Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji perla
 Group:		Applications
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description tools
 Various tools from the core perl distribution:
@@ -520,8 +520,8 @@ Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 Summary:	Developer's tools from the core perl distribution
 Summary(pl):	Narzêdzia z podstawowej dystrybucji perla, przeznaczone dla programistów
 Group:		Development/Tools
-Requires:	%{name}-base = %{epoch}:%{version}
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-base = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description tools-devel
 Various tools from the core perl distribution:
@@ -557,7 +557,7 @@ Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 Summary:	Tools for manipulating files in the POD format
 Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
 Group:		Applications
-Requires:	%{name}-modules = %{epoch}:%{version}
+Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 
 %description tools-pod
 Tools for manipulating files in the POD (Plain Old Documentation)
