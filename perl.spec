@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	64
+Release:	65
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -433,13 +433,8 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid
 
-mv -f Makefile Makefile.bak
-sed -e 's#^CCDLFLAGS = -rdynamic -Wl,-rpath,/usr/lib/perl5/.*#CCDLFLAGS = -rdynamic#' \
-	Makefile.bak > Makefile
+%{__make} CCDLFLAGS=-rdynamic
 
-%{__make}
-
-echo -e ",s/^man1ext='1'/man1ext='1p'/\n,s/^man3ext='3perl'/man3ext='3pm'/\nw" | ed lib/Config.pm
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -532,6 +527,10 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # why is it there...?
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE/sperl.o
+
+# documentation suffixes: .1/.3perl for core modules and .1p/.3pm for built from CPAN
+echo -e ",s/^man1ext='1'/man1ext='1p'/\n,s/^man3ext='3perl'/man3ext='3pm'/\nw" | ed \
+	$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -950,6 +949,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
+%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
+%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
+%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tolower.al
@@ -980,6 +982,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
+%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ops.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
