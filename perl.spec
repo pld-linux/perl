@@ -24,9 +24,9 @@
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
 %define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
-%define		perl_sitelib	%{_usr}/local/share/perl5/
+%define		perl_sitelib	%{_usr}/local/share/perl5
 %define		perl_sitearch	%{_usr}/local/lib/perl5/%{version}/%{_target_platform}%{perlthread}
-%define		perl_vendorlib	%{_datadir}/perl5/vendor_perl/
+%define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{version}/%{_target_platform}%{perlthread}
 
 Summary:	Practical Extraction and Report Language (Perl)
@@ -690,9 +690,13 @@ rm -rf $RPM_BUILD_ROOT
 %lang(tw) %doc README.tw
 
 %dir %{perl_sitelib}
+%dir %{_usr}/local/lib/perl5
+%dir %{_usr}/local/lib/perl5/%{version}
 %dir %{perl_sitearch}
 %dir %{perl_sitearch}/auto
 %dir %{perl_vendorlib}
+%dir %{_libdir}/perl5/vendor_perl
+%dir %{_libdir}/perl5/vendor_perl/%{version}
 %dir %{perl_vendorarch}
 %dir %{perl_vendorarch}/auto
 
@@ -705,7 +709,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fi) %{_mandir}/fi/man1/perl*
 %lang(pl) %{_mandir}/pl/man1/perl*
 
+%dir %{_datadir}/perl5
 %dir %{perl_privlib}
+%dir %{_libdir}/perl5
+%dir %{_libdir}/perl5/%{version}
 %dir %{perl_archlib}
 %dir %{perl_archlib}/auto
 
