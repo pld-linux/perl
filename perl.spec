@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	66
+Release:	67
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -493,10 +493,10 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 (cd $RPM_BUILD_ROOT%{_libdir}/perl5/site_perl
 install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	Audio Authen B Bundle Business CGI Cache Chart Class Config \
-	Convert Crypt DBD Data Date Devel Digest Error ExtUtils File \
+	Convert Crypt DBD Data Date Devel Device Digest Error ExtUtils File \
 	Filesys Font Games Getopt GnuPG Graph HTML HTTP I18N IO/Socket IPC \
-	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
-	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
+	Image Inline Language Lingua/EN List Locale LockFile Log MIME Mail \
+	Math Module Net/SMTP NetServer Netscape News Number OLE Parse Pod \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
 	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
@@ -578,6 +578,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Data
 %{_libdir}/perl5/site_perl/Date
 %{_libdir}/perl5/site_perl/Devel
+%{_libdir}/perl5/site_perl/Device
 %{_libdir}/perl5/site_perl/Digest
 %{_libdir}/perl5/site_perl/Error
 %{_libdir}/perl5/site_perl/ExtUtils
@@ -845,6 +846,7 @@ rm -rf $RPM_BUILD_ROOT
 %files modules
 %defattr(644,root,root,755)
 %{_libdir}/perl5/site_perl/B
+%{_libdir}/perl5/site_perl/LockFile
 %{_libdir}/perl5/site_perl/NetServer
 %{_libdir}/perl5/site_perl/Netscape
 %{_libdir}/perl5/site_perl/SOAP
