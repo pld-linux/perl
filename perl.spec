@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	43
+Release:	44
 Epoch:		1
 License:	GPL or Artistic
 Group:		Applications/Text
@@ -499,15 +499,15 @@ install -d Apache Archive Authen B Bundle Business CGI Class Convert Crypt \
 	auto/{Net,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
-install -d Authen BSD Bit Compress Crypt Data Devel Digest File IPC \
-	Locale Math Net String Term Text Unicode XML \
-	auto/{Authen,BSD,Bit,Compress,Crypt,Data,Devel,Digest,File,IPC} \
-	auto/{Locale,Math,Net,String,Term,Text,Unicode,XML}
+install -d Authen BSD Bit Compress Crypt/OpenSSL Data Devel Digest File \
+	IPC Locale Math Net String Term Text Unicode XML \
+	auto/{Authen,BSD,Bit,Compress,Crypt/OpenSSL,Data,Devel,Digest} \
+	auto/{File,IPC,Locale,Math,Net,String,Term,Text,Unicode,XML}
 )
 
 # These File::Spec submodules are for non-Unix systems
-rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EFMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Functions,Mac,OS2,VMS,Win32}.3pm*
+rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 #
 # Newer Test::Harness is available as a separate package
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
@@ -653,6 +653,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/File/Find.pm
 %{_libdir}/perl5/%{version}/File/Path.pm
 %{_libdir}/perl5/%{version}/File/Spec.pm
+%{_libdir}/perl5/%{version}/File/Spec/Functions.pm
 %{_libdir}/perl5/%{version}/File/stat.pm
 %dir %{_libdir}/perl5/%{version}/File/Spec
 %{_libdir}/perl5/%{version}/File/Spec/Unix.pm
