@@ -2,8 +2,12 @@
 %define		perlthread %{?_with_perl_threads:-thread-multi}
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(de):	Praktische Extraktions- und Berichtsprache
+Summary(es):	Lenguaje prАctica de extracciСn y listado
 Summary(pl):	Interpreter jЙzyka Perl (Practical Extraction and Report Language)
+Summary(pt_BR):	Linguagem prАtica de extraГЦo e relatСrio
+Summary(ru):	Practical Extraction and Report Language
 Summary(tr):	Kabuk yorumlama dili
+Summary(uk):	Practical Extraction and Report Language
 Name:		perl
 Version:	5.6.1
 Release:	17
@@ -36,7 +40,7 @@ Patch5:		%{name}-syslog.patch
 Patch6:		%{name}-CGI-upload-tmpdir.patch
 Patch7:		%{name}-LD_RUN_PATH.patch
 Patch8:		%{name}-errno_h-parsing.patch
-Patch9:		%{name}-use-LD_PRELOAD-for-libperl.so.patch
+Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
 Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
@@ -66,6 +70,14 @@ Systemverwaltungsaufgaben. Sie ist eher praktisch (einfache
 Anwendung,effizient, vollstДndig) als schЖn (winzig, elegant,
 minimal).
 
+%description -l es
+Perl es un lenguaje interpretado, optimizado para manejar archivos
+texto, extrayendo informaciСn de estos archivos y mostrando listados
+basados en esta informaciСn. TambiИn es un buen lenguaje para varias
+tareas de administraciСn de sistema. El lenguaje busca ser mАs
+prАctico (fАcil de usar, eficiente, completo) que bonito (minЗsculo,
+elegante, mМnimo).
+
 %description -l fr
 Perl est un langage interprИtИ, optimisИ pour filtrer des fichiers
 texte, extraire des informations de ces fichiers, et imprimer des
@@ -82,6 +94,28 @@ zwi╠zanych z nadzorem systemu. JЙzyk ten jest w zamierzeniu bardziej
 praktyczny (Ёatwy w u©yciu, wydajny, kompletny) ni© piЙkny (skromny,
 elegancki, minimalny).
 
+%description -l pt_BR
+Perl И uma linguagem interpretada, otimizada para tratar arquivos
+texto, extraindo informaГЦo desses arquivos e mostrando relatСrios
+baseados nessa informaГЦo. TambИm И uma boa linguagem para vАrias
+tarefas de administraГЦo de sistema. A linguagem procura ser mais
+prАtica (fАcil de usar, eficiente, completa) do que bonita (minЗscula,
+elegante, mМnima).
+
+%description -l ru
+Perl - это интерпретируемый язык программирования, уходящий корнями в
+C, sed, awk и языки командных оболочек (shell). Perl хорош для работы
+с процессами и файлами, а особенно хорош для задач обработки текстов.
+Особенности Perl - практичность и эффективность. Хотя он и
+используется для решения самых разных задач, наиболее распространенные
+применения (и то, в чем он силен) это, вероятно, утилиты системного
+администрирования и web-программирование. Большая часть CGI скриптов
+написана на Perl.
+
+Поскольку утилиты на Perl необходимые для системы или входящие в
+состав других пакетов встречаются очень часто, лучше всего установить
+этот пакет.
+
 %description -l tr
 Perl, metin dosyalarЩnЩ taramak, bu metin dosyalarЩndan bilgi ГЩkarmak
 ve bu bilgiye dayalЩ raporlar hazЩrlamak icin geliЧtirilmiЧ bir
@@ -90,9 +124,24 @@ yararlЩ yetenekleri vardЩr. Perl, gЭzel (ufak, zarif, minimum)
 olmaktan Гok, pratik olmaya yЖnelik (kullanЩmЩ kolay, verimli,
 eksiksiz) olarak tasarlanmЩЧtЩr.
 
+%description -l uk
+Perl - це ╕нтерпретована мова програмування, що запозичу╓ ╕де╖ в C,
+sed, awk та мовах командних оболонок (shell). Perl добре п╕дходить для
+роботи з процесами та файлами, а найкраще - для обробки текст╕в.
+Особливост╕ Perl - практичн╕сть та ефективн╕сть. Хоча сфера його
+використання дуже широка, найб╕льш поширене його застосування (та
+найсильн╕ша сторона) це, ╕мов╕рно, утил╕ти системного адм╕н╕стрування
+та web-програмування. Б╕льша частина CGI скрипт╕в написана на Perl.
+
+Оск╕льки утил╕ти на Perl необх╕дн╕ для системи чи т╕, як╕ входять до
+складу ╕нших пакет╕в зустр╕чаються досить часто, варто цей пакет
+встановити.
+
 %package devel
 Summary:	Perl development files
-Summary(pl):	Pliki deweloperskie perla
+Summary(es):	Development and include files for perl
+Summary(pl):	Pliki potrzebne przy tworzeniu wЁasnych aplikacji w perlu
+Summary(pt_BR):	Arquivos de desenvolvimento e cabeГalhos para o perl
 Group:		Development/Libraries
 Group(cs):	VЩvojovИ prostЬedky/Knihovny
 Group(da):	Udvikling/Biblioteker
@@ -117,12 +166,20 @@ Obsoletes:	perl-lib-devel
 %description devel
 Files for developing applications which embed a Perl interpreter.
 
+%description devel -l es
+Development and include files for perl.
+
 %description devel -l pl
-Pliki do tworzenia aplikacji opartych na perlu.
+Pliki potrzebne przy tworzeniu wЁasnych aplikacji w perlu.
+
+%description devel -l pt_BR
+Arquivos de desenvolvimento e cabeГalhos para o perl.
 
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
+Summary(ru):	SUID версия языка Perl
 Summary(pl):	Practical Extraction and Report Language (binaria SUID root)
+Summary(uk):	SUID-верс╕я мови Perl
 Group:		Applications/Text
 Group(cs):	Aplikace/Text
 Group(da):	Programmer/Tekst
@@ -147,9 +204,28 @@ Practical Extraction and Report Language (SUID root binary).
 %description -n sperl -l pl
 Practical Extraction and Report Language (binaria SUID root).
 
+%description suid -l ru
+Perl - это интерпретируемый язык программирования, уходящий корнями в
+C, sed, awk и языки командных оболочек (shell). Perl хорош для работы
+с процессами и файлами, а особенно хорош для задач обработки текстов.
+Особенности Perl - практичность и эффективность. Хотя он и
+используется для решения самых разных задач, наиболее распространенные
+применения (и то, в чем он силен) это, вероятно, утилиты системного
+администрирования и web-программирование. Большая часть CGI скриптов
+написана на Perl.
+
+Suid perl испльзуется для того, чтобы дать возможность создавать
+скрипты с утановленным битом SUID. Хотя в него встроено достаточно
+много проверок, призваных обеспечить безопасность его использования
+suid perl все равно представляет собой значительную потенциальную
+опасность. Установливайте этот пакет только в том случае, когда вы
+уверены, что он вам действительно необходим.
+
 %package modules
 Summary:	Practical Extraction and Report Language - modules
+Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - moduЁy
+Summary(pt_BR):	MСdulos do perl bАsicos
 Group:		Applications/Text
 Group(cs):	Aplikace/Text
 Group(da):	Programmer/Tekst
@@ -179,8 +255,16 @@ Obsoletes:	perl-PodParser
 %description modules
 Practical Extraction and Report Language - modules.
 
+%description modules -l es
+This package contains standard perl modules needed by some
+application/scripts.
+
 %description modules -l pl
 Practical Extraction and Report Language - moduЁy.
+
+%description modules -l pt_BR
+Este pacote contИm mСdulos perl bАsicos necessАrios por alguns
+programas/ scripts.
 
 %package pod
 Summary:	Perl POD documentation
