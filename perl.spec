@@ -507,14 +507,6 @@ Tools for manipulating files in the POD (Plain Old Documentation) format:
  podchecker - check the syntax of POD format documentation files
  podselect  - print selected sections of pod documentation on standard output
 
-%package -n miniperl
-Summary:	miniperl - a minimal perl
-Group:		Development/Languages/Perl
-Requires:	%{name}-base = %{version}
-
-%description -n miniperl
-miniperl
-
 %package -n microperl
 Summary:	A really minimal perl, even more minimal than miniperl
 # XXX: is there a more appropiate group?
@@ -690,6 +682,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
+%lang(cn) %doc README.cn
+%lang(jp) %doc README.jp
+%lang(ko) %doc README.ko
+%lang(tw) %doc README.tw
 
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
@@ -1142,10 +1138,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pod*
 %{_mandir}/man1/pod*
-
-%files -n miniperl
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/miniperl
 
 %files -n microperl
 %defattr(644,root,root,755)
