@@ -587,6 +587,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
 ## We already have these *.pod files as man pages
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
 
@@ -636,10 +637,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/libnetcfg.*
 %attr(755,root,root) %{_bindir}/perlbug
 %{_mandir}/man1/perlbug.*
-%attr(755,root,root) %{_bindir}/piconv
-%{_mandir}/man1/piconv.*
-%attr(755,root,root) %{_bindir}/psed
-%{_mandir}/man1/psed.*
 %attr(755,root,root) %{_bindir}/perldoc
 %{perl_privlib}/pod/perldiag.pod
 %{perl_privlib}/pod/perlfaq*.pod
@@ -648,57 +645,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlfaq*.*
 %{_mandir}/man1/perlfunc.*
 
-%dir %{perl_sitelib}
-%dir %{perl_sitearch}
-%dir %{perl_vendorlib}
-%dir %{perl_vendorarch}
-%dir %{perl_vendorarch}/auto
-
-# FIXME: should it really be in the main package?
-%{perl_privlib}/unicore
-
-%{perl_privlib}/PerlIO
-%{_mandir}/man3/PerlIO::via::*
-
-# *.ph files (could be made a separate package, but an auto*helper's support is needed)
-%{perl_archlib}/*.ph
-%{perl_archlib}/bits
-%{perl_archlib}/gnu
-%{perl_archlib}/linux
-%{perl_archlib}/sys
-
-%{perl_archlib}/Data
-%dir %{perl_archlib}/auto/Data
-%dir %{perl_archlib}/auto/Data/Dumper
-%attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
-%{perl_archlib}/auto/Data/Dumper/*.bs
-%{_mandir}/man3/Data*
-
-%{perl_privlib}/Digest.pm
-%{perl_archlib}/Digest
-%dir %{perl_archlib}/auto/Digest
-%dir %{perl_archlib}/auto/Digest/MD5
-%attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/*.so
-%{perl_archlib}/auto/Digest/MD5/*.bs
-%{_mandir}/man3/Digest*
-
-## shouldn't this be in perl-base?
-%{perl_archlib}/Encode*
-%dir %{perl_archlib}/auto/Encode
-%dir %{perl_archlib}/auto/Encode/*/
-%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
-%{perl_archlib}/auto/Encode/*/*.bs
-%{_mandir}/man3/Encode*
-
-# FIXME: README and Changes files
-%{perl_archlib}/Filter
-%dir %{perl_archlib}/auto/Filter
-%dir %{perl_archlib}/auto/Filter/Util
-%dir %{perl_archlib}/auto/Filter/Util/Call
-%attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
-%{perl_archlib}/auto/Filter/Util/Call/*.bs
-%{_mandir}/man3/Filter*
-
+%{perl_sitelib}
+%{perl_vendorlib}
 
 
 %files base
@@ -804,8 +752,11 @@ rm -rf $RPM_BUILD_ROOT
 
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
+%{_mandir}/man3/ExtUtils*
 %{perl_privlib}/CPAN*
+%{_mandir}/man3/CPAN*
 
+%{perl_privlib}/B
 %{perl_archlib}/B
 %{perl_archlib}/B.pm
 %dir %{perl_archlib}/auto/B
@@ -816,6 +767,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/B/C/*.bs
 %{_mandir}/man3/B[.:]*
 
+%{perl_privlib}/Devel
 %{perl_archlib}/Devel
 %dir %{perl_archlib}/auto/Devel
 %dir %{perl_archlib}/auto/Devel/*/
@@ -841,19 +793,135 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc-reference
 %defattr(644,root,root,755)
-%{_mandir}/man1/perl[5deghilmnoprstuvwx]*
+%{_mandir}/man1/perl[5adeghilmnoprstuvwx]*
 %{_mandir}/man1/perlbo*
 %{_mandir}/man1/perlcall.*
 %{_mandir}/man1/perlclib.*
 %{_mandir}/man1/perlcompile.*
-%{_mandir}/man1/perldata.*
 %{_mandir}/man1/perlf[iou]*
 %lang(cn) %{_mandir}/man1/perlcn.*
 %lang(jp) %{_mandir}/man1/perljp.*
 %lang(ko) %{_mandir}/man1/perlko.*
 
 
+%files modules
+%defattr(644,root,root,755)
+# XXX: should it really be in this package?
+%{perl_privlib}/unicore
+
+%{perl_privlib}/PerlIO
+%{_mandir}/man3/PerlIO::via::*
+
+# *.ph files (could be made a separate package, but an autohelper's support is needed)
+%{perl_archlib}/*.ph
+%{perl_archlib}/bits
+%{perl_archlib}/gnu
+%{perl_archlib}/linux
+%{perl_archlib}/sys
+
+%{perl_archlib}/Data
+%dir %{perl_archlib}/auto/Data
+%dir %{perl_archlib}/auto/Data/Dumper
+%attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
+%{perl_archlib}/auto/Data/Dumper/*.bs
+%{_mandir}/man3/Data*
+
+%{perl_privlib}/Digest.pm
+%{perl_archlib}/Digest
+%dir %{perl_archlib}/auto/Digest
+%dir %{perl_archlib}/auto/Digest/MD5
+%attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/*.so
+%{perl_archlib}/auto/Digest/MD5/*.bs
+%{_mandir}/man3/Digest*
+
+## shouldn't this be in perl-base?
+%{perl_archlib}/Encode*
+%dir %{perl_archlib}/auto/Encode
+%dir %{perl_archlib}/auto/Encode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
+%{perl_archlib}/auto/Encode/*/*.bs
+%{_mandir}/man3/Encode*
+
+# FIXME: README and Changes files
+%{perl_archlib}/Filter
+%dir %{perl_archlib}/auto/Filter
+%dir %{perl_archlib}/auto/Filter/Util
+%dir %{perl_archlib}/auto/Filter/Util/Call
+%attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
+%{perl_archlib}/auto/Filter/Util/Call/*.bs
+%{_mandir}/man3/Filter*
+
+%{perl_privlib}/AnyDBM*
+%{_mandir}/man3/AnyDBM*
+# FIXME: move */demo to %_exapmlesdir or remove it at all
+%{perl_privlib}/Attribute
+%{_mandir}/man3/Attribute*
+%{perl_privlib}/Benchmark*
+%{_mandir}/man3/Benchmark*
+# FIXME: move */eg to %_examplesdir or remove it at all
+%{perl_privlib}/CGI*
+%{_mandir}/man3/CGI*
+%{perl_privlib}/Class
+%{_mandir}/man3/Class*
+%{perl_privlib}/DirHandle*
+%{_mandir}/man3/DirHandle*
+%{perl_privlib}/Dumpvalue*
+%{_mandir}/man3/Dumpvalue*
+%{perl_privlib}/Fatal*
+%{_mandir}/man3/Fatal*
+%{perl_privlib}/FindBin*
+%{_mandir}/man3/FindBin*
+%{perl_privlib}/Hash*
+%{_mandir}/man3/Hash*
+%{perl_privlib}/I18N
+%{_mandir}/man3/I18N*
+
+
 %files -n sperl
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{version}
 %attr(4755,root,root) %{_bindir}/suidperl
+
+
+%files tools
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/a2p
+%{_mandir}/man1/a2p.*
+%attr(755,root,root) %{_bindir}/find2perl
+%{_mandir}/man1/find2perl.*
+%attr(755,root,root) %{_bindir}/piconv
+%{_mandir}/man1/piconv.*
+%attr(755,root,root) %{_bindir}/psed
+%attr(755,root,root) %{_bindir}/s2p
+%{_mandir}/man1/psed.*
+%{_mandir}/man1/s2p.*
+
+
+%files tools-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/c2ph
+%attr(755,root,root) %{_bindir}/pstruct
+%{_mandir}/man1/c2ph.*
+%{_mandir}/man1/pstruct.*
+%attr(755,root,root) %{_bindir}/dprofpp
+%{_mandir}/man1/dprofpp.*
+%attr(755,root,root) %{_bindir}/enc2xs
+%{_mandir}/man1/enc2xs.*
+%attr(755,root,root) %{_bindir}/h2ph
+%{_mandir}/man1/h2ph.*
+%attr(755,root,root) %{_bindir}/h2xs
+%{_mandir}/man1/h2xs.*
+%attr(755,root,root) %{_bindir}/perlcc
+%{_mandir}/man1/perlcc.*
+%attr(755,root,root) %{_bindir}/perlivp
+%{_mandir}/man1/perlivp.*
+%attr(755,root,root) %{_bindir}/pl2pm
+%{_mandir}/man1/pl2pm.*
+%attr(755,root,root) %{_bindir}/splain
+%{_mandir}/man1/splain.*
+
+
+%files tools-pod
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/pod*
+%{_mandir}/man1/pod*
