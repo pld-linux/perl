@@ -788,11 +788,6 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
 # mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
-echo ".so perlcn.1" > $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1/perl.1
-echo ".so perljp.1" > $RPM_BUILD_ROOT%{_mandir}/ja/man1/perl.1
-echo ".so perlko.1" > $RPM_BUILD_ROOT%{_mandir}/ko/man1/perl.1
-# echo ".so perltw.1" > $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1/perl.1
-
 ## examples and demos
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
 mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
