@@ -328,6 +328,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/vars.pm
 %{_libdir}/perl5/%{version}/warnings.pm
 %{_libdir}/perl5/%{version}/warnings/register.pm
+%dir %{_libdir}/perl5/%{version}/pod
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/DynaLoader.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/IO.pm
@@ -515,4 +516,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pod
 %defattr(644,root,root,755)
-%{_libdir}/perl5/%{version}/pod
+%{_libdir}/perl5/%{version}/pod/perl[^d]*
+%{_libdir}/perl5/%{version}/pod/perld[^i]*
