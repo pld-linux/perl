@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.6.1
-Release:	55
+Release:	55.1
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -499,8 +499,8 @@ install -d AI Apache Archive Array Astro Audio Authen B Bundle Business \
 	CGI Class Config Convert Crypt DBD Data Date Devel Digest ExtUtils File \
 	Filesys Font Games Getopt Graph HTML HTTP I18N IO/Socket IPC \
 	Image Inline Language Lingua/EN List Locale Log MIME Mail Math \
-	Module Net/SMTP NetServer Netscape News Number Parse Pod PostScript \
-	Proc RADIUS RPC Regexp SOAP/Transport Set Sort Speech Sub Statistics \
+	Module Net/SMTP NetServer Netscape News Number OLE Parse Pod PostScript \
+	Proc RADIUS RPC Regexp SOAP/Transport Set Sort Speech Spreadsheet Sub Statistics \
 	String Sys TeX Test Text/Query Tie Time Tree WWW XML \
 	auto/{AI,Array,Crypt,Mail,Net,Statistics,Text,WWW}
 
@@ -595,6 +595,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/News
 %{_libdir}/perl5/site_perl/Net
 %{_libdir}/perl5/site_perl/Number
+%{_libdir}/perl5/site_perl/OLE
 %{_libdir}/perl5/site_perl/Parse
 %{_libdir}/perl5/site_perl/Pod
 %{_libdir}/perl5/site_perl/PostScript
@@ -605,6 +606,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/site_perl/Set
 %{_libdir}/perl5/site_perl/Sort
 %{_libdir}/perl5/site_perl/Speech
+%{_libdir}/perl5/site_perl/Spreadsheet
 %{_libdir}/perl5/site_perl/Statistics
 %{_libdir}/perl5/site_perl/String
 %{_libdir}/perl5/site_perl/Sub
