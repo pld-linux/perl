@@ -13,6 +13,7 @@ Copyright:   GPL
 Group:       Utilities/Text
 Source:      ftp://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch:       perl-noroot_install.patch
+URL:         http://www.perl.org/
 Requires:    csh
 Buildroot:   /tmp/%{name}-%{version}-root
 
@@ -117,6 +118,8 @@ rm -f Config.pm.old
 
 mv $RPM_BUILD_ROOT/usr/lib/perl5/5.00502/man/man3 $RPM_BUILD_ROOT/usr/man
 
+find $RPM_BUILD_ROOT/usr/lib/perl5 -name \*.so -exec strip --strip-debug {} \;
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -154,6 +157,8 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Oct 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [5.005_02-2]
 - added using $RPM_OPT_FLAGS during compile,
+- added striping modules,
+- added URL,
 - added sperl subpackage with suid perl binaries.
 
 * Tue Sep 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
