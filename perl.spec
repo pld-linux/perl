@@ -163,10 +163,12 @@ gcc-headers: \$(GCCH)
 
 EOF
 
-
-## Fix paths
 ( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}/
 
+## Fix permissions
+find . -name \*.ph -exec chmod 644 {} \;
+
+## Fix paths
 mv .packlist .packlist.old
 sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
 rm -f .packlist.old
