@@ -14,21 +14,6 @@ Release:	28
 Epoch:		1
 License:	GPL
 Group:		Applications/Text
-Group(cs):	Aplikace/Text
-Group(da):	Programmer/Tekst
-Group(de):	Applikationen/Text
-Group(es):	Aplicaciones/Texto
-Group(fr):	Applications/Texte
-Group(is):	Forrit/Texti
-Group(it):	Applicazioni/Testo
-Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔ф╔╜╔╧╔х
-Group(no):	Applikasjoner/Tekst
-Group(pl):	Aplikacje/Tekst
-Group(pt):	AplicaГУes/Texto
-Group(ru):	Приложения/Текстовые утилиты
-Group(sl):	Programi/Besedilo
-Group(sv):	TillДmpningar/Text
-Group(uk):	Прикладн╕ Програми/Текстов╕ утил╕ти
 Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-noroot_install.patch
@@ -143,22 +128,6 @@ Summary(es):	Development and include files for perl
 Summary(pl):	Pliki potrzebne przy tworzeniu wЁasnych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabeГalhos para o perl
 Group:		Development/Libraries
-Group(cs):	VЩvojovИ prostЬedky/Knihovny
-Group(da):	Udvikling/Biblioteker
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(is):	чrСunartСl/AПgerПasЖfn
-Group(it):	Sviluppo/Librerie
-Group(ja):	Ё╚х╞/╔И╔╓╔ж╔И╔Й
-Group(no):	Utvikling/Bibliotek
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(pt):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(sl):	Razvoj/Knji╬nice
-Group(sv):	Utveckling/Bibliotek
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 Requires:	%{name}-modules = %{version}
 Obsoletes:	perl-lib-devel
@@ -181,21 +150,6 @@ Summary(ru):	SUID версия языка Perl
 Summary(pl):	Practical Extraction and Report Language (binaria SUID root)
 Summary(uk):	SUID-верс╕я мови Perl
 Group:		Applications/Text
-Group(cs):	Aplikace/Text
-Group(da):	Programmer/Tekst
-Group(de):	Applikationen/Text
-Group(es):	Aplicaciones/Texto
-Group(fr):	Applications/Texte
-Group(is):	Forrit/Texti
-Group(it):	Applicazioni/Testo
-Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔ф╔╜╔╧╔х
-Group(no):	Applikasjoner/Tekst
-Group(pl):	Aplikacje/Tekst
-Group(pt):	AplicaГУes/Texto
-Group(ru):	Приложения/Текстовые утилиты
-Group(sl):	Programi/Besedilo
-Group(sv):	TillДmpningar/Text
-Group(uk):	Прикладн╕ Програми/Текстов╕ утил╕ти
 Requires:	%{name} = %{version}
 
 %description -n sperl
@@ -227,21 +181,6 @@ Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - moduЁy
 Summary(pt_BR):	MСdulos do perl bАsicos
 Group:		Applications/Text
-Group(cs):	Aplikace/Text
-Group(da):	Programmer/Tekst
-Group(de):	Applikationen/Text
-Group(es):	Aplicaciones/Texto
-Group(fr):	Applications/Texte
-Group(is):	Forrit/Texti
-Group(it):	Applicazioni/Testo
-Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔ф╔╜╔╧╔х
-Group(no):	Applikasjoner/Tekst
-Group(pl):	Aplikacje/Tekst
-Group(pt):	AplicaГУes/Texto
-Group(ru):	Приложения/Текстовые утилиты
-Group(sl):	Programi/Besedilo
-Group(sv):	TillДmpningar/Text
-Group(uk):	Прикладн╕ Програми/Текстов╕ утил╕ти
 Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
 Provides:	perl-Devel-Peek
@@ -270,21 +209,6 @@ programas/ scripts.
 Summary:	Perl POD documentation
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Applications/Text
-Group(cs):	Aplikace/Text
-Group(da):	Programmer/Tekst
-Group(de):	Applikationen/Text
-Group(es):	Aplicaciones/Texto
-Group(fr):	Applications/Texte
-Group(is):	Forrit/Texti
-Group(it):	Applicazioni/Testo
-Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔ф╔╜╔╧╔х
-Group(no):	Applikasjoner/Tekst
-Group(pl):	Aplikacje/Tekst
-Group(pt):	AplicaГУes/Texto
-Group(ru):	Приложения/Текстовые утилиты
-Group(sl):	Programi/Besedilo
-Group(sv):	TillДmpningar/Text
-Group(uk):	Прикладн╕ Програми/Текстов╕ утил╕ти
 Prereq:		%{name} = %{version}
 
 %description pod
