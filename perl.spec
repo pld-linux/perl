@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.6.1
-Release:	63
+Release:	64
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -45,6 +45,8 @@ Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
 Patch12:	%{name}-db3.patch
 Patch13:	%{name}-gcc3.patch
+Patch14:	%{name}-typemap-float.patch
+Patch15:	%{name}-Safe.patch
 URL:		http://www.perl.org/
 BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
@@ -52,8 +54,8 @@ Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
-Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	perl-File-Spec
 Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
@@ -169,8 +171,6 @@ aplicações mais comuns do Perl são utilitários de administração de
 sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
 são escritos em Perl. Você precisa do pacote perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
-
-%description -l no
 
 %description -l pt_BR
 Perl é uma linguagem interpretada, otimizada para tratar arquivos
@@ -383,6 +383,8 @@ POD.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 for i in find-* ; do
 	mv -f $i $i.old
