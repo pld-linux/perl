@@ -178,7 +178,7 @@ sh Configure \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
-	-Doptimize="$RPM_OPT_FLAGS" \
+	-Doptimize="%{rpmcflags}" \
 	${USETHREADS}usethreads \
 	-Uuselargefiles \
 %ifarch sparc sparc64
