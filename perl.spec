@@ -10,11 +10,12 @@ Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
 Release:	15
-Copyright:	GPL
+License:	GPL
 Group:		Utilities/Text
+Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
 Epoch:		1
-Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
+Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
 Patch1:		perl-DESTDIR.patch
 Patch2:		perl-File-Spec-0.7.patch
@@ -26,46 +27,52 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
-files, extracting information from those text files, and printing reports
-based on that information.  It's also a good language for many system
-management tasks.  The language is intended to be practical (easy to use,
-efficient, complete) rather than beautiful (tiny, elegant, minimal).
+files, extracting information from those text files, and printing
+reports based on that information. It's also a good language for many
+system management tasks. The language is intended to be practical
+(easy to use, efficient, complete) rather than beautiful (tiny,
+elegant, minimal).
 
 This version has support for threads compiled in.
 
 %description -l de
-Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger Text-
-dateien, Extrahieren von Informationen aus diesen Dateien und Drucken von
-auf diesen Informationen basierenden Berichten optimiert ist. Die Sprache
-eignet sich außerdem für viele Systemverwaltungsaufgaben. Sie ist eher 
-praktisch (einfache Anwendung,effizient, vollständig) als schön (winzig,
-elegant, minimal).
+Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger
+Text- dateien, Extrahieren von Informationen aus diesen Dateien und
+Drucken von auf diesen Informationen basierenden Berichten optimiert
+ist. Die Sprache eignet sich außerdem für viele
+Systemverwaltungsaufgaben. Sie ist eher praktisch (einfache
+Anwendung,effizient, vollständig) als schön (winzig, elegant,
+minimal).
 
 %description -l fr
-Perl est un langage interprété, optimisé pour filtrer des fichiers texte,
-extraire des informations de ces fichiers, et imprimer des rapports basés
-sur ces informations. C'est aussi un bon langage pour de nombreuses procédures
-de gestion système. Ce langage se veut pratique (simple à utiliser, efficace,
-complet) autant qu'agréable (conscrit, élégant, minimal).
+Perl est un langage interprété, optimisé pour filtrer des fichiers
+texte, extraire des informations de ces fichiers, et imprimer des
+rapports basés sur ces informations. C'est aussi un bon langage pour
+de nombreuses procédures de gestion système. Ce langage se veut
+pratique (simple à utiliser, efficace, complet) autant qu'agréable
+(conscrit, élégant, minimal).
 
 %description -l pl
-Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych, wyci±gania
-z nich informacji i drukowania raportu bazuj±cego na tych informacjach. Jest
-równie¿ doskona³ym jêzykiem dla wielu narzêdzi do nadzoru systemu. Jêzyk ten
-jest w zamierzeniu praktycznym (³atwym w u¿yciu, efektywnym, kompletnym) 
-bardziej ni¿ piêkny ;) (skromny, elegancki, minimalny).
+Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych,
+wyci±gania z nich informacji i drukowania raportu bazuj±cego na tych
+informacjach. Jest równie¿ doskona³ym jêzykiem dla wielu narzêdzi do
+nadzoru systemu. Jêzyk ten jest w zamierzeniu praktycznym (³atwym w
+u¿yciu, efektywnym, kompletnym) bardziej ni¿ piêkny ;) (skromny,
+elegancki, minimalny).
 
 %description -l tr
-Perl, metin dosyalarýný taramak, bu metin dosyalarýndan bilgi çýkarmak ve
-bu bilgiye dayalý raporlar hazýrlamak icin geliþtirilmiþ bir yorumlamalý
-dildir. Ayrýca pek çok sistem yönetimi görevleri için de yararlý yetenekleri
-vardýr. Perl, güzel (ufak, zarif, minimum) olmaktan çok, pratik olmaya
-yönelik (kullanýmý kolay, verimli, eksiksiz) olarak tasarlanmýþtýr.
+Perl, metin dosyalarýný taramak, bu metin dosyalarýndan bilgi çýkarmak
+ve bu bilgiye dayalý raporlar hazýrlamak icin geliþtirilmiþ bir
+yorumlamalý dildir. Ayrýca pek çok sistem yönetimi görevleri için de
+yararlý yetenekleri vardýr. Perl, güzel (ufak, zarif, minimum)
+olmaktan çok, pratik olmaya yönelik (kullanýmý kolay, verimli,
+eksiksiz) olarak tasarlanmýþtýr.
 
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
 Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
 Group:		Utilities/Text
+Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
 Requires:	%{name} = %{version}
 
@@ -179,7 +186,7 @@ mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
 rm -f Config.pm.old )
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man*/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README Change*
 
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so -exec strip --strip-unneeded {} \;
@@ -217,5 +224,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man[13]/*
 
 %files -n sperl
+%defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{perlver}%{perlrel}
 %attr(4755,root,root) %{_bindir}/suidperl
