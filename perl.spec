@@ -9,62 +9,71 @@ Summary(pl):	Practical Extraction and Report Language (Perl)
 Summary(tr):	Kabuk yorumlama dili
 Name:		perl
 Version:	%{perlver}_%{perlrel}
-Release:	14
-Copyright:	GPL
+Release:	15
+License:	GPL
 Group:		Utilities/Text
+Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
-Source:		ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
+Epoch:		1
+Source0:	ftp://ftp.perl.org/pub/perl/CPAN/src/5.0/%{name}%{version}.tar.gz
 Patch0:		perl-noroot_install.patch
 Patch1:		perl-DESTDIR.patch
 Patch2:		perl-File-Spec-0.7.patch
 Patch3:		perl-CPAN-1.50.patch
 Patch4:		perl-find-provides.patch
+Patch5:		perl-syslog.patch
 URL:		http://www.perl.org/
 Requires:	csh
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
-files, extracting information from those text files, and printing reports
-based on that information.  It's also a good language for many system
-management tasks.  The language is intended to be practical (easy to use,
-efficient, complete) rather than beautiful (tiny, elegant, minimal).
+files, extracting information from those text files, and printing
+reports based on that information. It's also a good language for many
+system management tasks. The language is intended to be practical
+(easy to use, efficient, complete) rather than beautiful (tiny,
+elegant, minimal).
 
 This version has support for threads compiled in.
 
 %description -l de
-Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger Text-
-dateien, Extrahieren von Informationen aus diesen Dateien und Drucken von
-auf diesen Informationen basierenden Berichten optimiert ist. Die Sprache
-eignet sich außerdem für viele Systemverwaltungsaufgaben. Sie ist eher 
-praktisch (einfache Anwendung,effizient, vollständig) als schön (winzig,
-elegant, minimal).
+Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger
+Text- dateien, Extrahieren von Informationen aus diesen Dateien und
+Drucken von auf diesen Informationen basierenden Berichten optimiert
+ist. Die Sprache eignet sich außerdem für viele
+Systemverwaltungsaufgaben. Sie ist eher praktisch (einfache
+Anwendung,effizient, vollständig) als schön (winzig, elegant,
+minimal).
 
 %description -l fr
-Perl est un langage interprété, optimisé pour filtrer des fichiers texte,
-extraire des informations de ces fichiers, et imprimer des rapports basés
-sur ces informations. C'est aussi un bon langage pour de nombreuses procédures
-de gestion système. Ce langage se veut pratique (simple à utiliser, efficace,
-complet) autant qu'agréable (conscrit, élégant, minimal).
+Perl est un langage interprété, optimisé pour filtrer des fichiers
+texte, extraire des informations de ces fichiers, et imprimer des
+rapports basés sur ces informations. C'est aussi un bon langage pour
+de nombreuses procédures de gestion système. Ce langage se veut
+pratique (simple à utiliser, efficace, complet) autant qu'agréable
+(conscrit, élégant, minimal).
 
 %description -l pl
-Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych, wyci±gania
-z nich informacji i drukowania raportu bazuj±cego na tych informacjach. Jest
-równie¿ doskona³ym jêzykiem dla wielu narzêdzi do nadzoru systemu. Jêzyk ten
-jest w zamierzeniu praktycznym (³atwym w u¿yciu, efektywnym, kompletnym) 
-bardziej ni¿ piêkny ;) (skromny, elegancki, minimalny).
+Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych,
+wyci±gania z nich informacji i drukowania raportu bazuj±cego na tych
+informacjach. Jest równie¿ doskona³ym jêzykiem dla wielu narzêdzi do
+nadzoru systemu. Jêzyk ten jest w zamierzeniu praktycznym (³atwym w
+u¿yciu, efektywnym, kompletnym) bardziej ni¿ piêkny ;) (skromny,
+elegancki, minimalny).
 
 %description -l tr
-Perl, metin dosyalarýný taramak, bu metin dosyalarýndan bilgi çýkarmak ve
-bu bilgiye dayalý raporlar hazýrlamak icin geliþtirilmiþ bir yorumlamalý
-dildir. Ayrýca pek çok sistem yönetimi görevleri için de yararlý yetenekleri
-vardýr. Perl, güzel (ufak, zarif, minimum) olmaktan çok, pratik olmaya
-yönelik (kullanýmý kolay, verimli, eksiksiz) olarak tasarlanmýþtýr.
+Perl, metin dosyalarýný taramak, bu metin dosyalarýndan bilgi çýkarmak
+ve bu bilgiye dayalý raporlar hazýrlamak icin geliþtirilmiþ bir
+yorumlamalý dildir. Ayrýca pek çok sistem yönetimi görevleri için de
+yararlý yetenekleri vardýr. Perl, güzel (ufak, zarif, minimum)
+olmaktan çok, pratik olmaya yönelik (kullanýmý kolay, verimli,
+eksiksiz) olarak tasarlanmýþtýr.
 
 %package -n sperl
 Summary:	Practical Extraction and Report Language (SUID root binary)
 Summary(pl):	Practical Extraction and Report Language (SUID root binaria)
 Group:		Utilities/Text
+Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
 Requires:	%{name} = %{version}
 
@@ -81,11 +90,12 @@ Practical Extraction and Report Language (SUID root binaria).
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 for i in find-* ; do
-  mv $i $i.old
-  sed "s|FPPATH|%{_builddir}/%{name}%{version}|g" < $i.old > $i
-  chmod 755 $i; rm -f $i.old
+	mv $i $i.old
+	sed "s|FPPATH|%{_builddir}/%{name}%{version}|g" < $i.old > $i
+	chmod 755 $i; rm -f $i.old
 done
 
 %build
@@ -120,7 +130,7 @@ sh Configure \
 	-Ud_setresuid \
 	-Ud_setresgid 
 
-make
+%{__make}
 
 # Strip binaries (done now rather than at install)
 
@@ -130,12 +140,12 @@ strip {perl,suidperl,x2p/a2p}
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
-make install
+%{__make} install
 install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 
 ## Generate *.ph files with a trick (based on RH).
 # Everybody else is using it so why can't we? ;)
-make all -f - <<EOF
+%{__make} all -f - <<EOF
 PKGS	= glibc-devel gdbm-devel gpm-devel libgr-devel libjpeg-devel \
 	libpng-devel libtiff-devel ncurses-devel popt-devel \
 	zlib-devel binutils libelf e2fsprogs-devel pam-devel pwdb-devel \
@@ -146,10 +156,10 @@ GCCDIR	= \$(shell gcc --print-file-name include)
 GCCH    = \$(filter \$(GCCDIR)/%%, \$(shell rpm -q --queryformat '[%%{FILENAMES}\n]' gcc))
 
 LIBPATH = %{_builddir}/%{name}%{perlver}_%{perlrel}
-PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5
+PERLLIB = $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}
 PERLBIN = $RPM_BUILD_ROOT%{_bindir}/perl
 PERL	= LD_LIBRARY_PATH=\$(LIBPATH) PERL5LIB=\$(PERLLIB) \$(PERLBIN)
-PHDIR	= \$(PERLLIB)/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}
+PHDIR	= \$(PERLLIB)/%{_target_platform}%{perlthread}
 PHBIN	= $RPM_BUILD_ROOT%{_bindir}/h2ph
 H2PH	= \$(PERL) \$(PHBIN) -d \$(PHDIR)/
 
@@ -163,10 +173,13 @@ gcc-headers: \$(GCCH)
 
 EOF
 
-
-## Fix paths
 ( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}/
 
+## Fix permissions
+find . -name \*.ph -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+
+## Fix paths
 mv .packlist .packlist.old
 sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
 rm -f .packlist.old
@@ -175,7 +188,7 @@ mv Config.pm Config.pm.old
 sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
 rm -f Config.pm.old )
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man*/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README Change*
 
 find $RPM_BUILD_ROOT%{_libdir}/perl5 -name \*.so -exec strip --strip-unneeded {} \;
@@ -213,5 +226,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man[13]/*
 
 %files -n sperl
+%defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/sperl%{perlver}%{perlrel}
 %attr(4755,root,root) %{_bindir}/suidperl
