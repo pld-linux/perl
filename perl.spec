@@ -97,6 +97,7 @@ sh Configure \
 	-Dcc=gcc \
 	-Darchname=%{_target_platform} \
 	-Dprefix=%{_prefix} \
+	-Dscriptdir=%{_bindir} \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
 	-Dman3ext=3pm \
