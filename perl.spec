@@ -25,7 +25,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl 编程语言。
 Name:		perl
 Version:	5.6.1
-Release:	67
+Release:	66
 Epoch:		1
 License:	GPL/Artistic
 Group:		Applications/Text
@@ -43,20 +43,20 @@ Patch8:		%{name}-errno_h-parsing.patch
 Patch9:		%{name}-use-LD_PRELOAD-for-lib%{name}.so.patch
 Patch10:	%{name}-sitearch.patch
 Patch11:	%{name}-soname.patch
-Patch12:	%{name}-db4.patch
+Patch12:	%{name}-db3.patch
 Patch13:	%{name}-gcc3.patch
 Patch14:	%{name}-link.patch
 Patch15:	%{name}-typemap-float.patch
 Patch16:	%{name}-Safe.patch
 URL:		http://www.perl.org/
-BuildRequires:	db-devel > 4.1
+BuildRequires:	db3-devel
 BuildRequires:	gdbm-devel
-BuildRequires:	ed
+Requires:	perl-Class-Fields
 Provides:	perl(DynaLoader)
 Provides:	perl-File-Spec = 0.82
 Provides:	perl-IO = 1.20
-Obsoletes:	perl-File-Spec
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	perl-File-Spec
 Obsoletes:	perl-IO
 Obsoletes:	perl-lib
 Obsoletes:	perl-mod-skel
@@ -238,7 +238,6 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 
 %package devel
 Summary:	Perl development files
-Summary(es):	Development and include files for perl
 Summary(pl):	Pliki potrzebne przy tworzeniu w砤snych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabe鏰lhos para o perl
 Group:		Development/Libraries
@@ -248,9 +247,6 @@ Obsoletes:	perl-lib-devel
 
 %description devel
 Files for developing applications which embed a Perl interpreter.
-
-%description devel -l es
-Development and include files for perl.
 
 %description devel -l pl
 Pliki potrzebne przy tworzeniu w砤snych aplikacji w perlu.
@@ -326,12 +322,11 @@ setuid perl 脚本。
 
 %package modules
 Summary:	Practical Extraction and Report Language - modules
-Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - modu硑
 Summary(pt_BR):	M骴ulos do perl b醩icos
 Group:		Applications/Text
-Requires:	%{name} = %{version}
 Requires:	perl-Test-Harness
+Prereq:		%{name} = %{version}
 Provides:	perl-ANSIColor
 Provides:	perl-DProf
 Provides:	perl-Devel-Peek
@@ -344,10 +339,6 @@ Obsoletes:	perl-PodParser
 %description modules
 Practical Extraction and Report Language - modules.
 
-%description modules -l es
-This package contains standard perl modules needed by some
-application/scripts.
-
 %description modules -l pl
 Practical Extraction and Report Language - modu硑.
 
@@ -359,7 +350,7 @@ programas/ scripts.
 Summary:	Perl POD documentation
 Summary(pl):	Dokumentacja Perla w formacie POD
 Group:		Applications/Text
-Requires:	%{name} = %{version}
+Prereq:		%{name} = %{version}
 
 %description pod
 Practical Extraction and Report Language - POD docs.
@@ -425,8 +416,7 @@ sh Configure \
 	-Dsitelib=%{_libdir}/perl5/site_perl \
 	-Dman1dir=%{_mandir}/man1 \
 	-Dman3dir=%{_mandir}/man3 \
-	-Dman1ext=1 \
-	-Dman3ext=3perl \
+	-Dman3ext=3pm \
 	-Doptimize="%{rpmcflags}" \
 	${USETHREADS}usethreads \
 	-Uuselargefiles \
@@ -439,7 +429,6 @@ sh Configure \
 	-Ud_setresgid
 
 %{__make} CCDLFLAGS=-rdynamic
-
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -500,7 +489,7 @@ install -d AI/NeuralNet Algorithm Apache Archive Array Astro Attribute \
 	PostScript Proc RADIUS RPC RPM Regexp SOAP/Transport SQL Schedule \
 	Set Sort Speech Spreadsheet Statistics String Sub Sys TeX Test \
 	Text/Query Tie Time Tree Unicode WWW XML/{Filter,Handler,Parser} \
-	auto/{AI,Array,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
+	auto/{AI,Array,Config,Crypt,Data,Mail,Net,Schedule,Statistics,Text,WWW}
 
 cd %{_target_platform}*/%{version}
 install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
@@ -513,29 +502,25 @@ install -d Astro Audio Authen B BSD Bit Compress Crypt/OpenSSL Data Devel \
 
 # These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 #
 # Newer Test::Harness is available as a separate package
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/Test/Harness.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Test::Harness.3pm*
 #
 # Newer DB_File is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/DB_File
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/DB_File.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/DB_File.3pm*
 #
 # Newer CGI is available as a separate package
 rm -rf $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/CGI*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3p*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/CGI*.3pm*
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # why is it there...?
 rm -f $RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/CORE/sperl.o
-
-# documentation suffixes: .1/.3perl for core modules and .1p/.3pm for built from CPAN
-echo -e ",s/^man1ext='1'/man1ext='1p'/\n,s/^man3ext='3perl'/man3ext='3pm'/\nw" | ed \
-	$RPM_BUILD_ROOT%{_libdir}/perl5/%{version}/%{_target_platform}*/Config.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -719,8 +704,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/Time/Local.pm
 %{_libdir}/perl5/%{version}/attributes.pm
 %{_libdir}/perl5/%{version}/autouse.pm
-%{_libdir}/perl5/%{version}/base.pm
-%{_libdir}/perl5/%{version}/fields.pm
+# newer versions are in perl-Class-Fields
+#%{_libdir}/perl5/%{version}/base.pm
+#%{_libdir}/perl5/%{version}/fields.pm
 %{_libdir}/perl5/%{version}/constant.pm
 %{_libdir}/perl5/%{version}/integer.pm
 %{_libdir}/perl5/%{version}/lib.pm
@@ -771,9 +757,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/find2perl.1*
 %{_mandir}/man1/perl.1*
 %{_mandir}/man1/perl[ae-z]*.1*
-%{_mandir}/man1/perlb[!u]*.1*
-%{_mandir}/man1/perlc[!c]*.1*
-%{_mandir}/man1/perld[!o]*.1*
+%{_mandir}/man1/perlb[^u]*.1*
+%{_mandir}/man1/perlc[^c]*.1*
+%{_mandir}/man1/perld[^o]*.1*
 %{_mandir}/man1/s2p.1*
 %{_mandir}/man1/xsubpp.1*
 %lang(fi) %{_mandir}/fi/man1/perl*
@@ -796,8 +782,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/[Xivw]*
 %{_mandir}/man3/attri*
 %{_mandir}/man3/au*
-%{_mandir}/man3/base.*
-%{_mandir}/man3/fields.*
+# newer versions are in perl-Class-Fields
+#%{_mandir}/man3/base.*
+#%{_mandir}/man3/fields.*
 %{_mandir}/man3/co*
 %{_mandir}/man3/l[io]*
 %{_mandir}/man3/ov*
@@ -956,9 +943,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.bs
 %attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/Opcode/Opcode.so
-#%dir %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.bs
-#%attr(755,root,root) %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/ODBM_File/ODBM_File.so
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/[a-su-w]*.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/time.al
 %{_libdir}/perl5/%{version}/%{_target_platform}*/auto/POSIX/tolower.al
@@ -989,7 +973,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/perl5/%{version}/%{_target_platform}*/GDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/NDBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/Opcode.pm
-#%{_libdir}/perl5/%{version}/%{_target_platform}*/ODBM_File.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/O.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/ops.pm
 %{_libdir}/perl5/%{version}/%{_target_platform}*/re.pm
@@ -1032,5 +1015,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pod
 %defattr(644,root,root,755)
-%{_libdir}/perl5/%{version}/pod/perl[!d]*
-%{_libdir}/perl5/%{version}/pod/perld[!i]*
+%{_libdir}/perl5/%{version}/pod/perl[^d]*
+%{_libdir}/perl5/%{version}/pod/perld[^i]*
