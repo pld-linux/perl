@@ -838,7 +838,7 @@ install -d AI Algorithm Astro Audio Authen B BSD Bit Chemistry Class \
 	Sys Template Term Text Time Unicode WWW XML \
 	auto/{AI,Algorithm,Astro,Audio,Authen,BSD,Bit,Chemistry,Class,Clone} \
 	auto/{Compress,Convert,Crypt/OpenSSL,Data,Devel,Device,Digest,File} \
-	auto/{IPC,Inline,Locale,Linux,Math/BigInt,Net,Regexp} \
+	auto/{IPC,Image,Inline,Locale,Linux,Math/BigInt,Net,Regexp} \
 	auto/{Speech/Recognizer,String,Sys,Term,Text,Time,Unicode,WWW,XML}
 
 cd "$owd"
