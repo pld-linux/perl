@@ -91,13 +91,14 @@ installsitearch=\`echo \$installsitearch | sed "s!\$prefix!\$installprefix!"\`
 EOF
 
 sh Configure \
+	-des \
 	-Darchname=${RPM_ARCH}-linux \
 	-Dprefix=/usr \
 	-Dman3dir=/usr/man/man3 \
 	-Dman3ext=3pm \
 	-Doptimize="$RPM_OPT_FLAGS" \
+	-Duseshrplib \
 	-Dusethreads \
-	-des \
 	-Dd_dosuid \
 	-Ud_setresuid \
 	-Ud_setresgid 
@@ -126,11 +127,11 @@ $RPM_BUILD_ROOT/usr/bin/h2ph \
 ( cd $RPM_BUILD_ROOT/usr/lib/perl5/%{perlver}%{perlrel}/${RPM_ARCH}-linux%{perlthread}/
 
 mv .packlist .packlist.old
-sed "s|$RPM_BUILD_ROOT||" < .packlist.old > .packlist
+sed "s|$RPM_BUILD_ROOT||g" < .packlist.old > .packlist
 rm -f .packlist.old
 
 mv Config.pm Config.pm.old
-sed "s|$RPM_BUILD_ROOT||" < Config.pm.old > Config.pm
+sed "s|$RPM_BUILD_ROOT||g" < Config.pm.old > Config.pm
 rm -f Config.pm.old )
 
 gzip -9fn $RPM_BUILD_ROOT/usr/man/man*/* \
@@ -177,7 +178,7 @@ rm -rf $RPM_BUILD_ROOT
   [5.005_03-2]
 - updated to 5.005_03
 - changed source URL
-- added -Dman3dir=/usr/man/man3 -Dman3ext=3pm to Configure
+- added -Dman3dir=/usr/man/man3 -Dman3ext=3pm -Duseshrplib to Configure
 - corrected .packlist
 - changed --strip-debug to --strip-unneeded
 - gzipped %doc (instead bzipping2)
