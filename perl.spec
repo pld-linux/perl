@@ -69,7 +69,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.0
-Release:	0.42%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.43%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -289,12 +289,12 @@ package) whenever possible.
 
 %description base -l pl
 Podstawowe sk³adniki, pliki, g³ówne modu³y itp. - minimalna instalacja
-Perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
+perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego perla
 (pakietu perl), je¶li to tylko mo¿liwe.
 
 %package GDBM_File
 Summary:	GDBM_File - Perl5 access to the gdbm library
-Summary(pl):	GDBM_File - dostêp Perla do biblioteki gdbm
+Summary(pl):	GDBM_File - dostêp do biblioteki gdbm w Perlu
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}
 # FIXME: Set Version: 1.06 and Release: 1 instead of inheriting
@@ -429,7 +429,7 @@ used for the documentation for the perl library modules.
 perldoc wyszukuje fragment dokumentacji w formacie .pod osadzony w
 drzewie instalacji perla lub w skypcie perlowym i wy¶wietla go przez
 "pod2man | nroff -man | $PAGER". Program ten u¿ywany jest g³ównie do
-dokumentacji modu³ów z bibliotek Perla.
+dokumentacji modu³ów z bibliotek perla.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
@@ -439,7 +439,7 @@ Summary(fr):	sperl, à utiliser avec les scripts Perl setuid
 Summary(it):	sperl, da usare con gli script di Perl setuid
 Summary(ja):	Setuid Perl scripts ¤È°ì½ï¤Ë»ÈÍÑ¤¹¤ë¤¿¤á¤Î suidperl
 Summary(ko):	Setuid ÆÞ ½ºÅ©¸³Æ®¿Í ÇÔ²² »ç¿ëµÇ´Â suidperl
-Summary(pl):	Binaria setuid root Perla dla setuid-owych skryptów Perla
+Summary(pl):	Binaria setuid root perla dla setuid-owych skryptów perla
 Summary(pt):	O suidperl, para usar com os programas de Perl 'setuid'
 Summary(ru):	SUID ×ÅÒÓÉÑ ÑÚÙËÁ Perl
 Summary(sv):	sperl, att användas med setuid perlskript
@@ -476,7 +476,7 @@ perl ¤Îsetuid ¥Ð¥¤¥Ê¥ê ¥³¥Ô¡¼¤Ç¤¹¡£
 %description -n sperl -l pl
 sperl jest to kopia setuid root programu binarnego perl umo¿liwiaj±ca
 bezpieczniejsze (miejmy nadziejê) uruchamianie setuidowych skryptów
-Perla.
+perla.
 
 %description -n sperl -l pt
 O suidperl é uma cópia do perl com 'setuid' que permite uma execução
@@ -512,7 +512,7 @@ Various tools from the core perl distribution:
  psed, s2p - a stream editor
 
 %description tools -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
+Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 
  a2p       - translator skryptów Awka do Perla
  find2perl - t³umaczenie linii poleceñ programu find na kod w Perlu
@@ -540,7 +540,7 @@ Various tools from the core perl distribution:
  splain        - force verbose warning diagnostics
 
 %description tools-devel -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
+Ró¿ne narzêdzia z podstawowej dystrybucji perla:
 
  c2ph, pstruct - zrzucanie struktur C w postaci generowanej z tablic
                  symboli z cc -g -S
@@ -551,7 +551,7 @@ Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
  h2xs          - konwerter plików nag³ówkowych .h z C na rozszerzenia
                  Perla
  perlcc        - generator binarek z programów w Perlu
- perlivp       - procedura weryfikacji instalacji Perla
+ perlivp       - procedura weryfikacji instalacji perla
  pl2pm         - zgrubne narzêdzie do t³umaczenia plików pl Perla 4 na
                  modu³y .pm Perla 5
  splain        - wymuszenie obszernych ostrze¿eñ diagnostycznych
@@ -696,7 +696,6 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
 %{__make} install
-install miniperl  $RPM_BUILD_ROOT%{_bindir}
 install microperl $RPM_BUILD_ROOT%{_bindir}
 
 ## use symlinks instead of hardlinks
@@ -705,13 +704,13 @@ install microperl $RPM_BUILD_ROOT%{_bindir}
 %{__ln_s} -f  c2ph           $RPM_BUILD_ROOT%{_bindir}/pstruct
 %{__ln_s} -f  psed           $RPM_BUILD_ROOT%{_bindir}/s2p
 
-## Fix lib
-rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so*
-install libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}
-%{__ln_s} -f libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
-
-
 %define		__perl	LD_LIBRARY_PATH="%{_builddir}/%{name}-%{version}" PERL5LIB="%{buildroot}/%{perl_privlib}:%{buildroot}/%{perl_archlib}" %{buildroot}/%{_bindir}/perl
+
+## Fix lib
+rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
+%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{version}'";s|^'%{_libdir}'/*||;print'` \
+	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{version}
+%{__ln_s} libperl.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'              $RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -812,12 +811,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ko) %doc README.ko
 %lang(tw) %doc README.tw
 
-%dir %{_libdir}/perl5/vendor_perl
-%dir %{_libdir}/perl5/vendor_perl/%{version}
-%{perl_vendorarch}
-%{perl_vendorlib}
-#%dir %{perl_vendorarch}/auto
-
 
 %files base
 %defattr(644,root,root,755)
@@ -834,6 +827,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}
 %dir %{perl_archlib}/auto
 
+%dir %{perl_archlib}/CORE
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{version}
+%attr(755,root,root) %{_libdir}/libperl.so*
+
+%dir %{_libdir}/perl5/vendor_perl
+%dir %{_libdir}/perl5/vendor_perl/%{version}
+%{perl_vendorarch}
+%{perl_vendorlib}
+
 # pragmas
 %{perl_privlib}/[a-z]*.pm
 %{perl_privlib}/[a-z]*.pl
@@ -846,17 +848,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/re/*.bs
 %attr(755,root,root) %{perl_archlib}/auto/re/*.so
 %{_mandir}/man3/[a-su-w]*
-
-%if %{?!_without_threads:1}0
-%{perl_archlib}/threads*
-%dir %{perl_archlib}/auto/threads
-%dir %{perl_archlib}/auto/threads/shared
-%{perl_archlib}/auto/threads/*.bs
-%{perl_archlib}/auto/threads/shared/*.bs
-%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
-%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
-%{_mandir}/man3/t*
-%endif
 
 # arch-_IN_dependent modules
 %{perl_privlib}/Auto*
@@ -929,8 +920,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/POSIX/*.ix
 %{_mandir}/man3/POSIX.*
 
-%attr(755,root,root) %{_libdir}/lib*.so.%{version}
-
 
 %if %{?!_without_gdbm:1}0
 %files GDBM_File
@@ -945,8 +934,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{perl_archlib}/CORE
+%attr(755,root,root) %{_libdir}/libperl.so
+%{perl_archlib}/CORE/*.h
 
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
@@ -1019,6 +1008,17 @@ rm -rf $RPM_BUILD_ROOT
 
 # XXX: should it really be in this package?
 %{perl_privlib}/unicore
+
+%if %{?!_without_threads:1}0
+%{perl_archlib}/threads*
+%dir %{perl_archlib}/auto/threads
+%dir %{perl_archlib}/auto/threads/shared
+%{perl_archlib}/auto/threads/*.bs
+%{perl_archlib}/auto/threads/shared/*.bs
+%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
+%{_mandir}/man3/t*
+%endif
 
 ## *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
