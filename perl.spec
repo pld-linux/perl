@@ -92,8 +92,8 @@ done
 # this is gross
 cat > config.over <<EOF
 installprefix=$RPM_BUILD_ROOT%{_prefix}
-test -d \$installprefix || mkdir \$installprefix
-test -d \$installprefix/bin || mkdir \$installprefix/bin
+test -d \$installprefix || mkdir -p \$installprefix
+test -d \$installprefix/bin || mkdir -p \$installprefix/bin
 installarchlib=\`echo \$installarchlib | sed "s!\$prefix!\$installprefix!"\`
 installbin=\`echo \$installbin | sed "s!\$prefix!\$installprefix!"\`
 installman1dir=\`echo \$installman1dir | sed "s!\$prefix!\$installprefix!"\`
@@ -136,9 +136,8 @@ install utils/pl2pm $RPM_BUILD_ROOT%{_bindir}/pl2pm
 (cd %{_includedir} ;
 LD_LIBRARY_PATH="%{_builddir}/%{name}%{perlver}_%{perlrel}" \
 PERL5LIB=$RPM_BUILD_ROOT%{_libdir}/perl5 $RPM_BUILD_ROOT%{_bindir}/perl \
-$RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread} \
 $RPM_BUILD_ROOT%{_bindir}/h2ph \
--d $RPM_BUILD_ROOT%{_libdir}/perl5/%{_target_platform}/%{perlver}%{perlrel}/ \
+-d $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread} \
 *.h sys/*.h linux/*.h asm/*.h net/*.h netinet/*.h arpa/*.h )
 
 ( cd $RPM_BUILD_ROOT%{_libdir}/perl5/%{perlver}%{perlrel}/%{_target_platform}%{perlthread}/
