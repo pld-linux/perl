@@ -35,13 +35,13 @@ Provides:	perl-Devel-Peek
 Provides:	perl-DProf
 Provides:	perl-PodParser
 Provides:	perl-CGI
+Prereq:		%{name}-lib = %{version}
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	perl-ANSIColor
 Obsoletes:	perl-Devel-Peek
 Obsoletes:	perl-DProf
 Obsoletes:	perl-PodParser
 Obsoletes:	perl-CGI
-Prereq:		%{name}-lib = %{version}
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
@@ -267,12 +267,12 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perl{5004delta,5005delta,aix,amiga,bs2000}*
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{cygwin,dos,hpux,machten,macos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}*
 
-gzip -9nf README Change*
+gzip -9nf README Changes
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post lib -p /sbin/ldconfig
+%post   lib -p /sbin/ldconfig
 %postun lib -p /sbin/ldconfig
 
 %files
