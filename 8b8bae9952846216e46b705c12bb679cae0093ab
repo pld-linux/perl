@@ -1,0 +1,4 @@
+- remove diffrent than Linux OS specyfic man pages like perl{5004delta,5005delta}
+  perl{5004delta,5005delta,aix,amiga,bs2000,cygwin,dos,hpux,machten,macos}
+  perl{mpeix,os2,os390,solaris,vmesa,vms,vos,win32}.
+- move all %%doc to devel.
