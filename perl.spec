@@ -238,7 +238,6 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 
 %package devel
 Summary:	Perl development files
-Summary(es):	Development and include files for perl
 Summary(pl):	Pliki potrzebne przy tworzeniu w砤snych aplikacji w perlu
 Summary(pt_BR):	Arquivos de desenvolvimento e cabe鏰lhos para o perl
 Group:		Development/Libraries
@@ -248,9 +247,6 @@ Obsoletes:	perl-lib-devel
 
 %description devel
 Files for developing applications which embed a Perl interpreter.
-
-%description devel -l es
-Development and include files for perl.
 
 %description devel -l pl
 Pliki potrzebne przy tworzeniu w砤snych aplikacji w perlu.
@@ -326,7 +322,6 @@ setuid perl 脚本。
 
 %package modules
 Summary:	Practical Extraction and Report Language - modules
-Summary(es):	Perl's base modules
 Summary(pl):	Practical Extraction and Report Language - modu硑
 Summary(pt_BR):	M骴ulos do perl b醩icos
 Group:		Applications/Text
@@ -343,10 +338,6 @@ Obsoletes:	perl-PodParser
 
 %description modules
 Practical Extraction and Report Language - modules.
-
-%description modules -l es
-This package contains standard perl modules needed by some
-application/scripts.
 
 %description modules -l pl
 Practical Extraction and Report Language - modu硑.
