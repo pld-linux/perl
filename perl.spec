@@ -56,7 +56,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.0
-Release:	0.50%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
+Release:	0.51%{?_without_threads:_nothr}%{?_without_largefiles:_nolfs}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -277,7 +277,10 @@ Group:		Text/Applications
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 0.83
 Provides:	perl-File-Temp = 0.13
+Provides:	perl-IO = 1.20
 Provides:	perl-Safe = 2.09
+Provides:	perl-Socket = 1.75
+Provides:	perl-Tie-File = 0.93
 %{?!_without_largefiles:Provides:	perl(largefiles)}
 # broken, unsupported module
 Obsoletes:	perl-SOAP
@@ -373,7 +376,6 @@ Provides:	perl-Digest-MD5 = 2.20
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.43
 #Provides:	perl-Hash-Utils = 0.04	Data::Util is missing
-Provides:	perl-IO = 1.20
 Provides:	perl-IPC-SysV = 1.03_00
 Provides:	perl-Locale-Maketext = 1.03
 Provides:	perl-MIME-Base64 = 2.12
@@ -386,7 +388,6 @@ Provides:	perl-PerlIO-via-QuotedPrint = 0.04
 Provides:	perl-Pod-LaTeX = 0.54
 Provides:	perl-Pod-Parser = 1.13
 Provides:	perl-Scalar-List-Utils = 1.07_00
-Provides:	perl-Socket = 1.75
 Provides:	perl-Storable = 2.04
 Provides:	perl-Term-ANSIColor = 1.05
 Provides:	perl-Term-Cap = 1.07
@@ -397,7 +398,6 @@ Provides:	perl-Text-Balanced = 1.89
 Provides:	perl-Text-ParseWords = 3.21
 Provides:	perl-Text-Soundex = 1.01
 Provides:	perl-Text-Tabs+Wrap = 2001.0929
-Provides:	perl-Tie-File = 0.93
 Provides:	perl-Time-HiRes = 1.20_00
 Provides:	perl-UNIVERSAL = 1.00
 Provides:	perl-Unicode-Collate = 0.12
