@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.6
-Release:	3%{!?with_threads:_nothr}
+Release:	4%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
