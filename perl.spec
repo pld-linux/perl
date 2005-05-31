@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.6
-Release:	4%{!?with_threads:_nothr}
+Release:	5%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -707,6 +707,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## use symlinks instead of hardlinks
 %{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f perl%{version} $RPM_BUILD_ROOT%{_bindir}/perl5
 %{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/suidperl
 %{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
 %{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
@@ -878,6 +879,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc-base/*
 %attr(755,root,root) %{_bindir}/perl
+%attr(755,root,root) %{_bindir}/perl5
 %attr(755,root,root) %{_bindir}/perl%{version}
 %{_mandir}/man1/perl.*
 %lang(fi) %{_mandir}/fi/man1/perl*
