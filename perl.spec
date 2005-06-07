@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
 Version:	5.8.6
-Release:	5%{!?with_threads:_nothr}
+Release:	5.9%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -69,6 +69,7 @@ Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 Patch7:		%{name}_585-microperl_uconfig.patch
 Patch8:		%{name}_586-sperl-CAN-2005-0155.patch
+Patch9:		%{name}-mod_perl2.patch
 URL:		http://dev.perl.org/perl5/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
@@ -616,6 +617,7 @@ microperlu - popraw je.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p0
+%patch9 -p0
 
 %build
 sh Configure \
