@@ -1,0 +1,33 @@
+--- ./lib/CGI/Cookie.pm.org	2004-03-09 16:13:48.000000000 +0100
++++ ./lib/CGI/Cookie.pm	2005-06-07 12:55:01.546120072 +0200
+@@ -27,7 +27,7 @@
+   if (defined $mod_perl::VERSION) {
+     if ($mod_perl::VERSION >= 1.99) {
+       $MOD_PERL = 2;
+-      require Apache::RequestUtil;
++      require Apache2::RequestUtil;
+     } else {
+       $MOD_PERL = 1;
+       require Apache;
+--- ./lib/CGI/Carp.pm.org	2004-06-09 10:25:42.000000000 +0200
++++ ./lib/CGI/Carp.pm	2005-06-07 12:53:39.541586656 +0200
+@@ -468,14 +468,14 @@
+     require mod_perl;
+     if ($mod_perl::VERSION >= 1.99) {
+       $mod_perl = 2;
+-      require Apache::RequestRec;
+-      require Apache::RequestIO;
+-      require Apache::RequestUtil;
++      require Apache2::RequestRec;
++      require Apache2::RequestIO;
++      require Apache2::RequestUtil;
+       require APR::Pool;
+       require ModPerl::Util;
+-      require Apache::Response;
++      require Apache2::Response;
+     }
+-    my $r = Apache->request;
++    my $r = Apache2::RequestUtil->request;
+     # If bytes have already been sent, then
+     # we print the message out directly.
+     # Otherwise we make a custom error
