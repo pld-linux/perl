@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.7
-Release:	0.1%{!?with_threads:_nothr}
+Release:	0.2%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -265,8 +265,8 @@ Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk≥adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Provides:	perl-File-Compare = 1.1003
-Provides:	perl-File-Spec = 3.01
-Provides:	perl-File-Temp = 0.14
+Provides:	perl-File-Spec = 3.05
+Provides:	perl-File-Temp = 0.16
 Provides:	perl-IO = 1.21
 Provides:	perl-Safe = 2.11
 Provides:	perl-Socket = 1.77
@@ -291,7 +291,7 @@ Summary:	GDBM_File - Perl5 access to the gdbm library
 Summary(pl):	GDBM_File - dostÍp do biblioteki gdbm w Perlu
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-# FIXME: Set Version: 1.06 and Release: 1 instead of inheriting
+# FIXME: Set Version: 1.07 and Release: 1 instead of inheriting
 #        values from the main package.  Why this causes setting
 #        version and release macros up to the end of this spec?
 
@@ -312,9 +312,9 @@ Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
 Provides:	perl-CPAN = 1.76_01
-Provides:	perl-Devel-DProf = 20030813.00
-Provides:	perl-Devel-PPPort = 3.03
-Provides:	perl-Devel-Peek = 1.01
+Provides:	perl-Devel-DProf = 20050310.00
+Provides:	perl-Devel-PPPort = 3.06
+Provides:	perl-Devel-Peek = 1.02
 Provides:	perl-ExtUtils-Embed = 1.2506_01
 Provides:	perl-ExtUtils-MakeMaker = 6.17
 Obsoletes:	perl-lib-devel
@@ -360,9 +360,9 @@ Summary(pl):	Modu≥y z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Provides:	perl-Attribute-Handlers = 0.78_01
-Provides:	perl-CGI = 3.05
-Provides:	perl-Class-ISA = 0.32
-Provides:	perl-Digest = 1.08
+Provides:	perl-CGI = 3.10
+Provides:	perl-Class-ISA = 0.33
+Provides:	perl-Digest = 1.10
 Provides:	perl-Digest-MD5 = 2.33
 Provides:	perl-Filter-Simple = 0.78
 Provides:	perl-FindBin = 1.44
@@ -372,30 +372,30 @@ Provides:	perl-IPC-SysV = 1.04
 Provides:	perl-Locale-Codes = 2.07
 Provides:	perl-Locale-Maketext = 1.09
 Provides:	perl-MIME-Base64 = 3.05
-Provides:	perl-Math-BigInt = 1.73
-Provides:	perl-Math-BigRat = 0.13
+Provides:	perl-Math-BigInt = 1.77
+Provides:	perl-Math-BigRat = 0.15
 Provides:	perl-Math-Trig = 1.02
 Provides:	perl-Memoize = 1.01
 Provides:	perl-NEXT = 0.60
 Provides:	perl-PerlIO-via-QuotedPrint = 0.06
-Provides:	perl-Pod-LaTeX = 0.56
-Provides:	perl-Pod-Parser = 1.14
+Provides:	perl-Pod-LaTeX = 0.58
+Provides:	perl-Pod-Parser = 1.30
 Provides:	perl-Scalar-List-Utils = 1.14
 Provides:	perl-Storable = 2.13
-Provides:	perl-Term-ANSIColor = 1.08
+Provides:	perl-Term-ANSIColor = 1.09
 Provides:	perl-Term-Cap = 1.09
 Provides:	perl-Test = 1.25
-Provides:	perl-Test-Harness = 2.42
-Provides:	perl-Test-Simple = 0.47
+Provides:	perl-Test-Harness = 2.48
+Provides:	perl-Test-Simple = 0.54
 Provides:	perl-Text-Balanced = 1.95
-Provides:	perl-Text-ParseWords = 3.23
+Provides:	perl-Text-ParseWords = 3.24
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
 #Provides:	perl-Text-Tabs+Wrap = 2001.09291
-Provides:	perl-Time-HiRes = 1.65
+Provides:	perl-Time-HiRes = 1.66
 Provides:	perl-UNIVERSAL = 1.01
 Provides:	perl-Unicode-Collate = 0.40
-Provides:	perl-Unicode-Normalize = 0.30
+Provides:	perl-Unicode-Normalize = 0.32
 Provides:	perl-libnet = 1.19
 Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
