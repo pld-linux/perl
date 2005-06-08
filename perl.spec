@@ -1176,6 +1176,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/gnu
 %{perl_archlib}/linux
 %{perl_archlib}/sys
+%ifarch amd64
+%{perl_archlib}/asm-i386
+%{perl_archlib}/asm-x86_64
+%endif
 
 %{perl_archlib}/Data
 %dir %{perl_archlib}/auto/Data
