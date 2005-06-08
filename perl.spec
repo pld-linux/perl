@@ -1176,7 +1176,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/gnu
 %{perl_archlib}/linux
 %{perl_archlib}/sys
-%ifarch amd64
+%ifarch %{x8664}
 %{perl_archlib}/asm-i386
 %{perl_archlib}/asm-x86_64
 %endif
