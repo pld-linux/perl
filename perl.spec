@@ -3,7 +3,7 @@
 %bcond_without	tests		# do not perform "make test"
 %bcond_without	threads		# build without support for threads
 %bcond_without	gdbm		# build without the GDBM_File module
-%bcond_without	microperl	# don't build microperl
+%bcond_with	microperl	# build microperl (needs fixing)
 #
 # TODO:
 # - fix "FIXME"s, review "XXX"s
@@ -51,13 +51,13 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.6
-Release:	5.9%{!?with_threads:_nothr}
+Version:	5.8.7
+Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	3d030b6ff2a433840edb1a407d18dc0a
+# Source0-md5:	9a175d6ccbb5d9b41ffac5073ff9cc3c
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	perl.prov
@@ -68,8 +68,6 @@ Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 Patch7:		%{name}_585-microperl_uconfig.patch
-Patch8:		%{name}_586-sperl-CAN-2005-0155.patch
-Patch9:		%{name}-mod_perl2.patch
 URL:		http://dev.perl.org/perl5/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
@@ -616,8 +614,6 @@ microperlu - popraw je.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p0
-%patch9 -p0
 
 %build
 sh Configure \
@@ -669,6 +665,14 @@ EOF
 %{__make} \
 	LIBPERL_SONAME=libperl.so.%{_abi}
 
+cat > runperl <<EOF
+#!/bin/sh
+LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
+PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
+exec %{buildroot}%{_bindir}/perl \$*
+EOF
+chmod a+x runperl
+
 ## microperl
 %if %{with microperl}
 rm -f uconfig.h
@@ -687,14 +691,6 @@ rm -f uconfig.h
 	usemallocwrap='define' \
 	OPTIMIZE="%{rpmcflags}"
 %endif
-
-cat > runperl <<EOF
-#!/bin/sh
-LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
-PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
-exec %{buildroot}%{_bindir}/perl \$*
-EOF
-chmod a+x runperl
 
 %{?with_tests:%{__make} test}
 #%{?with_tests:%{__make} minitest}
