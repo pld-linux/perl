@@ -820,11 +820,12 @@ install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 	IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball} List \
 	Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
 	Modem Module Net/{IDN,SMTP} NetAddr NetServer Netscape News Number \
-	Object OLE PAR PHP Parse PerlIO/via Pod PostScript Proc Quantum RADIUS RPC \
-	RPM RTF Regexp SNMP SOAP/Transport SQL SVN Schedule Set Sort Speech \
-	Spreadsheet Statistics String Sub Sys TeX Template \
-	Term/{ReadLine,Screen} Test Text/Query Tie Time Tree UNIVERSAL \
-	Unicode Unix WWW/Google X500 XML/{Filter,Handler,Parser,RSS,XPath} \
+	Object OLE PAR PHP Params Parse PerlIO/via Pod PostScript Proc \
+	Quantum RADIUS RPC RPM RTF Regexp SNMP SOAP/Transport SQL SVN \
+	Schedule Set Sort Speech Spreadsheet Statistics String Sub Sys TeX \
+	Template Term/{ReadLine,Screen} Test Text/Query Tie Time Tree \
+	UNIVERSAL Unicode Unix WWW/Google X500 \
+	XML/{Filter,Handler,Parser,RSS,XPath} \
 	auto/{AI,Array,Config,Crypt,Data,Devel,GnuPG,Mail,Math,Net,Schedule} \
 	auto/{Statistics,Text,WWW}
 
