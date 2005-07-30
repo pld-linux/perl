@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.7
-Release:	4%{!?with_threads:_nothr}
+Release:	5%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -276,6 +276,7 @@ Provides:	perl(largefiles)
 # broken, unsupported modules
 Obsoletes:	perl-SOAP
 Obsoletes:	perl-Sort-PolySort
+Conflicts:	perl < 1:5.8.0
 
 %description base
 Base components, files, core modules, etc. -- a minimal usable Perl
