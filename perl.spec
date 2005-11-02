@@ -69,6 +69,7 @@ Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 Patch7:		%{name}_585-microperl_uconfig.patch
 Patch8:		%{name}_587-Pod_Usage_version.patch
+Patch9:		%{name}-getgrent.patch
 URL:		http://dev.perl.org/perl5/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
@@ -617,6 +618,7 @@ microperlu - popraw je.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 sh Configure \
