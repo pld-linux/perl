@@ -1,0 +1,11 @@
+--- perl-5.8.7/util.c.25160	2005-05-30 08:44:15.000000000 -0400
++++ perl-5.8.7/util.c	2005-11-08 18:58:36.000000000 -0500
+@@ -1290,6 +1290,8 @@
+ 	    SV *msg;
+ 
+ 	    ENTER;
++	    SAVESPTR(PL_warnhook);
++	    PL_warnhook = Nullsv;
+ 	    save_re_context();
+ 	    msg = newSVpvn(message, msglen);
+ 	    SvFLAGS(msg) |= utf8;

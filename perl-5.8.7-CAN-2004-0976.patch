@@ -1,0 +1,184 @@
+--- perl-5.8.7/utils/c2ph.PL.CAN-2004-0976	2004-10-19 15:45:42.000000000 -0400
++++ perl-5.8.7/utils/c2ph.PL	2005-11-08 12:53:30.000000000 -0500
+@@ -1320,7 +1320,7 @@
+ 	$intrinsics{$_[1]} = $template{$_[0]};
+     }
+     close(PIPE) || die "couldn't read intrinsics!";
+-    unlink($TMP, '$SAFEDIR/a.out');
++    unlink($TMP, "$SAFEDIR/a.out");
+     print STDERR "done\n" if $trace;
+ }
+ 
+--- perl-5.8.7/lib/Memoize/t/tie_storable.t.CAN-2004-0976	2002-07-12 15:56:19.000000000 -0400
++++ perl-5.8.7/lib/Memoize/t/tie_storable.t	2005-11-08 13:06:13.000000000 -0500
+@@ -33,14 +33,7 @@
+ 
+ print "1..4\n";
+ 
+-
+-if (eval {require File::Spec::Functions}) {
+- File::Spec::Functions->import();
+-} else {
+-  *catfile = sub { join '/', @_ };
+-}
+-$tmpdir = $ENV{TMP} || $ENV{TMPDIR} ||  '/tmp';  
+-$file = catfile($tmpdir, "storable$$");
++$file = "storable$$";
+ 1 while unlink $file;
+ tryout('Memoize::Storable', $file, 1);  # Test 1..4
+ 1 while unlink $file;
+--- perl-5.8.7/lib/Memoize/t/tie_ndbm.t.CAN-2004-0976	2005-04-22 07:36:58.000000000 -0400
++++ perl-5.8.7/lib/Memoize/t/tie_ndbm.t	2005-11-08 13:04:45.000000000 -0500
+@@ -28,14 +28,7 @@
+ 
+ print "1..4\n";
+ 
+-
+-if (eval {require File::Spec::Functions}) {
+- File::Spec::Functions->import();
+-} else {
+-  *catfile = sub { join '/', @_ };
+-}
+-$tmpdir = $ENV{TMP} || $ENV{TMPDIR} ||  '/tmp';  
+-$file = catfile($tmpdir, "md$$");
++$file = "md$$";
+ 1 while unlink $file, "$file.dir", "$file.pag", "$file.db";
+ tryout('Memoize::NDBM_File', $file, 1);  # Test 1..4
+ 1 while unlink $file, "$file.dir", "$file.pag", "$file.db";
+--- perl-5.8.7/lib/Memoize/t/tie.t.CAN-2004-0976	2002-07-12 15:56:19.000000000 -0400
++++ perl-5.8.7/lib/Memoize/t/tie.t	2005-11-08 13:03:20.000000000 -0500
+@@ -29,14 +29,7 @@
+   $_[0]+1;
+ }
+ 
+-if (eval {require File::Spec::Functions}) {
+-  File::Spec::Functions->import('tmpdir', 'catfile');
+-  $tmpdir = tmpdir();
+-} else {
+-  *catfile = sub { join '/', @_ };
+-  $tmpdir = $ENV{TMP} || $ENV{TMPDIR} || '/tmp';
+-}
+-$file = catfile($tmpdir, "md$$");
++$file = "md$$";
+ @files = ($file, "$file.db", "$file.dir", "$file.pag");
+ 1 while unlink @files;
+ 
+--- perl-5.8.7/lib/Memoize/t/tie_sdbm.t.CAN-2004-0976	2002-07-12 15:56:19.000000000 -0400
++++ perl-5.8.7/lib/Memoize/t/tie_sdbm.t	2005-11-08 13:05:32.000000000 -0500
+@@ -28,14 +28,7 @@
+ 
+ print "1..4\n";
+ 
+-if (eval {require File::Spec::Functions}) {
+- File::Spec::Functions->import('tmpdir', 'catfile');
+- $tmpdir = tmpdir();
+-} else {
+- *catfile = sub { join '/', @_ };
+-  $tmpdir = $ENV{TMP} || $ENV{TMPDIR} || '/tmp';
+-}
+-$file = catfile($tmpdir, "md$$");
++$file = "md$$";
+ 1 while unlink $file, "$file.dir", "$file.pag";
+ tryout('Memoize::SDBM_File', $file, 1);  # Test 1..4
+ 1 while unlink $file, "$file.dir", "$file.pag";
+--- perl-5.8.7/lib/Memoize/t/tie_gdbm.t.CAN-2004-0976	2002-07-12 15:56:19.000000000 -0400
++++ perl-5.8.7/lib/Memoize/t/tie_gdbm.t	2005-11-08 13:04:03.000000000 -0500
+@@ -26,13 +26,7 @@
+ 
+ print "1..4\n";
+ 
+-if (eval {require File::Spec::Functions}) {
+- File::Spec::Functions->import();
+-} else {
+-  *catfile = sub { join '/', @_ };
+-}
+-$tmpdir = $ENV{TMP} || $ENV{TMPDIR} ||  '/tmp';  
+-$file = catfile($tmpdir, "md$$");
++$file = "md$$";
+ 1 while unlink $file, "$file.dir", "$file.pag";
+ tryout('GDBM_File', $file, 1);  # Test 1..4
+ 1 while unlink $file, "$file.dir", "$file.pag";
+--- perl-5.8.7/lib/ExtUtils/instmodsh.CAN-2004-0976	2004-01-05 17:34:59.000000000 -0500
++++ perl-5.8.7/lib/ExtUtils/instmodsh	2005-11-08 12:42:25.000000000 -0500
+@@ -2,6 +2,7 @@
+ 
+ use strict;
+ use IO::File;
++use File::Temp;
+ use ExtUtils::Packlist;
+ use ExtUtils::Installed;
+ 
+@@ -58,15 +59,14 @@
+       $reply =~ /^t\s*/ and do
+          {
+          my $file = (split(' ', $reply))[1];
+-         my $tmp = "/tmp/inst.$$";
+-         if (my $fh = IO::File->new($tmp, "w"))
+-            {
+-            $fh->print(join("\n", $Inst->files($module)));
+-            $fh->close();
+-            system("tar cvf $file -I $tmp");
+-            unlink($tmp);
+-            last CASE;
+-            }
++	 my ($fh, $tmp) = File::Temp::tempfile(UNLINK => 1);
++	 $fh->print(join("\n", $Inst->files($module)));
++	 $fh->close();
++	 # This used to use -I which is wrong for GNU tar.
++	 system("tar cvf $file -T $tmp");
++	 unlink($tmp);
++	 last CASE;
++         }  
+          else { print("Can't open $file: $!\n"); }
+          last CASE;
+          };
+--- perl-5.8.7/lib/ExtUtils/MakeMaker.pm.CAN-2004-0976	2004-01-05 17:34:59.000000000 -0500
++++ perl-5.8.7/lib/ExtUtils/MakeMaker.pm	2005-11-08 13:07:36.000000000 -0500
+@@ -1013,7 +1013,7 @@
+ The Makefile to be produced may be altered by adding arguments of the
+ form C<KEY=VALUE>. E.g.
+ 
+-  perl Makefile.PL PREFIX=/tmp/myperl5
++  perl Makefile.PL PREFIX=~/myperl5
+ 
+ Other interesting targets in the generated Makefile are
+ 
+@@ -1355,13 +1355,13 @@
+ 
+ This is the root directory into which the code will be installed.  It
+ I<prepends itself to the normal prefix>.  For example, if your code
+-would normally go into /usr/local/lib/perl you could set DESTDIR=/tmp/
+-and installation would go into /tmp/usr/local/lib/perl.
++would normally go into /usr/local/lib/perl you could set DESTDIR=~/myperl/
++and installation would go into ~/myperl/usr/local/lib/perl.
+ 
+ This is primarily of use for people who repackage Perl modules.
+ 
+ NOTE: Due to the nature of make, it is important that you put the trailing
+-slash on your DESTDIR.  "/tmp/" not "/tmp".
++slash on your DESTDIR.  "~/myperl/" not "~/myperl".
+ 
+ =item DIR
+ 
+--- perl-5.8.7/lib/CGI/Cookie.pm.CAN-2004-0976	2005-05-16 04:41:03.000000000 -0400
++++ perl-5.8.7/lib/CGI/Cookie.pm	2005-11-08 14:56:15.141710000 -0500
+@@ -407,7 +407,7 @@
+ You may also retrieve cookies that were stored in some external
+ form using the parse() class method:
+ 
+-       $COOKIES = `cat /usr/tmp/Cookie_stash`;
++       $COOKIES = `cat /var/run/www/Cookie_stash`;
+        %cookies = parse CGI::Cookie($COOKIES);
+ 
+ If you are in a mod_perl environment, you can save some overhead by
+--- perl-5.8.7/lib/Shell.pm.CAN-2004-0976	2004-06-01 05:42:17.000000000 -0400
++++ perl-5.8.7/lib/Shell.pm	2005-11-08 15:01:36.434664000 -0500
+@@ -127,7 +127,7 @@
+    use Shell qw(cat ps cp);
+    $passwd = cat('</etc/passwd');
+    @pslines = ps('-ww'),
+-   cp("/etc/passwd", "/tmp/passwd");
++   cp("/etc/passwd", "/etc/passwd.orig");
+ 
+    # object oriented 
+    my $sh = Shell->new;

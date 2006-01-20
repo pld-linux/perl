@@ -1,0 +1,114 @@
+--- perl-5.8.7/pp_sort.c.bz172587	2005-04-08 05:31:47.000000000 -0400
++++ perl-5.8.7/pp_sort.c	2005-11-07 12:57:07.000000000 -0500
+@@ -1510,6 +1510,7 @@
+ 
+     if (gimme != G_ARRAY) {
+ 	SP = MARK;
++	EXTEND(SP,1);
+ 	RETPUSHUNDEF;
+     }
+ 
+--- perl-5.8.7/pp_hot.c.bz172587	2005-04-22 10:12:27.000000000 -0400
++++ perl-5.8.7/pp_hot.c	2005-11-07 12:55:16.000000000 -0500
+@@ -639,12 +639,12 @@
+ 	}
+     }
+     SP = ORIGMARK;
+-    PUSHs(&PL_sv_yes);
++    XPUSHs(&PL_sv_yes);
+     RETURN;
+ 
+   just_say_no:
+     SP = ORIGMARK;
+-    PUSHs(&PL_sv_undef);
++    XPUSHs(&PL_sv_undef);
+     RETURN;
+ }
+ 
+--- perl-5.8.7/pp_sys.c.bz172587	2005-04-27 18:12:46.000000000 -0400
++++ perl-5.8.7/pp_sys.c	2005-11-07 13:03:39.000000000 -0500
+@@ -429,13 +429,16 @@
+     SV *tmpsv;
+     char *tmps;
+     STRLEN len;
+-    if (SP - MARK != 1) {
++    if (SP - MARK > 1) {
+ 	dTARGET;
+ 	do_join(TARG, &PL_sv_no, MARK, SP);
+ 	tmpsv = TARG;
+ 	SP = MARK + 1;
+-    }
+-    else {
++    } 
++    else if (SP == MARK ) {
++	tmpsv = &PL_sv_no;
++	EXTEND(SP, 1);
++    } else {
+ 	tmpsv = TOPs;
+     }
+     tmps = SvPV(tmpsv, len);
+@@ -3517,7 +3520,7 @@
+     I32 value = (I32)apply(PL_op->op_type, MARK, SP);
+ 
+     SP = MARK;
+-    PUSHi(value);
++    XPUSHi(value);
+     RETURN;
+ #else
+     DIE(aTHX_ PL_no_func, "chown");
+@@ -4127,7 +4130,7 @@
+ 	    if (errno != EAGAIN) {
+ 		value = -1;
+ 		SP = ORIGMARK;
+-		PUSHi(value);
++		XPUSHi(value);
+ 		if (did_pipes) {
+ 		    PerlLIO_close(pp[0]);
+ 		    PerlLIO_close(pp[1]);
+@@ -4176,7 +4179,7 @@
+ 		    STATUS_CURRENT = -1;
+ 		}
+ 	    }
+-	    PUSHi(STATUS_CURRENT);
++	    XPUSHi(STATUS_CURRENT);
+ 	    RETURN;
+ 	}
+ 	if (did_pipes) {
+@@ -4222,7 +4225,7 @@
+     STATUS_NATIVE_SET(value);
+     do_execfree();
+     SP = ORIGMARK;
+-    PUSHi(result ? value : STATUS_CURRENT);
++    XPUSHi(result ? value : STATUS_CURRENT);
+ #endif /* !FORK or VMS */
+     RETURN;
+ }
+@@ -4275,7 +4278,7 @@
+     }
+ 
+     SP = ORIGMARK;
+-    PUSHi(value);
++    XPUSHi(value);
+     RETURN;
+ }
+ 
+--- perl-5.8.7/pp.c.bz172587	2005-05-16 11:30:13.000000000 -0400
++++ perl-5.8.7/pp.c	2005-11-07 12:56:32.000000000 -0500
+@@ -721,7 +721,7 @@
+     while (MARK < SP)
+ 	do_chop(TARG, *++MARK);
+     SP = ORIGMARK;
+-    PUSHTARG;
++    XPUSHTARG;
+     RETURN;
+ }
+ 
+@@ -739,7 +739,7 @@
+ 
+     while (SP > MARK)
+ 	count += do_chomp(POPs);
+-    PUSHi(count);
++    XPUSHi(count);
+     RETURN;
+ }
+ 
