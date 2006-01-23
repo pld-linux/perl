@@ -64,3 +64,38 @@
  
  # Do not regenerate perly.c and perly.h.
  
+--- perl-5.8.7/uconfig.sh.orig	2006-01-23 10:56:57.000000000 +0100
++++ perl-5.8.7/uconfig.sh	2006-01-23 11:30:05.000000000 +0100
+@@ -194,6 +194,7 @@
+ d_ldbl_dig='undef'
+ d_link='undef'
+ d_localtime_r='undef'
++d_localtime_r_needs_tzset='define'
+ d_locconv='undef'
+ d_lockf='undef'
+ d_longdbl='undef'
+@@ -361,6 +362,8 @@
+ d_strerror='undef'
+ d_strerror_r='undef'
+ d_strftime='undef'
++d_strlcat='undef'
++d_strlcpy='undef'
+ d_strtod='undef'
+ d_strtol='undef'
+ d_strtold='undef'
+@@ -494,6 +497,7 @@
+ i_machcthr='undef'
+ i_malloc='undef'
+ i_math='define'
++d_libm_lib_version='define'
+ i_memory='undef'
+ i_mntent='undef'
+ i_ndbm='undef'
+@@ -685,6 +689,7 @@
+ usereentrant='undef'
+ usesfio='false'
+ useshrplib='false'
++usesitecustomize='undef'
+ usesocks='undef'
+ usethreads='undef'
+ usevendorprefix='undef'
