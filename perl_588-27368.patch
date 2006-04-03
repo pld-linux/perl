@@ -1,0 +1,55 @@
+Change 27368 by rgs@stencil on 2006/03/03 15:45:32
+
+	Subject: [PATCH] Re: [perl #38657] -d:Foo=bar broke in 5.8.8
+	From: Jarkko Hietaniemi <jhietaniemi@gmail.com>
+	Date: Thu, 02 Mar 2006 20:21:26 +0200
+	Message-ID: <440737A6.4060606@gmail.com>
+
+Affected files ...
+
+... //depot/perl/t/lib/Devel/switchd.pm#3 edit
+... //depot/perl/t/run/switchd.t#4 edit
+
+Differences ...
+
+--- t/lib/Devel/switchd.pm.dist	2006-03-02 20:02:52.000000000 +0200
++++ t/lib/Devel/switchd.pm	2006-03-02 20:12:59.000000000 +0200
+@@ -1,6 +1,8 @@
+ package Devel::switchd;
+ use strict; BEGIN { } # use strict; BEGIN { ... } to incite [perl #21890]
++sub import { print "import<@_>;" }
+ package DB;
+-sub DB { print join(",", caller), ";" }
++sub DB { print "DB<", join(",", caller), ">;" }
++sub sub { print "sub<$DB::sub>;"; goto &$DB::sub }
+ 1;
+ 
+--- t/run/switchd.t.dist	2006-03-02 19:59:03.000000000 +0200
++++ t/run/switchd.t	2006-03-02 20:17:18.000000000 +0200
+@@ -7,7 +7,9 @@
+ 
+ require "./test.pl";
+ 
+-plan(tests => 1);
++# This test depends on t/lib/Devel/switchd.pm.
++
++plan(tests => 2);
+ 
+ my $r;
+ my @tmpfiles = ();
+@@ -34,7 +36,14 @@
+     $r = runperl(
+ 		 switches => [ '-Ilib', '-d:switchd' ],
+ 		 progfile => $filename,
++		 args => ['3'],
+ 		);
+-    like($r, qr/^main,swdtest.tmp,9;Foo,swdtest.tmp,5;Foo,swdtest.tmp,6;Foo,swdtest.tmp,6;Bar,swdtest.tmp,2;Bar,swdtest.tmp,2;Bar,swdtest.tmp,2;$/i);
++    like($r, qr/^sub<Devel::switchd::import>;import<Devel::switchd>;DB<main,swdtest.tmp,9>;sub<Foo::foo>;DB<Foo,swdtest.tmp,5>;DB<Foo,swdtest.tmp,6>;DB<Foo,swdtest.tmp,6>;sub<Bar::bar>;DB<Bar,swdtest.tmp,2>;sub<Bar::bar>;DB<Bar,swdtest.tmp,2>;sub<Bar::bar>;DB<Bar,swdtest.tmp,2>;$/);
++    $r = runperl(
++		 switches => [ '-Ilib', '-d:switchd=a,42' ],
++		 progfile => $filename,
++		 args => ['4'],
++		);
++    like($r, qr/^sub<Devel::switchd::import>;import<Devel::switchd a 42>;DB<main,swdtest.tmp,9>;sub<Foo::foo>;DB<Foo,swdtest.tmp,5>;DB<Foo,swdtest.tmp,6>;DB<Foo,swdtest.tmp,6>;sub<Bar::bar>;DB<Bar,swdtest.tmp,2>;sub<Bar::bar>;DB<Bar,swdtest.tmp,2>;sub<Bar::bar>;DB<Bar,swdtest.tmp,2>;$/);
+ }
+ 
