@@ -51,13 +51,13 @@ Summary(sv):	Programmeringsspråket Perl
 Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
 Name:		perl
-Version:	5.8.7
-Release:	6%{!?with_threads:_nothr}
+Version:	5.8.8
+Release:	0.1%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	9a175d6ccbb5d9b41ffac5073ff9cc3c
+# Source0-md5:	a377c0c67ab43fd96eeec29ce19e8382
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	perl.prov
@@ -68,14 +68,14 @@ Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 Patch7:		%{name}_585-microperl_uconfig.patch
-Patch8:		%{name}_587-Pod_Usage_version.patch
+#Patch8:		%{name}_587-Pod_Usage_version.patch
 Patch9:		%{name}-getgrent.patch
 Patch10:	%{name}-5.8.7-172396.patch
 Patch11:	%{name}-5.8.7-CAN-2004-0976.patch
-Patch12:	%{name}-5.8.7-CVE-2005-3962-bz174684.patch
-Patch13:	%{name}-5.8.7-bz172236.patch
-Patch14:	%{name}-5.8.7-bz172587.patch
-Patch15:	%{name}-5.8.7-bz172739_obz36521.patch
+#Patch12:	%{name}-5.8.7-CVE-2005-3962-bz174684.patch
+#Patch13:	%{name}-5.8.7-bz172236.patch
+#Patch14:	%{name}-5.8.7-bz172587.patch
+#Patch15:	%{name}-5.8.7-bz172739_obz36521.patch
 URL:		http://dev.perl.org/perl5/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
@@ -273,11 +273,11 @@ Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Provides:	perl-File-Compare = 1.1003
-Provides:	perl-File-Spec = 3.05
+Provides:	perl-File-Spec = 3.12
 Provides:	perl-File-Temp = 0.16
-Provides:	perl-IO = 1.21
-Provides:	perl-Safe = 2.11
-Provides:	perl-Socket = 1.77
+Provides:	perl-IO = 1.22
+Provides:	perl-Safe = 2.12
+Provides:	perl-Socket = 1.78
 Provides:	perl-Tie-File = 0.97
 Provides:	perl(largefiles)
 # broken, unsupported modules
@@ -300,7 +300,7 @@ Summary:	GDBM_File - Perl5 access to the gdbm library
 Summary(pl):	GDBM_File - dostêp do biblioteki gdbm w Perlu
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-# FIXME: Set Version: 1.07 and Release: 1 instead of inheriting
+# FIXME: Set Version: 1.08 and Release: 1 instead of inheriting
 #        values from the main package.  Why this causes setting
 #        version and release macros up to the end of this spec?
 
@@ -320,10 +320,10 @@ Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
-Provides:	perl-CPAN = 1.76_01
-Provides:	perl-Devel-DProf = 20050310.00
-Provides:	perl-Devel-PPPort = 3.06
-Provides:	perl-Devel-Peek = 1.02
+Provides:	perl-CPAN = 1.76_02
+Provides:	perl-Devel-DProf = 20050603.00
+Provides:	perl-Devel-PPPort = 3.06_01
+Provides:	perl-Devel-Peek = 1.03
 Provides:	perl-ExtUtils-Embed = 1.2506_01
 Provides:	perl-ExtUtils-MakeMaker = 6.17
 Obsoletes:	perl-lib-devel
@@ -368,42 +368,42 @@ Summary:	Modules from the core Perl distribution
 Summary(pl):	Modu³y z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-Provides:	perl-Attribute-Handlers = 0.78_01
-Provides:	perl-CGI = 3.10
+Provides:	perl-Attribute-Handlers = 0.78_02
+Provides:	perl-CGI = 3.15
 Provides:	perl-Class-ISA = 0.33
-Provides:	perl-Digest = 1.10
-Provides:	perl-Digest-MD5 = 2.33
-Provides:	perl-Filter-Simple = 0.78
-Provides:	perl-FindBin = 1.44
+Provides:	perl-Digest = 1.14
+Provides:	perl-Digest-MD5 = 2.36
+Provides:	perl-Filter-Simple = 0.82
+Provides:	perl-FindBin = 1.47
 #Provides:	perl-Hash-Utils = 0.05	Data::Util is missing
 Provides:	perl-I18N-LangTags = 0.35
 Provides:	perl-IPC-SysV = 1.04
 Provides:	perl-Locale-Codes = 2.07
 Provides:	perl-Locale-Maketext = 1.09
-Provides:	perl-MIME-Base64 = 3.05
+Provides:	perl-MIME-Base64 = 3.07
 Provides:	perl-Math-BigInt = 1.77
 Provides:	perl-Math-BigRat = 0.15
-Provides:	perl-Math-Trig = 1.02
+Provides:	perl-Math-Trig = 1.03
 Provides:	perl-Memoize = 1.01
 Provides:	perl-NEXT = 0.60
 Provides:	perl-PerlIO-via-QuotedPrint = 0.06
 Provides:	perl-Pod-LaTeX = 0.58
-Provides:	perl-Pod-Parser = 1.30
-Provides:	perl-Scalar-List-Utils = 1.14
-Provides:	perl-Storable = 2.13
-Provides:	perl-Term-ANSIColor = 1.09
+Provides:	perl-Pod-Parser = 1.32
+Provides:	perl-Scalar-List-Utils = 1.18
+Provides:	perl-Storable = 2.15
+Provides:	perl-Term-ANSIColor = 1.10
 Provides:	perl-Term-Cap = 1.09
 Provides:	perl-Test = 1.25
-Provides:	perl-Test-Harness = 2.48
-Provides:	perl-Test-Simple = 0.54
+Provides:	perl-Test-Harness = 2.56
+Provides:	perl-Test-Simple = 0.62
 Provides:	perl-Text-Balanced = 1.95
 Provides:	perl-Text-ParseWords = 3.24
 Provides:	perl-Text-Soundex = 1.01
 # XXX: I'm not sure what to do with this one...
-#Provides:	perl-Text-Tabs+Wrap = 2001.09291
-Provides:	perl-Time-HiRes = 1.66
+#Provides:	perl-Text-Tabs+Wrap = 2005.0824(01)
+Provides:	perl-Time-HiRes = 1.86
 Provides:	perl-UNIVERSAL = 1.01
-Provides:	perl-Unicode-Collate = 0.40
+Provides:	perl-Unicode-Collate = 0.52
 Provides:	perl-Unicode-Normalize = 0.32
 Provides:	perl-libnet = 1.19
 Obsoletes:	perl-Encode-compat
@@ -622,15 +622,15 @@ microperlu - popraw je.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
+#%patch7 -p1
+#%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+#%patch12 -p1 # applied
+#%patch13 -p1 # applied
+#%patch14 -p1 # applied
+#%patch15 -p1 # applied
 
 %build
 sh Configure \
@@ -709,7 +709,7 @@ rm -f uconfig.h
 	OPTIMIZE="%{rpmcflags}"
 %endif
 
-%{?with_tests:%{__make} test}
+%{?with_tests:%{__make} test -j1}
 #%{?with_tests:%{__make} minitest}
 
 %install
@@ -764,12 +764,17 @@ rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
+## symlink perldelta.1 -> perlFOOdelta.1
+[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+ln -s perl%(echo %{version} | tr -d .)delta.1 $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+
 ## These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
 
 ## We already have these *.pod files as man pages
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},MakeMaker}/*.pod
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
@@ -780,44 +785,12 @@ install -d doc-base/{Getopt/Long,Switch} \
 	doc-devel/ExtUtils \
 	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
 
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Getopt/Long/{CHANGES,README} doc-base/Getopt/Long
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Switch/{Changes,README} doc-base/Switch
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/ExtUtils/{Changes,NOTES,PATCHING,README,TODO} \
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/ExtUtils/{NOTES,PATCHING} \
 	doc-devel/ExtUtils
 
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Attribute/Handlers/{Changes,README} \
-	doc-modules/Attribute/Handlers
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Filter/Simple/{Changes,README} \
-	doc-modules/Filter/Simple
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/I18N/LangTags/{ChangeLog,README} \
-	doc-modules/I18N/LangTags
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Locale/Codes/{ChangeLog,README} \
-	doc-modules/Locale/Codes
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Locale/Maketext/{ChangeLog,README} \
-	doc-modules/Locale/Maketext
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Memoize/{README,TODO} \
-	doc-modules/Memoize
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/NEXT/{Changes,README} \
-	doc-modules/NEXT
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/{Changes.libnet,README.libnet} \
-	doc-modules/Net
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Net/Ping/Changes \
-	doc-modules/Net/Ping
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Term/ANSIColor/{ChangeLog,README} \
-	doc-modules/Term/ANSIColor
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Test/Simple/{Changes,README} \
-	doc-modules/Test/Simple
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Text/Balanced/{Changes,README} \
-	doc-modules/Text/Balanced
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Text/TabsWrap/CHANGELOG \
-	doc-modules/Text/TabsWrap
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/README \
-	doc-modules/Unicode
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/{Changes,README} \
-	doc-modules/Unicode/Collate
 # needed only for tests
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{README.perl,ReadMe.txt} \
+mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
 	doc-modules/unicore
 # source for *.pl
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
@@ -869,16 +842,13 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/ma
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
 mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/CGI
-mv $RPM_BUILD_ROOT%{perl_privlib}/Attribute/Handlers/demo \
-	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Attribute-Handlers
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Attribute::Handlers::demo*
-#rm -f $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA/test.pl
-#rmdir $RPM_BUILD_ROOT%{perl_privlib}/Class/ISA
-mv $RPM_BUILD_ROOT%{perl_privlib}/Net/demos \
-	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/Net
+
 # XXX: bug bug bug...
 mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
 	$RPM_BUILD_ROOT%{perl_archlib}/auto/POSIX
+
+## for %%__spec_install_post_strip
+%{_fixperms} $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1407,6 +1377,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/find2perl
 %{_mandir}/man1/find2perl.*
 %attr(755,root,root) %{_bindir}/instmodsh
+%{_mandir}/man1/instmodsh.*
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
 %attr(755,root,root) %{_bindir}/piconv
