@@ -618,7 +618,7 @@ microperlu - popraw je.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#%patch7 -p1
+%patch7 -p1
 %patch8 -p0
 %patch9 -p1
 %patch10 -p1
