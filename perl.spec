@@ -3,7 +3,7 @@
 %bcond_without	tests		# do not perform "make test"
 %bcond_without	threads		# build without support for threads
 %bcond_without	gdbm		# build without the GDBM_File module
-%bcond_with	microperl	# build microperl (needs fixing)
+%bcond_without	microperl	# build microperl (needs fixing)
 #
 # TODO:
 # - fix "FIXME"s, review "XXX"s
@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.8
-Release:	1%{!?with_threads:_nothr}
+Release:	2%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
