@@ -794,11 +794,11 @@ owd="`pwd`"
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 	Attribute Audio Authen B Barcode Bundle Business CGI Cache Carp Chart \
-	Cisco Class Config Convert Crypt DBD DNS Data Date/Japanese DateTime \
-	Devel Device Digest Email Error Exporter ExtUtils File/Path Filesys \
-	Font Games Getopt GnuPG Graph Graphics HTML HTTP Hash I18N IO/Socket \
-	IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball} List \
-	Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
+	Cisco Class Class/Data Config Convert Crypt DBD DNS Data Date/Japanese \
+	DateTime Devel Device Digest Email Error Exporter ExtUtils File/Path \
+	Filesys Font Games Getopt GnuPG Graph Graphics HTML HTTP Hash I18N \
+	IO/Socket IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball}
+	List Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
 	Modem Module Net/{IDN,SMTP} NetAddr NetServer Netscape News Number \
 	Object OLE PAR PHP Params Parse PerlIO/via Pod PostScript Proc \
 	Quantum RADIUS RPC RPM RTF Regexp SNMP SOAP/Transport SQL SVN \
