@@ -3,7 +3,7 @@
 %bcond_without	tests		# do not perform "make test"
 %bcond_without	threads		# build without support for threads
 %bcond_without	gdbm		# build without the GDBM_File module
-%bcond_with	microperl	# build microperl (needs fixing)
+%bcond_without	microperl	# build microperl (needs fixing)
 #
 # TODO:
 # - fix "FIXME"s, review "XXX"s
@@ -52,7 +52,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.8
-Release:	1%{!?with_threads:_nothr}
+Release:	3%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -618,7 +618,7 @@ microperlu - popraw je.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#%patch7 -p1
+%patch7 -p1
 %patch8 -p0
 %patch9 -p1
 %patch10 -p1
@@ -794,11 +794,11 @@ owd="`pwd`"
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 	Attribute Audio Authen B Barcode Bundle Business CGI Cache Carp Chart \
-	Cisco Class Config Convert Crypt DBD DNS Data Date/Japanese DateTime \
-	Devel Device Digest Email Error Exporter ExtUtils File/Path Filesys \
-	Font Games Getopt GnuPG Graph Graphics HTML HTTP Hash I18N IO/Socket \
-	IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball} List \
-	Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
+	Cisco Class Class/Data Config Convert Crypt DBD DNS Data Date/Japanese \
+	DateTime Devel Device Digest Email Error Exporter ExtUtils File/Path \
+	Filesys Font Games Getopt GnuPG Graph Graphics HTML HTTP Hash I18N \
+	IO/Socket IPC Image Inline Jabber Language Lingua/{EN,Stem/Snowball} \
+	List Locale LockFile Log MIME Mail Math/{BigInt,Business,Calc,Fractal} \
 	Modem Module Net/{IDN,SMTP} NetAddr NetServer Netscape News Number \
 	Object OLE PAR PHP Params Parse PerlIO/via Pod PostScript Proc \
 	Quantum RADIUS RPC RPM RTF Regexp SNMP SOAP/Transport SQL SVN \
