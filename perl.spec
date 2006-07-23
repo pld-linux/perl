@@ -758,10 +758,10 @@ rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
-## symlink perldelta.1 -> perlFOOdelta.1
+## symlink perldelta.1.gz -> perlFOOdelta.1.gz
 [ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
-ln -s perl%(echo %{version} | tr -d .)delta.1 $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+ln -s perl%(echo %{version} | tr -d .)delta.1.gz $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1.gz
 
 ## These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
