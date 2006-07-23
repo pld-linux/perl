@@ -761,7 +761,7 @@ rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin
 ## symlink perldelta.1.gz -> perlFOOdelta.1.gz
 [ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
-ln -s perl%(echo %{version} | tr -d .)delta.1.gz $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1.gz
+echo ".so perl%(echo %{version} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
 ## These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
