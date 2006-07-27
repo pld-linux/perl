@@ -60,7 +60,7 @@ Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
 # Source0-md5:	a377c0c67ab43fd96eeec29ce19e8382
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
-Source2:	perl.prov
+Source2:	%{name}.prov
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
 Patch3:		%{name}_580-errno_h-parsing.patch
@@ -76,6 +76,7 @@ Patch12:	%{name}_588-27203.patch
 URL:		http://dev.perl.org/perl5/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
+BuildRequires:	rpmbuild(macros) >= 1.310
 %{?with_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
@@ -269,6 +270,7 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk砤dniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
+Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
 Provides:	perl-File-Temp = 0.16
@@ -276,7 +278,6 @@ Provides:	perl-IO = 1.22
 Provides:	perl-Safe = 2.12
 Provides:	perl-Socket = 1.78
 Provides:	perl-Tie-File = 0.97
-Provides:	perl(largefiles)
 # broken, unsupported modules
 Obsoletes:	perl-SOAP
 Obsoletes:	perl-Sort-PolySort
@@ -353,8 +354,8 @@ Summary(pl):	Dokumentacja Perla
 Group:		Documentation
 
 %description doc-reference
-Reference documentation for the Practical Extraction and Report Language
-and it's interpreter in the man(1) format.
+Reference documentation for the Practical Extraction and Report
+Language and it's interpreter in the man(1) format.
 
 %description doc-reference -l pl
 Dokumentacja referencyjna w formacie man do j陑yka Perl (Practical
@@ -840,9 +841,6 @@ mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
 # XXX: bug bug bug...
 mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
 	$RPM_BUILD_ROOT%{perl_archlib}/auto/POSIX
-
-## for %%__spec_install_post_strip
-%{_fixperms} $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
