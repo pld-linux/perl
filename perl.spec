@@ -634,6 +634,8 @@ sh Configure \
 	-Dcccdlflags='-fPIC' \
 	-Dccdlflags='-rdynamic' \
 	-Dldlibpthname=none \
+	-Dldflags="%{rpmldflags}" \
+	-Dlddlflags="-shared %{rpmldflags}" \
 	-Doptimize="%{rpmcflags}" \
 	%{?debug:-DDEBUGGING} \
 	-Duseshrplib \
