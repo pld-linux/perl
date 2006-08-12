@@ -799,7 +799,7 @@ owd="`pwd`"
 cd $RPM_BUILD_ROOT%{perl_vendorlib}
 install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
 	Attribute Audio Authen B Barcode Bundle Business CGI Cache Carp \
-	Chart Cisco Class Class/Data Config Convert Crypt DBD DNS Data \
+	Chart Cisco Class/Data Config Convert Crypt DBD DNS Data \
 	Date/Japanese DateTime Devel Device Digest Email/Simple Error \
 	Exporter ExtUtils File/Path Filesys Font Games Getopt GnuPG Graph \
 	Graphics HTML HTTP Hash I18N IO/Socket IPC Image Inline Jabber \
