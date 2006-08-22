@@ -29,7 +29,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 5
+%define		_rel 6
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
 Summary(da):	Programmeringssproget Perl
