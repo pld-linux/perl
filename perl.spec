@@ -29,6 +29,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
+%define		_rel 5
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	ProgramovacÌ jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -52,7 +53,7 @@ Summary(tr):	Kabuk yorumlama dili
 Summary(zh_CN):	Perl ±‡≥Ã”Ô—‘°£
 Name:		perl
 Version:	5.8.8
-Release:	2%{!?with_threads:_nothr}
+Release:	%{_rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -270,6 +271,7 @@ Perl  «“ª÷÷∏ﬂº∂±‡≥Ã”Ô—‘£¨∆‘¥”⁄ C°¢sed°¢awk ∫Õ shell Ω≈±æ°£
 Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk≥adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
+Requires:	perl-dirs
 Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
@@ -795,37 +797,6 @@ rm -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
 owd="`pwd`"
-
-cd $RPM_BUILD_ROOT%{perl_vendorlib}
-install -d AI/NeuralNet Algorithm Apache App/Packer Archive Array Astro \
-	Attribute Audio Authen B Barcode Bundle Business CGI Cache Carp \
-	Chart Cisco Class/Data Config Convert Crypt DBD DNS Data \
-	Date/Japanese DateTime Devel Device Digest Email/Simple Error \
-	Exporter ExtUtils File/Path Filesys Font Games Getopt GnuPG Graph \
-	Graphics HTML HTTP Hash I18N IO/Socket IPC Image Inline Jabber \
-	Language Lingua/{EN,Stem/Snowball} List Locale LockFile Log MIME \
-	Mail Math/{BigInt,Business,Calc,Fractal} Modem Module Net/{IDN,SMTP} \
-	NetAddr NetServer Netscape News Number Object OLE PAR PHP Params \
-	Parse PerlIO/via Pod PostScript Proc Quantum RADIUS RPC RPM RTF \
-	Regexp SNMP SOAP/Transport SQL SVN Schedule Set Sort Speech \
-	Spreadsheet Statistics String Sub Sys TeX Template \
-	Term/{ReadLine,Screen} Test Text/Query Tie Time Tree UNIVERSAL \
-	Unicode Unix WWW/Google X500 XML/{Filter,Handler,Parser,RSS,XPath} \
-	auto/{AI,Array,Config,Crypt,Data,Devel,GnuPG,Mail,Math,Net,Schedule} \
-	auto/{Statistics,Text,WWW}
-
-cd $RPM_BUILD_ROOT%{perl_vendorarch}
-install -d AI Algorithm Astro Audio Authen B BSD Bit Chemistry Class \
-	Compress Convert Crypt/OpenSSL Data DateTime Devel Device Digest \
-	File IPC Image Inline Linux Locale Math/BigInt Net Ogg/Vorbis PerlIO \
-	Speech/Recognizer String Sys Template Term Text Time Unicode WWW XML \
-	auto/{AI,Algorithm,Astro,Audio,Authen,BSD,Bit,Chemistry,Class,Clone} \
-	auto/{Compress,Convert,Crypt/OpenSSL,Data,Devel,Device,Digest,File} \
-	auto/{IPC,Image,Inline,Locale,Linux,Math/BigInt,Net,Ogg/Vorbis} \
-	auto/{PerlIO,Regexp,Speech/Recognizer,String,Sys,Term,Text,Time} \
-	auto/{Unicode,WWW,XML}
-
-cd "$owd"
 
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
