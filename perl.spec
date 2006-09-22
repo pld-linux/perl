@@ -325,7 +325,7 @@ Provides:	perl-Devel-DProf = 20050603.00
 Provides:	perl-Devel-PPPort = 3.06_01
 Provides:	perl-Devel-Peek = 1.03
 Provides:	perl-ExtUtils-Embed = 1.2506_01
-Provides:	perl-ExtUtils-MakeMaker = 6.17
+Provides:	perl-ExtUtils-MakeMaker = 6.30
 Obsoletes:	perl-lib-devel
 
 %description devel
