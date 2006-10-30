@@ -78,7 +78,7 @@ Patch13:	%{name}-ExtUtils-MakeMaker-write-permissions.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
-BuildRequires:	gcc >= 4.1
+BuildRequires:	gcc >= 5:4.1
 %endif
 %{?with_gdbm:BuildRequires:	gdbm-devel}
 # required for proper Provides generation (older are not supported by spec)
