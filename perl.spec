@@ -76,10 +76,14 @@ Patch11:	%{name}-5.8.7-CAN-2004-0976.patch
 Patch12:	%{name}_588-27203.patch
 Patch13:	%{name}-ExtUtils-MakeMaker-write-permissions.patch
 URL:		http://dev.perl.org/perl5/
+%ifarch ppc
+# gcc 3.3.x miscompiles pp_hot.c
+BuildRequires:	gcc >= 4.1
+%endif
+%{?with_gdbm:BuildRequires:	gdbm-devel}
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
 BuildRequires:	rpmbuild(macros) >= 1.310
-%{?with_gdbm:BuildRequires:	gdbm-devel}
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
@@ -88,11 +92,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/%{name}-%{version}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
-
-# gcc 3.3.x miscompiles pp_hot.c
-# (in PUSHSUB in entersub two SvREFCNT_inc()s are working as one)
-# -fno-strict-aliasing is already used to build Perl and doesn't help
-%define		specflags_ppc	-O1
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
