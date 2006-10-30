@@ -29,7 +29,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 6
+%define		_rel 7
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -74,6 +74,7 @@ Patch9:		%{name}-getgrent.patch
 Patch10:	%{name}-5.8.7-172396.patch
 Patch11:	%{name}-5.8.7-CAN-2004-0976.patch
 Patch12:	%{name}_588-27203.patch
+Patch13:	%{name}-ExtUtils-MakeMaker-write-permissions.patch
 URL:		http://dev.perl.org/perl5/
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
@@ -628,6 +629,7 @@ microperlu - popraw je.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p0
+%patch13 -p1
 
 %build
 sh Configure \
