@@ -10,7 +10,6 @@
 # - add the {O,N}DBM_File modules
 # - review the perldiag.pod issue
 # - consider disabling ithreads by default
-# - consider introducing perl-dirs
 # - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
 # - patch MakeMaker to get rid of empty *.bs files (MM_Unix::dynamic_bs())
 #
@@ -29,7 +28,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 7
+%define		_rel 8
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	ProgramovacÌ jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -272,7 +271,7 @@ Perl  «“ª÷÷∏ﬂº∂±‡≥Ã”Ô—‘£¨∆‘¥”⁄ C°¢sed°¢awk ∫Õ shell Ω≈±æ°£
 Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk≥adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
-Requires:	perl-dirs
+Requires:	perl-dirs(%{_target_cpu})
 Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
