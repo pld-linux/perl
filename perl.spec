@@ -28,7 +28,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 8
+%define		_rel 9
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -266,11 +266,20 @@ Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆğÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
 ±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
 ÓïÑÔ½øĞĞ±àĞ´¡£Äú±ØĞëÔÚÏµÍ³ÖĞ°²×° Perl Èí¼ş°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
 
+%package libs
+Summary:	Shared Perl library
+Group:		Libraries
+Conflicts:	perl-base < 1:5.8.8-8.1
+
+%description libs
+Shared Perl library.
+
 %package base
 Summary:	Base Perl components for a minimal installation
 Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Requires:	perl-dirs(%{_target_cpu})
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
@@ -818,12 +827,21 @@ mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	base -p /sbin/ldconfig
-%postun	base -p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libperl.so.*
+%dir %{_libdir}/perl5
+%dir %{_libdir}/perl5/%{version}
+%dir %{perl_archlib}
+%dir %{perl_archlib}/CORE
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
 
 %files base
 %defattr(644,root,root,755)
@@ -836,14 +854,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_datadir}/perl5
 %dir %{perl_privlib}
-%dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{version}
-%dir %{perl_archlib}
 %dir %{perl_archlib}/auto
-
-%dir %{perl_archlib}/CORE
-%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
-%attr(755,root,root) %{_libdir}/libperl.so.*
 
 %dir %{_libdir}/perl5/vendor_perl
 %dir %{_libdir}/perl5/vendor_perl/%{_abi}
