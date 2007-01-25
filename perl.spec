@@ -28,7 +28,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 9
+%define		_rel 10
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -74,6 +74,7 @@ Patch10:	%{name}-5.8.7-172396.patch
 Patch11:	%{name}-5.8.7-CAN-2004-0976.patch
 Patch12:	%{name}_588-27203.patch
 Patch13:	%{name}-ExtUtils-MakeMaker-write-permissions.patch
+Patch14:	%{name}-makedepend.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -89,7 +90,7 @@ Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
 Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__perl		%{_builddir}/%{name}-%{version}/runperl
+%define		__perl		%{_builddir}/perl-%{version}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
 
 %description
@@ -637,6 +638,7 @@ microperlu - popraw je.
 %patch11 -p1
 %patch12 -p0
 %patch13 -p1
+%patch14 -p1
 
 %build
 sh Configure \
