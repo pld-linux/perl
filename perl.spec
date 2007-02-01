@@ -269,11 +269,15 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 
 %package libs
 Summary:	Shared Perl library
+Summary(pl):	Biblioteka wsp蟪dzielona Perla
 Group:		Libraries
 Conflicts:	perl-base < 1:5.8.8-8.1
 
 %description libs
 Shared Perl library.
+
+%description libs -l pl
+Biblioteka wsp蟪dzielona Perla.
 
 %package base
 Summary:	Base Perl components for a minimal installation
