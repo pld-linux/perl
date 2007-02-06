@@ -645,6 +645,7 @@ microperlu - popraw je.
 %patch14 -p1
 
 %build
+unset LD_SYMBOLIC_FUNCTIONS || :
 sh Configure \
 	-des \
 	-Dcc="%{__cc}" \
