@@ -28,7 +28,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 10
+%define		_rel 11
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs):	Programovací jazyk Perl
 Summary(da):	Programmeringssproget Perl
@@ -92,6 +92,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{version}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
+
+%define filterout_ld -Wl,--as-needed
+# Otherwise `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
+# which is then forced upon anyone embedding perl.
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
