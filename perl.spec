@@ -93,10 +93,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		__perl		%{_builddir}/perl-%{version}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
 
-%define filterout_ld -Wl,--as-needed
-# Otherwise `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
-# which is then forced upon anyone embedding perl.
-
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
 files, extracting information from those text files, and printing
@@ -834,6 +830,8 @@ mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
 # XXX: bug bug bug...
 mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
 	$RPM_BUILD_ROOT%{perl_archlib}/auto/POSIX
+
+sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
 %clean
 rm -rf $RPM_BUILD_ROOT
