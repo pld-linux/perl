@@ -697,7 +697,8 @@ WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT")
 EOF
 
 %{__make} \
-	LIBPERL_SONAME=libperl.so.%{_abi}
+	LIBPERL_SONAME=libperl.so.%{_abi} \
+	LDDLFLAGS="%{rpmcflags} -shared"
 
 cat > runperl <<EOF
 #!/bin/sh
