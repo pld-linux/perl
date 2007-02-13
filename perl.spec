@@ -30,26 +30,26 @@
 
 %define		_rel 11
 Summary:	Practical Extraction and Report Language (Perl)
-Summary(cs.UTF-8):   Programovací jazyk Perl
-Summary(da.UTF-8):   Programmeringssproget Perl
-Summary(de.UTF-8):   Praktische Extraktions- und Berichtsprache
-Summary(es.UTF-8):   Lenguaje práctica de extracción y listado
-Summary(fr.UTF-8):   Langage de programmation Perl
-Summary(id.UTF-8):   Bahasa pemrograman Perl
-Summary(is.UTF-8):   Forritunarmálið Perl
-Summary(it.UTF-8):   Perl: linguaggio di programmazione
-Summary(ja.UTF-8):   Perl プログラミング言語
-Summary(ko.UTF-8):   펄 프로그래밍 언어
-Summary(nb.UTF-8):   Programmeringsspråket Perl
-Summary(pl.UTF-8):   Interpreter języka Perl (Practical Extraction and Report Language)
-Summary(pt.UTF-8):   A linguagem de programação Perl
-Summary(pt_BR.UTF-8):   Linguagem prática de extração e relatório
-Summary(ru.UTF-8):   Язык программирования Perl
-Summary(sk.UTF-8):   Programovací jazyk Perl
-Summary(sl.UTF-8):   Programski jezik Perl
-Summary(sv.UTF-8):   Programmeringsspråket Perl
-Summary(tr.UTF-8):   Kabuk yorumlama dili
-Summary(zh_CN.UTF-8):   Perl 编程语言。
+Summary(cs.UTF-8):	Programovací jazyk Perl
+Summary(da.UTF-8):	Programmeringssproget Perl
+Summary(de.UTF-8):	Praktische Extraktions- und Berichtsprache
+Summary(es.UTF-8):	Lenguaje práctica de extracción y listado
+Summary(fr.UTF-8):	Langage de programmation Perl
+Summary(id.UTF-8):	Bahasa pemrograman Perl
+Summary(is.UTF-8):	Forritunarmálið Perl
+Summary(it.UTF-8):	Perl: linguaggio di programmazione
+Summary(ja.UTF-8):	Perl プログラミング言語
+Summary(ko.UTF-8):	펄 프로그래밍 언어
+Summary(nb.UTF-8):	Programmeringsspråket Perl
+Summary(pl.UTF-8):	Interpreter języka Perl (Practical Extraction and Report Language)
+Summary(pt.UTF-8):	A linguagem de programação Perl
+Summary(pt_BR.UTF-8):	Linguagem prática de extração e relatório
+Summary(ru.UTF-8):	Язык программирования Perl
+Summary(sk.UTF-8):	Programovací jazyk Perl
+Summary(sl.UTF-8):	Programski jezik Perl
+Summary(sv.UTF-8):	Programmeringsspråket Perl
+Summary(tr.UTF-8):	Kabuk yorumlama dili
+Summary(zh_CN.UTF-8):	Perl 编程语言。
 Name:		perl
 Version:	5.8.8
 Release:	%{_rel}%{!?with_threads:_nothr}
@@ -270,7 +270,7 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 
 %package libs
 Summary:	Shared Perl library
-Summary(pl.UTF-8):   Biblioteka współdzielona Perla
+Summary(pl.UTF-8):	Biblioteka współdzielona Perla
 Group:		Libraries
 Conflicts:	perl-base < 1:5.8.8-8.1
 
@@ -282,7 +282,7 @@ Biblioteka współdzielona Perla.
 
 %package base
 Summary:	Base Perl components for a minimal installation
-Summary(pl.UTF-8):   Podstawowe składniki potrzebne do minimalnej instalacji Perla
+Summary(pl.UTF-8):	Podstawowe składniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Requires:	perl-dirs(%{_target_cpu})
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -311,7 +311,7 @@ Perla, nadająca się do użytku. Zaleca się instalację pełnego Perla
 
 %package GDBM_File
 Summary:	GDBM_File - Perl5 access to the gdbm library
-Summary(pl.UTF-8):   GDBM_File - dostęp do biblioteki gdbm w Perlu
+Summary(pl.UTF-8):	GDBM_File - dostęp do biblioteki gdbm w Perlu
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 # FIXME: Set Version: 1.08 and Release: 1 instead of inheriting
@@ -328,8 +328,8 @@ z biblioteki GNU gdbm.
 
 %package devel
 Summary:	Perl development files
-Summary(pl.UTF-8):   Pliki potrzebne przy tworzeniu własnych aplikacji w Perlu
-Summary(pt_BR.UTF-8):   Arquivos de desenvolvimento e cabeçalhos para o Perl
+Summary(pl.UTF-8):	Pliki potrzebne przy tworzeniu własnych aplikacji w Perlu
+Summary(pt_BR.UTF-8):	Arquivos de desenvolvimento e cabeçalhos para o Perl
 Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
@@ -352,7 +352,7 @@ Perla oraz kompilowania modułów Perla.
 
 %package doc-pod
 Summary:	Perl documentation in POD format
-Summary(pl.UTF-8):   Dokumentacja Perla w formacie POD
+Summary(pl.UTF-8):	Dokumentacja Perla w formacie POD
 Group:		Documentation
 Requires:	perldoc
 Obsoletes:	perl-pod
@@ -366,7 +366,7 @@ POD.
 
 %package doc-reference
 Summary:	Perl reference documentation
-Summary(pl.UTF-8):   Dokumentacja Perla
+Summary(pl.UTF-8):	Dokumentacja Perla
 Group:		Documentation
 
 %description doc-reference
@@ -379,7 +379,7 @@ Extraction and Report Language) i jego interpretera.
 
 %package modules
 Summary:	Modules from the core Perl distribution
-Summary(pl.UTF-8):   Moduły z podstawowej dystrybucji Perla
+Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Provides:	perl-Attribute-Handlers = 0.78_02
@@ -433,7 +433,7 @@ dystrybucji.
 
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
-Summary(pl.UTF-8):   perldoc - przeszukiwanie dokumentacji Perla w formacie pod
+Summary(pl.UTF-8):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Group:		Development/Tools
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
@@ -453,18 +453,18 @@ dokumentacji modułów z bibliotek Perla.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
-Summary(de.UTF-8):   sperl zur Verwendung mit setuid Perl-Skripts
-Summary(es.UTF-8):   sperl, para uso con los scrips de Perl setuid
-Summary(fr.UTF-8):   sperl, à utiliser avec les scripts Perl setuid
-Summary(it.UTF-8):   sperl, da usare con gli script di Perl setuid
-Summary(ja.UTF-8):   Setuid Perl scripts と一緒に使用するための suidperl
-Summary(ko.UTF-8):   Setuid 펄 스크립트와 함께 사용되는 suidperl
-Summary(pl.UTF-8):   Binaria setuid root Perla dla setuid-owych skryptów Perla
-Summary(pt.UTF-8):   O suidperl, para usar com os programas de Perl 'setuid'
-Summary(ru.UTF-8):   SUID версия языка Perl
-Summary(sv.UTF-8):   sperl, att användas med setuid perlskript
-Summary(uk.UTF-8):   SUID-версія мови Perl
-Summary(zh_CN.UTF-8):   sperl，用来与 setuid Perl 脚本一起使用
+Summary(de.UTF-8):	sperl zur Verwendung mit setuid Perl-Skripts
+Summary(es.UTF-8):	sperl, para uso con los scrips de Perl setuid
+Summary(fr.UTF-8):	sperl, à utiliser avec les scripts Perl setuid
+Summary(it.UTF-8):	sperl, da usare con gli script di Perl setuid
+Summary(ja.UTF-8):	Setuid Perl scripts と一緒に使用するための suidperl
+Summary(ko.UTF-8):	Setuid 펄 스크립트와 함께 사용되는 suidperl
+Summary(pl.UTF-8):	Binaria setuid root Perla dla setuid-owych skryptów Perla
+Summary(pt.UTF-8):	O suidperl, para usar com os programas de Perl 'setuid'
+Summary(ru.UTF-8):	SUID версия языка Perl
+Summary(sv.UTF-8):	sperl, att användas med setuid perlskript
+Summary(uk.UTF-8):	SUID-версія мови Perl
+Summary(zh_CN.UTF-8):	sperl，用来与 setuid Perl 脚本一起使用
 Group:		Development/Languages/Perl
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Obsoletes:	perl-suidperl
@@ -519,7 +519,7 @@ setuid perl 脚本。
 
 %package tools
 Summary:	Various tools from the core Perl distribution
-Summary(pl.UTF-8):   Różne narzędzia z podstawowej dystrybucji Perla
+Summary(pl.UTF-8):	Różne narzędzia z podstawowej dystrybucji Perla
 Group:		Applications
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -541,7 +541,7 @@ psed, s2p	- edytor strumieniowy
 
 %package tools-devel
 Summary:	Developer's tools from the core Perl distribution
-Summary(pl.UTF-8):   Narzędzia z podstawowej dystrybucji Perla, przeznaczone dla programistów
+Summary(pl.UTF-8):	Narzędzia z podstawowej dystrybucji Perla, przeznaczone dla programistów
 Group:		Development/Tools
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
@@ -576,7 +576,7 @@ splain		- wymuszenie obszernych ostrzeżeń diagnostycznych
 
 %package tools-pod
 Summary:	Tools for manipulating files in the POD format
-Summary(pl.UTF-8):   Narzędzia do przetwarzania plików w formacie POD
+Summary(pl.UTF-8):	Narzędzia do przetwarzania plików w formacie POD
 Group:		Applications
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 
@@ -605,7 +605,7 @@ podselect	- wypisanie wybranych sekcji z dokumentacji POD
 
 %package -n microperl
 Summary:	A really minimal Perl, even more minimal than miniperl
-Summary(pl.UTF-8):   Naprawdę minimalny Perl, nawet bardziej minimalny niż miniperl
+Summary(pl.UTF-8):	Naprawdę minimalny Perl, nawet bardziej minimalny niż miniperl
 # XXX: is there a more appropiate group?
 Group:		Applications
 
