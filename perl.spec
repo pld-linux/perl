@@ -73,7 +73,7 @@ Patch9:		%{name}-getgrent.patch
 Patch10:	%{name}-5.8.7-172396.patch
 Patch11:	%{name}-5.8.7-CAN-2004-0976.patch
 Patch12:	%{name}_588-27203.patch
-Patch13:	%{name}-ExtUtils-MakeMaker-write-permissions.patch
+Patch13:	%{name}-write-permissions.patch
 Patch14:	%{name}-makedepend.patch
 Patch15:	%{name}-timer-test.patch
 URL:		http://dev.perl.org/perl5/
