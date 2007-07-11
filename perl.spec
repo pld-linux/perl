@@ -1157,7 +1157,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/asm-x86_64
 %endif
 %ifarch sparc64
-%{perl_archlib}/asm-sparc*
+%{perl_archlib}/asm-sparc
+%{perl_archlib}/asm-sparc64
 %endif
 
 %{perl_archlib}/Data
