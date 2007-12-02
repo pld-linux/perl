@@ -28,7 +28,6 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 11
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -52,7 +51,7 @@ Summary(tr.UTF-8):	Kabuk yorumlama dili
 Summary(zh_CN.UTF-8):	Perl 编程语言。
 Name:		perl
 Version:	5.8.8
-Release:	%{_rel}%{!?with_threads:_nothr}
+Release:	12%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -76,6 +75,7 @@ Patch12:	%{name}_588-27203.patch
 Patch13:	%{name}-write-permissions.patch
 Patch14:	%{name}-makedepend.patch
 Patch15:	%{name}-timer-test.patch
+Patch16:	%{name}-regexp-CVE-2007-5116.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -645,6 +645,7 @@ microperlu - popraw je.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
