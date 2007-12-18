@@ -6,6 +6,7 @@
 %bcond_without	microperl	# build microperl (needs fixing)
 #
 # TODO:
+# - Perl 5.10.0 is out http://www.nntp.perl.org/group/perl.perl5.porters/2007/12/msg131636.html
 # - fix "FIXME"s, review "XXX"s
 # - add the {O,N}DBM_File modules
 # - review the perldiag.pod issue
