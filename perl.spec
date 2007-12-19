@@ -18,7 +18,7 @@
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
 #
 
-%define _abi	5.8.0
+%define _abi	5.10.0
 
 %define		perlthread	%{?with_threads:-thread-multi}
 
@@ -29,6 +29,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
+%define		_rel	0.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -51,13 +52,13 @@ Summary(sv.UTF-8):	Programmeringsspråket Perl
 Summary(tr.UTF-8):	Kabuk yorumlama dili
 Summary(zh_CN.UTF-8):	Perl 编程语言。
 Name:		perl
-Version:	5.8.8
-Release:	12%{!?with_threads:_nothr}
+Version:	5.10.0
+Release:	%{_rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	a377c0c67ab43fd96eeec29ce19e8382
+Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
+# Source0-md5:	d2c39b002ebfd2c3c5dba589365c5a71
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -632,21 +633,21 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p0
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p0
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
+#%patch5 -p1
+#%patch6 -p1
+#%patch7 -p1
+#%patch8 -p0
+#%patch9 -p1
+#%patch10 -p1
+#%patch11 -p1
+#%patch12 -p0
+#%patch13 -p1
+#%patch14 -p1
+#%patch15 -p1
+#%patch16 -p1
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
