@@ -69,13 +69,8 @@ Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
 Patch5:		%{name}_581-soname.patch
 Patch6:		%{name}-test-noproc.patch
 Patch7:		%{name}_585-microperl_uconfig.patch
-Patch8:		%{name}_588-27368.patch
-Patch9:		%{name}-getgrent.patch
-Patch10:	%{name}-5.8.7-172396.patch
-Patch12:	%{name}_588-27203.patch
 Patch13:	%{name}-write-permissions.patch
 Patch15:	%{name}-timer-test.patch
-Patch16:	%{name}-regexp-CVE-2007-5116.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -637,18 +632,8 @@ microperlu - popraw je.
 #%patch5 -p1
 %patch6 -p1
 %patch7 -p1
-# obsolete?
-#%patch8 -p0
-# wtf?
-#%patch9 -p1
-# ?
-#%patch10 -p1
-# ?
-#%patch12 -p0
 %patch13 -p1
 %patch15 -p1
-# ? probably obsolete
-#%patch16 -p1
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
