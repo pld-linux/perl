@@ -1,16 +1,17 @@
---- perl-5.8.1/perl.c.orig	Fri Aug 22 12:30:22 2003
-+++ perl-5.8.1/perl.c	Fri Aug 22 12:32:51 2003
-@@ -3937,39 +3937,6 @@
-     incpush(APPLLIB_EXP, TRUE, TRUE, TRUE);
+diff -urN perl-5.10.0.org/perl.c perl-5.10.0/perl.c
+--- perl-5.10.0.org/perl.c	2007-12-18 11:47:08.000000000 +0100
++++ perl-5.10.0/perl.c	2008-01-09 14:12:15.921155066 +0100
+@@ -4753,39 +4753,6 @@
+     incpush(APPLLIB_EXP, TRUE, TRUE, TRUE, TRUE);
  #endif
  
 -#ifdef ARCHLIB_EXP
--    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE);
+-    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE, TRUE);
 -#endif
 -#ifdef MACOS_TRADITIONAL
 -    {
 -	Stat_t tmpstatbuf;
--    	SV * privdir = NEWSV(55, 0);
+-    	SV * privdir = newSV(0);
 -	char * macperl = PerlEnv_getenv("MACPERL");
 -	
 -	if (!macperl)
@@ -18,43 +19,43 @@
 -	
 -	Perl_sv_setpvf(aTHX_ privdir, "%slib:", macperl);
 -	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
--	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE);
+-	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
 -	Perl_sv_setpvf(aTHX_ privdir, "%ssite_perl:", macperl);
 -	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
--	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE);
+-	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
 -	
 -   	SvREFCNT_dec(privdir);
 -    }
 -    if (!PL_tainting)
--	incpush(":", FALSE, FALSE, TRUE);
+-	incpush(":", FALSE, FALSE, TRUE, FALSE);
 -#else
 -#ifndef PRIVLIB_EXP
 -#  define PRIVLIB_EXP "/usr/local/lib/perl5:/usr/local/lib/perl"
 -#endif
 -#if defined(WIN32)
--    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE);
+-    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE, TRUE);
 -#else
--    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE);
+-    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE, TRUE);
 -#endif
 -
  #ifdef SITEARCH_EXP
      /* sitearch is always relative to sitelib on Windows for
       * DLL-based path intuition to work correctly */
-@@ -3988,7 +3955,7 @@
- #endif
+@@ -4805,7 +4772,7 @@
  
- #ifdef SITELIB_STEM /* Search for version-specific dirs below here */
--    incpush(SITELIB_STEM, FALSE, TRUE, TRUE);
-+/*  incpush(SITELIB_STEM, FALSE, TRUE, TRUE); */
+ #if defined(SITELIB_STEM) && defined(PERL_INC_VERSION_LIST)
+     /* Search for version-specific dirs below here */
+-    incpush(SITELIB_STEM, FALSE, TRUE, TRUE, TRUE);
++    /* incpush(SITELIB_STEM, FALSE, TRUE, TRUE, TRUE); */
  #endif
  
  #ifdef PERL_VENDORARCH_EXP
-@@ -4008,7 +3975,40 @@
+@@ -4825,7 +4792,40 @@
  #endif
  
  #ifdef PERL_VENDORLIB_STEM /* Search for version-specific dirs below here */
--    incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE);
-+/*  incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE); */
+-    incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE, TRUE);
++/*    incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE, TRUE); */
 +#endif
 +
 +#ifdef ARCHLIB_EXP
@@ -63,20 +64,20 @@
 +#ifdef MACOS_TRADITIONAL
 +    {
 +	Stat_t tmpstatbuf;
-+    	SV * privdir = NEWSV(55, 0);
++	SV * privdir = NEWSV(55, 0);
 +	char * macperl = PerlEnv_getenv("MACPERL");
-+	
++
 +	if (!macperl)
 +	    macperl = "";
-+	
++
 +	Perl_sv_setpvf(aTHX_ privdir, "%slib:", macperl);
 +	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
 +	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE);
 +	Perl_sv_setpvf(aTHX_ privdir, "%ssite_perl:", macperl);
 +	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
 +	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE);
-+	
-+   	SvREFCNT_dec(privdir);
++
++	SvREFCNT_dec(privdir);
 +    }
 +    if (!PL_tainting)
 +	incpush(":", FALSE, FALSE, TRUE);
