@@ -59,7 +59,7 @@ diff -urN perl-5.10.0.org/perl.c perl-5.10.0/perl.c
 +#endif
 +
 +#ifdef ARCHLIB_EXP
-+    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE);
++    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE, TRUE);
 +#endif
 +#ifdef MACOS_TRADITIONAL
 +    {
@@ -72,23 +72,23 @@ diff -urN perl-5.10.0.org/perl.c perl-5.10.0/perl.c
 +
 +	Perl_sv_setpvf(aTHX_ privdir, "%slib:", macperl);
 +	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
-+	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE);
++	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
 +	Perl_sv_setpvf(aTHX_ privdir, "%ssite_perl:", macperl);
 +	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
-+	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE);
++	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
 +
 +	SvREFCNT_dec(privdir);
 +    }
 +    if (!PL_tainting)
-+	incpush(":", FALSE, FALSE, TRUE);
++	incpush(":", FALSE, FALSE, TRUE, FALSE);
 +#else
 +#ifndef PRIVLIB_EXP
 +#  define PRIVLIB_EXP "/usr/local/lib/perl5:/usr/local/lib/perl"
 +#endif
 +#if defined(WIN32)
-+    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE);
++    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE, TRUE);
 +#else
-+    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE);
++    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE, TRUE);
  #endif
  
  #ifdef PERL_OTHERLIBDIRS
