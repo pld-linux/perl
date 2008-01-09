@@ -72,10 +72,8 @@ Patch7:		%{name}_585-microperl_uconfig.patch
 Patch8:		%{name}_588-27368.patch
 Patch9:		%{name}-getgrent.patch
 Patch10:	%{name}-5.8.7-172396.patch
-Patch11:	%{name}-5.8.7-CAN-2004-0976.patch
 Patch12:	%{name}_588-27203.patch
 Patch13:	%{name}-write-permissions.patch
-Patch14:	%{name}-makedepend.patch
 Patch15:	%{name}-timer-test.patch
 Patch16:	%{name}-regexp-CVE-2007-5116.patch
 URL:		http://dev.perl.org/perl5/
@@ -633,20 +631,23 @@ microperlu - popraw je.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch3 -p1
 %patch4 -p1
 #%patch5 -p1
-#%patch6 -p1
-#%patch7 -p1
+%patch6 -p1
+%patch7 -p1
+# obsolete?
 #%patch8 -p0
+# wtf?
 #%patch9 -p1
+# ?
 #%patch10 -p1
-#%patch11 -p1
+# ?
 #%patch12 -p0
-#%patch13 -p1
-#%patch14 -p1
-#%patch15 -p1
+%patch13 -p1
+%patch15 -p1
+# ? probably obsolete
 #%patch16 -p1
 
 %build
