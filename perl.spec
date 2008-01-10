@@ -629,7 +629,7 @@ microperlu - popraw je.
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch13 -p1
@@ -722,9 +722,6 @@ rm -f uconfig.h
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
-
-# LD_PRELOAD in runperl fails so we use this as workaround
-LD_LIBRARY_PATH=$(pwd); export LD_LIBRARY_PATH
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
