@@ -814,7 +814,7 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/ma
 sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+#rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
@@ -830,7 +830,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}
 %dir %{perl_archlib}
 %dir %{perl_archlib}/CORE
-#%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
 
 %files base
 %defattr(644,root,root,755)
@@ -902,7 +902,7 @@ rm -rf $RPM_BUILD_ROOT
 
 ## arch-dependent modules
 %{perl_archlib}/Config*
-%{_mandir}/man3/Config*
+%{_mandir}/man3/Config.*
 %{perl_archlib}/DynaLoader*
 %{perl_archlib}/auto/DynaLoader
 %{_mandir}/man3/DynaLoader*
@@ -937,38 +937,32 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/IO*
 %dir %{perl_archlib}/auto/IO
 %attr(755,root,root) %{perl_archlib}/auto/IO/*.so
-#%{perl_archlib}/auto/IO/*.bs
 %{_mandir}/man3/IO*
 
 %{perl_archlib}/Opcode.*
 %dir %{perl_archlib}/auto/Opcode
 %attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
-#%{perl_archlib}/auto/Opcode/*.bs
 %{_mandir}/man3/Opcode.*
 
-%{perl_privlib}/PerlIO.*
+%{perl_privlib}/PerlIO*
 %{perl_archlib}/PerlIO
 %dir %{perl_archlib}/auto/PerlIO
 %dir %{perl_archlib}/auto/PerlIO/*/
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
-#%{perl_archlib}/auto/PerlIO/*/*.bs
-%{_mandir}/man3/PerlIO.*
-%{_mandir}/man3/PerlIO::[es]*
-%{_mandir}/man3/PerlIO::via.*
+%{_mandir}/man3/PerlIO*
 
 %{perl_archlib}/POSIX*
 %dir %{perl_archlib}/auto/POSIX
 %attr(755,root,root) %{perl_archlib}/auto/POSIX/*.so
 %{perl_archlib}/auto/POSIX/*.al
-#%{perl_archlib}/auto/POSIX/*.bs
 %{perl_archlib}/auto/POSIX/*.ix
 %{perl_archlib}/auto/POSIX/SigAction
+%{perl_archlib}/auto/POSIX/SigRt
 %{_mandir}/man3/POSIX.*
 
 %{perl_archlib}/Socket.*
 %dir %{perl_archlib}/auto/Socket
 %attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
-#%{perl_archlib}/auto/Socket/*.bs
 %{_mandir}/man3/Socket.*
 
 
@@ -978,7 +972,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/GDBM_File.*
 %dir %{perl_archlib}/auto/GDBM_File
 %attr(755,root,root) %{perl_archlib}/auto/GDBM_File/*.so
-#%{perl_archlib}/auto/GDBM_File/*.bs
 %{_mandir}/man3/GDBM_File.*
 %endif
 
@@ -997,18 +990,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/CPAN*
 %{perl_privlib}/DB.*
 %{_mandir}/man3/DB.*
+%{perl_privlib}/Module/Build*
+%{_mandir}/man3/Module::Build*
+
 %{perl_archlib}/O.*
 %{_mandir}/man3/O.*
 
-#%{perl_privlib}/B
 %{perl_archlib}/B
 %{perl_archlib}/B.pm
-#%dir %{perl_archlib}/auto/B
-#%dir %{perl_archlib}/auto/B/C
-#%attr(755,root,root) %{perl_archlib}/auto/B/*.so
-#%attr(755,root,root) %{perl_archlib}/auto/B/C/*.so
-#%{perl_archlib}/auto/B/*.bs
-#%{perl_archlib}/auto/B/C/*.bs
+%dir %{perl_archlib}/auto/B
+%attr(755,root,root) %{perl_archlib}/auto/B/*.so
 %{_mandir}/man3/B[.:]*
 
 #%{perl_archlib}/ByteLoader.*
@@ -1077,6 +1068,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/bytes.*
 %{perl_privlib}/charnames.pm
 %{_mandir}/man3/charnames.*
+%{perl_privlib}/encoding
+%{_mandir}/man3/encoding::*
 %{perl_privlib}/filetest.pm
 %{_mandir}/man3/filetest.*
 %{perl_privlib}/if.pm
@@ -1136,6 +1129,15 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/asm-sparc
 %{perl_archlib}/asm-sparc64
 %endif
+
+%{perl_archlib}/Compress
+%dir %{perl_archlib}/auto/Compress
+%dir %{perl_archlib}/auto/Compress/Raw
+%dir %{perl_archlib}/auto/Compress/Raw/Zlib
+%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Zlib/*.so
+%{perl_archlib}/auto/Compress/Zlib/*.ix
+%{perl_archlib}/auto/Compress/Raw/Zlib/*.ix
+%{_mandir}/man3/Compress*
 
 %{perl_archlib}/Data
 %dir %{perl_archlib}/auto/Data
@@ -1228,6 +1230,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Sys/*/*.ix
 %{_mandir}/man3/Sys::*
 
+%{perl_archlib}/Text
+%dir %{perl_archlib}/auto/Text
+%dir %{perl_archlib}/auto/Text/Soundex
+%attr(755,root,root) %{perl_archlib}/auto/Text/Soundex/*.so
+#%{_mandir}/man3/Text::Soundex*	# listed later
+
 %{perl_archlib}/Time
 %dir %{perl_archlib}/auto/Time
 %dir %{perl_archlib}/auto/Time/HiRes
@@ -1246,6 +1254,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{perl_privlib}/AnyDBM*
 %{_mandir}/man3/AnyDBM*
+%{perl_privlib}/Archive*
+%{_mandir}/man3/Archive*
 %{perl_privlib}/Attribute
 %{_mandir}/man3/Attribute*
 %{perl_privlib}/Benchmark*
@@ -1254,6 +1264,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/CGI*
 %{perl_privlib}/Class/ISA*
 %{_mandir}/man3/Class::ISA*
+%{perl_privlib}/Config
+%{_mandir}/man3/Config::*
 %{perl_privlib}/DirHandle*
 %{_mandir}/man3/DirHandle*
 %{perl_privlib}/Dumpvalue.*
@@ -1267,12 +1279,17 @@ rm -rf $RPM_BUILD_ROOT
 #%{perl_privlib}/Hash
 %{_mandir}/man3/Hash::*
 # FIXME: README and Changes files
+%{perl_privlib}/Log
+%{_mandir}/man3/Log::*
 %{perl_privlib}/Locale
 %{_mandir}/man3/Locale::*
 %{perl_privlib}/Math
 %{_mandir}/man3/Math::*
 %{perl_privlib}/Memoize*
 %{_mandir}/man3/Memoize*
+%dir %{perl_privlib}/Module
+%{perl_privlib}/Module/[CLP]*
+%{_mandir}/man3/Module::[CLP]*
 %{perl_privlib}/NEXT.pm
 %{_mandir}/man3/NEXT*
 # FIXME: README and Changes files
@@ -1281,8 +1298,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Net/*.pm
 %{perl_privlib}/Net/FTP
 %{_mandir}/man3/Net::*
-%{perl_privlib}/PerlIO
-%{_mandir}/man3/PerlIO::via::*
+%{perl_privlib}/Object
+%{_mandir}/man3/Object::*
+%{perl_privlib}/Package
+%{_mandir}/man3/Package::*
+%{perl_privlib}/Params
+%{_mandir}/man3/Params::*
 %{perl_privlib}/Pod
 %{_mandir}/man3/Pod::*
 #%{perl_privlib}/Scalar
