@@ -857,6 +857,8 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %{_mandir}/man3/constant.*
 %{perl_privlib}/diagnostics.pm
 %{_mandir}/man3/diagnostics.*
+%{perl_privlib}/feature.pm
+%{_mandir}/man3/feature.*
 %{perl_privlib}/fields.pm
 %{_mandir}/man3/fields.*
 %{perl_privlib}/integer.pm
@@ -981,7 +983,7 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %doc doc-devel/*
 %attr(755,root,root) %{_libdir}/libperl.so
 %{perl_archlib}/CORE/*.h
-#%{perl_archlib}/CORE/reentr.inc
+%{_mandir}/man3/CORE*
 
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
@@ -1078,21 +1080,23 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %{_mandir}/man3/less.*
 %{perl_privlib}/locale.pm
 %{_mandir}/man3/locale.*
+%{perl_privlib}/mro.pm
+%{_mandir}/man3/mro.*
 %{perl_privlib}/open.pm
 %{_mandir}/man3/open.*
 %{perl_privlib}/sigtrap.pm
 %{_mandir}/man3/sigtrap.*
 %{perl_privlib}/utf8.pm
 %{_mandir}/man3/utf8.*
+%{perl_privlib}/version.pm
+%{_mandir}/man3/version.*
 
 %{perl_archlib}/attrs.pm
 %dir %{perl_archlib}/auto/attrs
-#%{perl_archlib}/auto/attrs/*.bs
 %attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
 %{_mandir}/man3/attrs.*
 %{perl_archlib}/re.pm
 %dir %{perl_archlib}/auto/re
-#%{perl_archlib}/auto/re/*.bs
 %attr(755,root,root) %{perl_archlib}/auto/re/*.so
 %{_mandir}/man3/re.*
 %{perl_archlib}/encoding.pm
@@ -1104,8 +1108,6 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %{perl_archlib}/threads*
 %dir %{perl_archlib}/auto/threads
 %dir %{perl_archlib}/auto/threads/shared
-#%{perl_archlib}/auto/threads/*.bs
-#%{perl_archlib}/auto/threads/shared/*.bs
 %attr(755,root,root) %{perl_archlib}/auto/threads/*.so
 %attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
 %{_mandir}/man3/t*
@@ -1143,16 +1145,13 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %dir %{perl_archlib}/auto/Data
 %dir %{perl_archlib}/auto/Data/Dumper
 %attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
-#%{perl_archlib}/auto/Data/Dumper/*.bs
 %{_mandir}/man3/Data*
 
-%{perl_privlib}/Digest.pm
-%{perl_privlib}/Digest
+%{perl_privlib}/Digest*
 %{perl_archlib}/Digest
 %dir %{perl_archlib}/auto/Digest
-%dir %{perl_archlib}/auto/Digest/MD5
-%attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/*.so
-#%{perl_archlib}/auto/Digest/MD5/*.bs
+%dir %{perl_archlib}/auto/Digest/*/
+%attr(755,root,root) %{perl_archlib}/auto/Digest/*/*.so
 %{_mandir}/man3/Digest*
 
 # FIXME: Changes file
@@ -1165,7 +1164,6 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %dir %{perl_archlib}/auto/Encode
 %dir %{perl_archlib}/auto/Encode/*/
 %attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
-#%{perl_archlib}/auto/Encode/*/*.bs
 %{_mandir}/man3/Encode*
 
 # FIXME: README and Changes files
@@ -1175,15 +1173,20 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %dir %{perl_archlib}/auto/Filter/Util
 %dir %{perl_archlib}/auto/Filter/Util/Call
 %attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
-#%{perl_archlib}/auto/Filter/Util/Call/*.bs
 %{_mandir}/man3/Filter*
+
+%{perl_archlib}/Hash
+%dir %{perl_archlib}/auto/Hash
+%dir %{perl_archlib}/auto/Hash/*/
+%attr(755,root,root) %{perl_archlib}/auto/Hash/*/*.so
+%attr(755,root,root) %{perl_archlib}/auto/Hash/*/*/*.so
+%{_mandir}/man3/Hash::*
 
 %{perl_privlib}/I18N
 %{perl_archlib}/I18N
 %dir %{perl_archlib}/auto/I18N
 %dir %{perl_archlib}/auto/I18N/*/
 %attr(755,root,root) %{perl_archlib}/auto/I18N/*/*.so
-#%{perl_archlib}/auto/I18N/*/*.bs
 %{perl_archlib}/auto/I18N/*/*.ix
 %{_mandir}/man3/I18N::*
 
@@ -1191,34 +1194,37 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %dir %{perl_archlib}/auto/IPC
 %dir %{perl_archlib}/auto/IPC/*/
 %attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
-#%{perl_archlib}/auto/IPC/*/*.bs
 %{_mandir}/man3/IPC::[MS]*
 
 %{perl_archlib}/List
 %dir %{perl_archlib}/auto/List
 %dir %{perl_archlib}/auto/List/*/
 %attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
-#%{perl_archlib}/auto/List/*/*.bs
 %{_mandir}/man3/List::*
+
+%{perl_privlib}/Math
+%{perl_archlib}/Math
+%dir %{perl_archlib}/auto/Math
+%dir %{perl_archlib}/auto/Math/*/
+%dir %{perl_archlib}/auto/Math/*/*/
+%attr(755,root,root) %{perl_archlib}/auto/Math/*/*/*.so
+%{_mandir}/man3/Math::*
 
 %{perl_archlib}/MIME
 %dir %{perl_archlib}/auto/MIME
 %dir %{perl_archlib}/auto/MIME/Base64
 %attr(755,root,root) %{perl_archlib}/auto/MIME/Base64/*.so
-#%{perl_archlib}/auto/MIME/Base64/*.bs
 %{_mandir}/man3/MIME::*
 
 %{perl_archlib}/SDBM_File.*
 %dir %{perl_archlib}/auto/SDBM_File
 %attr(755,root,root) %{perl_archlib}/auto/SDBM_File/*.so
-#%{perl_archlib}/auto/SDBM_File/*.bs
 %{_mandir}/man3/SDBM_File.*
 
 %{perl_archlib}/Storable.*
 %dir %{perl_archlib}/auto/Storable
 %attr(755,root,root) %{perl_archlib}/auto/Storable/*.so
 %{perl_archlib}/auto/Storable/*.al
-#%{perl_archlib}/auto/Storable/*.bs
 %{perl_archlib}/auto/Storable/*.ix
 %{_mandir}/man3/Storable.*
 
@@ -1226,7 +1232,6 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %dir %{perl_archlib}/auto/Sys
 %dir %{perl_archlib}/auto/Sys/*/
 %attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
-#%{perl_archlib}/auto/Sys/*/*.bs
 %{perl_archlib}/auto/Sys/*/*.ix
 %{_mandir}/man3/Sys::*
 
@@ -1236,12 +1241,12 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %attr(755,root,root) %{perl_archlib}/auto/Text/Soundex/*.so
 #%{_mandir}/man3/Text::Soundex*	# listed later
 
+%{perl_privlib}/Time
 %{perl_archlib}/Time
 %dir %{perl_archlib}/auto/Time
-%dir %{perl_archlib}/auto/Time/HiRes
-%attr(755,root,root) %{perl_archlib}/auto/Time/HiRes/*.so
-#%{perl_archlib}/auto/Time/HiRes/*.bs
-%{_mandir}/man3/Time::HiRes*
+%dir %{perl_archlib}/auto/Time/*/
+%attr(755,root,root) %{perl_archlib}/auto/Time/*/*.so
+%{_mandir}/man3/Time::*
 
 %dir %{perl_privlib}/Unicode
 %{perl_privlib}/Unicode/*.pm
@@ -1249,7 +1254,6 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %dir %{perl_archlib}/auto/Unicode
 %dir %{perl_archlib}/auto/Unicode/*
 %attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
-#%{perl_archlib}/auto/Unicode/*/*.bs
 %{_mandir}/man3/Unicode::*
 
 %{perl_privlib}/AnyDBM*
@@ -1276,15 +1280,12 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %{_mandir}/man3/Fatal.*
 %{perl_privlib}/FindBin.*
 %{_mandir}/man3/FindBin.*
-#%{perl_privlib}/Hash
-%{_mandir}/man3/Hash::*
 # FIXME: README and Changes files
+%{perl_privlib}/IPC
 %{perl_privlib}/Log
 %{_mandir}/man3/Log::*
 %{perl_privlib}/Locale
 %{_mandir}/man3/Locale::*
-%{perl_privlib}/Math
-%{_mandir}/man3/Math::*
 %{perl_privlib}/Memoize*
 %{_mandir}/man3/Memoize*
 %dir %{perl_privlib}/Module
@@ -1306,7 +1307,7 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %{_mandir}/man3/Params::*
 %{perl_privlib}/Pod
 %{_mandir}/man3/Pod::*
-#%{perl_privlib}/Scalar
+%{perl_archlib}/Scalar
 %{_mandir}/man3/Scalar::*
 %{perl_privlib}/Search
 %{_mandir}/man3/Search::*
@@ -1329,8 +1330,6 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 %{perl_privlib}/Thread*
 %{_mandir}/man3/Thread*
 %endif
-%{perl_privlib}/Time
-%{_mandir}/man3/Time::[La-z]*
 # XXX: to perl-base?
 %{perl_privlib}/UNIVERSAL.*
 %{_mandir}/man3/UNIVERSAL.*
