@@ -13,6 +13,7 @@
 # - consider disabling ithreads by default
 # - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
 # - patch MakeMaker to get rid of empty *.bs files (MM_Unix::dynamic_bs())
+# - %{__cc}: cc -c -o uhv.o -DPERL_CORE -DPERL_MICRO -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -O2 -march=i686  hv.c
 #
 # TODO for perl-dependent packages:
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
@@ -680,7 +681,7 @@ sh Configure \
 ## probably be done in %%prep, but then Configure would complain (->MANIFEST))
 mv ext/List/Util/lib/List/Util.pm ext/List/Util
 rm -f ext/List/Util/Makefile.PL
-cat <<EOF > ext/List/Util/Makefile.PL
+cat <<'EOF' > ext/List/Util/Makefile.PL
 use ExtUtils::MakeMaker;
 WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT");
 EOF
@@ -689,11 +690,11 @@ EOF
 	LIBPERL_SONAME=libperl.so.%{_abi} \
 	LDDLFLAGS="%{rpmcflags} -shared"
 
-cat > runperl <<EOF
+cat > runperl <<'EOF'
 #!/bin/sh
-LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
-PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
-exec %{buildroot}%{_bindir}/perl \$*
+LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \
+PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
+exec %{buildroot}%{_bindir}/perl $*
 EOF
 chmod a+x runperl
 
