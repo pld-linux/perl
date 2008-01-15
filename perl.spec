@@ -1,3 +1,31 @@
+# unpackaged:
+#   /usr/bin/config_data
+#   /usr/bin/corelist
+#   /usr/bin/cpan2dist
+#   /usr/bin/cpanp
+#   /usr/bin/cpanp-run-perl
+#   /usr/bin/prove
+#   /usr/bin/ptar
+#   /usr/bin/ptardiff
+#   /usr/bin/shasum
+#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/.packlist
+#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/auto/sdbm/extralibs.ld
+#   /usr/share/man/man1/config_data.1.gz
+#   /usr/share/man/man1/corelist.1.gz
+#   /usr/share/man/man1/cpan2dist.1.gz
+#   /usr/share/man/man1/cpanp.1.gz
+#   /usr/share/man/man1/perlcommunity.1.gz
+#   /usr/share/man/man1/prove.1.gz
+#   /usr/share/man/man1/ptar.1.gz
+#   /usr/share/man/man1/ptardiff.1.gz
+#   /usr/share/man/man1/shasum.1.gz
+#   /usr/share/man/man3/IPC::Cmd.3perl.gz
+#   /usr/share/man/man3/XS::APItest.3perl.gz
+#   /usr/share/man/man3/XS::Typemap.3perl.gz
+#   /usr/share/man/man3/vmsish.3perl.gz
+#   /usr/share/perl5/5.10.0/Unicode/Collate/allkeys.txt
+#   /usr/share/perl5/5.10.0/pod/a2p.pod
+#   /usr/share/perl5/5.10.0/vmsish.pm
 #
 # Conditional build:
 %bcond_without	tests		# do not perform "make test"
@@ -6,7 +34,6 @@
 %bcond_without	microperl	# build microperl (needs fixing)
 #
 # TODO:
-# - Perl 5.10.0 is out http://www.nntp.perl.org/group/perl.perl5.porters/2007/12/msg131636.html
 # - fix "FIXME"s, review "XXX"s
 # - add the {O,N}DBM_File modules
 # - review the perldiag.pod issue
@@ -280,8 +307,8 @@ Biblioteka współdzielona Perla.
 Summary:	Base Perl components for a minimal installation
 Summary(pl.UTF-8):	Podstawowe składniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
-Requires:	perl-dirs(%{_target_cpu})
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	perl-dirs(%{_target_cpu})
 Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
@@ -814,8 +841,10 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/ma
 
 sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
+rm -rf $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
+
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
