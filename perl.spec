@@ -1,31 +1,6 @@
 # unpackaged:
-#   /usr/bin/config_data
-#   /usr/bin/corelist
-#   /usr/bin/cpan2dist
-#   /usr/bin/cpanp
-#   /usr/bin/cpanp-run-perl
-#   /usr/bin/prove
-#   /usr/bin/ptar
-#   /usr/bin/ptardiff
-#   /usr/bin/shasum
 #   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/.packlist
 #   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/auto/sdbm/extralibs.ld
-#   /usr/share/man/man1/config_data.1.gz
-#   /usr/share/man/man1/corelist.1.gz
-#   /usr/share/man/man1/cpan2dist.1.gz
-#   /usr/share/man/man1/cpanp.1.gz
-#   /usr/share/man/man1/perlcommunity.1.gz
-#   /usr/share/man/man1/prove.1.gz
-#   /usr/share/man/man1/ptar.1.gz
-#   /usr/share/man/man1/ptardiff.1.gz
-#   /usr/share/man/man1/shasum.1.gz
-#   /usr/share/man/man3/IPC::Cmd.3perl.gz
-#   /usr/share/man/man3/XS::APItest.3perl.gz
-#   /usr/share/man/man3/XS::Typemap.3perl.gz
-#   /usr/share/man/man3/vmsish.3perl.gz
-#   /usr/share/perl5/5.10.0/Unicode/Collate/allkeys.txt
-#   /usr/share/perl5/5.10.0/pod/a2p.pod
-#   /usr/share/perl5/5.10.0/vmsish.pm
 #
 # Conditional build:
 %bcond_without	tests		# do not perform "make test"
@@ -57,7 +32,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel	0.1
+%define		_rel	0.2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -549,18 +524,18 @@ Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 %description tools
 Various tools from the core Perl distribution:
 a2p		- Awk to Perl translator
-cpan		- easily interact with CPAN from the command line
 find2perl	- translate find command lines to Perl code
 piconv		- iconv(1), reinvented in Perl
 psed, s2p	- a stream editor
+and others.
 
 %description tools -l pl.UTF-8
 Różne narzędzia z podstawowej dystrybucji Perla:
 a2p		- translator skryptów Awka do Perla
-cpan		- easily interact with CPAN from the command line
 find2perl	- tłumaczenie linii poleceń programu find na kod w Perlu
 piconv		- iconv(1) napisany w Perlu
 psed, s2p	- edytor strumieniowy
+i inne.
 
 %package tools-devel
 Summary:	Developer's tools from the core Perl distribution
@@ -707,7 +682,7 @@ sh Configure \
 ## {Scalar,List}::Util should be in perl_archlib (it's a bit tricky and should
 ## probably be done in %%prep, but then Configure would complain (->MANIFEST))
 mv ext/List/Util/lib/List/Util.pm ext/List/Util
-rm -f ext/List/Util/Makefile.PL
+rm --interactive=never ext/List/Util/Makefile.PL
 cat <<'EOF' > ext/List/Util/Makefile.PL
 use ExtUtils::MakeMaker;
 WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT");
@@ -727,7 +702,7 @@ chmod a+x runperl
 
 ## microperl
 %if %{with microperl}
-rm -f uconfig.h
+rm --interactive=never uconfig.h
 #chmod u+w uconfig.sh
 #echo "usemallocwrap='define'" >> uconfig.sh
 %{__make} -f Makefile.micro \
@@ -762,7 +737,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 %{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
 ## Fix lib
-rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
+rm --interactive=never $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
 %{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
 	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
 %{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
@@ -795,37 +770,46 @@ WANTED='
 cd "$owd"
 
 ## remove man pages for other operating systems
-rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
+rm --interactive=never	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
 ## symlink perldelta.1.gz -> perlFOOdelta.1.gz
 [ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+rm $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 echo ".so perl%(echo %{version} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
 ## These File::Spec submodules are for non-Unix systems
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3pm*
+rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
+rm $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 ## We already have these *.pod files as man pages
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},MakeMaker}/*.pod
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/*.pod
-rm -f $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+rm $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
+rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/*.pod
+rm --interactive=never $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
 ## this object file looks unused; why is it there?
-rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
+rm --interactive=never $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
 install -d doc-base/{Getopt/Long,Switch} \
 	doc-devel/ExtUtils \
 	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
 
 # needed only for tests
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
+rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
 mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
 	doc-modules/unicore
 # source for *.pl
-rm -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
+rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
+# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
+rm --interactive=never $RPM_BUILD_ROOT%{_bindir}/cpan*
+rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
+# others
+rm --interactive=never $RPM_BUILD_ROOT%{_bindir}/config_data
+rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
+rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
+rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
 
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
@@ -925,6 +909,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Getopt*
 %{perl_privlib}/IPC
 %{_mandir}/man3/IPC::Open*
+%{_mandir}/man3/IPC::Cmd*
 %{perl_privlib}/SelectSaver.pm
 %{_mandir}/man3/SelectSaver.*
 %{perl_privlib}/Symbol.pm
@@ -1018,6 +1003,8 @@ rm -rf $RPM_BUILD_ROOT
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
 %{_mandir}/man3/ExtUtils*
+%{perl_privlib}/vmsish.pm
+%{_mandir}/man3/vmsish.*
 %{perl_privlib}/CPAN*
 %{_mandir}/man3/CPAN*
 %{perl_privlib}/DB.*
@@ -1071,6 +1058,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlcall.*
 %{_mandir}/man1/perlcheat.*
 %{_mandir}/man1/perlclib.*
+%{_mandir}/man1/perlcommunity.*
 %{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
 %{_mandir}/man1/perli[!v]*
@@ -1153,13 +1141,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/gnu
 %{perl_archlib}/linux
 %{perl_archlib}/sys
-%ifarch %{x8664}
-%{perl_archlib}/asm-i386
-%{perl_archlib}/asm-x86_64
-%endif
-%ifarch sparc64
-%{perl_archlib}/asm-sparc
-%{perl_archlib}/asm-sparc64
+%ifarch %{x8664} sparc64
+%{perl_archlib}/asm-*
 %endif
 
 %{perl_archlib}/Compress
@@ -1280,6 +1263,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{perl_privlib}/Unicode
 %{perl_privlib}/Unicode/*.pm
+%{perl_privlib}/Unicode/Collate
 %{perl_archlib}/Unicode
 %dir %{perl_archlib}/auto/Unicode
 %dir %{perl_archlib}/auto/Unicode/*
@@ -1387,8 +1371,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/a2p
 %{_mandir}/man1/a2p.*
-%attr(755,root,root) %{_bindir}/cpan
-%{_mandir}/man1/cpan.*
+%attr(755,root,root) %{_bindir}/corelist
+%{_mandir}/man1/corelist.*
 %attr(755,root,root) %{_bindir}/find2perl
 %{_mandir}/man1/find2perl.*
 %attr(755,root,root) %{_bindir}/instmodsh
@@ -1398,9 +1382,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/piconv
 %{_mandir}/man1/piconv.*
 %attr(755,root,root) %{_bindir}/psed
-%attr(755,root,root) %{_bindir}/s2p
 %{_mandir}/man1/psed.*
+%attr(755,root,root) %{_bindir}/ptar
+%{_mandir}/man1/ptar.*
+%attr(755,root,root) %{_bindir}/ptardiff
+%{_mandir}/man1/ptardiff.*
+%attr(755,root,root) %{_bindir}/s2p
 %{_mandir}/man1/s2p.*
+%attr(755,root,root) %{_bindir}/shasum
+%{_mandir}/man1/shasum.*
 
 %files tools-devel
 %defattr(644,root,root,755)
@@ -1424,6 +1414,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlivp.*
 %attr(755,root,root) %{_bindir}/pl2pm
 %{_mandir}/man1/pl2pm.*
+%attr(755,root,root) %{_bindir}/prove
+%{_mandir}/man1/prove.*
 %attr(755,root,root) %{_bindir}/splain
 %{_mandir}/man1/splain.*
 %attr(755,root,root) %{_bindir}/xsubpp
