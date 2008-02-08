@@ -32,7 +32,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel	1
+%define		_rel	1.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -1150,8 +1150,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Compress/Raw
 %dir %{perl_archlib}/auto/Compress/Raw/Zlib
 %attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Zlib/*.so
-%{perl_archlib}/auto/Compress/Zlib/*.ix
 %{perl_archlib}/auto/Compress/Raw/Zlib/*.ix
+%dir %{perl_archlib}/auto/Compress/Zlib
+%{perl_archlib}/auto/Compress/Zlib/*.ix
 %{_mandir}/man3/Compress*
 
 %{perl_archlib}/Data
@@ -1191,6 +1192,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/Hash
 %dir %{perl_archlib}/auto/Hash
 %dir %{perl_archlib}/auto/Hash/*/
+%dir %{perl_archlib}/auto/Hash/*/*/
 %attr(755,root,root) %{perl_archlib}/auto/Hash/*/*.so
 %attr(755,root,root) %{perl_archlib}/auto/Hash/*/*/*.so
 %{_mandir}/man3/Hash::*
