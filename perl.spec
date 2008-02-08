@@ -82,7 +82,7 @@ BuildRequires:	gcc >= 5:4.1
 %{?with_gdbm:BuildRequires:	gdbm-devel}
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
-BuildRequires:	rpmbuild(macros) >= 1.310
+BuildRequires:	rpmbuild(macros) >= 1.424
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
@@ -682,7 +682,7 @@ sh Configure \
 ## {Scalar,List}::Util should be in perl_archlib (it's a bit tricky and should
 ## probably be done in %%prep, but then Configure would complain (->MANIFEST))
 mv ext/List/Util/lib/List/Util.pm ext/List/Util
-rm --interactive=never ext/List/Util/Makefile.PL
+%{__rm} ext/List/Util/Makefile.PL
 cat <<'EOF' > ext/List/Util/Makefile.PL
 use ExtUtils::MakeMaker;
 WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT");
@@ -702,7 +702,7 @@ chmod a+x runperl
 
 ## microperl
 %if %{with microperl}
-rm --interactive=never uconfig.h
+%{__rm} uconfig.h
 #chmod u+w uconfig.sh
 #echo "usemallocwrap='define'" >> uconfig.sh
 %{__make} -f Makefile.micro \
@@ -737,7 +737,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 %{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
 ## Fix lib
-rm --interactive=never $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
+%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
 %{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
 	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
 %{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
@@ -770,7 +770,7 @@ WANTED='
 cd "$owd"
 
 ## remove man pages for other operating systems
-rm --interactive=never	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
+%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
@@ -780,36 +780,36 @@ rm $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 echo ".so perl%(echo %{version} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
 ## These File::Spec submodules are for non-Unix systems
-rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
 rm $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 ## We already have these *.pod files as man pages
-rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
 rm $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
-rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/*.pod
-rm --interactive=never $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
 ## this object file looks unused; why is it there?
-rm --interactive=never $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
+%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
 install -d doc-base/{Getopt/Long,Switch} \
 	doc-devel/ExtUtils \
 	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
 
 # needed only for tests
-rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
 mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
 	doc-modules/unicore
 # source for *.pl
-rm --interactive=never $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
 # cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
-rm --interactive=never $RPM_BUILD_ROOT%{_bindir}/cpan*
-rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
 # others
-rm --interactive=never $RPM_BUILD_ROOT%{_bindir}/config_data
-rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
-rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
-rm --interactive=never $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
 
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
