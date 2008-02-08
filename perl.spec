@@ -82,7 +82,7 @@ BuildRequires:	gcc >= 5:4.1
 %{?with_gdbm:BuildRequires:	gdbm-devel}
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
-BuildRequires:	rpmbuild(macros) >= 1.424
+BuildRequires:	rpmbuild(macros) >= 1.426
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
