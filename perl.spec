@@ -32,7 +32,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		_rel	2
+%define		rel	2.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -56,7 +56,7 @@ Summary(tr.UTF-8):	Kabuk yorumlama dili
 Summary(zh_CN.UTF-8):	Perl 编程语言。
 Name:		perl
 Version:	5.10.0
-Release:	%{_rel}%{!?with_threads:_nothr}
+Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
@@ -67,13 +67,14 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 Source2:	%{name}.prov
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
-Patch3:		%{name}_580-errno_h-parsing.patch
-Patch4:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
-Patch5:		%{name}_581-soname.patch
-Patch6:		%{name}-test-noproc.patch
-Patch7:		%{name}_585-microperl_uconfig.patch
-Patch13:	%{name}-write-permissions.patch
-Patch15:	%{name}-timer-test.patch
+Patch2:		%{name}_580-errno_h-parsing.patch
+Patch3:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
+Patch4:		%{name}_581-soname.patch
+Patch5:		%{name}-test-noproc.patch
+Patch6:		%{name}_585-microperl_uconfig.patch
+Patch7:		%{name}-write-permissions.patch
+Patch8:		%{name}-timer-test.patch
+Patch9:		%{name}-h2ph-includes.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -630,13 +631,14 @@ microperlu - popraw je.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch13 -p1
-%patch15 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
@@ -1137,13 +1139,15 @@ rm -rf $RPM_BUILD_ROOT
 ## *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
 %{perl_archlib}/asm
+%{perl_archlib}/asm-generic
+%ifarch sparc64
+%{perl_archlib}/asm-sparc
+%{perl_archlib}/asm-sparc64
+%endif
 %{perl_archlib}/bits
 %{perl_archlib}/gnu
 %{perl_archlib}/linux
 %{perl_archlib}/sys
-%ifarch %{x8664} sparc64
-%{perl_archlib}/asm-*
-%endif
 
 %{perl_archlib}/Compress
 %dir %{perl_archlib}/auto/Compress
