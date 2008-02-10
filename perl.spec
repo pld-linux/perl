@@ -607,8 +607,7 @@ podselect	- wypisanie wybranych sekcji z dokumentacji POD
 %package -n microperl
 Summary:	A really minimal Perl, even more minimal than miniperl
 Summary(pl.UTF-8):	Naprawdę minimalny Perl, nawet bardziej minimalny niż miniperl
-# XXX: is there a more appropiate group?
-Group:		Applications
+Group:		Development/Languages/Perl
 
 %description -n microperl
 microperl is supposed to be able a really minimal Perl, even more
