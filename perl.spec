@@ -851,9 +851,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc-base/*
 %attr(755,root,root) %{_bindir}/perl
 %attr(755,root,root) %{_bindir}/perl%{version}
-%{_mandir}/man1/perl.*
-%lang(fi) %{_mandir}/fi/man1/perl*
-%lang(pl) %{_mandir}/pl/man1/perl*
+%{_mandir}/man1/perl.1*
+%lang(fi) %{_mandir}/fi/man1/perl.1*
+%lang(pl) %{_mandir}/pl/man1/perl.1*
 
 %dir %{_datadir}/perl5
 %dir %{perl_privlib}
@@ -1068,6 +1068,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perld[!o]*
 %{_mandir}/man1/perli[!v]*
 
+%lang(fi) %{_mandir}/fi/man1/perlbook.1*
+%lang(pl) %{_mandir}/pl/man1/perldata.1*
+%lang(pl) %{_mandir}/pl/man1/perl[fors]*.1*
 %lang(zh_CN) %{_mandir}/zh_CN/man1/perlcn.*
 %lang(ja) %{_mandir}/ja/man1/perljp.*
 %lang(ko) %{_mandir}/ko/man1/perlko.*
