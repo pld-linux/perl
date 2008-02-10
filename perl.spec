@@ -81,6 +81,8 @@ URL:		http://dev.perl.org/perl5/
 BuildRequires:	gcc >= 5:4.1
 %endif
 %{?with_gdbm:BuildRequires:	gdbm-devel}
+# asm-generic, merged x86 asm dirs
+BuildRequires:	linux-libc-headers >= 7:2.6.24
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
 BuildRequires:	rpmbuild(macros) >= 1.426
