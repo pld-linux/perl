@@ -15,7 +15,6 @@
 # - consider disabling ithreads by default
 # - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
 # - patch MakeMaker to get rid of empty *.bs files (MM_Unix::dynamic_bs())
-# - %{__cc}: cc -c -o uhv.o -DPERL_CORE -DPERL_MICRO -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -O2 -march=i686  hv.c
 # - consider separating C/XS development files (*.h, libperl.so)
 #   and perl development modules (like MakeMaker, Devel...)
 # - resolve ugly perl-base/perl-dirs dependency loop
@@ -706,8 +705,6 @@ chmod a+x runperl
 ## microperl
 %if %{with microperl}
 %{__rm} uconfig.h
-#chmod u+w uconfig.sh
-#echo "usemallocwrap='define'" >> uconfig.sh
 %{__make} -f Makefile.micro \
 	archlib=%{perl_archlib} \
 	archlibexp=%{perl_archlib} \
@@ -719,6 +716,7 @@ chmod a+x runperl
 	scriptdir=%{_bindir} \
 	scriptdirexp=%{_bindir} \
 	usemallocwrap='define' \
+	CC="%{__cc}" \
 	OPTIMIZE="%{rpmcflags}"
 %endif
 
@@ -744,7 +742,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 #%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
 #	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
 mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}
-%{__ln_s} ../../../../libperl.so.%{_abi} $RPM_BUILD_ROOT%{perl_archlib}/libperl.so.%{_abi}
+%{__ln_s} ../../../../libperl.so.%{_abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{_abi}
 %{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 # installed as non-executable - let rpm generate deps
 chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
