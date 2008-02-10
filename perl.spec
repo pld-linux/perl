@@ -675,9 +675,6 @@ sh Configure \
 	-%{?with_threads:D}%{!?with_threads:U}usethreads \
 	-Duselargefiles
 
-## why were these three undefined?
-#	-Ud_setresgid \
-#	-Ud_setresuid \
 ## what's the problem with this one?
 # %ifarch sparc sparc64
 #	-Ud_longdbl
@@ -742,9 +739,13 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## Fix lib
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
-	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
+#%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
+#	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
+mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}
+%{__ln_s} ../../../../libperl.so.%{_abi} $RPM_BUILD_ROOT%{perl_archlib}/libperl.so.%{_abi}
 %{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+# installed as non-executable - let rpm generate deps
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -843,12 +844,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libperl.so.*
-%dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{version}
-%dir %{perl_archlib}
-%dir %{perl_archlib}/CORE
-%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
+%attr(755,root,root) %{_libdir}/libperl.so.%{_abi}
 
 %files base
 %defattr(644,root,root,755)
@@ -861,6 +857,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_datadir}/perl5
 %dir %{perl_privlib}
+%dir %{_libdir}/perl5
+%dir %{_libdir}/perl5/%{version}
+%dir %{perl_archlib}
+%dir %{perl_archlib}/CORE
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
 %dir %{perl_archlib}/auto
 
 %dir %{_libdir}/perl5/vendor_perl
