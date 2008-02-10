@@ -68,13 +68,12 @@ Source2:	%{name}.prov
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
 Patch2:		%{name}_580-errno_h-parsing.patch
-Patch3:		%{name}_580-use-LD_PRELOAD-for-libperl.so.patch
-Patch4:		%{name}_581-soname.patch
-Patch5:		%{name}-test-noproc.patch
-Patch6:		%{name}_585-microperl_uconfig.patch
-Patch7:		%{name}-write-permissions.patch
-Patch8:		%{name}-timer-test.patch
-Patch9:		%{name}-h2ph-includes.patch
+Patch3:		%{name}_581-soname.patch
+Patch4:		%{name}-test-noproc.patch
+Patch5:		%{name}_585-microperl_uconfig.patch
+Patch6:		%{name}-write-permissions.patch
+Patch7:		%{name}-timer-test.patch
+Patch8:		%{name}-h2ph-includes.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -639,7 +638,6 @@ microperlu - popraw je.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
