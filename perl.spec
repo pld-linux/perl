@@ -36,7 +36,7 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
 
-%define		rel	2.1
+%define		rel	2.2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -291,16 +291,14 @@ Group:		Development/Languages/Perl
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	perl-dirs(%{_target_cpu})
 Provides:	perl(largefiles)
-Provides:	perl-File-Compare = 1.1003
-Provides:	perl-File-Spec = 3.12
-Provides:	perl-File-Temp = 0.16
-Provides:	perl-IO = 1.22
+Provides:	perl-File-Compare = 1.1005
+Provides:	perl-File-Spec = 3.2501
+Provides:	perl-File-Temp = 0.18
+Provides:	perl-IO = 1.23_01
+Provides:	perl-PerlIO-via-QuotedPrint = 0.06
 Provides:	perl-Safe = 2.12
 Provides:	perl-Socket = 1.78
 Provides:	perl-Tie-File = 0.97
-# broken, unsupported modules
-Obsoletes:	perl-SOAP
-Obsoletes:	perl-Sort-PolySort
 Conflicts:	perl < 1:5.8.0
 
 %description base
@@ -338,12 +336,12 @@ Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
-Provides:	perl-CPAN = 1.76_02
+Provides:	perl-CPAN = 1.9205
 Provides:	perl-Devel-DProf = 20050603.00
-Provides:	perl-Devel-PPPort = 3.06_01
+Provides:	perl-Devel-PPPort = 3.13
 Provides:	perl-Devel-Peek = 1.03
-Provides:	perl-ExtUtils-Embed = 1.2506_01
-Provides:	perl-ExtUtils-MakeMaker = 6.30
+Provides:	perl-ExtUtils-Embed = 1.27
+Provides:	perl-ExtUtils-MakeMaker = 6.42
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -386,44 +384,43 @@ Summary:	Modules from the core Perl distribution
 Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-Provides:	perl-Attribute-Handlers = 0.78_02
-Provides:	perl-CGI = 3.15
+Provides:	perl-Attribute-Handlers = 0.79
+Provides:	perl-CGI = 3.29
 Provides:	perl-Class-ISA = 0.33
-Provides:	perl-Digest = 1.14
-Provides:	perl-Digest-MD5 = 2.36
+Provides:	perl-Digest = 1.15
+Provides:	perl-Digest-MD5 = 2.36_01
 Provides:	perl-Filter-Simple = 0.82
-Provides:	perl-FindBin = 1.47
+Provides:	perl-FindBin = 1.49
 #Provides:	perl-Hash-Utils = 0.05	Data::Util is missing
 Provides:	perl-I18N-LangTags = 0.35
-Provides:	perl-IPC-SysV = 1.04
+Provides:	perl-IPC-SysV = 1.05
 Provides:	perl-Locale-Codes = 2.07
-Provides:	perl-Locale-Maketext = 1.09
-Provides:	perl-MIME-Base64 = 3.07
-Provides:	perl-Math-BigInt = 1.77
-Provides:	perl-Math-BigRat = 0.15
-Provides:	perl-Math-Trig = 1.03
-Provides:	perl-Memoize = 1.01
-Provides:	perl-NEXT = 0.60
-Provides:	perl-PerlIO-via-QuotedPrint = 0.06
+Provides:	perl-Locale-Maketext = 1.12
+Provides:	perl-MIME-Base64 = 3.07_01
+Provides:	perl-Math-BigInt = 1.88
+Provides:	perl-Math-BigRat = 0.21
+Provides:	perl-Math-Trig = 1.04
+Provides:	perl-Memoize = 1.01_02
+Provides:	perl-NEXT = 0.60_01
 Provides:	perl-Pod-LaTeX = 0.58
-Provides:	perl-Pod-Parser = 1.32
-Provides:	perl-Scalar-List-Utils = 1.18
-Provides:	perl-Storable = 2.15
-Provides:	perl-Term-ANSIColor = 1.10
-Provides:	perl-Term-Cap = 1.09
+Provides:	perl-Pod-Parser = 1.35
+Provides:	perl-Scalar-List-Utils = 1.19
+Provides:	perl-Storable = 2.18
+Provides:	perl-Term-ANSIColor = 1.12
+Provides:	perl-Term-Cap = 1.12
 Provides:	perl-Test = 1.25
-Provides:	perl-Test-Harness = 2.56
-Provides:	perl-Test-Simple = 0.62
+Provides:	perl-Test-Harness = 2.64
+Provides:	perl-Test-Simple = 0.72
 Provides:	perl-Text-Balanced = 1.95
-Provides:	perl-Text-ParseWords = 3.24
-Provides:	perl-Text-Soundex = 1.01
+Provides:	perl-Text-ParseWords = 3.26
+Provides:	perl-Text-Soundex = 3.03
 # XXX: I'm not sure what to do with this one...
 #Provides:	perl-Text-Tabs+Wrap = 2005.0824(01)
-Provides:	perl-Time-HiRes = 1.86
-Provides:	perl-UNIVERSAL = 1.01
+Provides:	perl-Time-HiRes = 1.9711
+Provides:	perl-UNIVERSAL = 1.04
 Provides:	perl-Unicode-Collate = 0.52
-Provides:	perl-Unicode-Normalize = 0.32
-Provides:	perl-libnet = 1.19
+Provides:	perl-Unicode-Normalize = 1.02
+Provides:	perl-libnet = 1.22
 Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
 
@@ -441,7 +438,7 @@ Summary(pl.UTF-8):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Group:		Development/Tools
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
-Provides:	perldoc = 3.13@%{version}
+Provides:	perldoc = 3.14_02@%{version}
 
 %description perldoc
 perldoc looks up a piece of documentation in .pod format that is
