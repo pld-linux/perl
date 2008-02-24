@@ -394,10 +394,8 @@ Provides:	%perl_modversion Digest
 Provides:	%perl_modversion Digest::MD5
 Provides:	%perl_modversion Filter::Simple
 Provides:	%perl_modversion FindBin
-#Provides:	%%perl_modversion Hash::Utils Data::Util is missing
 Provides:	%perl_modversion I18N::LangTags
 Provides:	%perl_modversion IPC::SysV
-#Provides:	%%perl_modversion Locale::Codes
 Provides:	%perl_modversion Locale::Maketext
 Provides:	%perl_modversion MIME::Base64
 Provides:	%perl_modversion Math::BigInt
@@ -407,7 +405,6 @@ Provides:	%perl_modversion Memoize
 Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Pod::LaTeX
 Provides:	%perl_modversion Pod::Parser
-#Provides:	%%perl_modversion Scalar::List::Utils
 Provides:	%perl_modversion Storable
 Provides:	%perl_modversion Term::ANSIColor
 Provides:	%perl_modversion Term::Cap
@@ -417,8 +414,6 @@ Provides:	%perl_modversion Test::Simple
 Provides:	%perl_modversion Text::Balanced
 Provides:	%perl_modversion Text::ParseWords
 Provides:	%perl_modversion Text::Soundex
-# XXX: I'm not sure what to do with this one...
-#Provides:	%%perl_modversion Text::Tabs+Wrap 2005.0824(01)
 Provides:	%perl_modversion Time::HiRes
 Provides:	%perl_modversion UNIVERSAL
 Provides:	%perl_modversion Unicode::Collate
