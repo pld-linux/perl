@@ -25,16 +25,15 @@
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
 #
 
-%define _abi	5.10.0
-
+%define		abi	5.10.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{version}
 %define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
 %define		perl_sitelib	%{_usr}/local/share/perl5
-%define		perl_sitearch	%{_usr}/local/lib/perl5/%{_abi}/%{_target_platform}%{perlthread}
+%define		perl_sitearch	%{_usr}/local/lib/perl5/%{abi}/%{_target_platform}%{perlthread}
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
-%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
+%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{abi}/%{_target_platform}%{perlthread}
 
 %define		rel	2.2
 Summary:	Practical Extraction and Report Language (Perl)
@@ -688,14 +687,14 @@ WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT")
 EOF
 
 %{__make} \
-	LIBPERL_SONAME=libperl.so.%{_abi} \
+	LIBPERL_SONAME=libperl.so.%{abi} \
 	LDDLFLAGS="%{rpmcflags} -shared"
 
 cat > runperl <<'EOF'
 #!/bin/sh
-LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \
+LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{abi}" \
 PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
-exec %{buildroot}%{_bindir}/perl $*
+exec %{buildroot}%{_bindir}/perl ${1:+"$@"}
 EOF
 chmod a+x runperl
 
@@ -736,13 +735,13 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## Fix lib
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-#%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
-#	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
-mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}
-%{__ln_s} ../../../../libperl.so.%{_abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{_abi}
-%{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+#%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{abi}'";s|^'%{_libdir}'/*||;print'` \
+#	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
+mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
+%{__ln_s} ../../../../libperl.so.%{abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi}
+%{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 # installed as non-executable - let rpm generate deps
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -750,7 +749,7 @@ chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
 %{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm',"	$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
 
 ## Generate the *.ph files
-owd="`pwd`"
+owd=$(pwd)
 cd /usr/include
 H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
 PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
@@ -815,7 +814,7 @@ mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
 
 ## dir tree for other perl modules
 install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
-owd="`pwd`"
+owd=$(pwd)
 
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
@@ -825,6 +824,8 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
+# `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
+# which is then forced upon anyone embedding perl.
 sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
 rm -rf $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
@@ -841,7 +842,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libperl.so.%{_abi}
+%attr(755,root,root) %{_libdir}/libperl.so.%{abi}
 
 %files base
 %defattr(644,root,root,755)
@@ -858,11 +859,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/perl5/%{version}
 %dir %{perl_archlib}
 %dir %{perl_archlib}/CORE
-%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{abi}
 %dir %{perl_archlib}/auto
 
 %dir %{_libdir}/perl5/vendor_perl
-%dir %{_libdir}/perl5/vendor_perl/%{_abi}
+%dir %{_libdir}/perl5/vendor_perl/%{abi}
 %{perl_vendorarch}
 %{perl_vendorlib}
 
