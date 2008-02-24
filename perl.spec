@@ -35,6 +35,9 @@
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{abi}/%{_target_platform}%{perlthread}
 
+# extract module version from source
+%define		perl_modversion()	%(awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}'  %{SOURCE3})
+
 %define		rel	2.2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -68,6 +71,7 @@ Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.gz
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
+Source3:	%{name}-modules
 Patch0:		%{name}_581-noroot_install.patch
 Patch1:		%{name}_581-INC.patch
 Patch2:		%{name}_580-errno_h-parsing.patch
@@ -290,14 +294,14 @@ Group:		Development/Languages/Perl
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	perl-dirs(%{_target_cpu})
 Provides:	perl(largefiles)
-Provides:	perl-File-Compare = 1.1005
-Provides:	perl-File-Spec = 3.2501
-Provides:	perl-File-Temp = 0.18
-Provides:	perl-IO = 1.23_01
-Provides:	perl-PerlIO-via-QuotedPrint = 0.06
-Provides:	perl-Safe = 2.12
-Provides:	perl-Socket = 1.78
-Provides:	perl-Tie-File = 0.97
+Provides:	%perl_modversion File::Compare
+Provides:	%perl_modversion File::Spec
+Provides:	%perl_modversion File::Temp
+Provides:	%perl_modversion IO
+Provides:	%perl_modversion PerlIO::via::QuotedPrint
+Provides:	%perl_modversion Safe
+Provides:	%perl_modversion Socket
+Provides:	%perl_modversion Tie::File
 Conflicts:	perl < 1:5.8.0
 
 %description base
@@ -335,12 +339,12 @@ Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
-Provides:	perl-CPAN = 1.9205
-Provides:	perl-Devel-DProf = 20050603.00
-Provides:	perl-Devel-PPPort = 3.13
-Provides:	perl-Devel-Peek = 1.03
-Provides:	perl-ExtUtils-Embed = 1.27
-Provides:	perl-ExtUtils-MakeMaker = 6.42
+Provides:	%perl_modversion CPAN
+Provides:	%perl_modversion Devel::DProf
+Provides:	%perl_modversion Devel::PPPort
+Provides:	%perl_modversion Devel::Peek
+Provides:	%perl_modversion ExtUtils::Embed
+Provides:	%perl_modversion ExtUtils::MakeMaker
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -383,43 +387,43 @@ Summary:	Modules from the core Perl distribution
 Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-Provides:	perl-Attribute-Handlers = 0.79
-Provides:	perl-CGI = 3.29
-Provides:	perl-Class-ISA = 0.33
-Provides:	perl-Digest = 1.15
-Provides:	perl-Digest-MD5 = 2.36_01
-Provides:	perl-Filter-Simple = 0.82
-Provides:	perl-FindBin = 1.49
-#Provides:	perl-Hash-Utils = 0.05	Data::Util is missing
-Provides:	perl-I18N-LangTags = 0.35
-Provides:	perl-IPC-SysV = 1.05
-Provides:	perl-Locale-Codes = 2.07
-Provides:	perl-Locale-Maketext = 1.12
-Provides:	perl-MIME-Base64 = 3.07_01
-Provides:	perl-Math-BigInt = 1.88
-Provides:	perl-Math-BigRat = 0.21
-Provides:	perl-Math-Trig = 1.04
-Provides:	perl-Memoize = 1.01_02
-Provides:	perl-NEXT = 0.60_01
-Provides:	perl-Pod-LaTeX = 0.58
-Provides:	perl-Pod-Parser = 1.35
-Provides:	perl-Scalar-List-Utils = 1.19
-Provides:	perl-Storable = 2.18
-Provides:	perl-Term-ANSIColor = 1.12
-Provides:	perl-Term-Cap = 1.12
-Provides:	perl-Test = 1.25
-Provides:	perl-Test-Harness = 2.64
-Provides:	perl-Test-Simple = 0.72
-Provides:	perl-Text-Balanced = 1.95
-Provides:	perl-Text-ParseWords = 3.26
-Provides:	perl-Text-Soundex = 3.03
+Provides:	%perl_modversion Attribute::Handlers
+Provides:	%perl_modversion CGI
+Provides:	%perl_modversion Class::ISA
+Provides:	%perl_modversion Digest
+Provides:	%perl_modversion Digest::MD5
+Provides:	%perl_modversion Filter::Simple
+Provides:	%perl_modversion FindBin
+#Provides:	%%perl_modversion Hash::Utils Data::Util is missing
+Provides:	%perl_modversion I18N::LangTags
+Provides:	%perl_modversion IPC::SysV
+#Provides:	%%perl_modversion Locale::Codes
+Provides:	%perl_modversion Locale::Maketext
+Provides:	%perl_modversion MIME::Base64
+Provides:	%perl_modversion Math::BigInt
+Provides:	%perl_modversion Math::BigRat
+Provides:	%perl_modversion Math::Trig
+Provides:	%perl_modversion Memoize
+Provides:	%perl_modversion NEXT
+Provides:	%perl_modversion Pod::LaTeX
+Provides:	%perl_modversion Pod::Parser
+#Provides:	%%perl_modversion Scalar::List::Utils
+Provides:	%perl_modversion Storable
+Provides:	%perl_modversion Term::ANSIColor
+Provides:	%perl_modversion Term::Cap
+Provides:	%perl_modversion Test
+Provides:	%perl_modversion Test::Harness
+Provides:	%perl_modversion Test::Simple
+Provides:	%perl_modversion Text::Balanced
+Provides:	%perl_modversion Text::ParseWords
+Provides:	%perl_modversion Text::Soundex
 # XXX: I'm not sure what to do with this one...
-#Provides:	perl-Text-Tabs+Wrap = 2005.0824(01)
-Provides:	perl-Time-HiRes = 1.9711
-Provides:	perl-UNIVERSAL = 1.04
-Provides:	perl-Unicode-Collate = 0.52
-Provides:	perl-Unicode-Normalize = 1.02
-Provides:	perl-libnet = 1.22
+#Provides:	%%perl_modversion Text::Tabs+Wrap 2005.0824(01)
+Provides:	%perl_modversion Time::HiRes
+Provides:	%perl_modversion UNIVERSAL
+Provides:	%perl_modversion Unicode::Collate
+Provides:	%perl_modversion Unicode::Normalize
+Provides:	%perl_modversion libnet
 Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
 
@@ -640,6 +644,7 @@ microperlu - popraw je.
 %patch8 -p1
 
 %build
+
 unset LD_SYMBOLIC_FUNCTIONS || :
 sh Configure \
 	-des \
@@ -720,12 +725,18 @@ chmod a+x runperl
 #%{?with_tests:%{__make} minitest}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
+if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
+	rm -rf makeinstall.stamp installed.stamp $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	%{__make} install \
+		DESTDIR=$RPM_BUILD_ROOT
+	touch makeinstall.stamp
+fi
+
+if [ ! -f installed.stamp ]; then
+
 %{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
+install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## use symlinks instead of hardlinks
 %{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/perl
@@ -829,6 +840,37 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/ma
 sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
 rm -rf $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
+
+	touch installed.stamp
+fi
+
+# update and check perl-modules file
+echo '# Module versions from Perl %{version} distribution.' > perl-modules
+for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
+	case $m in
+	Devel::DProf)
+#		+ perl -ilib -MDevel::DProf -e print 'Devel-DProf = ',$Devel::DProf::VERSION
+#		DProf: run perl with -d to use DProf.
+#		Compilation failed in require.
+#		BEGIN failed--compilation aborted.
+		v=$(%{__perl} -e 'do "Devel/DProf.pm"; print $Devel::DProf::VERSION')
+		;;
+	libnet)
+		v=$(awk '/^libnet /{print $2; exit}' lib/Net/Changes)
+		;;
+	*)
+		v=$(%{__perl} -M$m -e "print \$$m::VERSION" )
+		;;
+	esac
+	echo "$m = $v" >> perl-modules
+done
+
+egrep -v '^([ 	]*$|[;#])' %{SOURCE3} > .mods1
+egrep -v '^([ 	]*$|[;#])' perl-modules > .mods2
+if ! cmp -s .mods1 .mods2; then
+	: %{SOURCE3} outdated with $(pwd)/perl-modules
+	exit 1
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
