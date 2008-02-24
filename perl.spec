@@ -734,112 +734,111 @@ if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
 fi
 
 if [ ! -f installed.stamp ]; then
+	%{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
+	install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
-%{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
-install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
+	## use symlinks instead of hardlinks
+	%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/perl
+	%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/suidperl
+	%{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
+	%{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
-## use symlinks instead of hardlinks
-%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/perl
-%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/suidperl
-%{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
-%{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
+	## Fix lib
+	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
+	#%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{abi}'";s|^'%{_libdir}'/*||;print'` \
+	#	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
+	mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
+	%{__ln_s} ../../../../libperl.so.%{abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi}
+	%{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+	# installed as non-executable - let rpm generate deps
+	chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
 
-## Fix lib
-%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-#%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{abi}'";s|^'%{_libdir}'/*||;print'` \
-#	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
-mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
-%{__ln_s} ../../../../libperl.so.%{abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi}
-%{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
-# installed as non-executable - let rpm generate deps
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
+	## Fix Config.pm: remove buildroot path and change man pages extensions
+	%{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+	%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"		$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
+	%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm',"	$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
 
-## Fix Config.pm: remove buildroot path and change man pages extensions
-%{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
-%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"		$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
-%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm',"	$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
+	## Generate the *.ph files
+	owd=$(pwd)
+	cd /usr/include
+	H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
+	PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
+	WANTED='
+		syscall.h
+		syslog.h
+		termios.h
+		wait.h
+		asm/termios.h
+		sys/ioctl.h
+		sys/socket.h
+		sys/syscall.h
+		sys/time.h
+		linux/posix_types.h
+		linux/stddef.h
+	'
+	# why it returns non-zero???
+	%{__perl} $H2PH -a -d $PHDIR $WANTED || :
+	cd "$owd"
 
-## Generate the *.ph files
-owd=$(pwd)
-cd /usr/include
-H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
-PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
-WANTED='
-	syscall.h
-	syslog.h
-	termios.h
-	wait.h
-	asm/termios.h
-	sys/ioctl.h
-	sys/socket.h
-	sys/syscall.h
-	sys/time.h
-	linux/posix_types.h
-	linux/stddef.h
-'
-# why it returns non-zero???
-%{__perl} $H2PH -a -d $PHDIR $WANTED || :
-cd "$owd"
+	## remove man pages for other operating systems
+	%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
+		$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
+		$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
-## remove man pages for other operating systems
-%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
-	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
-	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
+	## symlink perldelta.1.gz -> perlFOOdelta.1.gz
+	[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
+	rm $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+	echo ".so perl%(echo %{version} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
-## symlink perldelta.1.gz -> perlFOOdelta.1.gz
-[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
-rm $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
-echo ".so perl%(echo %{version} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+	## These File::Spec submodules are for non-Unix systems
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
+	rm $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
-## These File::Spec submodules are for non-Unix systems
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
-rm $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
+	## We already have these *.pod files as man pages
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+	rm $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
+	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
-## We already have these *.pod files as man pages
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
-rm $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
-%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+	## this object file looks unused; why is it there?
+	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
-## this object file looks unused; why is it there?
-%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
+	install -d doc-base/{Getopt/Long,Switch} \
+		doc-devel/ExtUtils \
+		doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
 
-install -d doc-base/{Getopt/Long,Switch} \
-	doc-devel/ExtUtils \
-	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
+	# needed only for tests
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
+	mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
+		doc-modules/unicore
+	# source for *.pl
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
+	# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
+	%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
+	# others
+	%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
 
-# needed only for tests
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
-mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
-	doc-modules/unicore
-# source for *.pl
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
-# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
-# others
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
+	## dir tree for other perl modules
+	install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
+	owd=$(pwd)
 
-## dir tree for other perl modules
-install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
-owd=$(pwd)
+	## non-english man pages
+	%{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-## non-english man pages
-%{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
+	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
+	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
+	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
+	# `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
+	# which is then forced upon anyone embedding perl.
+	sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
-# `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
-# which is then forced upon anyone embedding perl.
-sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
-
-rm -rf $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
+	rm -rf $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
 
 	touch installed.stamp
 fi
