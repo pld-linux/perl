@@ -26,6 +26,8 @@
 # TODO for perl-dependent packages:
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
 #
+# NOTE
+# - modules in 5.10.0: http://search.cpan.org/~rgarcia/perl-5.10.0/
 
 %define		abi	5.10.0
 %define		perlthread	%{?with_threads:-thread-multi}
@@ -1181,7 +1183,9 @@ rm -rf $RPM_BUILD_ROOT
 ## *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
 %{perl_archlib}/asm
+%ifnarch ppc
 %{perl_archlib}/asm-generic
+%endif
 %ifarch sparc64
 %{perl_archlib}/asm-sparc
 %{perl_archlib}/asm-sparc64
