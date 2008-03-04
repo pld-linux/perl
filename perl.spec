@@ -1181,7 +1181,7 @@ rm -rf $RPM_BUILD_ROOT
 ## *.ph files (could be made a separate package, but an autohelper's support is needed)
 %{perl_archlib}/*.ph
 %{perl_archlib}/asm
-%ifnarch alpha ppc ppc64
+%ifnarch alpha ppc ppc64 sparc sparc64
 # alpha and powerpc asm/ioctl.h doesn't use asm-generic
 %{perl_archlib}/asm-generic
 %endif
