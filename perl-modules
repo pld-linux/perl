@@ -21,6 +21,7 @@ Digest = 1.15
 Digest::MD5 = 2.36_01
 Filter::Simple = 0.82
 FindBin = 1.49
+GDBM_File = 1.08
 Hash::Util = 0.07
 I18N::LangTags = 0.35
 IPC::SysV = 1.05
