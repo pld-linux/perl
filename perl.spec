@@ -30,26 +30,26 @@
 
 %define		_rel 10
 Summary:	Practical Extraction and Report Language (Perl)
-Summary(cs):	Programovací jazyk Perl
-Summary(da):	Programmeringssproget Perl
-Summary(de):	Praktische Extraktions- und Berichtsprache
-Summary(es):	Lenguaje práctica de extracción y listado
-Summary(fr):	Langage de programmation Perl
-Summary(id):	Bahasa pemrograman Perl
-Summary(is):	Forritunarmáliğ Perl
-Summary(it):	Perl: linguaggio di programmazione
-Summary(ja):	Perl ¥×¥í¥°¥é¥ß¥ó¥°¸À¸ì
-Summary(ko):	ÆŞ ÇÁ·Î±×·¡¹Ö ¾ğ¾î
-Summary(nb):	Programmeringsspråket Perl
-Summary(pl):	Interpreter jêzyka Perl (Practical Extraction and Report Language)
-Summary(pt):	A linguagem de programação Perl
-Summary(pt_BR):	Linguagem prática de extração e relatório
-Summary(ru):	ñÚÙË ĞÒÏÇÒÁÍÍÉÒÏ×ÁÎÉÑ Perl
-Summary(sk):	Programovací jazyk Perl
-Summary(sl):	Programski jezik Perl
-Summary(sv):	Programmeringsspråket Perl
-Summary(tr):	Kabuk yorumlama dili
-Summary(zh_CN):	Perl ±à³ÌÓïÑÔ¡£
+Summary(cs.UTF-8):	ProgramovacÃ­ jazyk Perl
+Summary(da.UTF-8):	Programmeringssproget Perl
+Summary(de.UTF-8):	Praktische Extraktions- und Berichtsprache
+Summary(es.UTF-8):	Lenguaje prÃ¡ctica de extracciÃ³n y listado
+Summary(fr.UTF-8):	Langage de programmation Perl
+Summary(id.UTF-8):	Bahasa pemrograman Perl
+Summary(is.UTF-8):	ForritunarmÃ¡liÃ° Perl
+Summary(it.UTF-8):	Perl: linguaggio di programmazione
+Summary(ja.UTF-8):	Perl ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èª
+Summary(ko.UTF-8):	í„ í”„ë¡œê·¸ë˜ë° ì–¸ì–´
+Summary(nb.UTF-8):	ProgrammeringssprÃ¥ket Perl
+Summary(pl.UTF-8):	Interpreter jÄ™zyka Perl (Practical Extraction and Report Language)
+Summary(pt.UTF-8):	A linguagem de programaÃ§Ã£o Perl
+Summary(pt_BR.UTF-8):	Linguagem prÃ¡tica de extraÃ§Ã£o e relatÃ³rio
+Summary(ru.UTF-8):	Ğ¯Ğ·Ñ‹Ğº Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ Perl
+Summary(sk.UTF-8):	ProgramovacÃ­ jazyk Perl
+Summary(sl.UTF-8):	Programski jezik Perl
+Summary(sv.UTF-8):	ProgrammeringssprÃ¥ket Perl
+Summary(tr.UTF-8):	Kabuk yorumlama dili
+Summary(zh_CN.UTF-8):	Perl ç¼–ç¨‹è¯­è¨€ã€‚
 Name:		perl
 Version:	5.8.8
 Release:	%{_rel}%{!?with_threads:_nothr}
@@ -101,51 +101,51 @@ system management tasks. The language is intended to be practical
 (easy to use, efficient, complete) rather than beautiful (tiny,
 elegant, minimal).
 
-%description -l cs
-Perl je vy¹¹í programovací jazyk s koøeny v jazyce C, sed, awk a
-shellovıch skriptech. Perl je vhodnı pro manipulace s procesy a
-soubory, ale obzvlá¹tì se hodí ke zpracovávání textù. Perl vyniká
-praktièností úèinností. I kdy¾ se pou¾ívá prakticky na cokoli, vìt¹ina
-Perlovıch programù slou¾í jako správcovské utility nebo programy pro
-WWW. V Perlu je napsáno velmi mnoho CGI skriptù pro WWW servery na
-celém svìtì.
+%description -l cs.UTF-8
+Perl je vyÅ¡Å¡Ã­ programovacÃ­ jazyk s koÅ™eny v jazyce C, sed, awk a
+shellovÃ½ch skriptech. Perl je vhodnÃ½ pro manipulace s procesy a
+soubory, ale obzvlÃ¡Å¡tÄ› se hodÃ­ ke zpracovÃ¡vÃ¡nÃ­ textÅ¯. Perl vynikÃ¡
+praktiÄnostÃ­ ÃºÄinnostÃ­. I kdyÅ¾ se pouÅ¾Ã­vÃ¡ prakticky na cokoli, vÄ›tÅ¡ina
+PerlovÃ½ch programÅ¯ slouÅ¾Ã­ jako sprÃ¡vcovskÃ© utility nebo programy pro
+WWW. V Perlu je napsÃ¡no velmi mnoho CGI skriptÅ¯ pro WWW servery na
+celÃ©m svÄ›tÄ›.
 
-%description -l da
-Perl er et høgniveauprogramsprog med røtter i C, sed, awk og
-skalskript. Perl er godt på at behandle processer og filer, og er
-særskilt godt på at behandle text. Utmærkende for Perl er at det er
-praktisk og effektivt. Det bruges for at gøre en mængd forskellige
+%description -l da.UTF-8
+Perl er et hÃ¸gniveauprogramsprog med rÃ¸tter i C, sed, awk og
+skalskript. Perl er godt pÃ¥ at behandle processer og filer, og er
+sÃ¦rskilt godt pÃ¥ at behandle text. UtmÃ¦rkende for Perl er at det er
+praktisk og effektivt. Det bruges for at gÃ¸re en mÃ¦ngd forskellige
 saker, men de almindeligeste programmerne er systemadministration og
-webbprogrammering. En stor andel af CGI-skripten på webben er skrivna
-i Perl. Du behøver installere pakken Perl på dit system så at ditt
+webbprogrammering. En stor andel af CGI-skripten pÃ¥ webben er skrivna
+i Perl. Du behÃ¸ver installere pakken Perl pÃ¥ dit system sÃ¥ at ditt
 system kan behandle Perlskript.
 
-%description -l de
+%description -l de.UTF-8
 Perl ist eine Interpreter-Sprache, die zum Durchsuchen beliebiger
 Text- dateien, Extrahieren von Informationen aus diesen Dateien und
 Drucken von auf diesen Informationen basierenden Berichten optimiert
-ist. Die Sprache eignet sich außerdem für viele
+ist. Die Sprache eignet sich auÃŸerdem fÃ¼r viele
 Systemverwaltungsaufgaben. Sie ist eher praktisch (einfache
-Anwendung,effizient, vollständig) als schön (winzig, elegant,
+Anwendung,effizient, vollstÃ¤ndig) als schÃ¶n (winzig, elegant,
 minimal).
 
-%description -l es
+%description -l es.UTF-8
 Perl es un lenguaje interpretado, optimizado para manejar archivos
-texto, extrayendo información de estos archivos y mostrando listados
-basados en esta información. También es un buen lenguaje para varias
-tareas de administración de sistema. El lenguaje busca ser más
-práctico (fácil de usar, eficiente, completo) que bonito (minúsculo,
-elegante, mínimo).
+texto, extrayendo informaciÃ³n de estos archivos y mostrando listados
+basados en esta informaciÃ³n. TambiÃ©n es un buen lenguaje para varias
+tareas de administraciÃ³n de sistema. El lenguaje busca ser mÃ¡s
+prÃ¡ctico (fÃ¡cil de usar, eficiente, completo) que bonito (minÃºsculo,
+elegante, mÃ­nimo).
 
-%description -l fr
-Perl est un langage interprété, optimisé pour filtrer des fichiers
+%description -l fr.UTF-8
+Perl est un langage interprÃ©tÃ©, optimisÃ© pour filtrer des fichiers
 texte, extraire des informations de ces fichiers, et imprimer des
-rapports basés sur ces informations. C'est aussi un bon langage pour
-de nombreuses procédures de gestion système. Ce langage se veut
-pratique (simple à utiliser, efficace, complet) autant qu'agréable
-(conscrit, élégant, minimal).
+rapports basÃ©s sur ces informations. C'est aussi un bon langage pour
+de nombreuses procÃ©dures de gestion systÃ¨me. Ce langage se veut
+pratique (simple Ã  utiliser, efficace, complet) autant qu'agrÃ©able
+(conscrit, Ã©lÃ©gant, minimal).
 
-%description -l id
+%description -l id.UTF-8
 Perl adalah sebuah bahasa pemrograman tingkat tinggi yang didasarkan
 pada C, sed, awk, dan bahasa shell. Perl memiliki kemampuan penanganan
 proses dan file yang bagus, tapi terutama kemampuan penanganan teksnya
@@ -155,133 +155,133 @@ utilitas sistem administrasi dan pemrograman web. Sebagian besar skrip
 CGI yang ada di web ditulis dalam Perl. Anda Perlu memasang paket Perl
 di sistem agar dapat menjalankan skrip-skrip Perl.
 
-%description -l is
-Perl er hás stigs forritunar tungumál sem á rætur sínar ağ rekja til
-C, sed, awk, og skeljar forritunar. Perl er góğ í ağ meğhöndla
-processa og skrár og er sérstaklega góğ í ağ meğhöndla texta. Perls
-kostir eru nytsamleiki og virkni. Á meğan şağ er notağ til ağ gera
-marga mismunandi hluti, Perl mest notuğu forrit eru krefisstjórnunar
-tól og vef forritun Stór hluti af CGI forritum á vefnum eru skrifağar
-í Perl. Şú şarft Perl pakkann settan upp á şínu krefi svo şitt kerfi
-geti notağ Perl scriptur.
+%description -l is.UTF-8
+Perl er hÃ¡s stigs forritunar tungumÃ¡l sem Ã¡ rÃ¦tur sÃ­nar aÃ° rekja til
+C, sed, awk, og skeljar forritunar. Perl er gÃ³Ã° Ã­ aÃ° meÃ°hÃ¶ndla
+processa og skrÃ¡r og er sÃ©rstaklega gÃ³Ã° Ã­ aÃ° meÃ°hÃ¶ndla texta. Perls
+kostir eru nytsamleiki og virkni. Ã meÃ°an Ã¾aÃ° er notaÃ° til aÃ° gera
+marga mismunandi hluti, Perl mest notuÃ°u forrit eru krefisstjÃ³rnunar
+tÃ³l og vef forritun StÃ³r hluti af CGI forritum Ã¡ vefnum eru skrifaÃ°ar
+Ã­ Perl. ÃÃº Ã¾arft Perl pakkann settan upp Ã¡ Ã¾Ã­nu krefi svo Ã¾itt kerfi
+geti notaÃ° Perl scriptur.
 
-%description -l it
-Perl è un linguaggio di programmazione di alto livello derivato dal
+%description -l it.UTF-8
+Perl Ã¨ un linguaggio di programmazione di alto livello derivato dal
 linguaggio C, da sed, da awk e dallo scripting delle shell. E' adatto
 per la gestione di processi, di file e in particolare di file di
-testo. Perl è un linguaggio semplice ed efficiente. Viene utilizzato
-per numerosi scopi, ma le sue applicazioni più diffuse sono le utility
+testo. Perl Ã¨ un linguaggio semplice ed efficiente. Viene utilizzato
+per numerosi scopi, ma le sue applicazioni piÃ¹ diffuse sono le utility
 di amministrazione del sistema e la programmazione Web. Una grossa
-parte degli script CGI nel Web sono scritti in Perl. È consigliabile
+parte degli script CGI nel Web sono scritti in Perl. Ãˆ consigliabile
 installare il pacchetto Perl in modo che il sistema sia in grado di
 gestire gli script di Perl.
 
-%description -l ja
-Perl ¤Ï C¸À¸ì¡¢sed, awk¡¢µÚ¤Ó ¥·¥§¥ë¥¹¥¯¥ê¥×¥Æ¥£¥ó¥°¤Ëº¬¸»¤ò
-»ı¤Ä¥Ï¥¤¥ì¥Ù¥ë¤Ê ¥×¥í¥°¥é¥à¸À¸ì¤Ç¤¹¡£Perl ¤Ï¥×¥í¥»¥¹¤ä¥Õ¥¡¥¤¥ë¤Î½èÍı¤Ë
-Å¬ÀÚ¤Ç ¡¢ÆÃ¤Ë ¥Æ¥­¥¹¥È½èÍı¤Ë¤ÏºÇÅ¬¤Ç¤¹¡£¤µ¤Ş¤¶¤Ş¤Êºî¶È¤Ë
-»ÈÍÑ¤µ¤ì¤Ş¤¹¤¬¡¢ Perl¤ÎºÇ¤âÉÑÈË¤Ê³èÍÑ¤Ï¥·¥¹¥Æ¥à¥¢¥É¥ß¥Ë¥¹¥È¥ì¡¼¥·¥ç¥ó
-¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤È web¥×¥í¥°¥é¥ß¥ó¥°¤Ç¤¹¡£web¾å¤Î ÂçÉôÊ¬¤ÎCGI"
-¥¹¥¯¥ê¥×¥È¤¬Perl¤Ç½ñ¤«¤ì¤Æ¤¤¤Ş¤¹¡£ ¥·¥¹¥Æ¥à¤¬Perl¥¹¥¯¥ê¥×¥È¤ò
-½èÍı½ĞÍè¤ë¤è¤¦¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï Perl¥Ñ¥Ã¥±¡¼¥¸¤ò ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
-É¬Í×¤¬¤¢¤ê¤Ş¤¹¡£
+%description -l ja.UTF-8
+Perl ã¯ Cè¨€èªã€sed, awkã€åŠã³ ã‚·ã‚§ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒ†ã‚£ãƒ³ã‚°ã«æ ¹æºã‚’
+æŒã¤ãƒã‚¤ãƒ¬ãƒ™ãƒ«ãª ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¨€èªã§ã™ã€‚Perl ã¯ãƒ—ãƒ­ã‚»ã‚¹ã‚„ãƒ•ã‚¡ã‚¤ãƒ«ã®å‡¦ç†ã«
+é©åˆ‡ã§ ã€ç‰¹ã« ãƒ†ã‚­ã‚¹ãƒˆå‡¦ç†ã«ã¯æœ€é©ã§ã™ã€‚ã•ã¾ã–ã¾ãªä½œæ¥­ã«
+ä½¿ç”¨ã•ã‚Œã¾ã™ãŒã€ Perlã®æœ€ã‚‚é »ç¹ãªæ´»ç”¨ã¯ã‚·ã‚¹ãƒ†ãƒ ã‚¢ãƒ‰ãƒŸãƒ‹ã‚¹ãƒˆãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
+ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã¨ webãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°ã§ã™ã€‚webä¸Šã® å¤§éƒ¨åˆ†ã®CGI"
+ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒPerlã§æ›¸ã‹ã‚Œã¦ã„ã¾ã™ã€‚ ã‚·ã‚¹ãƒ†ãƒ ãŒPerlã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’
+å‡¦ç†å‡ºæ¥ã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã«ã¯ Perlãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã‚’ ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹
+å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
-%description -l pl
-Perl jest jêzykiem przeznaczonym do skanowania plików tekstowych,
-wyci±gania z nich informacji i drukowania raportu bazuj±cego na tych
-informacjach. Jest równie¿ doskona³ym jêzykiem do wielu prac
-zwi±zanych z nadzorem systemu. Jêzyk ten jest w zamierzeniu bardziej
-praktyczny (³atwy w u¿yciu, wydajny, kompletny) ni¿ piêkny (skromny,
+%description -l pl.UTF-8
+Perl jest jÄ™zykiem przeznaczonym do skanowania plikÃ³w tekstowych,
+wyciÄ…gania z nich informacji i drukowania raportu bazujÄ…cego na tych
+informacjach. Jest rÃ³wnieÅ¼ doskonaÅ‚ym jÄ™zykiem do wielu prac
+zwiÄ…zanych z nadzorem systemu. JÄ™zyk ten jest w zamierzeniu bardziej
+praktyczny (Å‚atwy w uÅ¼yciu, wydajny, kompletny) niÅ¼ piÄ™kny (skromny,
 elegancki, minimalny).
 
-%description -l pt
-O Perl é uma linguagem de programação de alto nível que tem como
-raizes o C, sed, awk, e 'shell scripting'. O Perl é bom a manipular
-processos e ficheiros, e é especialmente bom para manipular texto.
-Características do Perl são a eficiência e o uso prático. As
-aplicações mais comuns do Perl são utilitários de administração de
-sistema e programação Web. Uma grande parte dos 'scripts' CGI na Web
-são escritos em Perl. Você precisa do pacote Perl instalado no seu
+%description -l pt.UTF-8
+O Perl Ã© uma linguagem de programaÃ§Ã£o de alto nÃ­vel que tem como
+raizes o C, sed, awk, e 'shell scripting'. O Perl Ã© bom a manipular
+processos e ficheiros, e Ã© especialmente bom para manipular texto.
+CaracterÃ­sticas do Perl sÃ£o a eficiÃªncia e o uso prÃ¡tico. As
+aplicaÃ§Ãµes mais comuns do Perl sÃ£o utilitÃ¡rios de administraÃ§Ã£o de
+sistema e programaÃ§Ã£o Web. Uma grande parte dos 'scripts' CGI na Web
+sÃ£o escritos em Perl. VocÃª precisa do pacote Perl instalado no seu
 sistema de maneira a que este possa tratar de 'scripts' de Perl.
 
-%description -l pt_BR
-Perl é uma linguagem interpretada, otimizada para tratar arquivos
-texto, extraindo informação desses arquivos e mostrando relatórios
-baseados nessa informação. Também é uma boa linguagem para várias
-tarefas de administração de sistema. A linguagem procura ser mais
-prática (fácil de usar, eficiente, completa) do que bonita (minúscula,
-elegante, mínima).
+%description -l pt_BR.UTF-8
+Perl Ã© uma linguagem interpretada, otimizada para tratar arquivos
+texto, extraindo informaÃ§Ã£o desses arquivos e mostrando relatÃ³rios
+baseados nessa informaÃ§Ã£o. TambÃ©m Ã© uma boa linguagem para vÃ¡rias
+tarefas de administraÃ§Ã£o de sistema. A linguagem procura ser mais
+prÃ¡tica (fÃ¡cil de usar, eficiente, completa) do que bonita (minÃºscula,
+elegante, mÃ­nima).
 
-%description -l ru
-Perl - ÜÔÏ ÉÎÔÅÒĞÒÅÔÉÒÕÅÍÙÊ ÑÚÙË ĞÒÏÇÒÁÍÍÉÒÏ×ÁÎÉÑ, ÕÈÏÄÑİÉÊ ËÏÒÎÑÍÉ ×
-C, sed, awk É ÑÚÙËÉ ËÏÍÁÎÄÎÙÈ ÏÂÏÌÏŞÅË (shell). Perl ÈÏÒÏÛ ÄÌÑ ÒÁÂÏÔÙ
-Ó ĞÒÏÃÅÓÓÁÍÉ É ÆÁÊÌÁÍÉ, Á ÏÓÏÂÅÎÎÏ ÈÏÒÏÛ ÄÌÑ ÚÁÄÁŞ ÏÂÒÁÂÏÔËÉ ÔÅËÓÔÏ×.
-ïÓÏÂÅÎÎÏÓÔÉ Perl - ĞÒÁËÔÉŞÎÏÓÔØ É ÜÆÆÅËÔÉ×ÎÏÓÔØ. èÏÔÑ ÏÎ É
-ÉÓĞÏÌØÚÕÅÔÓÑ ÄÌÑ ÒÅÛÅÎÉÑ ÓÁÍÙÈ ÒÁÚÎÙÈ ÚÁÄÁŞ, ÎÁÉÂÏÌÅÅ ÒÁÓĞÒÏÓÔÒÁÎÅÎÎÙÅ
-ĞÒÉÍÅÎÅÎÉÑ (É ÔÏ, × ŞÅÍ ÏÎ ÓÉÌÅÎ) ÜÔÏ, ×ÅÒÏÑÔÎÏ, ÕÔÉÌÉÔÙ ÓÉÓÔÅÍÎÏÇÏ
-ÁÄÍÉÎÉÓÔÒÉÒÏ×ÁÎÉÑ É web-ĞÒÏÇÒÁÍÍÉÒÏ×ÁÎÉÅ. âÏÌØÛÁÑ ŞÁÓÔØ CGI ÓËÒÉĞÔÏ×
-ÎÁĞÉÓÁÎÁ ÎÁ Perl.
+%description -l ru.UTF-8
+Perl - ÑÑ‚Ğ¾ Ğ¸Ğ½Ñ‚ĞµÑ€Ğ¿Ñ€ĞµÑ‚Ğ¸Ñ€ÑƒĞµĞ¼Ñ‹Ğ¹ ÑĞ·Ñ‹Ğº Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ, ÑƒÑ…Ğ¾Ğ´ÑÑ‰Ğ¸Ğ¹ ĞºĞ¾Ñ€Ğ½ÑĞ¼Ğ¸ Ğ²
+C, sed, awk Ğ¸ ÑĞ·Ñ‹ĞºĞ¸ ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ğ½Ñ‹Ñ… Ğ¾Ğ±Ğ¾Ğ»Ğ¾Ñ‡ĞµĞº (shell). Perl Ñ…Ğ¾Ñ€Ğ¾Ñˆ Ğ´Ğ»Ñ Ñ€Ğ°Ğ±Ğ¾Ñ‚Ñ‹
+Ñ Ğ¿Ñ€Ğ¾Ñ†ĞµÑÑĞ°Ğ¼Ğ¸ Ğ¸ Ñ„Ğ°Ğ¹Ğ»Ğ°Ğ¼Ğ¸, Ğ° Ğ¾ÑĞ¾Ğ±ĞµĞ½Ğ½Ğ¾ Ñ…Ğ¾Ñ€Ğ¾Ñˆ Ğ´Ğ»Ñ Ğ·Ğ°Ğ´Ğ°Ñ‡ Ğ¾Ğ±Ñ€Ğ°Ğ±Ğ¾Ñ‚ĞºĞ¸ Ñ‚ĞµĞºÑÑ‚Ğ¾Ğ².
+ĞÑĞ¾Ğ±ĞµĞ½Ğ½Ğ¾ÑÑ‚Ğ¸ Perl - Ğ¿Ñ€Ğ°ĞºÑ‚Ğ¸Ñ‡Ğ½Ğ¾ÑÑ‚ÑŒ Ğ¸ ÑÑ„Ñ„ĞµĞºÑ‚Ğ¸Ğ²Ğ½Ğ¾ÑÑ‚ÑŒ. Ğ¥Ğ¾Ñ‚Ñ Ğ¾Ğ½ Ğ¸
+Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·ÑƒĞµÑ‚ÑÑ Ğ´Ğ»Ñ Ñ€ĞµÑˆĞµĞ½Ğ¸Ñ ÑĞ°Ğ¼Ñ‹Ñ… Ñ€Ğ°Ğ·Ğ½Ñ‹Ñ… Ğ·Ğ°Ğ´Ğ°Ñ‡, Ğ½Ğ°Ğ¸Ğ±Ğ¾Ğ»ĞµĞµ Ñ€Ğ°ÑĞ¿Ñ€Ğ¾ÑÑ‚Ñ€Ğ°Ğ½ĞµĞ½Ğ½Ñ‹Ğµ
+Ğ¿Ñ€Ğ¸Ğ¼ĞµĞ½ĞµĞ½Ğ¸Ñ (Ğ¸ Ñ‚Ğ¾, Ğ² Ñ‡ĞµĞ¼ Ğ¾Ğ½ ÑĞ¸Ğ»ĞµĞ½) ÑÑ‚Ğ¾, Ğ²ĞµÑ€Ğ¾ÑÑ‚Ğ½Ğ¾, ÑƒÑ‚Ğ¸Ğ»Ğ¸Ñ‚Ñ‹ ÑĞ¸ÑÑ‚ĞµĞ¼Ğ½Ğ¾Ğ³Ğ¾
+Ğ°Ğ´Ğ¼Ğ¸Ğ½Ğ¸ÑÑ‚Ñ€Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ Ğ¸ web-Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ. Ğ‘Ğ¾Ğ»ÑŒÑˆĞ°Ñ Ñ‡Ğ°ÑÑ‚ÑŒ CGI ÑĞºÑ€Ğ¸Ğ¿Ñ‚Ğ¾Ğ²
+Ğ½Ğ°Ğ¿Ğ¸ÑĞ°Ğ½Ğ° Ğ½Ğ° Perl.
 
-%description -l sk
-Perl je programovací jazyk vy¹¹ej úrovne s koreòmi v C, sed, awk, a
-shell skriptoch. Perl má vhodné vlastnosti pre spracovanie procesov a
-súborov a je zvlá¹» vhodnı pre spracovanie textu. Jeho cieµmi sú
-praktiènos» a efektivita. Aj keï je pou¾ívanı pre mno¾stvo rozliènıch
-èinností, jeho najèastej¹ím pou¾itím (a kde vyniká najviac) sú
-pravdepodobne nástroje pre správu systému a programovanie na Webe.
-Veµká èas» CGI skriptov na Webe je napísaná v Perle. Balík Perl
-potrebujete ma» nain¹talovanı, aby bol vá¹ systém schopnı spracova»
+%description -l sk.UTF-8
+Perl je programovacÃ­ jazyk vyÅ¡Å¡ej Ãºrovne s koreÅˆmi v C, sed, awk, a
+shell skriptoch. Perl mÃ¡ vhodnÃ© vlastnosti pre spracovanie procesov a
+sÃºborov a je zvlÃ¡Å¡Å¥ vhodnÃ½ pre spracovanie textu. Jeho cieÄ¾mi sÃº
+praktiÄnosÅ¥ a efektivita. Aj keÄ je pouÅ¾Ã­vanÃ½ pre mnoÅ¾stvo rozliÄnÃ½ch
+ÄinnostÃ­, jeho najÄastejÅ¡Ã­m pouÅ¾itÃ­m (a kde vynikÃ¡ najviac) sÃº
+pravdepodobne nÃ¡stroje pre sprÃ¡vu systÃ©mu a programovanie na Webe.
+VeÄ¾kÃ¡ ÄasÅ¥ CGI skriptov na Webe je napÃ­sanÃ¡ v Perle. BalÃ­k Perl
+potrebujete maÅ¥ nainÅ¡talovanÃ½, aby bol vÃ¡Å¡ systÃ©m schopnÃ½ spracovaÅ¥
 Perl skripty.
 
-%description -l sv
-Perl är ett högnivåprogramspråk med rötter i C, sed, awk och
-skalskript. Perl är bra på att hantera processer och filer, och är
-särskilt bra på att hantera text. Utmärkande för Perl är att det är
-praktiskt och effektivt. Det används för att göra en mängd olika
-saker, men de vanligaste tillämpningarna är systemadministration och
-webbprogrammering. En stor andel av CGI-skripten på webben är skrivna
-i Perl. Du behöver installera paketet Perl på ditt system så att ditt
+%description -l sv.UTF-8
+Perl Ã¤r ett hÃ¶gnivÃ¥programsprÃ¥k med rÃ¶tter i C, sed, awk och
+skalskript. Perl Ã¤r bra pÃ¥ att hantera processer och filer, och Ã¤r
+sÃ¤rskilt bra pÃ¥ att hantera text. UtmÃ¤rkande fÃ¶r Perl Ã¤r att det Ã¤r
+praktiskt och effektivt. Det anvÃ¤nds fÃ¶r att gÃ¶ra en mÃ¤ngd olika
+saker, men de vanligaste tillÃ¤mpningarna Ã¤r systemadministration och
+webbprogrammering. En stor andel av CGI-skripten pÃ¥ webben Ã¤r skrivna
+i Perl. Du behÃ¶ver installera paketet Perl pÃ¥ ditt system sÃ¥ att ditt
 
-%description -l tr
-Perl, metin dosyalarını taramak, bu metin dosyalarından bilgi çıkarmak
-ve bu bilgiye dayalı raporlar hazırlamak icin geliştirilmiş bir
-yorumlamalı dildir. Ayrıca pek çok sistem yönetimi görevleri için de
-yararlı yetenekleri vardır. Perl, güzel (ufak, zarif, minimum)
-olmaktan çok, pratik olmaya yönelik (kullanımı kolay, verimli,
-eksiksiz) olarak tasarlanmıştır.
+%description -l tr.UTF-8
+Perl, metin dosyalarÄ±nÄ± taramak, bu metin dosyalarÄ±ndan bilgi Ã§Ä±karmak
+ve bu bilgiye dayalÄ± raporlar hazÄ±rlamak icin geliÅŸtirilmiÅŸ bir
+yorumlamalÄ± dildir. AyrÄ±ca pek Ã§ok sistem yÃ¶netimi gÃ¶revleri iÃ§in de
+yararlÄ± yetenekleri vardÄ±r. Perl, gÃ¼zel (ufak, zarif, minimum)
+olmaktan Ã§ok, pratik olmaya yÃ¶nelik (kullanÄ±mÄ± kolay, verimli,
+eksiksiz) olarak tasarlanmÄ±ÅŸtÄ±r.
 
-%description -l uk
-Perl - ÃÅ ¦ÎÔÅÒĞÒÅÔÏ×ÁÎÁ ÍÏ×Á ĞÒÏÇÒÁÍÕ×ÁÎÎÑ, İÏ ÚÁĞÏÚÉŞÕ¤ ¦ÄÅ§ × C,
-sed, awk ÔÁ ÍÏ×ÁÈ ËÏÍÁÎÄÎÉÈ ÏÂÏÌÏÎÏË (shell). Perl ÄÏÂÒÅ Ğ¦ÄÈÏÄÉÔØ ÄÌÑ
-ÒÏÂÏÔÉ Ú ĞÒÏÃÅÓÁÍÉ ÔÁ ÆÁÊÌÁÍÉ, Á ÎÁÊËÒÁİÅ - ÄÌÑ ÏÂÒÏÂËÉ ÔÅËÓÔ¦×.
-ïÓÏÂÌÉ×ÏÓÔ¦ Perl - ĞÒÁËÔÉŞÎ¦ÓÔØ ÔÁ ÅÆÅËÔÉ×Î¦ÓÔØ. èÏŞÁ ÓÆÅÒÁ ÊÏÇÏ
-×ÉËÏÒÉÓÔÁÎÎÑ ÄÕÖÅ ÛÉÒÏËÁ, ÎÁÊÂ¦ÌØÛ ĞÏÛÉÒÅÎÅ ÊÏÇÏ ÚÁÓÔÏÓÕ×ÁÎÎÑ (ÔÁ
-ÎÁÊÓÉÌØÎ¦ÛÁ ÓÔÏÒÏÎÁ) ÃÅ, ¦ÍÏ×¦ÒÎÏ, ÕÔÉÌ¦ÔÉ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍ¦Î¦ÓÔÒÕ×ÁÎÎÑ
-ÔÁ web-ĞÒÏÇÒÁÍÕ×ÁÎÎÑ. â¦ÌØÛÁ ŞÁÓÔÉÎÁ CGI ÓËÒÉĞÔ¦× ÎÁĞÉÓÁÎÁ ÎÁ Perl.
+%description -l uk.UTF-8
+Perl - Ñ†Ğµ Ñ–Ğ½Ñ‚ĞµÑ€Ğ¿Ñ€ĞµÑ‚Ğ¾Ğ²Ğ°Ğ½Ğ° Ğ¼Ğ¾Ğ²Ğ° Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼ÑƒĞ²Ğ°Ğ½Ğ½Ñ, Ñ‰Ğ¾ Ğ·Ğ°Ğ¿Ğ¾Ğ·Ğ¸Ñ‡ÑƒÑ” Ñ–Ğ´ĞµÑ— Ğ² C,
+sed, awk Ñ‚Ğ° Ğ¼Ğ¾Ğ²Ğ°Ñ… ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ğ½Ğ¸Ñ… Ğ¾Ğ±Ğ¾Ğ»Ğ¾Ğ½Ğ¾Ğº (shell). Perl Ğ´Ğ¾Ğ±Ñ€Ğµ Ğ¿Ñ–Ğ´Ñ…Ğ¾Ğ´Ğ¸Ñ‚ÑŒ Ğ´Ğ»Ñ
+Ñ€Ğ¾Ğ±Ğ¾Ñ‚Ğ¸ Ğ· Ğ¿Ñ€Ğ¾Ñ†ĞµÑĞ°Ğ¼Ğ¸ Ñ‚Ğ° Ñ„Ğ°Ğ¹Ğ»Ğ°Ğ¼Ğ¸, Ğ° Ğ½Ğ°Ğ¹ĞºÑ€Ğ°Ñ‰Ğµ - Ğ´Ğ»Ñ Ğ¾Ğ±Ñ€Ğ¾Ğ±ĞºĞ¸ Ñ‚ĞµĞºÑÑ‚Ñ–Ğ².
+ĞÑĞ¾Ğ±Ğ»Ğ¸Ğ²Ğ¾ÑÑ‚Ñ– Perl - Ğ¿Ñ€Ğ°ĞºÑ‚Ğ¸Ñ‡Ğ½Ñ–ÑÑ‚ÑŒ Ñ‚Ğ° ĞµÑ„ĞµĞºÑ‚Ğ¸Ğ²Ğ½Ñ–ÑÑ‚ÑŒ. Ğ¥Ğ¾Ñ‡Ğ° ÑÑ„ĞµÑ€Ğ° Ğ¹Ğ¾Ğ³Ğ¾
+Ğ²Ğ¸ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ°Ğ½Ğ½Ñ Ğ´ÑƒĞ¶Ğµ ÑˆĞ¸Ñ€Ğ¾ĞºĞ°, Ğ½Ğ°Ğ¹Ğ±Ñ–Ğ»ÑŒÑˆ Ğ¿Ğ¾ÑˆĞ¸Ñ€ĞµĞ½Ğµ Ğ¹Ğ¾Ğ³Ğ¾ Ğ·Ğ°ÑÑ‚Ğ¾ÑÑƒĞ²Ğ°Ğ½Ğ½Ñ (Ñ‚Ğ°
+Ğ½Ğ°Ğ¹ÑĞ¸Ğ»ÑŒĞ½Ñ–ÑˆĞ° ÑÑ‚Ğ¾Ñ€Ğ¾Ğ½Ğ°) Ñ†Ğµ, Ñ–Ğ¼Ğ¾Ğ²Ñ–Ñ€Ğ½Ğ¾, ÑƒÑ‚Ğ¸Ğ»Ñ–Ñ‚Ğ¸ ÑĞ¸ÑÑ‚ĞµĞ¼Ğ½Ğ¾Ğ³Ğ¾ Ğ°Ğ´Ğ¼Ñ–Ğ½Ñ–ÑÑ‚Ñ€ÑƒĞ²Ğ°Ğ½Ğ½Ñ
+Ñ‚Ğ° web-Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼ÑƒĞ²Ğ°Ğ½Ğ½Ñ. Ğ‘Ñ–Ğ»ÑŒÑˆĞ° Ñ‡Ğ°ÑÑ‚Ğ¸Ğ½Ğ° CGI ÑĞºÑ€Ğ¸Ğ¿Ñ‚Ñ–Ğ² Ğ½Ğ°Ğ¿Ğ¸ÑĞ°Ğ½Ğ° Ğ½Ğ° Perl.
 
-%description -l zh_CN
-Perl ÊÇÒ»ÖÖ¸ß¼¶±à³ÌÓïÑÔ£¬ÆğÔ´ÓÚ C¡¢sed¡¢awk ºÍ shell ½Å±¾¡£
-ËüÉÆÓÚ´¦Àí½ø³ÌºÍÎÄ¼ş£¬ÓÈÆäÊÇ´¦ÀíÎÄ±¾¡£Perl
-µÄÌØµãÔÚÓÚÆäÊµÓÃĞÔºÍÓĞĞ§ĞÔ¡£
-¾¡¹ÜËü¿ÉÓÃÓÚÖ´ĞĞĞí¶à²»Í¬µÄÈÎÎñ£¬µ«ÊÇÍ¨³£¶àÓ¦ÓÃÓÚÏµÍ³¹ÜÀíÊµÓÃ³ÌĞòºÍ Web
-±à³Ì¡£\n Web ÉÏµÄ´ó²¿·Ö CGI ½Å±¾¾ùÊ¹ÓÃ Perl
-ÓïÑÔ½øĞĞ±àĞ´¡£Äú±ØĞëÔÚÏµÍ³ÖĞ°²×° Perl Èí¼ş°ü£¬ ÒÔ±ã´¦Àí Perl ½Å±¾¡£
+%description -l zh_CN.UTF-8
+Perl æ˜¯ä¸€ç§é«˜çº§ç¼–ç¨‹è¯­è¨€ï¼Œèµ·æºäº Cã€sedã€awk å’Œ shell è„šæœ¬ã€‚
+å®ƒå–„äºå¤„ç†è¿›ç¨‹å’Œæ–‡ä»¶ï¼Œå°¤å…¶æ˜¯å¤„ç†æ–‡æœ¬ã€‚Perl
+çš„ç‰¹ç‚¹åœ¨äºå…¶å®ç”¨æ€§å’Œæœ‰æ•ˆæ€§ã€‚
+å°½ç®¡å®ƒå¯ç”¨äºæ‰§è¡Œè®¸å¤šä¸åŒçš„ä»»åŠ¡ï¼Œä½†æ˜¯é€šå¸¸å¤šåº”ç”¨äºç³»ç»Ÿç®¡ç†å®ç”¨ç¨‹åºå’Œ Web
+ç¼–ç¨‹ã€‚\n Web ä¸Šçš„å¤§éƒ¨åˆ† CGI è„šæœ¬å‡ä½¿ç”¨ Perl
+è¯­è¨€è¿›è¡Œç¼–å†™ã€‚æ‚¨å¿…é¡»åœ¨ç³»ç»Ÿä¸­å®‰è£… Perl è½¯ä»¶åŒ…ï¼Œ ä»¥ä¾¿å¤„ç† Perl è„šæœ¬ã€‚
 
 %package libs
 Summary:	Shared Perl library
-Summary(pl):	Biblioteka wspó³dzielona Perla
+Summary(pl.UTF-8):	Biblioteka wspÃ³Å‚dzielona Perla
 Group:		Libraries
 Conflicts:	perl-base < 1:5.8.8-8.1
 
 %description libs
 Shared Perl library.
 
-%description libs -l pl
-Biblioteka wspó³dzielona Perla.
+%description libs -l pl.UTF-8
+Biblioteka wspÃ³Å‚dzielona Perla.
 
 %package base
 Summary:	Base Perl components for a minimal installation
-Summary(pl):	Podstawowe sk³adniki potrzebne do minimalnej instalacji Perla
+Summary(pl.UTF-8):	Podstawowe skÅ‚adniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Requires:	perl-dirs(%{_target_cpu})
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -303,14 +303,14 @@ Base components, files, core modules, etc. -- a minimal usable Perl
 installation. You are encouraged to install a full Perl (the perl
 package) whenever possible.
 
-%description base -l pl
-Podstawowe sk³adniki, pliki, g³ówne modu³y itp. - minimalna instalacja
-Perla, nadaj±ca siê do u¿ytku. Zaleca siê instalacjê pe³nego Perla
-(pakietu perl), je¶li to tylko mo¿liwe.
+%description base -l pl.UTF-8
+Podstawowe skÅ‚adniki, pliki, gÅ‚Ã³wne moduÅ‚y itp. - minimalna instalacja
+Perla, nadajÄ…ca siÄ™ do uÅ¼ytku. Zaleca siÄ™ instalacjÄ™ peÅ‚nego Perla
+(pakietu perl), jeÅ›li to tylko moÅ¼liwe.
 
 %package GDBM_File
 Summary:	GDBM_File - Perl5 access to the gdbm library
-Summary(pl):	GDBM_File - dostêp do biblioteki gdbm w Perlu
+Summary(pl.UTF-8):	GDBM_File - dostÄ™p do biblioteki gdbm w Perlu
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 # FIXME: Set Version: 1.08 and Release: 1 instead of inheriting
@@ -321,14 +321,14 @@ Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 GDBM_File is a module which allows Perl programs to make use of the
 facilities provided by the GNU gdbm library.
 
-%description GDBM_File -l pl
-GDBM_File jest modu³em, który umo¿liwia programom w Perlu korzystanie
+%description GDBM_File -l pl.UTF-8
+GDBM_File jest moduÅ‚em, ktÃ³ry umoÅ¼liwia programom w Perlu korzystanie
 z biblioteki GNU gdbm.
 
 %package devel
 Summary:	Perl development files
-Summary(pl):	Pliki potrzebne przy tworzeniu w³asnych aplikacji w Perlu
-Summary(pt_BR):	Arquivos de desenvolvimento e cabeçalhos para o Perl
+Summary(pl.UTF-8):	Pliki potrzebne przy tworzeniu wÅ‚asnych aplikacji w Perlu
+Summary(pt_BR.UTF-8):	Arquivos de desenvolvimento e cabeÃ§alhos para o Perl
 Group:		Development/Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
@@ -345,13 +345,13 @@ Obsoletes:	perl-lib-devel
 Components required for developing applications which embed a Perl
 interpreter and compiling Perl modules.
 
-%description devel -l pl
-Sk³adniki potrzebne do tworzenia aplikacji osadzaj±cych interpreter
-Perla oraz kompilowania modu³ów Perla.
+%description devel -l pl.UTF-8
+SkÅ‚adniki potrzebne do tworzenia aplikacji osadzajÄ…cych interpreter
+Perla oraz kompilowania moduÅ‚Ã³w Perla.
 
 %package doc-pod
 Summary:	Perl documentation in POD format
-Summary(pl):	Dokumentacja Perla w formacie POD
+Summary(pl.UTF-8):	Dokumentacja Perla w formacie POD
 Group:		Documentation
 Requires:	perldoc
 Obsoletes:	perl-pod
@@ -359,26 +359,26 @@ Obsoletes:	perl-pod
 %description doc-pod
 Practical Extraction and Report Language - POD docs.
 
-%description doc-pod -l pl
+%description doc-pod -l pl.UTF-8
 Practical Extraction and Report Language - dokumentacja w formacie
 POD.
 
 %package doc-reference
 Summary:	Perl reference documentation
-Summary(pl):	Dokumentacja Perla
+Summary(pl.UTF-8):	Dokumentacja Perla
 Group:		Documentation
 
 %description doc-reference
 Reference documentation for the Practical Extraction and Report
 Language and it's interpreter in the man(1) format.
 
-%description doc-reference -l pl
-Dokumentacja referencyjna w formacie man do jêzyka Perl (Practical
+%description doc-reference -l pl.UTF-8
+Dokumentacja referencyjna w formacie man do jÄ™zyka Perl (Practical
 Extraction and Report Language) i jego interpretera.
 
 %package modules
 Summary:	Modules from the core Perl distribution
-Summary(pl):	Modu³y z podstawowej dystrybucji Perla
+Summary(pl.UTF-8):	ModuÅ‚y z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Provides:	perl-Attribute-Handlers = 0.78_02
@@ -426,13 +426,13 @@ Obsoletes:	perl-lib
 Practical Extraction and Report Language - modules from the core
 distribution.
 
-%description modules -l pl
-Practical Extraction and Report Language - modu³y z podstawowej
+%description modules -l pl.UTF-8
+Practical Extraction and Report Language - moduÅ‚y z podstawowej
 dystrybucji.
 
 %package perldoc
 Summary:	perldoc - Look up Perl documentation in pod format
-Summary(pl):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
+Summary(pl.UTF-8):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Group:		Development/Tools
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
@@ -444,26 +444,26 @@ embedded in the Perl installation tree or in a Perl script, and
 displays it via "pod2man | nroff -man | $PAGER". This is primarily
 used for the documentation for the Perl library modules.
 
-%description perldoc -l pl
+%description perldoc -l pl.UTF-8
 perldoc wyszukuje fragment dokumentacji w formacie .pod osadzony w
-drzewie instalacji Perla lub w skypcie perlowym i wy¶wietla go przez
-"pod2man | nroff -man | $PAGER". Program ten u¿ywany jest g³ównie do
-dokumentacji modu³ów z bibliotek Perla.
+drzewie instalacji Perla lub w skypcie perlowym i wyÅ›wietla go przez
+"pod2man | nroff -man | $PAGER". Program ten uÅ¼ywany jest gÅ‚Ã³wnie do
+dokumentacji moduÅ‚Ã³w z bibliotek Perla.
 
 %package -n sperl
 Summary:	Perl setuid root binaries for use with setuid Perl scripts
-Summary(de):	sperl zur Verwendung mit setuid Perl-Skripts
-Summary(es):	sperl, para uso con los scrips de Perl setuid
-Summary(fr):	sperl, à utiliser avec les scripts Perl setuid
-Summary(it):	sperl, da usare con gli script di Perl setuid
-Summary(ja):	Setuid Perl scripts ¤È°ì½ï¤Ë»ÈÍÑ¤¹¤ë¤¿¤á¤Î suidperl
-Summary(ko):	Setuid ÆŞ ½ºÅ©¸³Æ®¿Í ÇÔ²² »ç¿ëµÇ´Â suidperl
-Summary(pl):	Binaria setuid root Perla dla setuid-owych skryptów Perla
-Summary(pt):	O suidperl, para usar com os programas de Perl 'setuid'
-Summary(ru):	SUID ×ÅÒÓÉÑ ÑÚÙËÁ Perl
-Summary(sv):	sperl, att användas med setuid perlskript
-Summary(uk):	SUID-×ÅÒÓ¦Ñ ÍÏ×É Perl
-Summary(zh_CN):	sperl£¬ÓÃÀ´Óë setuid Perl ½Å±¾Ò»ÆğÊ¹ÓÃ
+Summary(de.UTF-8):	sperl zur Verwendung mit setuid Perl-Skripts
+Summary(es.UTF-8):	sperl, para uso con los scrips de Perl setuid
+Summary(fr.UTF-8):	sperl, Ã  utiliser avec les scripts Perl setuid
+Summary(it.UTF-8):	sperl, da usare con gli script di Perl setuid
+Summary(ja.UTF-8):	Setuid Perl scripts ã¨ä¸€ç·’ã«ä½¿ç”¨ã™ã‚‹ãŸã‚ã® suidperl
+Summary(ko.UTF-8):	Setuid í„ ìŠ¤í¬ë¦½íŠ¸ì™€ í•¨ê»˜ ì‚¬ìš©ë˜ëŠ” suidperl
+Summary(pl.UTF-8):	Binaria setuid root Perla dla setuid-owych skryptÃ³w Perla
+Summary(pt.UTF-8):	O suidperl, para usar com os programas de Perl 'setuid'
+Summary(ru.UTF-8):	SUID Ğ²ĞµÑ€ÑĞ¸Ñ ÑĞ·Ñ‹ĞºĞ° Perl
+Summary(sv.UTF-8):	sperl, att anvÃ¤ndas med setuid perlskript
+Summary(uk.UTF-8):	SUID-Ğ²ĞµÑ€ÑÑ–Ñ Ğ¼Ğ¾Ğ²Ğ¸ Perl
+Summary(zh_CN.UTF-8):	sperlï¼Œç”¨æ¥ä¸ setuid Perl è„šæœ¬ä¸€èµ·ä½¿ç”¨
 Group:		Development/Languages/Perl
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Obsoletes:	perl-suidperl
@@ -472,53 +472,53 @@ Obsoletes:	perl-suidperl
 sperl is a setuid root binary copy of Perl that allows for (hopefully)
 more secure running of setuid Perl scripts.
 
-%description -n sperl -l de
-sperl ist eine binäre setuid Kopie von Perl, mit der (hoffentlich)
-setuid-Skripts sicherer ausgeführt werden können.
+%description -n sperl -l de.UTF-8
+sperl ist eine binÃ¤re setuid Kopie von Perl, mit der (hoffentlich)
+setuid-Skripts sicherer ausgefÃ¼hrt werden kÃ¶nnen.
 
-%description -n sperl -l es
+%description -n sperl -l es.UTF-8
 sperl es una copia binaria de setuid para Perl que le permite una
-ejecución más segura de los scripts de Perl setuid.
+ejecuciÃ³n mÃ¡s segura de los scripts de Perl setuid.
 
-%description -n sperl -l fr
-sperl est une copie binaire setuid de Perl qui permet une exécution
-plus sûre de scripts Perl setuid.
+%description -n sperl -l fr.UTF-8
+sperl est une copie binaire setuid de Perl qui permet une exÃ©cution
+plus sÃ»re de scripts Perl setuid.
 
-%description -n sperl -l it
-sperl è una copia binaria setuid di Perl che consente un'esecuzione
-più sicura di script di Perl setuid.
+%description -n sperl -l it.UTF-8
+sperl Ã¨ una copia binaria setuid di Perl che consente un'esecuzione
+piÃ¹ sicura di script di Perl setuid.
 
-%description -n sperl -l ja
-sperl ¤Ï setuid Perl scripts.¤ò¤â¤Ã¤È°ÂÁ´¤ËÆ°ºî¤Ç¤­¤ë(´üÂÔ¤Î¤¢¤ë)°Ù¤Î
-Perl ¤Îsetuid ¥Ğ¥¤¥Ê¥ê ¥³¥Ô¡¼¤Ç¤¹¡£
+%description -n sperl -l ja.UTF-8
+sperl ã¯ setuid Perl scripts.ã‚’ã‚‚ã£ã¨å®‰å…¨ã«å‹•ä½œã§ãã‚‹(æœŸå¾…ã®ã‚ã‚‹)ç‚ºã®
+Perl ã®setuid ãƒã‚¤ãƒŠãƒª ã‚³ãƒ”ãƒ¼ã§ã™ã€‚
 
-%description -n sperl -l pl
-sperl jest to kopia setuid root programu binarnego Perl umo¿liwiaj±ca
-bezpieczniejsze (miejmy nadziejê) uruchamianie setuidowych skryptów
+%description -n sperl -l pl.UTF-8
+sperl jest to kopia setuid root programu binarnego Perl umoÅ¼liwiajÄ…ca
+bezpieczniejsze (miejmy nadziejÄ™) uruchamianie setuidowych skryptÃ³w
 Perla.
 
-%description -n sperl -l pt
-O suidperl é uma cópia do Perl com 'setuid' que permite uma execução
+%description -n sperl -l pt.UTF-8
+O suidperl Ã© uma cÃ³pia do Perl com 'setuid' que permite uma execuÃ§Ã£o
 mais segura dos 'scripts' de Perl 'setuid'.
 
-%description -n sperl -l ru
-Suid perl ÉÓĞÌØÚÕÅÔÓÑ ÄÌÑ ÔÏÇÏ, ŞÔÏÂÙ ÄÁÔØ ×ÏÚÍÏÖÎÏÓÔØ ÓÏÚÄÁ×ÁÔØ
-ÓËÒÉĞÔÙ Ó ÕÔÁÎÏ×ÌÅÎÎÙÍ ÂÉÔÏÍ SUID. èÏÔÑ × ÎÅÇÏ ×ÓÔÒÏÅÎÏ ÄÏÓÔÁÔÏŞÎÏ
-ÍÎÏÇÏ ĞÒÏ×ÅÒÏË, ĞÒÉÚ×ÁÎÙÈ ÏÂÅÓĞÅŞÉÔØ ÂÅÚÏĞÁÓÎÏÓÔØ ÅÇÏ ÉÓĞÏÌØÚÏ×ÁÎÉÑ
-suid perl ×ÓÅ ÒÁ×ÎÏ ĞÒÅÄÓÔÁ×ÌÑÅÔ ÓÏÂÏÊ ÚÎÁŞÉÔÅÌØÎÕÀ ĞÏÔÅÎÃÉÁÌØÎÕÀ
-ÏĞÁÓÎÏÓÔØ.
+%description -n sperl -l ru.UTF-8
+Suid perl Ğ¸ÑĞ¿Ğ»ÑŒĞ·ÑƒĞµÑ‚ÑÑ Ğ´Ğ»Ñ Ñ‚Ğ¾Ğ³Ğ¾, Ñ‡Ñ‚Ğ¾Ğ±Ñ‹ Ğ´Ğ°Ñ‚ÑŒ Ğ²Ğ¾Ğ·Ğ¼Ğ¾Ğ¶Ğ½Ğ¾ÑÑ‚ÑŒ ÑĞ¾Ğ·Ğ´Ğ°Ğ²Ğ°Ñ‚ÑŒ
+ÑĞºÑ€Ğ¸Ğ¿Ñ‚Ñ‹ Ñ ÑƒÑ‚Ğ°Ğ½Ğ¾Ğ²Ğ»ĞµĞ½Ğ½Ñ‹Ğ¼ Ğ±Ğ¸Ñ‚Ğ¾Ğ¼ SUID. Ğ¥Ğ¾Ñ‚Ñ Ğ² Ğ½ĞµĞ³Ğ¾ Ğ²ÑÑ‚Ñ€Ğ¾ĞµĞ½Ğ¾ Ğ´Ğ¾ÑÑ‚Ğ°Ñ‚Ğ¾Ñ‡Ğ½Ğ¾
+Ğ¼Ğ½Ğ¾Ğ³Ğ¾ Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€Ğ¾Ğº, Ğ¿Ñ€Ğ¸Ğ·Ğ²Ğ°Ğ½Ñ‹Ñ… Ğ¾Ğ±ĞµÑĞ¿ĞµÑ‡Ğ¸Ñ‚ÑŒ Ğ±ĞµĞ·Ğ¾Ğ¿Ğ°ÑĞ½Ğ¾ÑÑ‚ÑŒ ĞµĞ³Ğ¾ Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ
+suid perl Ğ²ÑĞµ Ñ€Ğ°Ğ²Ğ½Ğ¾ Ğ¿Ñ€ĞµĞ´ÑÑ‚Ğ°Ğ²Ğ»ÑĞµÑ‚ ÑĞ¾Ğ±Ğ¾Ğ¹ Ğ·Ğ½Ğ°Ñ‡Ğ¸Ñ‚ĞµĞ»ÑŒĞ½ÑƒÑ Ğ¿Ğ¾Ñ‚ĞµĞ½Ñ†Ğ¸Ğ°Ğ»ÑŒĞ½ÑƒÑ
+Ğ¾Ğ¿Ğ°ÑĞ½Ğ¾ÑÑ‚ÑŒ.
 
-%description -n sperl -l sv
-suidperl är en setuid binärkopia av pers som tillåter
-(förhoppningsvis) säkrare körning av setuid perlskript.
+%description -n sperl -l sv.UTF-8
+suidperl Ã¤r en setuid binÃ¤rkopia av pers som tillÃ¥ter
+(fÃ¶rhoppningsvis) sÃ¤krare kÃ¶rning av setuid perlskript.
 
-%description -n sperl -l zh_CN
-suidperl ÊÇ Perl µÄ setuid ¶ş½øÖÆ¸±±¾¡£ËüÔÊĞí£¨Ï£ÍûÈç´Ë£© ¸ü°²È«µØÔËĞĞ
-setuid perl ½Å±¾¡£
+%description -n sperl -l zh_CN.UTF-8
+suidperl æ˜¯ Perl çš„ setuid äºŒè¿›åˆ¶å‰¯æœ¬ã€‚å®ƒå…è®¸ï¼ˆå¸Œæœ›å¦‚æ­¤ï¼‰ æ›´å®‰å…¨åœ°è¿è¡Œ
+setuid perl è„šæœ¬ã€‚
 
 %package tools
 Summary:	Various tools from the core Perl distribution
-Summary(pl):	Ró¿ne narzêdzia z podstawowej dystrybucji Perla
+Summary(pl.UTF-8):	RÃ³Å¼ne narzÄ™dzia z podstawowej dystrybucji Perla
 Group:		Applications
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -530,17 +530,17 @@ find2perl	- translate find command lines to Perl code
 piconv		- iconv(1), reinvented in Perl
 psed, s2p	- a stream editor
 
-%description tools -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
-a2p		- translator skryptów Awka do Perla
+%description tools -l pl.UTF-8
+RÃ³Å¼ne narzÄ™dzia z podstawowej dystrybucji Perla:
+a2p		- translator skryptÃ³w Awka do Perla
 cpan		- easily interact with CPAN from the command line
-find2perl	- t³umaczenie linii poleceñ programu find na kod w Perlu
+find2perl	- tÅ‚umaczenie linii poleceÅ„ programu find na kod w Perlu
 piconv		- iconv(1) napisany w Perlu
 psed, s2p	- edytor strumieniowy
 
 %package tools-devel
 Summary:	Developer's tools from the core Perl distribution
-Summary(pl):	Narzêdzia z podstawowej dystrybucji Perla, przeznaczone dla programistów
+Summary(pl.UTF-8):	NarzÄ™dzia z podstawowej dystrybucji Perla, przeznaczone dla programistÃ³w
 Group:		Development/Tools
 Requires:	%{name}-base = %{epoch}:%{version}-%{release}
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
@@ -557,25 +557,25 @@ perlivp		- Perl Installation Verification Procedure
 pl2pm		- Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
 splain		- force verbose warning diagnostics
 
-%description tools-devel -l pl
-Ró¿ne narzêdzia z podstawowej dystrybucji Perla:
+%description tools-devel -l pl.UTF-8
+RÃ³Å¼ne narzÄ™dzia z podstawowej dystrybucji Perla:
 c2ph, pstruct	- zrzucanie struktur C w postaci generowanej z tablic
 		  symboli z cc -g -S
-dprofpp		- wy¶wietlanie perlowych danych profiluj±cych
-enc2xs	 	- generator modu³ów koduj±cych w Perlu
-h2ph		- konwerter plików nag³ówkowych .h z C na perlowe pliki
-	 	  nag³ówkowe .ph
-h2xs	 	- konwerter plików nag³ówkowych .h z C na rozszerzenia
+dprofpp		- wyÅ›wietlanie perlowych danych profilujÄ…cych
+enc2xs	 	- generator moduÅ‚Ã³w kodujÄ…cych w Perlu
+h2ph		- konwerter plikÃ³w nagÅ‚Ã³wkowych .h z C na perlowe pliki
+	 	  nagÅ‚Ã³wkowe .ph
+h2xs	 	- konwerter plikÃ³w nagÅ‚Ã³wkowych .h z C na rozszerzenia
 		  Perla
-perlcc	 	- generator binarek z programów w Perlu
+perlcc	 	- generator binarek z programÃ³w w Perlu
 perlivp	 	- procedura weryfikacji instalacji Perla
-pl2pm		- zgrubne narzêdzie do t³umaczenia plików pl Perla 4 na
-		  modu³y .pm Perla 5
-splain		- wymuszenie obszernych ostrze¿eñ diagnostycznych
+pl2pm		- zgrubne narzÄ™dzie do tÅ‚umaczenia plikÃ³w pl Perla 4 na
+		  moduÅ‚y .pm Perla 5
+splain		- wymuszenie obszernych ostrzeÅ¼eÅ„ diagnostycznych
 
 %package tools-pod
 Summary:	Tools for manipulating files in the POD format
-Summary(pl):	Narzêdzia do przetwarzania plików w formacie POD
+Summary(pl.UTF-8):	NarzÄ™dzia do przetwarzania plikÃ³w w formacie POD
 Group:		Applications
 Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
 
@@ -590,21 +590,21 @@ pod2usage	- print usage messages from embedded pod docs in files
 podchecker	- check the syntax of POD format documentation files
 podselect	- print selected sections of pod documentation
 
-%description tools-pod -l pl
-Narzêdzia do przetwarzania plików w formacie POD (Plain Old
+%description tools-pod -l pl.UTF-8
+NarzÄ™dzia do przetwarzania plikÃ³w w formacie POD (Plain Old
 Documentation):
-pod2html	- konwerter plików .pod do plików .html
+pod2html	- konwerter plikÃ³w .pod do plikÃ³w .html
 pod2latex	- konwerter dokumentacji pod do formatu LaTeX
-pod2man		- konwerter danych POD na wej¶cie sformatowane dla *roffa
+pod2man		- konwerter danych POD na wejÅ›cie sformatowane dla *roffa
 pod2text	- konwerter danych POD na sformatowany tekst ASCII
-pod2usage	- wypisanie informacji o u¿ywaniu programu z dokumentacji
+pod2usage	- wypisanie informacji o uÅ¼ywaniu programu z dokumentacji
 		  osadzonej w plikach
-podchecker	- kontrola sk³adni dokumentacji w formacie POD
+podchecker	- kontrola skÅ‚adni dokumentacji w formacie POD
 podselect	- wypisanie wybranych sekcji z dokumentacji POD
 
 %package -n microperl
 Summary:	A really minimal Perl, even more minimal than miniperl
-Summary(pl):	Naprawdê minimalny Perl, nawet bardziej minimalny ni¿ miniperl
+Summary(pl.UTF-8):	NaprawdÄ™ minimalny Perl, nawet bardziej minimalny niÅ¼ miniperl
 # XXX: is there a more appropiate group?
 Group:		Applications
 
@@ -617,14 +617,14 @@ operating system are left very -- minimal.
 All this is experimental. If you don't know what to do with microperl
 you probably shouldn't. Do not report bugs in microperl; fix the bugs.
 
-%description -n microperl -l pl
-microperl ma byæ naprawdê minimalnym Perlem, nawet bardziej minimalnym
+%description -n microperl -l pl.UTF-8
+microperl ma byÄ‡ naprawdÄ™ minimalnym Perlem, nawet bardziej minimalnym
 od miniperla. Uruchamianie Configure nie jest potrzebne do zbudowania
-microperla, z drugiej strony oznacza to, ¿e interfejs miêdzy Perlem a
+microperla, z drugiej strony oznacza to, Å¼e interfejs miÄ™dzy Perlem a
 systemem operacyjnym pozostaje bardzo minimalny.
 
-Ca³o¶æ jest eksperymentalna. Je¶li nie wiesz co zrobiæ z microperlem,
-prawdopodobnie nie powiniene¶ tego robiæ. Nie zg³aszaj b³êdów w
+CaÅ‚oÅ›Ä‡ jest eksperymentalna. JeÅ›li nie wiesz co zrobiÄ‡ z microperlem,
+prawdopodobnie nie powinieneÅ› tego robiÄ‡. Nie zgÅ‚aszaj bÅ‚Ä™dÃ³w w
 microperlu - popraw je.
 
 %prep
