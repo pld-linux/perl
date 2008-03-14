@@ -1,4 +1,5 @@
 # Module versions from Perl 5.10.0 distribution.
+Encode = 2.23
 File::Compare = 1.1005
 File::Spec = 3.2501
 File::Temp = 0.18
