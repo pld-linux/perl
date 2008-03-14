@@ -630,8 +630,9 @@ formacie Perla a resztą systemu.
 Summary:	GDBM_File - Perl5 access to the gdbm library
 Summary(pl.UTF-8):	GDBM_File - dostęp do biblioteki gdbm w Perlu
 Version:	%perl_modver GDBM_File
+Epoch:		2
 Group:		Libraries
-Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-base = 1:%{ver}-%{release}
 
 %description GDBM_File
 GDBM_File is a module which allows Perl programs to make use of the
