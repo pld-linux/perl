@@ -333,6 +333,7 @@ Provides:	%perl_modversion Devel::PPPort
 Provides:	%perl_modversion Devel::Peek
 Provides:	%perl_modversion ExtUtils::Embed
 Provides:	%perl_modversion ExtUtils::MakeMaker
+Provides:	%perl_modversion Module::Build
 Obsoletes:	perl-lib-devel
 
 %description devel
