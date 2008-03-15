@@ -49,3 +49,4 @@ UNIVERSAL = 1.04
 Unicode::Collate = 0.52
 Unicode::Normalize = 1.02
 libnet = 1.22
+version = 0.74
