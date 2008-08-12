@@ -17,18 +17,19 @@
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
 #
 
-%define _abi	5.8.0
+%define		abi	5.8.0
 
 %define		perlthread	%{?with_threads:-thread-multi}
 
-%define		perl_privlib	%{_datadir}/perl5/%{version}
-%define		perl_archlib	%{_libdir}/perl5/%{version}/%{_target_platform}%{perlthread}
+%define		perl_privlib	%{_datadir}/perl5/%{ver}
+%define		perl_archlib	%{_libdir}/perl5/%{ver}/%{_target_platform}%{perlthread}
 %define		perl_sitelib	%{_usr}/local/share/perl5
-%define		perl_sitearch	%{_usr}/local/lib/perl5/%{_abi}/%{_target_platform}%{perlthread}
+%define		perl_sitearch	%{_usr}/local/lib/perl5/%{abi}/%{_target_platform}%{perlthread}
 %define		perl_vendorlib	%{_datadir}/perl5/vendor_perl
-%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{_abi}/%{_target_platform}%{perlthread}
+%define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{abi}/%{_target_platform}%{perlthread}
 
-%define		_rel 10
+%define		ver	5.8.8
+%define		rel 11
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -51,12 +52,12 @@ Summary(sv.UTF-8):	Programmeringsspråket Perl
 Summary(tr.UTF-8):	Kabuk yorumlama dili
 Summary(zh_CN.UTF-8):	Perl 编程语言。
 Name:		perl
-Version:	5.8.8
-Release:	%{_rel}%{!?with_threads:_nothr}
+Version:	%{ver}
+Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{version}.tar.bz2
+Source0:	http://www.cpan.org/src/%{name}-%{ver}.tar.bz2
 # Source0-md5:	a377c0c67ab43fd96eeec29ce19e8382
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
@@ -79,13 +80,13 @@ URL:		http://dev.perl.org/perl5/
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
 BuildRequires:	rpmbuild(macros) >= 1.310
 %{?with_gdbm:BuildRequires:	gdbm-devel}
-Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
-Requires:	%{name}-doc-reference = %{epoch}:%{version}-%{release}
+Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Requires:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__perl		%{_builddir}/%{name}-%{version}/runperl
+%define		__perl		%{_builddir}/perl-%{ver}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
 
 # gcc 3.3.x miscompiles pp_hot.c
@@ -284,7 +285,7 @@ Summary:	Base Perl components for a minimal installation
 Summary(pl.UTF-8):	Podstawowe składniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Requires:	perl-dirs(%{_target_cpu})
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{ver}-%{release}
 Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
@@ -308,31 +309,14 @@ Podstawowe składniki, pliki, główne moduły itp. - minimalna instalacja
 Perla, nadająca się do użytku. Zaleca się instalację pełnego Perla
 (pakietu perl), jeśli to tylko możliwe.
 
-%package GDBM_File
-Summary:	GDBM_File - Perl5 access to the gdbm library
-Summary(pl.UTF-8):	GDBM_File - dostęp do biblioteki gdbm w Perlu
-Group:		Libraries
-Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-# FIXME: Set Version: 1.08 and Release: 1 instead of inheriting
-#        values from the main package.  Why this causes setting
-#        version and release macros up to the end of this spec?
-
-%description GDBM_File
-GDBM_File is a module which allows Perl programs to make use of the
-facilities provided by the GNU gdbm library.
-
-%description GDBM_File -l pl.UTF-8
-GDBM_File jest modułem, który umożliwia programom w Perlu korzystanie
-z biblioteki GNU gdbm.
-
 %package devel
 Summary:	Perl development files
 Summary(pl.UTF-8):	Pliki potrzebne przy tworzeniu własnych aplikacji w Perlu
 Summary(pt_BR.UTF-8):	Arquivos de desenvolvimento e cabeçalhos para o Perl
 Group:		Development/Libraries
-Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
-Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
+Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-tools-pod = %{epoch}:%{ver}-%{release}
 Provides:	perl-CPAN = 1.76_02
 Provides:	perl-Devel-DProf = 20050603.00
 Provides:	perl-Devel-PPPort = 3.06_01
@@ -380,7 +364,7 @@ Extraction and Report Language) i jego interpretera.
 Summary:	Modules from the core Perl distribution
 Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
-Requires:	%{name}-base = %{epoch}:%{version}-%{release}
+Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Provides:	perl-Attribute-Handlers = 0.78_02
 Provides:	perl-CGI = 3.15
 Provides:	perl-Class-ISA = 0.33
@@ -419,6 +403,7 @@ Provides:	perl-UNIVERSAL = 1.01
 Provides:	perl-Unicode-Collate = 0.52
 Provides:	perl-Unicode-Normalize = 0.32
 Provides:	perl-libnet = 1.19
+#Requires:	perl-Encode >= 1:2.12
 Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
 
@@ -434,9 +419,9 @@ dystrybucji.
 Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl.UTF-8):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Group:		Development/Tools
-Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
-Requires:	%{name}-tools-pod = %{epoch}:%{version}-%{release}
-Provides:	perldoc = 3.13@%{version}
+Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-tools-pod = %{epoch}:%{ver}-%{release}
+Provides:	perldoc = 3.13@%{ver}
 
 %description perldoc
 perldoc looks up a piece of documentation in .pod format that is
@@ -465,7 +450,7 @@ Summary(sv.UTF-8):	sperl, att användas med setuid perlskript
 Summary(uk.UTF-8):	SUID-версія мови Perl
 Summary(zh_CN.UTF-8):	sperl，用来与 setuid Perl 脚本一起使用
 Group:		Development/Languages/Perl
-Requires:	%{name}-base = %{epoch}:%{version}-%{release}
+Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Obsoletes:	perl-suidperl
 
 %description -n sperl
@@ -520,7 +505,7 @@ setuid perl 脚本。
 Summary:	Various tools from the core Perl distribution
 Summary(pl.UTF-8):	Różne narzędzia z podstawowej dystrybucji Perla
 Group:		Applications
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{ver}-%{release}
 
 %description tools
 Various tools from the core Perl distribution:
@@ -535,21 +520,19 @@ Różne narzędzia z podstawowej dystrybucji Perla:
 a2p		- translator skryptów Awka do Perla
 cpan		- easily interact with CPAN from the command line
 find2perl	- tłumaczenie linii poleceń programu find na kod w Perlu
-piconv		- iconv(1) napisany w Perlu
 psed, s2p	- edytor strumieniowy
 
 %package tools-devel
 Summary:	Developer's tools from the core Perl distribution
 Summary(pl.UTF-8):	Narzędzia z podstawowej dystrybucji Perla, przeznaczone dla programistów
 Group:		Development/Tools
-Requires:	%{name}-base = %{epoch}:%{version}-%{release}
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{ver}-%{release}
 
 %description tools-devel
 Various tools from the core Perl distribution:
 c2ph, pstruct	- Dump C structures as generated from C<cc -g -S> stabs
 dprofpp		- display Perl profile data
-enc2xs		- Perl Encode Module Generator
 h2ph		- convert .h C header files to .ph Perl header files
 h2xs		- convert .h C header files to Perl extensions
 perlcc		- generate executables from Perl programs
@@ -562,7 +545,6 @@ Różne narzędzia z podstawowej dystrybucji Perla:
 c2ph, pstruct	- zrzucanie struktur C w postaci generowanej z tablic
 		  symboli z cc -g -S
 dprofpp		- wyświetlanie perlowych danych profilujących
-enc2xs	 	- generator modułów kodujących w Perlu
 h2ph		- konwerter plików nagłówkowych .h z C na perlowe pliki
 	 	  nagłówkowe .ph
 h2xs	 	- konwerter plików nagłówkowych .h z C na rozszerzenia
@@ -577,7 +559,7 @@ splain		- wymuszenie obszernych ostrzeżeń diagnostycznych
 Summary:	Tools for manipulating files in the POD format
 Summary(pl.UTF-8):	Narzędzia do przetwarzania plików w formacie POD
 Group:		Applications
-Requires:	%{name}-modules = %{epoch}:%{version}-%{release}
+Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 
 %description tools-pod
 Tools for manipulating files in the POD (Plain Old Documentation)
@@ -605,8 +587,7 @@ podselect	- wypisanie wybranych sekcji z dokumentacji POD
 %package -n microperl
 Summary:	A really minimal Perl, even more minimal than miniperl
 Summary(pl.UTF-8):	Naprawdę minimalny Perl, nawet bardziej minimalny niż miniperl
-# XXX: is there a more appropiate group?
-Group:		Applications
+Group:		Development/Languages/Perl
 
 %description -n microperl
 microperl is supposed to be able a really minimal Perl, even more
@@ -626,6 +607,37 @@ systemem operacyjnym pozostaje bardzo minimalny.
 Całość jest eksperymentalna. Jeśli nie wiesz co zrobić z microperlem,
 prawdopodobnie nie powinieneś tego robić. Nie zgłaszaj błędów w
 microperlu - popraw je.
+
+%package Encode
+Summary:	Encode - character encodings
+Summary(pl.UTF-8):	Encode - kodowania znaków
+Version:	2.12
+Group:		Libraries
+Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+
+%description Encode
+The Encode module provides the interfaces between Perl's strings and
+the rest of the system.
+
+%description Encode -l pl.UTF-8
+Moduł Encode udostępnia interfejs pomiędzy łańcuchami w wewnętrznym
+formacie Perla a resztą systemu.
+
+%package GDBM_File
+Summary:	GDBM_File - Perl5 access to the gdbm library
+Summary(pl.UTF-8):	GDBM_File - dostęp do biblioteki gdbm w Perlu
+Version:	1.08
+Epoch:		2
+Group:		Libraries
+Requires:	%{name}-base = 1:%{ver}-%{release}
+
+%description GDBM_File
+GDBM_File is a module which allows Perl programs to make use of the
+facilities provided by the GNU gdbm library.
+
+%description GDBM_File -l pl.UTF-8
+GDBM_File jest modułem, który umożliwia programom w Perlu korzystanie
+z biblioteki GNU gdbm.
 
 %prep
 %setup -q
@@ -693,11 +705,11 @@ WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT")
 EOF
 
 %{__make} \
-	LIBPERL_SONAME=libperl.so.%{_abi}
+	LIBPERL_SONAME=libperl.so.%{abi}
 
 cat > runperl <<EOF
 #!/bin/sh
-LD_PRELOAD="%{_builddir}/%{name}-%{version}/libperl.so.%{_abi}" \\
+LD_PRELOAD="%{_builddir}/%{name}-%{ver}/libperl.so.%{abi}" \\
 PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \\
 exec %{buildroot}%{_bindir}/perl \$*
 EOF
@@ -734,16 +746,16 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 %{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
 
 ## use symlinks instead of hardlinks
-%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/perl
-%{__ln_s} -f perl%{version}	$RPM_BUILD_ROOT%{_bindir}/suidperl
+%{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/suidperl
 %{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
 %{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
 ## Fix lib
 rm -f $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{_abi}'";s|^'%{_libdir}'/*||;print'` \
-	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{_abi}
-%{__ln_s} libperl.so.%{_abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+%{__ln_s} `%{__perl} -e '$_="'%{perl_archlib}/CORE/libperl.so.%{abi}'";s|^'%{_libdir}'/*||;print'` \
+	$RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
+%{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 
 ## Fix Config.pm: remove buildroot path and change man pages extensions
 %{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
@@ -778,9 +790,9 @@ rm -f	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
 ## symlink perldelta.1.gz -> perlFOOdelta.1.gz
-[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{version} | tr -d .)delta.1 ] || exit 1
+[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{ver} | tr -d .)delta.1 ] || exit 1
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
-echo ".so perl%(echo %{version} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
 ## These File::Spec submodules are for non-Unix systems
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
@@ -821,9 +833,9 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
 ## examples and demos
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{ver}
 mv $RPM_BUILD_ROOT%{perl_privlib}/CGI/eg \
-	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{version}/CGI
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-modules-%{ver}/CGI
 
 # XXX: bug bug bug...
 mv $RPM_BUILD_ROOT%{perl_privlib}/auto/POSIX/SigAction \
@@ -843,16 +855,16 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libperl.so.*
 %dir %{_libdir}/perl5
-%dir %{_libdir}/perl5/%{version}
+%dir %{_libdir}/perl5/%{ver}
 %dir %{perl_archlib}
 %dir %{perl_archlib}/CORE
-%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{_abi}
+%attr(755,root,root) %{perl_archlib}/CORE/libperl.so.%{abi}
 
 %files base
 %defattr(644,root,root,755)
 %doc doc-base/*
 %attr(755,root,root) %{_bindir}/perl
-%attr(755,root,root) %{_bindir}/perl%{version}
+%attr(755,root,root) %{_bindir}/perl%{ver}
 %{_mandir}/man1/perl.*
 %lang(fi) %{_mandir}/fi/man1/perl*
 %lang(pl) %{_mandir}/pl/man1/perl*
@@ -862,7 +874,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto
 
 %dir %{_libdir}/perl5/vendor_perl
-%dir %{_libdir}/perl5/vendor_perl/%{_abi}
+%dir %{_libdir}/perl5/vendor_perl/%{abi}
 %{perl_vendorarch}
 %{perl_vendorlib}
 
@@ -987,6 +999,21 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/Socket/*.bs
 %{_mandir}/man3/Socket.*
 
+%files Encode
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/enc2xs
+%attr(755,root,root) %{_bindir}/piconv
+# FIXME: *.h to devel(?), check out the use for *.e2x files
+%{perl_privlib}/Encode
+%{perl_archlib}/Encode*
+%{perl_archlib}/encoding.pm
+%dir %{perl_archlib}/auto/Encode
+%dir %{perl_archlib}/auto/Encode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
+%{_mandir}/man1/enc2xs.*
+%{_mandir}/man1/piconv.*
+%{_mandir}/man3/Encode*
+%{_mandir}/man3/encoding.*
 
 %if %{with gdbm}
 %files GDBM_File
@@ -997,7 +1024,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/GDBM_File/*.bs
 %{_mandir}/man3/GDBM_File.*
 %endif
-
 
 %files devel
 %defattr(644,root,root,755)
@@ -1077,7 +1103,7 @@ rm -rf $RPM_BUILD_ROOT
 %files modules
 %defattr(644,root,root,755)
 %doc doc-modules/*
-%{_examplesdir}/%{name}-modules-%{version}
+%{_examplesdir}/%{name}-modules-%{ver}
 
 %{perl_privlib}/unicore
 
@@ -1119,8 +1145,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/re/*.bs
 %attr(755,root,root) %{perl_archlib}/auto/re/*.so
 %{_mandir}/man3/re.*
-%{perl_archlib}/encoding.pm
-%{_mandir}/man3/encoding.*
 %{perl_archlib}/ops.pm
 %{_mandir}/man3/ops.*
 
@@ -1172,15 +1196,6 @@ rm -rf $RPM_BUILD_ROOT
 # FIXME: Changes file
 %{perl_privlib}/DBM_Filter*
 %{_mandir}/man3/DBM_Filter*
-
-# FIXME: *.h to devel(?), check out the use for *.e2x files
-%{perl_privlib}/Encode
-%{perl_archlib}/Encode*
-%dir %{perl_archlib}/auto/Encode
-%dir %{perl_archlib}/auto/Encode/*/
-%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
-%{perl_archlib}/auto/Encode/*/*.bs
-%{_mandir}/man3/Encode*
 
 # FIXME: README and Changes files
 %{perl_privlib}/Filter
@@ -1346,7 +1361,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n sperl
 %defattr(644,root,root,755)
-%attr(4755,root,root) %{_bindir}/sperl%{version}
+%attr(4755,root,root) %{_bindir}/sperl%{ver}
 %attr(755,root,root) %{_bindir}/suidperl
 
 %files tools
@@ -1361,8 +1376,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/instmodsh.*
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
-%attr(755,root,root) %{_bindir}/piconv
-%{_mandir}/man1/piconv.*
 %attr(755,root,root) %{_bindir}/psed
 %attr(755,root,root) %{_bindir}/s2p
 %{_mandir}/man1/psed.*
@@ -1378,8 +1391,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/pstruct.*
 %attr(755,root,root) %{_bindir}/dprofpp
 %{_mandir}/man1/dprofpp.*
-%attr(755,root,root) %{_bindir}/enc2xs
-%{_mandir}/man1/enc2xs.*
 %attr(755,root,root) %{_bindir}/h2ph
 %{_mandir}/man1/h2ph.*
 %attr(755,root,root) %{_bindir}/h2xs
