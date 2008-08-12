@@ -29,7 +29,7 @@
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{abi}/%{_target_platform}%{perlthread}
 
 %define		ver	5.8.8
-%define		rel 11
+%define		rel 12
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -1172,9 +1172,6 @@ rm -rf $RPM_BUILD_ROOT
 %ifarch %{x8664}
 %{perl_archlib}/asm-i386
 %{perl_archlib}/asm-x86_64
-%endif
-%ifarch sparc	# sparc64?
-%{perl_archlib}/asm-sparc*
 %endif
 
 %{perl_archlib}/Data
