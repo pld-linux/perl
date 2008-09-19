@@ -11,7 +11,8 @@
 # TODO:
 # - fix "FIXME"s, review "XXX"s
 # - add the {O,N}DBM_File modules
-# - review the perldiag.pod issue - what issue?
+# - `diagnostics.pm' (perl-base) requires `perldiag.pod' (perl-perldoc)
+#   move .pod file to -base or S: perl-perldoc in -base
 # - consider disabling ithreads by default
 # - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
 # - patch MakeMaker to get rid of empty *.bs files (MM_Unix::dynamic_bs())
