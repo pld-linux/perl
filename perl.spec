@@ -43,7 +43,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.10.0
-%define		rel	14
+%define		rel	15
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -299,7 +299,7 @@ Summary:	Base Perl components for a minimal installation
 Summary(pl.UTF-8):	Podstawowe składniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
 Requires:	%{name}-libs = %{epoch}:%{ver}-%{release}
-Requires:	perl-dirs(%{_target_cpu}) >= 2.1
+Requires:	perl-dirs(%{_target_cpu}) >= 2.1-2
 Provides:	perl(largefiles)
 Provides:	%perl_modversion File::Compare
 Provides:	%perl_modversion File::Spec
@@ -837,8 +837,6 @@ if [ ! -f installed.stamp ]; then
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
 
-	## dir tree for other perl modules
-	install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
 	owd=$(pwd)
 
 	## non-english man pages
@@ -920,8 +918,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/perl5/vendor_perl
 %dir %{_libdir}/perl5/vendor_perl/%{abi}
-%{perl_vendorarch}/*
-%{perl_vendorlib}/*
 
 ## pragmas
 %{perl_privlib}/base.pm
