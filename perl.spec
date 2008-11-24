@@ -1088,12 +1088,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/B/*.so
 %{_mandir}/man3/B[.:]*
 
-#%{perl_archlib}/ByteLoader.*
-#%dir %{perl_archlib}/auto/ByteLoader
-#%attr(755,root,root) %{perl_archlib}/auto/ByteLoader/*.so
-#%{perl_archlib}/auto/ByteLoader/*.bs
-#%{_mandir}/man3/ByteLoader.*
-
 %{perl_privlib}/Devel
 %{perl_archlib}/Devel
 %dir %{perl_archlib}/auto/Devel
