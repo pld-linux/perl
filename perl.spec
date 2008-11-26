@@ -29,7 +29,7 @@
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{abi}/%{_target_platform}%{perlthread}
 
 %define		ver	5.8.8
-%define		rel 12
+%define		rel 13
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -284,8 +284,9 @@ Biblioteka współdzielona Perla.
 Summary:	Base Perl components for a minimal installation
 Summary(pl.UTF-8):	Podstawowe składniki potrzebne do minimalnej instalacji Perla
 Group:		Development/Languages/Perl
-Requires:	perl-dirs(%{_target_cpu})
 Requires:	%{name}-libs = %{epoch}:%{ver}-%{release}
+Requires:	%{perl_vendorarch}
+Requires:	%{perl_vendorlib}
 Provides:	perl(largefiles)
 Provides:	perl-File-Compare = 1.1003
 Provides:	perl-File-Spec = 3.12
@@ -820,8 +821,6 @@ mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
 # source for *.pl
 rm -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
 
-## dir tree for other perl modules
-install -d $RPM_BUILD_ROOT{%{perl_vendorlib},%{perl_vendorarch},%{perl_vendorarch}/auto}
 owd="`pwd`"
 
 ## non-english man pages
@@ -872,11 +871,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/perl5
 %dir %{perl_privlib}
 %dir %{perl_archlib}/auto
-
-%dir %{_libdir}/perl5/vendor_perl
-%dir %{_libdir}/perl5/vendor_perl/%{abi}
-%{perl_vendorarch}
-%{perl_vendorlib}
 
 ## pragmas
 %{perl_privlib}/base.pm
