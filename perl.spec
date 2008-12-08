@@ -412,7 +412,6 @@ Provides:	%perl_modversion Unicode::Collate
 Provides:	%perl_modversion Unicode::Normalize
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
-Obsoletes:	perl-Encode-compat
 Obsoletes:	perl-lib
 
 %description modules
@@ -621,6 +620,7 @@ Summary(pl.UTF-8):	Encode - kodowania znaków
 Version:	%perl_modver Encode
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Obsoletes:	perl-Encode-compat
 
 %description Encode
 The Encode module provides the interfaces between Perl's strings and
