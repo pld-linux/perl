@@ -43,7 +43,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.10.0
-%define		rel	17
+%define		rel	18
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -88,6 +88,7 @@ Patch7:		%{name}-timer-test.patch
 Patch8:		%{name}-h2ph-includes.patch
 Patch9:		%{name}-t-syslog.patch
 Patch10:	%{name}-PerlIO.patch
+Patch11:	%{name}-attribute_error.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -659,6 +660,7 @@ z biblioteki GNU gdbm.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 
