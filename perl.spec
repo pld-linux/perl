@@ -101,9 +101,9 @@ BuildRequires:	linux-libc-headers >= 7:2.6.24
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
 BuildRequires:	rpmbuild(macros) >= 1.426
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
-Requires:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
-Requires:	perldoc
+Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
+Suggests:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
@@ -428,7 +428,7 @@ Summary:	perldoc - Look up Perl documentation in pod format
 Summary(pl.UTF-8):	perldoc - przeszukiwanie dokumentacji Perla w formacie pod
 Group:		Development/Tools
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
-Requires:	%{name}-tools-pod = %{epoch}:%{ver}-%{release}
+Requires:	%{name}-tools-pod
 Provides:	perldoc = 3.14_02@%{ver}
 
 %description perldoc
@@ -553,11 +553,11 @@ c2ph, pstruct	- zrzucanie struktur C w postaci generowanej z tablic
 		  symboli z cc -g -S
 dprofpp		- wyświetlanie perlowych danych profilujących
 h2ph		- konwerter plików nagłówkowych .h z C na perlowe pliki
-	 	  nagłówkowe .ph
-h2xs	 	- konwerter plików nagłówkowych .h z C na rozszerzenia
+		  nagłówkowe .ph
+h2xs		- konwerter plików nagłówkowych .h z C na rozszerzenia
 		  Perla
-perlcc	 	- generator binarek z programów w Perlu
-perlivp	 	- procedura weryfikacji instalacji Perla
+perlcc		- generator binarek z programów w Perlu
+perlivp		- procedura weryfikacji instalacji Perla
 pl2pm		- zgrubne narzędzie do tłumaczenia plików pl Perla 4 na
 		  moduły .pm Perla 5
 splain		- wymuszenie obszernych ostrzeżeń diagnostycznych
