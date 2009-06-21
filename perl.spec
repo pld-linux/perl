@@ -43,7 +43,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.10.0
-%define		rel	18
+%define		rel	19
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -696,11 +696,6 @@ sh Configure \
 	-%{?with_threads:D}%{!?with_threads:U}usethreads \
 	-Duselargefiles
 
-## what's the problem with this one?
-# %ifarch sparc sparc64
-#	-Ud_longdbl
-# %endif
-
 ## {Scalar,List}::Util should be in perl_archlib (it's a bit tricky and should
 ## probably be done in %%prep, but then Configure would complain (->MANIFEST))
 mv ext/List/Util/lib/List/Util.pm ext/List/Util
@@ -1203,10 +1198,6 @@ rm -rf $RPM_BUILD_ROOT
 %ifnarch alpha ppc ppc64 sparc sparcv9 sparc64
 # on archs which <asm/ioctl.h> uses <asm-generic/ioctl.h>
 %{perl_archlib}/asm-generic
-%endif
-%ifarch sparc64
-%{perl_archlib}/asm-sparc
-%{perl_archlib}/asm-sparc64
 %endif
 %{perl_archlib}/bits
 %{perl_archlib}/gnu
