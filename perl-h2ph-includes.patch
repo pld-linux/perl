@@ -1,6 +1,6 @@
---- perl-5.10.0/utils/h2ph.PL.orig	2007-12-18 11:47:08.000000000 +0100
-+++ perl-5.10.0/utils/h2ph.PL	2008-02-10 14:01:47.206525485 +0100
-@@ -717,6 +717,7 @@
+--- perl-5.10.1/utils/h2ph.PL.orig	2009-08-25 10:14:50.000000000 +0200
++++ perl-5.10.1/utils/h2ph.PL	2009-08-25 10:23:00.000000000 +0200
+@@ -722,6 +722,7 @@
  
      return if ($file eq "-");
  
@@ -8,12 +8,14 @@
      open HEADER, $file or return;
          while (defined($line = <HEADER>)) {
              while (/\\$/) { # Handle continuation lines
-@@ -726,6 +727,8 @@
- 
-             if ($line =~ /^#\s*include\s+<(.*?)>/) {
-                 push(@ARGV, $1) unless $Is_converted{$1};
+@@ -736,7 +737,9 @@
+                     $new_file = "$1/$new_file";
+                 }
+                 push(@ARGV, $new_file) unless $Is_converted{$new_file};
+-            }
 +            } elsif ($line =~ /^#\s*include\s+\"(.*?)\"/) {
-+                push(@ARGV, $filedir . $1) unless $Is_converted{$filedir . $1};
-             }
++		    push(@ARGV, $filedir . $new_file) unless $Is_converted{$filedir . $new_file};
++	    }
          }
      close HEADER;
+ }

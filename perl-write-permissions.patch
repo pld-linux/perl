@@ -1,15 +1,15 @@
---- ExtUtils-MakeMaker-6.30.orig/lib/ExtUtils/Install.pm	2005-03-22 04:30:24.000000000 +0000
-+++ ExtUtils-MakeMaker-6.30.write-permissions/lib/ExtUtils/Install.pm	2006-10-30 16:14:28.000000000 +0000
-@@ -666,7 +666,7 @@
-             utime($atime,$mtime + $Is_VMS,$targetfile) unless $nonono>1;
+--- perl-5.10.1/lib/ExtUtils/Install.pm.orig	2009-08-25 08:46:26.000000000 +0200
++++ perl-5.10.1/lib/ExtUtils/Install.pm	2009-08-25 08:48:05.000000000 +0200
+@@ -813,7 +813,7 @@
+                 utime($atime,$mtime + $Is_VMS,$targetfile) unless $dry_run>1;
  
  
--            $mode = 0444 | ( $mode & 0111 ? 0111 : 0 );
-+            $mode = 0644 | ( $mode & 0111 ? 0111 : 0 );
-             $mode = $mode | 0222
-                 if $realtarget ne $targetfile;
-             _chmod( $mode, $targetfile, $verbose );
-@@ -1018,7 +1018,7 @@
+-                $mode = 0444 | ( $mode & 0111 ? 0111 : 0 );
++                $mode = 0644 | ( $mode & 0111 ? 0111 : 0 );
+                 $mode = $mode | 0222
+                     if $realtarget ne $targetfile;
+                 _chmod( $mode, $targetfile, $verbose );
+@@ -1215,7 +1215,7 @@
          }
          my($mode,$atime,$mtime) = (stat $from)[2,8,9];
          utime($atime,$mtime+$Is_VMS,$to);
@@ -18,4 +18,3 @@
          next unless $from =~ /\.pm$/;
          _autosplit($to,$autodir);
      }
-
