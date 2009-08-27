@@ -1,6 +1,6 @@
 diff -ur perl-5.10.0.org/ext/PerlIO/via/via.xs perl-5.10.0/ext/PerlIO/via/via.xs
---- perl-5.10.0.org/ext/PerlIO-via/via.xs	2007-12-18 11:47:07.000000000 +0100
-+++ perl-5.10.0/ext/PerlIO-via/via.xs	2008-08-10 00:35:51.367506014 +0200
+--- perl-5.10.0.org/ext/PerlIO/via/via.xs	2007-12-18 11:47:07.000000000 +0100
++++ perl-5.10.0/ext/PerlIO/via/via.xs	2008-08-10 00:35:51.367506014 +0200
 @@ -89,7 +89,7 @@
  	    if (!s->fh) {
  		GV *gv = newGVgen(HvNAME_get(s->stash));

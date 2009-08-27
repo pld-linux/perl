@@ -25,14 +25,15 @@ diff -urN perl-5.10.0.org/Makefile.micro perl-5.10.0/Makefile.micro
  
  # Do not regenerate perly.c and perly.h.
  
---- perl-5.10.1/uconfig.sh.orig	2009-08-25 08:37:36.000000000 +0200
-+++ perl-5.10.1/uconfig.sh	2009-08-25 08:43:07.000000000 +0200
+diff -urN perl-5.10.0.org/uconfig.sh perl-5.10.0/uconfig.sh
+--- perl-5.10.0.org/uconfig.sh	2007-12-18 11:47:08.000000000 +0100
++++ perl-5.10.0/uconfig.sh	2008-01-09 14:21:01.327533497 +0100
 @@ -5,12 +5,7 @@
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.11/unknown'
--archlibexp='/usr/local/lib/perl5/5.11/unknown'
+-archlib='/usr/local/lib/perl5/5.10/unknown'
+-archlibexp='/usr/local/lib/perl5/5.10/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
@@ -46,19 +47,19 @@ diff -urN perl-5.10.0.org/Makefile.micro perl-5.10.0/Makefile.micro
  d_alarm='undef'
 -d_archlib='undef'
 +d_archlib='define'
- d_asctime64='undef'
  d_asctime_r='undef'
  d_atolf='undef'
-@@ -232,7 +227,7 @@
+ d_atoll='undef'
+@@ -221,7 +216,7 @@
  d_libm_lib_version='undef'
  d_link='undef'
- d_localtime64='undef'
+ d_localtime_r='undef'
 -d_localtime_r_needs_tzset='undef'
 +d_localtime_r_needs_tzset='define'
- d_localtime_r='undef'
  d_locconv='undef'
  d_lockf='undef'
-@@ -661,14 +656,10 @@
+ d_longdbl='undef'
+@@ -639,14 +634,10 @@
  old_pthread_create_joinable=''
  optimize='-O2'
  orderlib='false'
@@ -68,13 +69,13 @@ diff -urN perl-5.10.0.org/Makefile.micro perl-5.10.0/Makefile.micro
  package='perl5'
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.11'
--privlibexp='/usr/local/lib/perl5/5.11'
+-privlib='/usr/local/lib/perl5/5.10'
+-privlibexp='/usr/local/lib/perl5/5.10'
  procselfexe=''
  prototype='undef'
  ptrsize='4'
-@@ -699,8 +690,6 @@
- sPRIXU64='"LX"'
+@@ -673,8 +664,6 @@
+ sPRIx64='"Lx"'
  sSCNfldbl='"llf"'
  sched_yield='sched_yield()'
 -scriptdir='/usr/local/bin'

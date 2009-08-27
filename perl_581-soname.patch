@@ -1,6 +1,6 @@
---- perl-5.10.1/Makefile.SH.orig	2009-08-25 08:26:10.000000000 +0200
-+++ perl-5.10.0/Makefile.SH	2009-08-25 08:32:41.000000000 +0200
-@@ -160,7 +160,7 @@
+--- perl-5.10.0/Makefile.SH.orig	2008-01-09 21:37:11.870736307 +0000
++++ perl-5.10.0/Makefile.SH	2008-01-09 22:47:51.579350787 +0000
+@@ -124,7 +124,7 @@
  	    # INSTALL file, under "Building a shared perl library".
  	    # If there is no pre-existing $libperl, we don't need
  	    # to do anything further.
@@ -9,7 +9,7 @@
  		rm -f preload
  		cat <<'EOT' > preload
  #! /bin/sh
-@@ -171,7 +171,7 @@
+@@ -135,7 +135,7 @@
  EOT
  		chmod 755 preload
  		ldlibpth="$ldlibpth `pwd`/preload `pwd`/$libperl"
@@ -18,19 +18,19 @@
  	    ;;
  	os390)	test -f /bin/env && ldlibpth="/bin/env $ldlibpth"
  		;;
-@@ -728,14 +728,16 @@
- !NO!SUBS!
- 		;;
-     esac
--	$spitshell >>$Makefile <<'!NO!SUBS!'
+@@ -581,14 +581,16 @@
+ Makefile: $Makefile_s
+ !GROK!THIS!
+ else
+-	$spitshell >>Makefile <<'!NO!SUBS!'
 -$(LIBPERL): $& $(obj) $(DYNALOADER) $(LIBPERLEXPORT)
-+	$spitshell >>$Makefile <<!NO!SUBS!
++	$spitshell >>Makefile <<!NO!SUBS!
 +LIBPERL_SONAME=\$(LIBPERL).$version
 +\$(LIBPERL): \$& \$(obj) \$(DYNALOADER) \$(LIBPERLEXPORT)
  !NO!SUBS!
  	case "$useshrplib" in
  	true)
- 		$spitshell >>$Makefile <<'!NO!SUBS!'
+ 		$spitshell >>Makefile <<'!NO!SUBS!'
 -	rm -f $@
 -	$(LD) -o $@ $(SHRPLDFLAGS) $(obj) $(DYNALOADER) $(libs)
 +	rm -f $@ $(LIBPERL_SONAME)

@@ -28,7 +28,7 @@
 # NOTE
 # - modules in 5.10.0: http://search.cpan.org/~rgarcia/perl-5.10.0/
 
-%define		abi	5.10.1
+%define		abi	5.10.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -42,8 +42,8 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.10.1
-%define		rel	1
+%define		ver	5.10.0
+%define		rel	20
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -72,7 +72,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{ver}.tar.gz
-# Source0-md5:	b9b2fdb957f50ada62d73f43ee75d044
+# Source0-md5:	d2c39b002ebfd2c3c5dba589365c5a71
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -87,9 +87,9 @@ Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-timer-test.patch
 Patch8:		%{name}-h2ph-includes.patch
 Patch9:		%{name}-t-syslog.patch
-#Patch10:	%{name}-ListUtil.patch
-#Patch11:	%{name}-attribute_error.patch
-#Patch12:	%{name}-parameter_passing.patch
+Patch10:	%{name}-PerlIO.patch
+Patch11:	%{name}-attribute_error.patch
+Patch12:	%{name}-parameter_passing.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -660,9 +660,9 @@ z biblioteki GNU gdbm.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-#%patch10 -p1
-#%patch11 -p1
-#%patch12 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 
@@ -700,14 +700,14 @@ sh Configure \
 
 ## {Scalar,List}::Util should be in perl_archlib (it's a bit tricky and should
 ## probably be done in %%prep, but then Configure would complain (->MANIFEST))
-mv ext/List-Util/lib/List/Util.pm ext/List-Util
-%{__rm} ext/List-Util/Makefile.PL
-cat <<'EOF' > ext/List-Util/Makefile.PL
+mv ext/List/Util/lib/List/Util.pm ext/List/Util
+%{__rm} ext/List/Util/Makefile.PL
+cat <<'EOF' > ext/List/Util/Makefile.PL
 use ExtUtils::MakeMaker;
 WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT");
 EOF
 
-%{__make} -j1 \
+%{__make} \
 	LIBPERL_SONAME=libperl.so.%{abi} \
 	LDDLFLAGS="%{rpmcflags} -shared"
 
@@ -722,7 +722,7 @@ chmod a+x runperl
 ## microperl
 %if %{with microperl}
 %{__rm} uconfig.h
-%{__make} -j1 -f Makefile.micro \
+%{__make} -f Makefile.micro \
 	archlib=%{perl_archlib} \
 	archlibexp=%{perl_archlib} \
 	privlib=%{perl_privlib} \
