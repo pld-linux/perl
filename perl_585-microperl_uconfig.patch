@@ -1,39 +1,11 @@
-diff -urN perl-5.10.0.org/Makefile.micro perl-5.10.0/Makefile.micro
---- perl-5.10.0.org/Makefile.micro	2007-12-18 11:47:07.000000000 +0100
-+++ perl-5.10.0/Makefile.micro	2008-01-09 14:22:14.801222180 +0100
-@@ -39,6 +39,12 @@
- 
- distclean:	clean
- 
-+# not really autoconfigured variables (PLD hack, requires patched uconfig.sh)
-+NRACV = archlib=$(archlib) archlibexp=$(archlibexp) privlib=$(privlib) \
-+	privlibexp=$(privlibexp) archname=$(archname) osname=$(osname) \
-+	bin=$(bin) scriptdir=$(scriptdir) scriptdirexp=$(scriptdirexp) \
-+	usemallocwrap=$(usemallocwrap)
-+
- # The microconfiguration.
- 
- # Cannot use $$ in the command line itself, so using var expansion instead.
-@@ -47,7 +53,9 @@
- 	$(PERL) -MConfig -pi -e "s/^((?:short|int|long(?:dbl|long)?|ptr|double|[iun]v|u?quad|[iu]\d+|fpos|lseek)(?:size|type)|byteorder|d_quad|quadkind|use64.+)=.*/\\1='"$(Config)"'/g" uconfig.shx
- 
- regen_uconfig uconfig.h: uconfig.sh
--	$(ENV) CONFIG_SH=uconfig.sh CONFIG_H=uconfig.h sh ./config_h.SH
-+	$(ENV) CONFIG_SH=uconfig.sh CONFIG_H=uconfig.h $(NRACV) sh ./config_h.SH
-+
-+uconfig.h: regen_uconfig
- 
- # Do not regenerate perly.c and perly.h.
- 
-diff -urN perl-5.10.0.org/uconfig.sh perl-5.10.0/uconfig.sh
---- perl-5.10.0.org/uconfig.sh	2007-12-18 11:47:08.000000000 +0100
-+++ perl-5.10.0/uconfig.sh	2008-01-09 14:21:01.327533497 +0100
+--- perl-5.10.1/uconfig.sh.orig	2009-04-19 18:18:52.000000000 +0200
++++ perl-5.10.1/uconfig.sh	2009-09-12 10:05:33.571536125 +0200
 @@ -5,12 +5,7 @@
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.10/unknown'
--archlibexp='/usr/local/lib/perl5/5.10/unknown'
+-archlib='/usr/local/lib/perl5/5.11/unknown'
+-archlibexp='/usr/local/lib/perl5/5.11/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
@@ -47,19 +19,19 @@ diff -urN perl-5.10.0.org/uconfig.sh perl-5.10.0/uconfig.sh
  d_alarm='undef'
 -d_archlib='undef'
 +d_archlib='define'
+ d_asctime64='undef'
  d_asctime_r='undef'
  d_atolf='undef'
- d_atoll='undef'
-@@ -221,7 +216,7 @@
+@@ -232,7 +227,7 @@
  d_libm_lib_version='undef'
  d_link='undef'
- d_localtime_r='undef'
+ d_localtime64='undef'
 -d_localtime_r_needs_tzset='undef'
 +d_localtime_r_needs_tzset='define'
+ d_localtime_r='undef'
  d_locconv='undef'
  d_lockf='undef'
- d_longdbl='undef'
-@@ -639,14 +634,10 @@
+@@ -661,14 +656,10 @@
  old_pthread_create_joinable=''
  optimize='-O2'
  orderlib='false'
@@ -69,13 +41,13 @@ diff -urN perl-5.10.0.org/uconfig.sh perl-5.10.0/uconfig.sh
  package='perl5'
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.10'
--privlibexp='/usr/local/lib/perl5/5.10'
+-privlib='/usr/local/lib/perl5/5.11'
+-privlibexp='/usr/local/lib/perl5/5.11'
  procselfexe=''
  prototype='undef'
  ptrsize='4'
-@@ -673,8 +664,6 @@
- sPRIx64='"Lx"'
+@@ -699,8 +690,6 @@
+ sPRIXU64='"LX"'
  sSCNfldbl='"llf"'
  sched_yield='sched_yield()'
 -scriptdir='/usr/local/bin'

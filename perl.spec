@@ -42,8 +42,8 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.10.0
-%define		rel	20
+%define		ver	5.10.1
+%define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -72,7 +72,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/%{name}-%{ver}.tar.gz
-# Source0-md5:	d2c39b002ebfd2c3c5dba589365c5a71
+# Source0-md5:	b9b2fdb957f50ada62d73f43ee75d044
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -85,11 +85,7 @@ Patch4:		%{name}-test-noproc.patch
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-timer-test.patch
-Patch8:		%{name}-h2ph-includes.patch
 Patch9:		%{name}-t-syslog.patch
-Patch10:	%{name}-PerlIO.patch
-Patch11:	%{name}-attribute_error.patch
-Patch12:	%{name}-parameter_passing.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -105,7 +101,7 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Suggests:	perldoc
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{ver}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
@@ -397,6 +393,7 @@ Provides:	%perl_modversion Math::BigRat
 Provides:	%perl_modversion Math::Trig
 Provides:	%perl_modversion Memoize
 Provides:	%perl_modversion NEXT
+Provides:	%perl_modversion Parse::CPAN::Meta
 Provides:	%perl_modversion Pod::LaTeX
 Provides:	%perl_modversion Pod::Parser
 Provides:	%perl_modversion Storable
@@ -658,11 +655,7 @@ z biblioteki GNU gdbm.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %build
 
@@ -697,15 +690,6 @@ sh Configure \
 	-Dlibswanted="dl m c crypt %{?with_gdbm:gdbm}" \
 	-%{?with_threads:D}%{!?with_threads:U}usethreads \
 	-Duselargefiles
-
-## {Scalar,List}::Util should be in perl_archlib (it's a bit tricky and should
-## probably be done in %%prep, but then Configure would complain (->MANIFEST))
-mv ext/List/Util/lib/List/Util.pm ext/List/Util
-%{__rm} ext/List/Util/Makefile.PL
-cat <<'EOF' > ext/List/Util/Makefile.PL
-use ExtUtils::MakeMaker;
-WriteMakefile(NAME=>"List::Util", VERSION_FROM=>"Util.pm", DEFINE=>"-DPERL_EXT");
-EOF
 
 %{__make} \
 	LIBPERL_SONAME=libperl.so.%{abi} \
@@ -819,7 +803,8 @@ if [ ! -f installed.stamp ]; then
 
 	install -d doc-base/{Getopt/Long,Switch} \
 		doc-devel/ExtUtils \
-		doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT,Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
+		doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT} \
+		doc-modules/{Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
 
 	# needed only for tests
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
@@ -870,7 +855,7 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 		v=$(awk '/^libnet /{print $2; exit}' lib/Net/Changes)
 		;;
 	*)
-		v=$(%{__perl} -M$m -e "print \$$m::VERSION" )
+		v=$(%{__perl} -M$m -e "print $m->VERSION" )
 		;;
 	esac
 	echo "$m = $v" >> perl-modules
@@ -892,6 +877,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS
+%attr(755,root,root) %{_bindir}/perlthanks
 
 %files libs
 %defattr(644,root,root,755)
@@ -916,6 +902,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto
 
 ## pragmas
+%{perl_privlib}/autodie*
+%{_mandir}/man3/autodie*
 %{perl_privlib}/base.pm
 %{_mandir}/man3/base.*
 %{perl_privlib}/constant.pm
@@ -928,8 +916,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/fields.*
 %{perl_privlib}/integer.pm
 %{_mandir}/man3/integer.*
-%{perl_privlib}/overload.pm
-%{_mandir}/man3/overload.*
+%{perl_privlib}/overload*
+%{_mandir}/man3/overload*
+%{perl_privlib}/parent.pm
+%{_mandir}/man3/parent.*
 %{perl_privlib}/sort.pm
 %{_mandir}/man3/sort.*
 %{perl_privlib}/strict.pm
@@ -961,6 +951,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/IPC
 %{_mandir}/man3/IPC::Open*
 %{_mandir}/man3/IPC::Cmd*
+%{perl_privlib}/Safe*
+%{_mandir}/man3/Safe*
 %{perl_privlib}/SelectSaver.pm
 %{_mandir}/man3/SelectSaver.*
 %{perl_privlib}/Symbol.pm
@@ -976,8 +968,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/DynaLoader*
 %{perl_archlib}/Errno*
 %{_mandir}/man3/Errno*
-%{perl_archlib}/Safe*
-%{_mandir}/man3/Safe*
 %{perl_archlib}/XSLoader*
 %{_mandir}/man3/XSLoader*
 
@@ -1080,6 +1070,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/O.*
 %{_mandir}/man3/O.*
 
+%{perl_privlib}/B
 %{perl_archlib}/B
 %{perl_archlib}/B.pm
 %dir %{perl_archlib}/auto/B
@@ -1160,8 +1151,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/less.*
 %{perl_privlib}/locale.pm
 %{_mandir}/man3/locale.*
-%{perl_privlib}/mro.pm
-%{_mandir}/man3/mro.*
 %{perl_privlib}/open.pm
 %{_mandir}/man3/open.*
 %{perl_privlib}/sigtrap.pm
@@ -1169,12 +1158,15 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/utf8.pm
 %{_mandir}/man3/utf8.*
 %{perl_privlib}/version.pm
-%{_mandir}/man3/version.*
+%{_mandir}/man3/version*
 
 %{perl_archlib}/attrs.pm
 %dir %{perl_archlib}/auto/attrs
 %attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
 %{_mandir}/man3/attrs.*
+%{perl_archlib}/mro.pm
+%attr(755,root,root) %{perl_archlib}/auto/mro/*.so
+%{_mandir}/man3/mro.*
 %{perl_archlib}/re.pm
 %dir %{perl_archlib}/auto/re
 %attr(755,root,root) %{perl_archlib}/auto/re/*.so
@@ -1209,10 +1201,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/Compress
 %dir %{perl_archlib}/auto/Compress
 %dir %{perl_archlib}/auto/Compress/Raw
-%dir %{perl_archlib}/auto/Compress/Raw/Zlib
-%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Zlib/*.so
-%{perl_archlib}/auto/Compress/Raw/Zlib/*.ix
-%dir %{perl_archlib}/auto/Compress/Zlib
+%dir %{perl_archlib}/auto/Compress/Raw/*/
+%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/*/*.so
+%{perl_archlib}/auto/Compress/Raw/*/*.ix
+%dir %{perl_archlib}/auto/Compress/*
 %{perl_archlib}/auto/Compress/Zlib/*.ix
 %{_mandir}/man3/Compress*
 
@@ -1327,6 +1319,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{perl_privlib}/AnyDBM*
 %{_mandir}/man3/AnyDBM*
+%{perl_privlib}/App
+%{_mandir}/man3/App::Prove*
 %{perl_privlib}/Archive*
 %{_mandir}/man3/Archive*
 %{perl_privlib}/Attribute
@@ -1374,6 +1368,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Package::*
 %{perl_privlib}/Params
 %{_mandir}/man3/Params::*
+%{perl_privlib}/Parse
+%{_mandir}/man3/Parse::CPAN::Meta*
 %{perl_privlib}/Pod
 %{_mandir}/man3/Pod::*
 %{perl_archlib}/Scalar
@@ -1384,6 +1380,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/SelfLoader.*
 %{perl_privlib}/Shell.*
 %{_mandir}/man3/Shell.*
+%{perl_privlib}/TAP
+%{_mandir}/man3/TAP::*
 # FIXME: README and Changes files
 %{perl_privlib}/Switch.*
 %{_mandir}/man3/Switch.*
@@ -1480,6 +1478,6 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with microperl}
 %files -n microperl
 %defattr(644,root,root,755)
-%doc README.micro Todo.micro
+%doc README.micro
 %attr(755,root,root) %{_bindir}/microperl
 %endif
