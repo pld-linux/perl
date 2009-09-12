@@ -1165,6 +1165,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
 %{_mandir}/man3/attrs.*
 %{perl_archlib}/mro.pm
+%dir %attr(755,root,root) %{perl_archlib}/auto/mro
 %attr(755,root,root) %{perl_archlib}/auto/mro/*.so
 %{_mandir}/man3/mro.*
 %{perl_archlib}/re.pm
@@ -1204,7 +1205,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Compress/Raw/*/
 %attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/*/*.so
 %{perl_archlib}/auto/Compress/Raw/*/*.ix
-%dir %{perl_archlib}/auto/Compress/*
 %{perl_archlib}/auto/Compress/Zlib/*.ix
 %{_mandir}/man3/Compress*
 
