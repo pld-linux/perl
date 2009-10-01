@@ -43,7 +43,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.10.1
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -1203,6 +1203,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Compress
 %dir %{perl_archlib}/auto/Compress/Raw
 %dir %{perl_archlib}/auto/Compress/Raw/*/
+%dir %{perl_archlib}/auto/Compress/Zlib
 %attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/*/*.so
 %{perl_archlib}/auto/Compress/Raw/*/*.ix
 %{perl_archlib}/auto/Compress/Zlib/*.ix
