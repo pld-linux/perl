@@ -101,7 +101,7 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Suggests:	perldoc
-BuildRoot:	%{tmpdir}/%{name}-%{ver}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
