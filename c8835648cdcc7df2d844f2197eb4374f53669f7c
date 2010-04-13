@@ -1,0 +1,2 @@
+- added missing %{perl_archlib}/CORE/reentr.inc file to -devel subpackage
+- rel. 2
