@@ -1,94 +1,71 @@
-diff -urN perl-5.10.0.org/perl.c perl-5.10.0/perl.c
---- perl-5.10.0.org/perl.c	2007-12-18 11:47:08.000000000 +0100
-+++ perl-5.10.0/perl.c	2008-01-09 14:12:15.921155066 +0100
-@@ -4753,39 +4753,6 @@
-     incpush(APPLLIB_EXP, TRUE, TRUE, TRUE, TRUE);
+diff --git a/perl.c b/perl.c
+index dfb549d..9b5dd4c 100644
+--- a/perl.c
++++ b/perl.c
+@@ -4151,26 +4151,6 @@ S_init_perllib(pTHX)
+ #  endif
  #endif
  
 -#ifdef ARCHLIB_EXP
--    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE, TRUE);
+-    S_incpush_use_sep(aTHX_ STR_WITH_LEN(ARCHLIB_EXP), INCPUSH_CAN_RELOCATE);
 -#endif
--#ifdef MACOS_TRADITIONAL
--    {
--	Stat_t tmpstatbuf;
--    	SV * privdir = newSV(0);
--	char * macperl = PerlEnv_getenv("MACPERL");
--	
--	if (!macperl)
--	    macperl = "";
--	
--	Perl_sv_setpvf(aTHX_ privdir, "%slib:", macperl);
--	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
--	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
--	Perl_sv_setpvf(aTHX_ privdir, "%ssite_perl:", macperl);
--	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
--	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
--	
--   	SvREFCNT_dec(privdir);
--    }
--    if (!PL_tainting)
--	incpush(":", FALSE, FALSE, TRUE, FALSE);
--#else
+-
 -#ifndef PRIVLIB_EXP
 -#  define PRIVLIB_EXP "/usr/local/lib/perl5:/usr/local/lib/perl"
 -#endif
+-
 -#if defined(WIN32)
--    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE, TRUE);
+-    s = win32_get_privlib(PERL_FS_VERSION, &len);
+-    if (s)
+-	incpush_use_sep(s, len, INCPUSH_ADD_SUB_DIRS|INCPUSH_CAN_RELOCATE);
 -#else
--    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE, TRUE);
+-#  ifdef NETWARE
+-    S_incpush_use_sep(aTHX_ PRIVLIB_EXP, 0, INCPUSH_CAN_RELOCATE);
+-#  else
+-    S_incpush_use_sep(aTHX_ STR_WITH_LEN(PRIVLIB_EXP), INCPUSH_CAN_RELOCATE);
+-#  endif
 -#endif
 -
- #ifdef SITEARCH_EXP
-     /* sitearch is always relative to sitelib on Windows for
-      * DLL-based path intuition to work correctly */
-@@ -4805,7 +4772,7 @@
+ #ifdef PERL_OTHERLIBDIRS
+     S_incpush_use_sep(aTHX_ STR_WITH_LEN(PERL_OTHERLIBDIRS),
+ 		      INCPUSH_ADD_VERSIONED_SUB_DIRS|INCPUSH_NOT_BASEDIR
+@@ -4216,15 +4196,35 @@ S_init_perllib(pTHX)
  
  #if defined(SITELIB_STEM) && defined(PERL_INC_VERSION_LIST)
      /* Search for version-specific dirs below here */
--    incpush(SITELIB_STEM, FALSE, TRUE, TRUE, TRUE);
-+    /* incpush(SITELIB_STEM, FALSE, TRUE, TRUE, TRUE); */
+-    S_incpush_use_sep(aTHX_ STR_WITH_LEN(SITELIB_STEM),
+-		      INCPUSH_ADD_OLD_VERS|INCPUSH_CAN_RELOCATE);
++/*  S_incpush_use_sep(aTHX_ STR_WITH_LEN(SITELIB_STEM),
++		      INCPUSH_ADD_OLD_VERS|INCPUSH_CAN_RELOCATE); */
  #endif
  
- #ifdef PERL_VENDORARCH_EXP
-@@ -4825,7 +4792,40 @@
- #endif
  
- #ifdef PERL_VENDORLIB_STEM /* Search for version-specific dirs below here */
--    incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE, TRUE);
-+/*    incpush(PERL_VENDORLIB_STEM, FALSE, TRUE, TRUE, TRUE); */
+ #if defined(PERL_VENDORLIB_STEM) && defined(PERL_INC_VERSION_LIST)
+     /* Search for version-specific dirs below here */
+-    S_incpush_use_sep(aTHX_ STR_WITH_LEN(PERL_VENDORLIB_STEM),
+-		      INCPUSH_ADD_OLD_VERS|INCPUSH_CAN_RELOCATE);
++/*  S_incpush_use_sep(aTHX_ STR_WITH_LEN(PERL_VENDORLIB_STEM),
++		      INCPUSH_ADD_OLD_VERS|INCPUSH_CAN_RELOCATE); */
 +#endif
 +
 +#ifdef ARCHLIB_EXP
-+    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE, TRUE);
++    S_incpush_use_sep(aTHX_ STR_WITH_LEN(ARCHLIB_EXP), INCPUSH_CAN_RELOCATE);
 +#endif
-+#ifdef MACOS_TRADITIONAL
-+    {
-+	Stat_t tmpstatbuf;
-+	SV * privdir = NEWSV(55, 0);
-+	char * macperl = PerlEnv_getenv("MACPERL");
 +
-+	if (!macperl)
-+	    macperl = "";
-+
-+	Perl_sv_setpvf(aTHX_ privdir, "%slib:", macperl);
-+	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
-+	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
-+	Perl_sv_setpvf(aTHX_ privdir, "%ssite_perl:", macperl);
-+	if (PerlLIO_stat(SvPVX(privdir), &tmpstatbuf) >= 0 && S_ISDIR(tmpstatbuf.st_mode))
-+	    incpush(SvPVX(privdir), TRUE, FALSE, TRUE, FALSE);
-+
-+	SvREFCNT_dec(privdir);
-+    }
-+    if (!PL_tainting)
-+	incpush(":", FALSE, FALSE, TRUE, FALSE);
-+#else
 +#ifndef PRIVLIB_EXP
 +#  define PRIVLIB_EXP "/usr/local/lib/perl5:/usr/local/lib/perl"
 +#endif
++
 +#if defined(WIN32)
-+    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE, TRUE);
++    s = win32_get_privlib(PERL_FS_VERSION, &len);
++    if (s)
++	incpush_use_sep(s, len, INCPUSH_ADD_SUB_DIRS|INCPUSH_CAN_RELOCATE);
 +#else
-+    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE, TRUE);
++#  ifdef NETWARE
++    S_incpush_use_sep(aTHX_ PRIVLIB_EXP, 0, INCPUSH_CAN_RELOCATE);
++#  else
++    S_incpush_use_sep(aTHX_ STR_WITH_LEN(PRIVLIB_EXP), INCPUSH_CAN_RELOCATE);
++#  endif
  #endif
  
  #ifdef PERL_OTHERLIBDIRS

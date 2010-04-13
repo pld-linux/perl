@@ -1,5 +1,5 @@
---- perl-5.10.1/lib/ExtUtils/Install.pm.orig	2009-08-03 21:36:03.000000000 +0200
-+++ perl-5.10.1/lib/ExtUtils/Install.pm	2009-09-12 10:07:06.181527344 +0200
+--- perl-5.12.0/dist/ExtUtils-Install/lib/ExtUtils/Install.pm.orig	2009-08-03 21:36:03.000000000 +0200
++++ perl-5.12.0/dist/ExtUtils-Install/lib/ExtUtils/Install.pm	2009-09-12 10:07:06.181527344 +0200
 @@ -813,7 +813,7 @@
                  utime($atime,$mtime + $Is_VMS,$targetfile) unless $dry_run>1;
  

@@ -1,5 +1,5 @@
---- perl-5.8.2/ext/threads/t/join.t.orig	Tue Sep 30 19:10:32 2003
-+++ perl-5.8.2/ext/threads/t/join.t	Mon Dec  8 14:49:12 2003
+--- perl-5.12.0/dist/threads/t/join.t.orig	Tue Sep 30 19:10:32 2003
++++ perl-5.12.0/dist/threads/t/join.t	Mon Dec  8 14:49:12 2003
 @@ -118,6 +118,10 @@
  
  # We parse ps output so this is OS-dependent.

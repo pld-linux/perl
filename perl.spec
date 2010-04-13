@@ -6,7 +6,7 @@
 %bcond_without	tests		# do not perform "make test"
 %bcond_without	threads		# build without support for threads
 %bcond_without	gdbm		# build without the GDBM_File module
-%bcond_without	microperl	# build microperl (needs fixing)
+%bcond_with	microperl	# build microperl (needs fixing)
 #
 # TODO:
 # - fix "FIXME"s, review "XXX"s
@@ -28,7 +28,7 @@
 # NOTE
 # - modules in 5.10.0: http://search.cpan.org/~rgarcia/perl-5.10.0/
 
-%define		abi	5.10.0
+%define		abi	5.12.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -42,8 +42,8 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.10.1
-%define		rel	2
+%define		ver	5.12.0
+%define		rel	0.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -71,14 +71,12 @@ Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/%{name}-%{ver}.tar.gz
-# Source0-md5:	b9b2fdb957f50ada62d73f43ee75d044
+Source0:	http://www.cpan.org/modules/by-authors/id/J/JE/JESSE/%{name}-%{ver}.tar.bz2
+# Source0-md5:	3e15696f4160775a90f6b2fb3ccc98c2
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
 Source3:	%{name}-modules
-Patch0:		%{name}_581-noroot_install.patch
-Patch1:		%{name}_581-INC.patch
 Patch2:		%{name}_580-errno_h-parsing.patch
 Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
@@ -101,7 +99,7 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Suggests:	perldoc
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{ver}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
@@ -441,72 +439,6 @@ drzewie instalacji Perla lub w skypcie perlowym i wyświetla go przez
 "pod2man | nroff -man | $PAGER". Program ten używany jest głównie do
 dokumentacji modułów z bibliotek Perla.
 
-%package -n sperl
-Summary:	Perl setuid root binaries for use with setuid Perl scripts
-Summary(de.UTF-8):	sperl zur Verwendung mit setuid Perl-Skripts
-Summary(es.UTF-8):	sperl, para uso con los scrips de Perl setuid
-Summary(fr.UTF-8):	sperl, à utiliser avec les scripts Perl setuid
-Summary(it.UTF-8):	sperl, da usare con gli script di Perl setuid
-Summary(ja.UTF-8):	Setuid Perl scripts と一緒に使用するための suidperl
-Summary(ko.UTF-8):	Setuid 펄 스크립트와 함께 사용되는 suidperl
-Summary(pl.UTF-8):	Binaria setuid root Perla dla setuid-owych skryptów Perla
-Summary(pt.UTF-8):	O suidperl, para usar com os programas de Perl 'setuid'
-Summary(ru.UTF-8):	SUID версия языка Perl
-Summary(sv.UTF-8):	sperl, att användas med setuid perlskript
-Summary(uk.UTF-8):	SUID-версія мови Perl
-Summary(zh_CN.UTF-8):	sperl，用来与 setuid Perl 脚本一起使用
-Group:		Development/Languages/Perl
-Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
-Obsoletes:	perl-suidperl
-
-%description -n sperl
-sperl is a setuid root binary copy of Perl that allows for (hopefully)
-more secure running of setuid Perl scripts.
-
-%description -n sperl -l de.UTF-8
-sperl ist eine binäre setuid Kopie von Perl, mit der (hoffentlich)
-setuid-Skripts sicherer ausgeführt werden können.
-
-%description -n sperl -l es.UTF-8
-sperl es una copia binaria de setuid para Perl que le permite una
-ejecución más segura de los scripts de Perl setuid.
-
-%description -n sperl -l fr.UTF-8
-sperl est une copie binaire setuid de Perl qui permet une exécution
-plus sûre de scripts Perl setuid.
-
-%description -n sperl -l it.UTF-8
-sperl è una copia binaria setuid di Perl che consente un'esecuzione
-più sicura di script di Perl setuid.
-
-%description -n sperl -l ja.UTF-8
-sperl は setuid Perl scripts.をもっと安全に動作できる(期待のある)為の
-Perl のsetuid バイナリ コピーです。
-
-%description -n sperl -l pl.UTF-8
-sperl jest to kopia setuid root programu binarnego Perl umożliwiająca
-bezpieczniejsze (miejmy nadzieję) uruchamianie setuidowych skryptów
-Perla.
-
-%description -n sperl -l pt.UTF-8
-O suidperl é uma cópia do Perl com 'setuid' que permite uma execução
-mais segura dos 'scripts' de Perl 'setuid'.
-
-%description -n sperl -l ru.UTF-8
-Suid perl испльзуется для того, чтобы дать возможность создавать
-скрипты с утановленным битом SUID. Хотя в него встроено достаточно
-много проверок, призваных обеспечить безопасность его использования
-suid perl все равно представляет собой значительную потенциальную
-опасность.
-
-%description -n sperl -l sv.UTF-8
-suidperl är en setuid binärkopia av pers som tillåter
-(förhoppningsvis) säkrare körning av setuid perlskript.
-
-%description -n sperl -l zh_CN.UTF-8
-suidperl 是 Perl 的 setuid 二进制副本。它允许（希望如此） 更安全地运行
-setuid perl 脚本。
-
 %package tools
 Summary:	Various tools from the core Perl distribution
 Summary(pl.UTF-8):	Różne narzędzia z podstawowej dystrybucji Perla
@@ -645,10 +577,11 @@ facilities provided by the GNU gdbm library.
 GDBM_File jest modułem, który umożliwia programom w Perlu korzystanie
 z biblioteki GNU gdbm.
 
+# Setting Version in GDBM_File resets the %version macro.  This hack works around it.
+%define		version	%{ver}
+
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -657,8 +590,15 @@ z biblioteki GNU gdbm.
 %patch7 -p1
 %patch9 -p1
 
-%build
+cat > runperl <<'EOF'
+#!/bin/sh
+LD_PRELOAD="%{_builddir}/%{name}-%{ver}/libperl.so.%{abi}" \
+PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
+exec %{buildroot}%{_bindir}/perl ${1:+"$@"}
+EOF
+chmod a+x runperl
 
+%build
 unset LD_SYMBOLIC_FUNCTIONS || :
 sh Configure \
 	-des \
@@ -672,7 +612,6 @@ sh Configure \
 	-Doptimize="%{rpmcflags}" \
 	-%{?debug:D}%{!?debug:U}DEBUGGING \
 	-Duseshrplib \
-	-Dd_dosuid \
 	-Dman1dir=%{_mandir}/man1 -Dman1ext=1 \
 	-Dman3dir=%{_mandir}/man3 -Dman3ext=3perl \
 	-Dvendorman1dir=%{_mandir}/man1 -Dvendorman1ext=1p \
@@ -694,14 +633,6 @@ sh Configure \
 %{__make} \
 	LIBPERL_SONAME=libperl.so.%{abi} \
 	LDDLFLAGS="%{rpmcflags} -shared"
-
-cat > runperl <<'EOF'
-#!/bin/sh
-LD_PRELOAD="%{_builddir}/%{name}-%{ver}/libperl.so.%{abi}" \
-PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
-exec %{buildroot}%{_bindir}/perl ${1:+"$@"}
-EOF
-chmod a+x runperl
 
 ## microperl
 %if %{with microperl}
@@ -739,7 +670,6 @@ if [ ! -f installed.stamp ]; then
 
 	## use symlinks instead of hardlinks
 	%{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/perl
-	%{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/suidperl
 	%{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
 	%{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
@@ -780,7 +710,7 @@ if [ ! -f installed.stamp ]; then
 
 	## remove man pages for other operating systems
 	%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
-		$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,machten,macos,mpeix,os2,os390}* \
+		$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,mpeix,os2,os390}* \
 		$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
 	## symlink perldelta.1.gz -> perlFOOdelta.1.gz
@@ -789,7 +719,7 @@ if [ ! -f installed.stamp ]; then
 	echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
 	## These File::Spec submodules are for non-Unix systems
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/File/Spec/[EMOVW]*.pm
+	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/File/Spec/[EMOVW]*.pm
 	rm $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 	## We already have these *.pod files as man pages
@@ -797,9 +727,6 @@ if [ ! -f installed.stamp ]; then
 	rm $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
-
-	## this object file looks unused; why is it there?
-	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/sperl.o
 
 	install -d doc-base/{Getopt/Long,Switch} \
 		doc-devel/ExtUtils \
@@ -852,7 +779,7 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 		v=$(%{__perl} -e 'do "Devel/DProf.pm"; print $Devel::DProf::VERSION')
 		;;
 	libnet)
-		v=$(awk '/^libnet /{print $2; exit}' lib/Net/Changes)
+		v=$(awk '/^libnet /{print $2; exit}' cpan/libnet/Changes)
 		;;
 	*)
 		v=$(%{__perl} -M$m -e "print $m->VERSION" )
@@ -959,6 +886,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Symbol.*
 %{perl_privlib}/Tie
 %{_mandir}/man3/Tie::*
+%{perl_privlib}/XSLoader*
+%{_mandir}/man3/XSLoader*
 
 ## arch-dependent modules
 %{perl_archlib}/Config*
@@ -968,8 +897,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/DynaLoader*
 %{perl_archlib}/Errno*
 %{_mandir}/man3/Errno*
-%{perl_archlib}/XSLoader*
-%{_mandir}/man3/XSLoader*
 
 %{perl_archlib}/Cwd.*
 %dir %{perl_archlib}/auto/Cwd
@@ -1055,6 +982,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/CORE/*.h
 %{_mandir}/man3/CORE*
 
+%{perl_privlib}/App/Cpan.pm
+%{_mandir}/man3/App::Cpan*
 # FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
 %{perl_privlib}/ExtUtils
 %{_mandir}/man3/ExtUtils*
@@ -1064,6 +993,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/CPAN*
 %{perl_privlib}/DB.*
 %{_mandir}/man3/DB.*
+
+%{perl_privlib}/inc
+%{_mandir}/man3/inc::latest*
 %{perl_privlib}/Module/Build*
 %{_mandir}/man3/Module::Build*
 
@@ -1129,8 +1061,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/unicore
 
 ## pragmas
-%{perl_privlib}/attributes.pm
-%{_mandir}/man3/attributes.*
 %{perl_privlib}/autouse.pm
 %{_mandir}/man3/autouse.*
 %{perl_privlib}/big*.pm
@@ -1141,6 +1071,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/bytes.*
 %{perl_privlib}/charnames.pm
 %{_mandir}/man3/charnames.*
+%{perl_privlib}/deprecate*.pm
+%{_mandir}/man3/deprecate*
 %{perl_privlib}/encoding
 %{_mandir}/man3/encoding::*
 %{perl_privlib}/filetest.pm
@@ -1160,10 +1092,11 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/version.pm
 %{_mandir}/man3/version*
 
-%{perl_archlib}/attrs.pm
-%dir %{perl_archlib}/auto/attrs
-%attr(755,root,root) %{perl_archlib}/auto/attrs/*.so
-%{_mandir}/man3/attrs.*
+
+%{perl_archlib}/attributes.pm
+%dir %{perl_archlib}/auto/attributes
+%attr(755,root,root) %{perl_archlib}/auto/attributes/*.so
+%{_mandir}/man3/attributes.*
 %{perl_archlib}/mro.pm
 %dir %attr(755,root,root) %{perl_archlib}/auto/mro
 %attr(755,root,root) %{perl_archlib}/auto/mro/*.so
@@ -1199,6 +1132,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/linux
 %{perl_archlib}/sys
 
+%{perl_privlib}/Compress
 %{perl_archlib}/Compress
 %dir %{perl_archlib}/auto/Compress
 %dir %{perl_archlib}/auto/Compress/Raw
@@ -1320,7 +1254,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{perl_privlib}/AnyDBM*
 %{_mandir}/man3/AnyDBM*
-%{perl_privlib}/App
+%dir %{perl_privlib}/App
+%{perl_privlib}/App/Prove*
 %{_mandir}/man3/App::Prove*
 %{perl_privlib}/Archive*
 %{_mandir}/man3/Archive*
@@ -1359,7 +1294,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/NEXT*
 # FIXME: README and Changes files
 %dir %{perl_privlib}/Net
-%{perl_privlib}/Net/*.eg
 %{perl_privlib}/Net/*.pm
 %{perl_privlib}/Net/FTP
 %{_mandir}/man3/Net::*
@@ -1415,11 +1349,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/pod/perlfunc.pod
 %{_mandir}/man1/perldoc.*
 
-
-%files -n sperl
-%defattr(644,root,root,755)
-%attr(4755,root,root) %{_bindir}/sperl%{ver}
-%attr(755,root,root) %{_bindir}/suidperl
 
 %files tools
 %defattr(644,root,root,755)
