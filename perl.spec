@@ -100,7 +100,8 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Suggests:	perldoc
-BuildRoot:	%{tmpdir}/%{name}-%{ver}-root-%(id -u -n)
+Obsoletes:	sperl
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
 %define		__perl_provides %{__perl} %{SOURCE2}
@@ -1025,14 +1026,12 @@ rm -rf $RPM_BUILD_ROOT
 #%{perl_archlib}/auto/XS/*/*.bs
 #%{_mandir}/man3/XS::*
 
-
 %files doc-pod
 %defattr(644,root,root,755)
 %{perl_privlib}/pod/perl.pod
 %{perl_privlib}/pod/perl[5abceghijklmnopqrstuvwx]*.pod
 %{perl_privlib}/pod/perld[!i]*.pod
 %{perl_privlib}/pod/perlf[!au]*.pod
-
 
 %files doc-reference
 %defattr(644,root,root,755)
@@ -1053,7 +1052,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/perljp.*
 %lang(ko) %{_mandir}/ko/man1/perlko.*
 %lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.*
-
 
 %files modules
 %defattr(644,root,root,755)
@@ -1092,7 +1090,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/utf8.*
 %{perl_privlib}/version.pm
 %{_mandir}/man3/version*
-
 
 %{perl_archlib}/attributes.pm
 %dir %{perl_archlib}/auto/attributes
@@ -1340,7 +1337,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/User
 %{_mandir}/man3/User::*
 
-
 %files perldoc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/perldoc
@@ -1349,7 +1345,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/pod/perlfaq*.pod
 %{perl_privlib}/pod/perlfunc.pod
 %{_mandir}/man1/perldoc.*
-
 
 %files tools
 %defattr(644,root,root,755)
