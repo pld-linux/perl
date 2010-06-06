@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.12.1
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -953,6 +953,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
 %{_mandir}/man3/Socket.*
 
+%if 0
 %files Encode
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/enc2xs
@@ -968,6 +969,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/piconv.*
 %{_mandir}/man3/Encode*
 %{_mandir}/man3/encoding.*
+%endif
 
 %if %{with gdbm}
 %files GDBM_File
