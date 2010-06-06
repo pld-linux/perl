@@ -43,7 +43,7 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.12.0
+%define		ver	5.12.1
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-authors/id/J/JE/JESSE/%{name}-%{ver}.tar.bz2
-# Source0-md5:	3e15696f4160775a90f6b2fb3ccc98c2
+# Source0-md5:	f7f2d7f5aaac15a75028381b159a560f
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov

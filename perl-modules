@@ -1,6 +1,6 @@
-# Module versions from Perl 5.12.0 distribution.
+# Module versions from Perl 5.12.1 distribution.
 Attribute::Handlers = 0.87
-CGI = 3.48
+CGI = 3.49
 CPAN = 1.9456
 Class::ISA = 0.36
 Devel::DProf = 20080331.00
@@ -33,7 +33,7 @@ Parse::CPAN::Meta = 1.40
 PerlIO::via::QuotedPrint = 0.06
 Pod::LaTeX = 0.58
 Pod::Parser = 1.37
-Safe = 2.25
+Safe = 2.27
 Socket = 1.87
 Storable = 2.22
 Term::ANSIColor = 2.02
