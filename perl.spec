@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.12.1
-%define		rel	2
+%define		rel	3
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -101,7 +101,6 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
 Suggests:	perldoc
-Obsoletes:	sperl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
@@ -309,6 +308,7 @@ Provides:	%perl_modversion PerlIO::via::QuotedPrint
 Provides:	%perl_modversion Safe
 Provides:	%perl_modversion Socket
 Provides:	%perl_modversion Tie::File
+Obsoletes:	sperl
 Conflicts:	perl < 1:5.8.0
 
 %description base
