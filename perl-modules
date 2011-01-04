@@ -1,4 +1,4 @@
-# Module versions from Perl 5.12.1 distribution.
+# Module versions from Perl 5.12.2 distribution.
 Attribute::Handlers = 0.87
 CGI = 3.49
 CPAN = 1.9456
@@ -12,7 +12,7 @@ Encode = 2.39
 ExtUtils::Embed = 1.28
 ExtUtils::MakeMaker = 6.56
 File::Compare = 1.1006
-File::Spec = 3.31
+File::Spec = 3.3101
 File::Temp = 0.22
 Filter::Simple = 0.84
 FindBin = 1.50
