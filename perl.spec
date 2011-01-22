@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.12.2
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -306,7 +306,6 @@ Provides:	%perl_modversion File::Spec
 Provides:	%perl_modversion File::Temp
 Provides:	%perl_modversion IO
 Provides:	%perl_modversion PerlIO::via::QuotedPrint
-Provides:	%perl_modversion Safe
 Provides:	%perl_modversion Socket
 Provides:	%perl_modversion Tie::File
 Obsoletes:	sperl
@@ -398,6 +397,7 @@ Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Parse::CPAN::Meta
 Provides:	%perl_modversion Pod::LaTeX
 Provides:	%perl_modversion Pod::Parser
+Provides:	%perl_modversion Safe
 Provides:	%perl_modversion Storable
 Provides:	%perl_modversion Term::ANSIColor
 Provides:	%perl_modversion Term::Cap
@@ -883,8 +883,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/IPC
 %{_mandir}/man3/IPC::Open*
 %{_mandir}/man3/IPC::Cmd*
-%{perl_privlib}/Safe*
-%{_mandir}/man3/Safe*
 %{perl_privlib}/SelectSaver.pm
 %{_mandir}/man3/SelectSaver.*
 %{perl_privlib}/Symbol.pm
@@ -1009,13 +1007,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/O.*
 %{_mandir}/man3/O.*
 
-%{perl_privlib}/B
-%{perl_archlib}/B
-%{perl_archlib}/B.pm
-%dir %{perl_archlib}/auto/B
-%attr(755,root,root) %{perl_archlib}/auto/B/*.so
-%{_mandir}/man3/B[.:]*
-
 %{perl_privlib}/Devel
 %{perl_archlib}/Devel
 %dir %{perl_archlib}/auto/Devel
@@ -1134,6 +1125,13 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/gnu
 %{perl_archlib}/linux
 %{perl_archlib}/sys
+
+%{perl_privlib}/B
+%{perl_archlib}/B
+%{perl_archlib}/B.pm
+%dir %{perl_archlib}/auto/B
+%attr(755,root,root) %{perl_archlib}/auto/B/*.so
+%{_mandir}/man3/B[.:]*
 
 %{perl_privlib}/Compress
 %{perl_archlib}/Compress
@@ -1310,6 +1308,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Parse::CPAN::Meta*
 %{perl_privlib}/Pod
 %{_mandir}/man3/Pod::*
+%{perl_privlib}/Safe*
+%{_mandir}/man3/Safe*
 %{perl_archlib}/Scalar
 %{_mandir}/man3/Scalar::*
 %{perl_privlib}/Search
