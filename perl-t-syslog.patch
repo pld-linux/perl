@@ -1,15 +1,12 @@
---- perl-5.12.0/cpan/Sys-Syslog/t/syslog.t~	2008-02-26 07:24:29.000000000 +0000
-+++ perl-5.12.0/cpan/Sys-Syslog/t/syslog.t	2008-02-26 07:24:34.000000000 +0000
-@@ -201,7 +201,11 @@
+--- perl-5.12.3/cpan/Sys-Syslog/t/syslog.t~	2011-02-21 19:02:35.662388256 +0100
++++ perl-5.12.3/cpan/Sys-Syslog/t/syslog.t	2011-02-21 19:02:54.904308246 +0100
+@@ -205,9 +205,6 @@
+             ok( !$r, "setlogsock() on Cygwin without syslog-ng should return false: '$r'" );
          }
      }
-     else  {
+-    else  {
 -        ok( $r, "setlogsock() should return true: '$r'" );
-+		if (-r "/dev/log") {
-+			ok( $r, "setlogsock() should return true: '$r'" );
-+		} else {
-+			ok( !$r, "setlogsock() should return false: '$r'" );
-+        }
-     }
+-    }
  
      # setlogsock() with "stream" and an empty path
+     $r = eval { setlogsock("stream", '' ) } || '';
