@@ -729,7 +729,7 @@ if [ ! -f installed.stamp ]; then
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 	## We already have these *.pod files as man pages
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},version}/*.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
