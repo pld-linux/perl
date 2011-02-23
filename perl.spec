@@ -721,16 +721,16 @@ if [ ! -f installed.stamp ]; then
 
 	## symlink perldelta.1.gz -> perlFOOdelta.1.gz
 	[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{ver} | tr -d .)delta.1 ] || exit 1
-	rm $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 	echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
 	## These File::Spec submodules are for non-Unix systems
 	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/File/Spec/[EMOVW]*.pm
-	rm $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 	## We already have these *.pod files as man pages
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext}}/*.pod
-	rm $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
@@ -768,7 +768,7 @@ if [ ! -f installed.stamp ]; then
 	# which is then forced upon anyone embedding perl.
 	sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
-	rm -rf $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
 
 	touch installed.stamp
 fi
