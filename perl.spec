@@ -881,6 +881,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/English*
 %{perl_privlib}/Getopt*
 %{_mandir}/man3/Getopt*
+# FIXME: README and Changes files
 %{perl_privlib}/IPC
 %{_mandir}/man3/IPC::Open*
 %{_mandir}/man3/IPC::Cmd*
@@ -1281,8 +1282,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Fatal.*
 %{perl_privlib}/FindBin.*
 %{_mandir}/man3/FindBin.*
-# FIXME: README and Changes files
-%{perl_privlib}/IPC
 %{perl_privlib}/Log
 %{_mandir}/man3/Log::*
 %{perl_privlib}/Locale
