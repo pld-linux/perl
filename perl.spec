@@ -32,7 +32,7 @@
 # NOTE
 # - modules in 5.10.0: http://search.cpan.org/~rgarcia/perl-5.10.0/
 
-%define		abi	5.12.0
+%define		abi	5.14.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -46,8 +46,8 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.12.3
-%define		rel	3
+%define		ver	5.14.0
+%define		rel	0.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -75,8 +75,8 @@ Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/%{name}-%{ver}.tar.bz2
-# Source0-md5:	72f3f7e1c700e79bbf9d9279ca5b42d9
+Source0:	http://search.cpan.org/CPAN/authors/id/J/JE/JESSE/%{name}-%{ver}.tar.gz
+# Source0-md5:	e688b0ddad50bca9a6223693a85c439d
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov

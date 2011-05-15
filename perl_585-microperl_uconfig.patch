@@ -1,11 +1,11 @@
---- perl-5.12.0/uconfig.sh.orig	2010-03-14 22:15:34.000000000 +0100
-+++ perl-5.12.0/uconfig.sh	2010-04-13 18:38:00.353231241 +0200
+--- perl-5.14.0/uconfig.sh.orig	2010-03-14 22:15:34.000000000 +0100
++++ perl-5.14.0/uconfig.sh	2010-04-13 18:38:00.353231241 +0200
 @@ -5,12 +5,7 @@
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.12/unknown'
--archlibexp='/usr/local/lib/perl5/5.12/unknown'
+-archlib='/usr/local/lib/perl5/5.14/unknown'
+-archlibexp='/usr/local/lib/perl5/5.14/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
@@ -33,19 +33,19 @@
  d_lockf='undef'
 @@ -662,14 +657,10 @@
  old_pthread_create_joinable=''
- optimize='-O2'
+ optimize=''
  orderlib='false'
 -osname='unknown'
 -osvers='unknown'
  otherlibdirs=' '
  package='perl5'
+ perl_static_inline='static'
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.12'
--privlibexp='/usr/local/lib/perl5/5.12'
+-privlib='/usr/local/lib/perl5/5.14'
+-privlibexp='/usr/local/lib/perl5/5.14'
  procselfexe=''
  prototype='undef'
- ptrsize='4'
 @@ -700,8 +691,6 @@
  sPRIXU64='"LX"'
  sSCNfldbl='"llf"'
