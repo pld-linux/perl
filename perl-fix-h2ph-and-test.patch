@@ -12,15 +12,6 @@ diff --git a/lib/h2ph.t b/lib/h2ph.t
 index 27dd7b9..8d62d46 100644
 --- a/lib/h2ph.t
 +++ b/lib/h2ph.t
-@@ -18,7 +18,7 @@ if (!(-e $extracted_program)) {
-     exit 0;
- }
- 
--plan(4);
-+plan(5);
- 
- # quickly compare two text files
- sub txt_compare {
 @@ -41,8 +41,16 @@ $result = runperl( progfile => 'lib/h2ph.pht',
                     stderr => 1 );
  like( $result, qr/syntax OK$/, "output compiles");

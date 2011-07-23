@@ -46,7 +46,7 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.14.0
+%define		ver	5.14.1
 %define		rel	0.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -76,7 +76,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://search.cpan.org/CPAN/authors/id/J/JE/JESSE/%{name}-%{ver}.tar.gz
-# Source0-md5:	e688b0ddad50bca9a6223693a85c439d
+# Source0-md5:	0b74cffa3a10aee08442f950aecbaeec
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -88,7 +88,6 @@ Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-timer-test.patch
 Patch9:		%{name}-t-syslog.patch
-Patch10:	%{name}-fix-h2ph-and-test.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -597,7 +596,6 @@ z biblioteki GNU gdbm.
 %patch6 -p1
 %patch7 -p1
 %patch9 -p1
-%patch10 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
