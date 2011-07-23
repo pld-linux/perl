@@ -716,7 +716,7 @@ if [ ! -f installed.stamp ]; then
 	cd "$owd"
 
 	## remove man pages for other operating systems
-	%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,apollo,beos,bs2000,ce,cygwin,dgux,dos}* \
+	%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,beos,bs2000,ce,cygwin,dgux,dos}* \
 		$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,mpeix,os2,os390}* \
 		$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
 
@@ -742,17 +742,14 @@ if [ ! -f installed.stamp ]; then
 
 	# needed only for tests
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
-	mv -f $RPM_BUILD_ROOT%{perl_privlib}/unicore/ReadMe.txt \
-		doc-modules/unicore
 	# source for *.pl
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
+	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/*.txt
 	# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
 	%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
 	# others
 	%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::APItest*
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
 
 	owd=$(pwd)
@@ -899,7 +896,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/Config*
 %{_mandir}/man3/Config.*
 %{perl_archlib}/DynaLoader*
-%{perl_archlib}/auto/DynaLoader
 %{_mandir}/man3/DynaLoader*
 %{perl_archlib}/Errno*
 %{_mandir}/man3/Errno*
@@ -1141,10 +1137,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Compress
 %dir %{perl_archlib}/auto/Compress/Raw
 %dir %{perl_archlib}/auto/Compress/Raw/*/
-%dir %{perl_archlib}/auto/Compress/Zlib
 %attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/*/*.so
 %{perl_archlib}/auto/Compress/Raw/*/*.ix
-%{perl_archlib}/auto/Compress/Zlib/*.ix
 %{_mandir}/man3/Compress*
 
 %{perl_archlib}/Data
@@ -1186,7 +1180,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/I18N
 %dir %{perl_archlib}/auto/I18N/*/
 %attr(755,root,root) %{perl_archlib}/auto/I18N/*/*.so
-%{perl_archlib}/auto/I18N/*/*.ix
 %{_mandir}/man3/I18N::*
 
 %{perl_archlib}/IPC
@@ -1223,15 +1216,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/Storable.*
 %dir %{perl_archlib}/auto/Storable
 %attr(755,root,root) %{perl_archlib}/auto/Storable/*.so
-%{perl_archlib}/auto/Storable/*.al
-%{perl_archlib}/auto/Storable/*.ix
 %{_mandir}/man3/Storable.*
 
 %{perl_archlib}/Sys
 %dir %{perl_archlib}/auto/Sys
 %dir %{perl_archlib}/auto/Sys/*/
 %attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
-%{perl_archlib}/auto/Sys/*/*.ix
 %{_mandir}/man3/Sys::*
 
 %{perl_archlib}/Text
@@ -1269,8 +1259,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Benchmark*
 %{perl_privlib}/CGI*
 %{_mandir}/man3/CGI*
-%{perl_privlib}/Class/ISA*
-%{_mandir}/man3/Class::ISA*
 %{perl_privlib}/Config
 %{_mandir}/man3/Config::*
 %{perl_privlib}/DirHandle*
@@ -1321,9 +1309,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Shell.*
 %{perl_privlib}/TAP
 %{_mandir}/man3/TAP::*
-# FIXME: README and Changes files
-%{perl_privlib}/Switch.*
-%{_mandir}/man3/Switch.*
 # FIXME: README and Changes files
 %{perl_privlib}/Term
 %{_mandir}/man3/Term::*
