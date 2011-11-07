@@ -1,14 +1,14 @@
 # Module versions from Perl 5.14.1 distribution.
 Attribute::Handlers = 0.89
 CGI = 3.52
-CPAN = 1.9600
+CPAN = 1.960001
 Class::ISA = 0.36
 Devel::DProf = 20110228.00
 Devel::PPPort = 3.19
 Devel::Peek = 1.07
 Digest = 1.16
 Digest::MD5 = 2.51
-Encode = 2.42
+Encode = 2.42_01
 ExtUtils::Embed = 1.30
 ExtUtils::MakeMaker = 6.57_05
 File::Compare = 1.1006
