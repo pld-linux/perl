@@ -744,8 +744,8 @@ if [ ! -f installed.stamp ]; then
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
 	# source for *.pl
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/*.txt
-	# keep UnicodeData.txt and friends, lib/Unicode/UCD.pm opens them via openunicode():
-	cp -p lib/unicore/{UnicodeData,Blocks,CaseFolding}.txt $RPM_BUILD_ROOT%{perl_privlib}/unicore
+	# lib/Unicode/UCD.pm opens them via openunicode():
+	cp -p lib/unicore/{Blocks,CaseFolding,SpecialCasing}.txt $RPM_BUILD_ROOT%{perl_privlib}/unicore
 
 	# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
 	%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
