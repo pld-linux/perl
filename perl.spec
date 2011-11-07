@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.12.3
-%define		rel	4
+%define		rel	5
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -745,8 +745,8 @@ if [ ! -f installed.stamp ]; then
 		doc-modules/unicore
 	# source for *.pl
 	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/{*.txt,mktables}
-	# keep UnicodeData.txt, needed by Unicode::UCD
-	cp -p lib/unicore/UnicodeData.txt $RPM_BUILD_ROOT%{perl_privlib}/unicore
+	# keep UnicodeData.txt and friends, lib/Unicode/UCD.pm opens them via openunicode():
+	cp -p lib/unicore/{UnicodeData,Blocks,Scripts,CompositionExclusions,CaseFolding,SpecialCasing,NamedSequences}.txt $RPM_BUILD_ROOT%{perl_privlib}/unicore
 
 	# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
 	%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
