@@ -4,8 +4,8 @@
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.14/unknown'
--archlibexp='/usr/local/lib/perl5/5.14/unknown'
+-archlib='/usr/local/lib/perl5/5.16/unknown'
+-archlibexp='/usr/local/lib/perl5/5.16/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
@@ -22,15 +22,15 @@
  d_asctime64='undef'
  d_asctime_r='undef'
  d_atolf='undef'
-@@ -233,7 +228,7 @@
- d_libm_lib_version='undef'
+@@ -232,7 +232,7 @@
  d_link='undef'
  d_localtime64='undef'
+ d_localtime_r='undef'
 -d_localtime_r_needs_tzset='undef'
 +d_localtime_r_needs_tzset='define'
- d_localtime_r='undef'
  d_locconv='undef'
  d_lockf='undef'
+ d_longdbl='undef'
 @@ -662,14 +657,10 @@
  old_pthread_create_joinable=''
  optimize=''
@@ -42,8 +42,8 @@
  perl_static_inline='static'
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.14'
--privlibexp='/usr/local/lib/perl5/5.14'
+-privlib='/usr/local/lib/perl5/5.16'
+-privlibexp='/usr/local/lib/perl5/5.16'
  procselfexe=''
  prototype='undef'
 @@ -700,8 +691,6 @@

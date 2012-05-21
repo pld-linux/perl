@@ -1,6 +1,156 @@
 # unpackaged:
-#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/.packlist
-#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/auto/sdbm/extralibs.ld
+#   /usr/bin/enc2xs
+#   /usr/bin/json_pp
+#   /usr/bin/piconv
+#   /usr/bin/ptargrep
+#   /usr/bin/zipdetails
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/.packlist
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Alias.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Byte.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/CJKConstants.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/CN.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/CN/HZ.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Config.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/EBCDIC.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Encoder.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Encoding.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/GSM0338.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Guess.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/JP.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/JP/H2Z.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/JP/JIS7.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/KR.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/KR/2022_KR.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/MIME/Header.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/MIME/Header/ISO_2022_JP.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/MIME/Name.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Symbol.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/TW.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Unicode.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Encode/Unicode/UTF7.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/Tie/Hash/NamedCapture.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/arybase.pm
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/B/B.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Compress/Raw/Bzip2/Bzip2.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Compress/Raw/Zlib/Zlib.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Cwd/Cwd.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Data/Dumper/Dumper.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Devel/PPPort/PPPort.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Devel/Peek/Peek.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Digest/MD5/MD5.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Digest/SHA/SHA.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Byte/Byte.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Byte/Byte.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/CN/CN.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/CN/CN.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/EBCDIC/EBCDIC.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/EBCDIC/EBCDIC.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Encode.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Encode.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/JP/JP.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/JP/JP.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/KR/KR.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/KR/KR.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Symbol/Symbol.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Symbol/Symbol.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/TW/TW.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/TW/TW.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Unicode/Unicode.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Encode/Unicode/Unicode.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Fcntl/Fcntl.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/File/Glob/Glob.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Filter/Util/Call/Call.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/GDBM_File/GDBM_File.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Hash/Util/FieldHash/FieldHash.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Hash/Util/Util.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/I18N/Langinfo/Langinfo.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/IO/IO.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/IPC/SysV/SysV.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/List/Util/Util.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/MIME/Base64/Base64.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Math/BigInt/FastCalc/FastCalc.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Opcode/Opcode.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/POSIX/POSIX.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/PerlIO/encoding/encoding.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/PerlIO/mmap/mmap.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/PerlIO/scalar/scalar.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/PerlIO/via/via.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/SDBM_File/SDBM_File.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Socket/Socket.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Storable/Storable.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Sys/Hostname/Hostname.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Sys/Syslog/Syslog.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Text/Soundex/Soundex.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Tie/Hash/NamedCapture/NamedCapture.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Tie/Hash/NamedCapture/NamedCapture.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Time/HiRes/HiRes.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Time/Piece/Piece.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Unicode/Collate/Collate.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/Unicode/Normalize/Normalize.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/arybase/arybase.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/arybase/arybase.so
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/attributes/attributes.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/mro/mro.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/re/re.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/sdbm/extralibs.ld
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/threads/shared/shared.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/auto/threads/threads.bs
+#   /usr/lib64/perl5/5.16.0/x86_64-pld-linux-thread-multi/encoding.pm
+#   /usr/share/man/man1/enc2xs.1.gz
+#   /usr/share/man/man1/json_pp.1.gz
+#   /usr/share/man/man1/piconv.1.gz
+#   /usr/share/man/man1/ptargrep.1.gz
+#   /usr/share/man/man1/zipdetails.1.gz
+#   /usr/share/man/man3/Encode.3perl.gz
+#   /usr/share/man/man3/Encode::Alias.3perl.gz
+#   /usr/share/man/man3/Encode::Byte.3perl.gz
+#   /usr/share/man/man3/Encode::CJKConstants.3perl.gz
+#   /usr/share/man/man3/Encode::CN.3perl.gz
+#   /usr/share/man/man3/Encode::CN::HZ.3perl.gz
+#   /usr/share/man/man3/Encode::Config.3perl.gz
+#   /usr/share/man/man3/Encode::EBCDIC.3perl.gz
+#   /usr/share/man/man3/Encode::Encoder.3perl.gz
+#   /usr/share/man/man3/Encode::Encoding.3perl.gz
+#   /usr/share/man/man3/Encode::GSM0338.3perl.gz
+#   /usr/share/man/man3/Encode::Guess.3perl.gz
+#   /usr/share/man/man3/Encode::JP.3perl.gz
+#   /usr/share/man/man3/Encode::JP::H2Z.3perl.gz
+#   /usr/share/man/man3/Encode::JP::JIS7.3perl.gz
+#   /usr/share/man/man3/Encode::KR.3perl.gz
+#   /usr/share/man/man3/Encode::KR::2022_KR.3perl.gz
+#   /usr/share/man/man3/Encode::MIME::Header.3perl.gz
+#   /usr/share/man/man3/Encode::MIME::Name.3perl.gz
+#   /usr/share/man/man3/Encode::PerlIO.3perl.gz
+#   /usr/share/man/man3/Encode::Supported.3perl.gz
+#   /usr/share/man/man3/Encode::Symbol.3perl.gz
+#   /usr/share/man/man3/Encode::TW.3perl.gz
+#   /usr/share/man/man3/Encode::Unicode.3perl.gz
+#   /usr/share/man/man3/Encode::Unicode::UTF7.3perl.gz
+#   /usr/share/man/man3/HTTP::Tiny.3perl.gz
+#   /usr/share/man/man3/JSON::PP.3perl.gz
+#   /usr/share/man/man3/JSON::PP::Boolean.3perl.gz
+#   /usr/share/man/man3/Module::Metadata.3perl.gz
+#   /usr/share/man/man3/Perl::OSType.3perl.gz
+#   /usr/share/man/man3/Version::Requirements.3perl.gz
+#   /usr/share/man/man3/arybase.3perl.gz
+#   /usr/share/man/man3/encoding.3perl.gz
+#   /usr/share/perl5/5.16.0/Encode/Changes.e2x
+#   /usr/share/perl5/5.16.0/Encode/ConfigLocal_PM.e2x
+#   /usr/share/perl5/5.16.0/Encode/Makefile_PL.e2x
+#   /usr/share/perl5/5.16.0/Encode/README.e2x
+#   /usr/share/perl5/5.16.0/Encode/_PM.e2x
+#   /usr/share/perl5/5.16.0/Encode/_T.e2x
+#   /usr/share/perl5/5.16.0/Encode/encode.h
+#   /usr/share/perl5/5.16.0/HTTP/Tiny.pm
+#   /usr/share/perl5/5.16.0/JSON/PP.pm
+#   /usr/share/perl5/5.16.0/JSON/PP/Boolean.pm
+#   /usr/share/perl5/5.16.0/Module/Metadata.pm
+#   /usr/share/perl5/5.16.0/Perl/OSType.pm
+#   /usr/share/perl5/5.16.0/Version/Requirements.pm
+#   /usr/share/perl5/5.16.0/_charnames.pm
+#   /usr/share/perl5/5.16.0/perlfaq.pm
+#
 #
 # Conditional build:
 %bcond_without	tests		# do not perform "make test"
@@ -32,7 +182,7 @@
 # NOTE
 # - modules in 5.10.0: http://search.cpan.org/~rgarcia/perl-5.10.0/
 
-%define		abi	5.14.0
+%define		abi	5.16.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -46,7 +196,7 @@
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
-%define		ver	5.14.2
+%define		ver	5.16.0
 %define		rel	0.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -76,7 +226,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.gz
-# Source0-md5:	3306fbaf976dcebdcd49b2ac0be00eb9
+# Source0-md5:	9847f7633da2e4cea016ba6c4020ec4c
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -86,8 +236,7 @@ Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
-Patch7:		%{name}-timer-test.patch
-Patch9:		%{name}-t-syslog.patch
+Patch7:		%{name}-t-syslog.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -332,7 +481,7 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{ver}-%{release}
 Provides:	%perl_modversion CPAN
-Provides:	%perl_modversion Devel::DProf
+#Provides:	%perl_modversion Devel::DProf
 Provides:	%perl_modversion Devel::PPPort
 Provides:	%perl_modversion Devel::Peek
 Provides:	%perl_modversion ExtUtils::Embed
@@ -595,7 +744,6 @@ z biblioteki GNU gdbm.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch9 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
@@ -753,7 +901,6 @@ if [ ! -f installed.stamp ]; then
 	# others
 	%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/XS::Typemap*
 
 	owd=$(pwd)
 
@@ -944,10 +1091,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/POSIX*
 %dir %{perl_archlib}/auto/POSIX
 %attr(755,root,root) %{perl_archlib}/auto/POSIX/*.so
-%{perl_archlib}/auto/POSIX/*.al
-%{perl_archlib}/auto/POSIX/*.ix
-%{perl_archlib}/auto/POSIX/SigAction
-%{perl_archlib}/auto/POSIX/SigRt
+#%{perl_archlib}/auto/POSIX/*.al
+#%{perl_archlib}/auto/POSIX/*.ix
+#%{perl_archlib}/auto/POSIX/SigAction
+#%{perl_archlib}/auto/POSIX/SigRt
 %{_mandir}/man3/POSIX.*
 
 %{perl_archlib}/Socket.*
@@ -1039,7 +1186,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlcheat.*
 %{_mandir}/man1/perlclib.*
 %{_mandir}/man1/perlcommunity.*
-%{_mandir}/man1/perlcompile.*
+#%{_mandir}/man1/perlcompile.*
 %{_mandir}/man1/perld[!o]*
 %{_mandir}/man1/perli[!v]*
 
@@ -1308,8 +1455,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Search::*
 %{perl_privlib}/SelfLoader.*
 %{_mandir}/man3/SelfLoader.*
-%{perl_privlib}/Shell.*
-%{_mandir}/man3/Shell.*
+#%{perl_privlib}/Shell.*
+#%{_mandir}/man3/Shell.*
 %{perl_privlib}/TAP
 %{_mandir}/man3/TAP::*
 # FIXME: README and Changes files
@@ -1371,8 +1518,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pstruct
 %{_mandir}/man1/c2ph.*
 %{_mandir}/man1/pstruct.*
-%attr(755,root,root) %{_bindir}/dprofpp
-%{_mandir}/man1/dprofpp.*
+#%attr(755,root,root) %{_bindir}/dprofpp
+#%{_mandir}/man1/dprofpp.*
 %attr(755,root,root) %{_bindir}/h2ph
 %{_mandir}/man1/h2ph.*
 %attr(755,root,root) %{_bindir}/h2xs
