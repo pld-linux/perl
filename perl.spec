@@ -828,6 +828,9 @@ if [ ! -f installed.stamp ]; then
 	%{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
 	%{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
 
+	## install directory needed by packages dependant on TAP::Harness
+	install -d $RPM_BUILD_ROOT%{perl_privlib}/TAP/Harness
+
 	## Fix lib
 	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
 	mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
