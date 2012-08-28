@@ -55,3 +55,12 @@
  seedfunc='srand'
  selectminbits='32'
  selecttype=int
+--- p/uconfig.h~	2012-08-03 19:35:26.000000000 +0200
++++ p/uconfig.h	2012-08-28 19:39:39.192490428 +0200
+@@ -4735,5 +4735,5 @@
+ 
+ /* Generated from:
+  * d9b6a68b192c72c0695b560fae6e4916b381f55df5fdf7911b0ef434840f092e config_h.SH
+- * 2678333a6d6676f8aa39b7011bf5133dce5be453df10a8d04cb3187103a10caf uconfig.sh
++ * 301549486ee1f0dd2c9e8b2b372428d88d70f2145400e366e2bd74886a10f969 uconfig.sh
+  * ex: set ro: */
