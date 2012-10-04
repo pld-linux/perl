@@ -1,8 +1,7 @@
-# Module versions from Perl 5.14.1 distribution.
+# Module versions from Perl 5.16.1 distribution.
 Attribute::Handlers = 0.93
 CGI = 3.59
 CPAN = 1.9800
-Class::ISA = 0.36
 Devel::PPPort = 3.20
 Devel::Peek = 1.08
 Digest = 1.17

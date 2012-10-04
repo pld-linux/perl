@@ -531,7 +531,6 @@ Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Provides:	%perl_modversion Attribute::Handlers
 Provides:	%perl_modversion CGI
-Provides:	%perl_modversion Class::ISA
 Provides:	%perl_modversion Digest
 Provides:	%perl_modversion Digest::MD5
 Provides:	%perl_modversion Filter::Simple
