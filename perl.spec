@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.12.4
-%define		rel	2
+%define		rel	3
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -887,9 +887,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/English*
 %{perl_privlib}/Getopt*
 %{_mandir}/man3/Getopt*
-%{perl_privlib}/IPC
-%{_mandir}/man3/IPC::Open*
-%{_mandir}/man3/IPC::Cmd*
 %{perl_privlib}/SelectSaver.pm
 %{_mandir}/man3/SelectSaver.*
 %{perl_privlib}/Symbol.pm
@@ -933,6 +930,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/IO
 %attr(755,root,root) %{perl_archlib}/auto/IO/*.so
 %{_mandir}/man3/IO*
+
+%{perl_privlib}/IPC
+%{perl_archlib}/IPC
+%dir %{perl_archlib}/auto/IPC
+%dir %{perl_archlib}/auto/IPC/*/
+%attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
+%{_mandir}/man3/IPC*
 
 %{perl_archlib}/Opcode.*
 %dir %{perl_archlib}/auto/Opcode
@@ -1193,12 +1197,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/auto/I18N/*/*.ix
 %{_mandir}/man3/I18N::*
 
-%{perl_archlib}/IPC
-%dir %{perl_archlib}/auto/IPC
-%dir %{perl_archlib}/auto/IPC/*/
-%attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
-%{_mandir}/man3/IPC::[MS]*
-
 %{perl_archlib}/List
 %dir %{perl_archlib}/auto/List
 %dir %{perl_archlib}/auto/List/*/
@@ -1288,7 +1286,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/FindBin.*
 %{_mandir}/man3/FindBin.*
 # FIXME: README and Changes files
-%{perl_privlib}/IPC
 %{perl_privlib}/Log
 %{_mandir}/man3/Log::*
 %{perl_privlib}/Locale
