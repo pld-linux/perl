@@ -96,7 +96,7 @@
 %bcond_with	microperl	# build microperl (needs fixing)
 #
 # TODO:
-# - fix "FIXME"s, review "XXX"s
+# - fix "FIXME"s
 # - add the {O,N}DBM_File modules
 # - `diagnostics.pm' (perl-base) requires `perldiag.pod' (perl-perldoc)
 #   move .pod file to -base or S: perl-perldoc in -base
@@ -500,6 +500,11 @@ Provides:	%perl_modversion Unicode::Collate
 Provides:	%perl_modversion Unicode::Normalize
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
+Suggests:	perl-Encode >= 2.44
+Suggests:	perl-JSON-PP
+Suggests:	perl-Module-Metadata
+Suggests:	perl-Perl-OSType
+Suggests:	perl-Version-Requirements
 Obsoletes:	perl-lib
 
 %description modules
@@ -990,6 +995,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Symbol.*
 %{perl_privlib}/Tie
 %{_mandir}/man3/Tie::*
+%{perl_privlib}/UNIVERSAL.*
+%{_mandir}/man3/UNIVERSAL.*
 %{perl_privlib}/XSLoader*
 %{_mandir}/man3/XSLoader*
 
@@ -1435,9 +1442,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Thread*
 %{_mandir}/man3/Thread*
 %endif
-# XXX: to perl-base?
-%{perl_privlib}/UNIVERSAL.*
-%{_mandir}/man3/UNIVERSAL.*
 # FIXME: README and Changes files
 %{perl_privlib}/User
 %{_mandir}/man3/User::*
