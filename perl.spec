@@ -500,7 +500,7 @@ Provides:	%perl_modversion Unicode::Collate
 Provides:	%perl_modversion Unicode::Normalize
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
-Suggests:	perl-Encode >= 2.44
+Suggests:	perl-Encode >= 1:2.44
 Suggests:	perl-JSON-PP
 Suggests:	perl-Module-Metadata
 Suggests:	perl-Perl-OSType
