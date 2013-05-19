@@ -4,15 +4,15 @@
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.16/unknown'
--archlibexp='/usr/local/lib/perl5/5.16/unknown'
+-archlib='/usr/local/lib/perl5/5.18/unknown'
+-archlibexp='/usr/local/lib/perl5/5.18/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
 -binexp='/usr/local/bin'
+ bootstrap_charset='undef'
  byteorder='1234'
  castflags='0'
- cf_by='root@localhost'
 @@ -44,7 +39,7 @@
  d_accessx='undef'
  d_aintl='undef'
@@ -42,8 +42,8 @@
  perl_static_inline='static'
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.16'
--privlibexp='/usr/local/lib/perl5/5.16'
+-privlib='/usr/local/lib/perl5/5.18'
+-privlibexp='/usr/local/lib/perl5/5.18'
  procselfexe=''
  prototype='undef'
 @@ -700,8 +691,6 @@
@@ -60,7 +60,7 @@
 @@ -4735,5 +4735,5 @@
  
  /* Generated from:
-  * d9b6a68b192c72c0695b560fae6e4916b381f55df5fdf7911b0ef434840f092e config_h.SH
-- * 2678333a6d6676f8aa39b7011bf5133dce5be453df10a8d04cb3187103a10caf uconfig.sh
-+ * 301549486ee1f0dd2c9e8b2b372428d88d70f2145400e366e2bd74886a10f969 uconfig.sh
+  * 2c9dc3f21d37b1665f6a59dfc6d79e6cb08bdf36a9c3e427d11d6b9ddffe2439 config_h.SH
+- * 26ab9b4aa382d32761cb91084ba59e7e4b190799502a43366ccb3d2f584783ca uconfig.sh
++ * c1284f07832b8806da2457d27463e177f35a407920d144abb1a8533f5b7cd3b9 uconfig.sh
   * ex: set ro: */

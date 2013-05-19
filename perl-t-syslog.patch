@@ -13,11 +13,3 @@
      }
  
      # setlogsock() with "stream" and an empty path
---- p/t/porting/customized.dat.org	2012-08-28 19:27:44.650934133 +0200
-+++ p/t/porting/customized.dat	2012-08-28 19:29:15.969929739 +0200
-@@ -10,4 +10,4 @@
- CPANPLUS cpan/CPANPLUS/Makefile.PL 5d533f6722af6aae73204755beb8d6c008fc0d4a
- Text-Tabs+Wrap cpan/Text-Tabs/t/fill.t a960d2c4f66b7e30557b5479e0da2da1bf7a7f45
- Text-Tabs+Wrap cpan/Text-Tabs/t/tabs.t 63a67b3a319c858d7e66306b8a653de1951153dc
--Sys::Syslog cpan/Sys-Syslog/t/syslog.t 647571fc90918883b871ff7e005ed7ab8a223784
-+Sys::Syslog cpan/Sys-Syslog/t/syslog.t bf6b60a6c15f8a5a86e08e2fcef151db6601d643
