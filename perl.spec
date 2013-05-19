@@ -1,93 +1,3 @@
-# unpackaged:
-#	/usr/bin/enc2xs
-#	/usr/bin/json_pp
-#	/usr/bin/piconv
-#	/usr/bin/ptargrep
-#	/usr/bin/zipdetails
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/.packlist
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Alias.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Byte.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/CJKConstants.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/CN.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/CN/HZ.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Config.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/EBCDIC.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Encoder.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Encoding.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/GSM0338.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Guess.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/JP.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/JP/H2Z.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/JP/JIS7.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/KR.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/KR/2022_KR.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/MIME/Header.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/MIME/Header/ISO_2022_JP.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/MIME/Name.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Symbol.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/TW.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Unicode.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/Encode/Unicode/UTF7.pm
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/Byte/Byte.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/CN/CN.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/EBCDIC/EBCDIC.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/Encode.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/JP/JP.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/KR/KR.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/Symbol/Symbol.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/TW/TW.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/Encode/Unicode/Unicode.so
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/auto/sdbm/extralibs.ld
-#	/usr/lib64/perl5/5.16.3/x86_64-pld-linux-thread-multi/encoding.pm
-#	/usr/share/man/man1/enc2xs.1.gz
-#	/usr/share/man/man1/json_pp.1.gz
-#	/usr/share/man/man1/piconv.1.gz
-#	/usr/share/man/man1/ptargrep.1.gz
-#	/usr/share/man/man1/zipdetails.1.gz
-#	/usr/share/man/man3/Encode.3perl.gz
-#	/usr/share/man/man3/Encode::Alias.3perl.gz
-#	/usr/share/man/man3/Encode::Byte.3perl.gz
-#	/usr/share/man/man3/Encode::CJKConstants.3perl.gz
-#	/usr/share/man/man3/Encode::CN.3perl.gz
-#	/usr/share/man/man3/Encode::CN::HZ.3perl.gz
-#	/usr/share/man/man3/Encode::Config.3perl.gz
-#	/usr/share/man/man3/Encode::EBCDIC.3perl.gz
-#	/usr/share/man/man3/Encode::Encoder.3perl.gz
-#	/usr/share/man/man3/Encode::Encoding.3perl.gz
-#	/usr/share/man/man3/Encode::GSM0338.3perl.gz
-#	/usr/share/man/man3/Encode::Guess.3perl.gz
-#	/usr/share/man/man3/Encode::JP.3perl.gz
-#	/usr/share/man/man3/Encode::JP::H2Z.3perl.gz
-#	/usr/share/man/man3/Encode::JP::JIS7.3perl.gz
-#	/usr/share/man/man3/Encode::KR.3perl.gz
-#	/usr/share/man/man3/Encode::KR::2022_KR.3perl.gz
-#	/usr/share/man/man3/Encode::MIME::Header.3perl.gz
-#	/usr/share/man/man3/Encode::MIME::Name.3perl.gz
-#	/usr/share/man/man3/Encode::PerlIO.3perl.gz
-#	/usr/share/man/man3/Encode::Supported.3perl.gz
-#	/usr/share/man/man3/Encode::Symbol.3perl.gz
-#	/usr/share/man/man3/Encode::TW.3perl.gz
-#	/usr/share/man/man3/Encode::Unicode.3perl.gz
-#	/usr/share/man/man3/Encode::Unicode::UTF7.3perl.gz
-#	/usr/share/man/man3/JSON::PP.3perl.gz
-#	/usr/share/man/man3/JSON::PP::Boolean.3perl.gz
-#	/usr/share/man/man3/Module::Metadata.3perl.gz
-#	/usr/share/man/man3/Perl::OSType.3perl.gz
-#	/usr/share/man/man3/Version::Requirements.3perl.gz
-#	/usr/share/man/man3/encoding.3perl.gz
-#	/usr/share/perl5/5.16.3/Encode/Changes.e2x
-#	/usr/share/perl5/5.16.3/Encode/ConfigLocal_PM.e2x
-#	/usr/share/perl5/5.16.3/Encode/Makefile_PL.e2x
-#	/usr/share/perl5/5.16.3/Encode/README.e2x
-#	/usr/share/perl5/5.16.3/Encode/_PM.e2x
-#	/usr/share/perl5/5.16.3/Encode/_T.e2x
-#	/usr/share/perl5/5.16.3/Encode/encode.h
-#	/usr/share/perl5/5.16.3/JSON/PP.pm
-#	/usr/share/perl5/5.16.3/JSON/PP/Boolean.pm
-#	/usr/share/perl5/5.16.3/Module/Metadata.pm
-#	/usr/share/perl5/5.16.3/Perl/OSType.pm
-#	/usr/share/perl5/5.16.3/Version/Requirements.pm
 #
 # Conditional build:
 %bcond_without	tests		# do not perform "make test"
@@ -474,14 +384,17 @@ Provides:	%perl_modversion Filter::Simple
 Provides:	%perl_modversion FindBin
 Provides:	%perl_modversion I18N::LangTags
 Provides:	%perl_modversion IPC::SysV
+Provides:	%perl_modversion JSON::PP
 Provides:	%perl_modversion Locale::Maketext
 Provides:	%perl_modversion MIME::Base64
 Provides:	%perl_modversion Math::BigInt
 Provides:	%perl_modversion Math::BigRat
 Provides:	%perl_modversion Math::Trig
 Provides:	%perl_modversion Memoize
+Provides:	%perl_modversion Module::Metadata
 Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Parse::CPAN::Meta
+Provides:	%perl_modversion Perl::OSType
 Provides:	%perl_modversion Pod::LaTeX
 Provides:	%perl_modversion Pod::Parser
 Provides:	%perl_modversion Safe
@@ -501,9 +414,6 @@ Provides:	%perl_modversion Unicode::Normalize
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
 Suggests:	perl-Encode >= 1:2.44
-Suggests:	perl-JSON-PP
-Suggests:	perl-Module-Metadata
-Suggests:	perl-Perl-OSType
 Suggests:	perl-Version-Requirements
 Obsoletes:	perl-lib
 
@@ -761,118 +671,111 @@ sh Configure \
 #%{?with_tests:%{__make} minitest}
 
 %install
-if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
-	rm -rf makeinstall.stamp installed.stamp $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
-	%{__make} install \
-		DESTDIR=$RPM_BUILD_ROOT
-	touch makeinstall.stamp
-fi
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-if [ ! -f installed.stamp ]; then
-	%{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
-	install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
+%{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
+install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
-	## use symlinks instead of hardlinks
-	%{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/perl
-	%{__ln_s} -f c2ph		$RPM_BUILD_ROOT%{_bindir}/pstruct
-	%{__ln_s} -f psed		$RPM_BUILD_ROOT%{_bindir}/s2p
+## use symlinks instead of hardlinks
+%{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/perl
+%{__ln_s} -f c2ph	$RPM_BUILD_ROOT%{_bindir}/pstruct
+%{__ln_s} -f psed	$RPM_BUILD_ROOT%{_bindir}/s2p
 
-	## install directory needed by packages dependant on TAP::Harness
-	install -d $RPM_BUILD_ROOT%{perl_privlib}/TAP/Harness
+## install directory needed by packages dependant on TAP::Harness
+install -d $RPM_BUILD_ROOT%{perl_privlib}/TAP/Harness
 
-	## Fix lib
-	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-	mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
-	%{__ln_s} ../../../../libperl.so.%{abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi}
-	%{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
-	# installed as non-executable - let rpm generate deps
-	chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
+## Fix lib
+%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
+mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
+%{__ln_s} ../../../../libperl.so.%{abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi}
+%{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
+# installed as non-executable - let rpm generate deps
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/libperl.so.%{abi}
 
-	## Fix Config.pm: remove buildroot path and change man pages extensions
-	%{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
-	%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"		$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
-	%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm',"	$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
+## Fix Config.pm: remove buildroot path and change man pages extensions
+%{__perl} -pi -e 's,%{buildroot}/*,/,g'			$RPM_BUILD_ROOT%{perl_archlib}/Config.pm
+%{__perl} -pi -e "s,^man1ext='1',man1ext='1p',"		$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
+%{__perl} -pi -e "s,^man3ext='3perl',man3ext='3pm',"	$RPM_BUILD_ROOT%{perl_archlib}/Config_heavy.pl
 
-	## Generate the *.ph files
-	owd=$(pwd)
-	cd /usr/include
-	H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
-	PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
-	WANTED='
-		syscall.h
-		syslog.h
-		termios.h
-		wait.h
-		asm/termios.h
-		sys/ioctl.h
-		sys/socket.h
-		sys/syscall.h
-		sys/time.h
-		linux/posix_types.h
-		linux/stddef.h
-	'
-	# why it returns non-zero???
-	%{__perl} $H2PH -a -d $PHDIR $WANTED || :
-	cd "$owd"
+## Generate the *.ph files
+owd=$(pwd)
+cd /usr/include
+H2PH=$RPM_BUILD_ROOT%{_bindir}/h2ph
+PHDIR=$RPM_BUILD_ROOT%{perl_archlib}
+WANTED='
+	syscall.h
+	syslog.h
+	termios.h
+	wait.h
+	asm/termios.h
+	sys/ioctl.h
+	sys/socket.h
+	sys/syscall.h
+	sys/time.h
+	linux/posix_types.h
+	linux/stddef.h
+'
+# why it returns non-zero???
+%{__perl} $H2PH -a -d $PHDIR $WANTED || :
+cd "$owd"
 
-	## remove man pages for other operating systems
-	%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,beos,bs2000,ce,cygwin,dgux,dos}* \
-		$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,mpeix,os2,os390}* \
-		$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vmesa,vms,vos,win32}*
+## remove man pages for other operating systems
+%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,ce,cygwin,dgux,dos}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,os2,os390}* \
+	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vms,vos,win32}*
 
-	## symlink perldelta.1.gz -> perlFOOdelta.1.gz
-	[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{ver} | tr -d .)delta.1 ] || exit 1
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
-	echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+## symlink perldelta.1.gz -> perlFOOdelta.1.gz
+[ -e $RPM_BUILD_ROOT%{_mandir}/man1/perl%(echo %{ver} | tr -d .)delta.1 ] || exit 1
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
+echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/perldelta.1
 
-	## These File::Spec submodules are for non-Unix systems
-	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/File/Spec/[EMOVW]*.pm
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
+## These File::Spec submodules are for non-Unix systems
+%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/File/Spec/[EMOVW]*.pm
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
-	## We already have these *.pod files as man pages
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},version}/*.pod
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
-	%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+## We already have these *.pod files as man pages
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},version}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
-	install -d doc-base/{Getopt/Long,Switch} \
-		doc-devel/ExtUtils \
-		doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT} \
-		doc-modules/{Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
+install -d doc-base/{Getopt/Long,Switch} \
+	doc-devel/ExtUtils \
+	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT} \
+	doc-modules/{Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
 
-	# needed only for tests
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
-	# source for *.pl
-	%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/*.txt
-	# lib/Unicode/UCD.pm opens them via openunicode():
-	cp -p lib/unicore/{Blocks,CaseFolding,SpecialCasing}.txt $RPM_BUILD_ROOT%{perl_privlib}/unicore
+# needed only for tests
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
+# source for *.pl
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/unicore/*.txt
+# lib/Unicode/UCD.pm opens them via openunicode():
+cp -p lib/unicore/{Blocks,CaseFolding,SpecialCasing}.txt $RPM_BUILD_ROOT%{perl_privlib}/unicore
 
-	# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
-	%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
-	# others
-	%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
+# cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
+# others
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
 
-	owd=$(pwd)
+owd=$(pwd)
 
-	## non-english man pages
-	%{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+## non-english man pages
+%{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
-	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
-	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
-	mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
+mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
-	# `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
-	# which is then forced upon anyone embedding perl.
-	sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
+# `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
+# which is then forced upon anyone embedding perl.
+sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
-	%{__rm} $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
-
-	touch installed.stamp
-fi
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
 
 # update and check perl-modules file
 echo '# Module versions from Perl %{ver} distribution.' > perl-modules
@@ -901,6 +804,9 @@ if ! cmp -s .mods1 .mods2; then
 	: %{SOURCE3} outdated with $(pwd)/perl-modules
 	exit 1
 fi
+
+# remove empty .bs files
+find $RPM_BUILD_ROOT -name \*.bs -size 0 -print0 | xargs -0 %{__rm}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1039,6 +945,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
 %{_mandir}/man3/Opcode.*
 
+%dir %{perl_privlib}/Perl
+%{perl_privlib}/Perl/OSType.pm
+%{_mandir}/man3/Perl::OSType*
+
 %{perl_privlib}/PerlIO*
 %{perl_archlib}/PerlIO
 %dir %{perl_archlib}/auto/PerlIO
@@ -1073,7 +983,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/arybase/*.so
 %{_mandir}/man3/arybase.*
 
-%if 0
 %files Encode
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/enc2xs
@@ -1089,7 +998,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/piconv.*
 %{_mandir}/man3/Encode*
 %{_mandir}/man3/encoding.*
-%endif
 
 %if %{with gdbm}
 %files GDBM_File
@@ -1392,6 +1300,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Fatal.*
 %{perl_privlib}/FindBin.*
 %{_mandir}/man3/FindBin.*
+%{perl_privlib}/JSON
+%{_mandir}/man3/JSON*
 %{perl_privlib}/Log
 %{_mandir}/man3/Log::*
 %{perl_privlib}/Locale
@@ -1399,8 +1309,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Memoize*
 %{_mandir}/man3/Memoize*
 %dir %{perl_privlib}/Module
-%{perl_privlib}/Module/[CLP]*
-%{_mandir}/man3/Module::[CLP]*
+%{perl_privlib}/Module/[CLMP]*
+%{_mandir}/man3/Module::[CLMP]*
 %{perl_privlib}/NEXT.pm
 %{_mandir}/man3/NEXT*
 # FIXME: README and Changes files
@@ -1466,18 +1376,24 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/find2perl.*
 %attr(755,root,root) %{_bindir}/instmodsh
 %{_mandir}/man1/instmodsh.*
+%attr(755,root,root) %{_bindir}/json_pp
+%{_mandir}/man1/json_pp.*
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
 %attr(755,root,root) %{_bindir}/psed
 %{_mandir}/man1/psed.*
 %attr(755,root,root) %{_bindir}/ptar
 %{_mandir}/man1/ptar.*
+%attr(755,root,root) %{_bindir}/ptargrep
+%{_mandir}/man1/ptargrep.*
 %attr(755,root,root) %{_bindir}/ptardiff
 %{_mandir}/man1/ptardiff.*
 %attr(755,root,root) %{_bindir}/s2p
 %{_mandir}/man1/s2p.*
 %attr(755,root,root) %{_bindir}/shasum
 %{_mandir}/man1/shasum.*
+%attr(755,root,root) %{_bindir}/zipdetails
+%{_mandir}/man1/zipdetails.1.gz
 
 %files tools-devel
 %defattr(644,root,root,755)
