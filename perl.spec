@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.12.5
-%define		rel	4
+%define		rel	5
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -895,6 +895,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/SelectSaver.*
 %{perl_privlib}/Symbol.pm
 %{_mandir}/man3/Symbol.*
+%{perl_archlib}/Scalar
+%{_mandir}/man3/Scalar::*
 %{perl_privlib}/Tie
 %{_mandir}/man3/Tie::*
 %{perl_privlib}/XSLoader*
@@ -1318,8 +1320,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Pod::*
 %{perl_privlib}/Safe*
 %{_mandir}/man3/Safe*
-%{perl_archlib}/Scalar
-%{_mandir}/man3/Scalar::*
 %{perl_privlib}/Search
 %{_mandir}/man3/Search::*
 %{perl_privlib}/SelfLoader.*
