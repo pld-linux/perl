@@ -6,14 +6,6 @@
 %bcond_with	microperl	# build microperl (needs fixing)
 #
 # TODO:
-# - on i486 and i686 the following tests fail:
-# t/re/pat_rt_report_thr ........................................ FAILED at test 55
-# Failed test 55 - UTF-8 regex matches above 32k; Bug 20020630.002 at re/pat_rt_report.t line 224
-# <utf8 x 32000>; pos = 1
-# Failed test 57 - UTF-8 regex matches above 32k; Bug 20020630.002 at re/pat_rt_report.t line 224
-# <utf8 x 32768>; pos = 1
-# Failed test 59 - UTF-8 regex matches above 32k; Bug 20020630.002 at re/pat_rt_report.t line 224
-# <utf8 x 33000>; pos = 1
 # - fix "FIXME"s
 # - add the {O,N}DBM_File modules
 # - `diagnostics.pm' (perl-base) requires `perldiag.pod' (perl-perldoc)
@@ -92,6 +84,7 @@ Patch4:		%{name}-test-noproc.patch
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
+Patch8:		%{name}-fix-pointer-arithmetic.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -603,6 +596,7 @@ z biblioteki GNU gdbm.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
