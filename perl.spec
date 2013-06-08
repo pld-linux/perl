@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.18.0
-%define		rel	2
+%define		rel	3
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -688,6 +688,8 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## install directory needed by packages dependant on TAP::Harness
 install -d $RPM_BUILD_ROOT%{perl_privlib}/TAP/Harness
+## install directory needed by packages dependant on Encode
+install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Encode
 
 ## Fix lib
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
@@ -989,6 +991,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/enc2xs
 %attr(755,root,root) %{_bindir}/piconv
+# for dependant packages (ex. perl-Encode-Locale)
+%{perl_vendorlib}/Encode
 # FIXME: *.h to devel(?), check out the use for *.e2x files
 %{perl_privlib}/Encode
 %{perl_archlib}/Encode*
