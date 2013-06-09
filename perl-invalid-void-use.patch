@@ -1,0 +1,11 @@
+--- perl-5.18.0/sv.h~	2013-05-10 04:30:48.000000000 +0200
++++ perl-5.18.0/sv.h	2013-06-09 21:11:34.889499879 +0200
+@@ -330,7 +330,7 @@
+ /* this is defined in this peculiar way to avoid compiler warnings.
+  * See the <20121213131428.GD1842@iabyn.com> thread in p5p */
+ #define SvUPGRADE(sv, mt) \
+-    ((void)(SvTYPE(sv) >= (mt) || (sv_upgrade(sv, mt),1)))
++    (SvTYPE(sv) >= (mt) || (sv_upgrade(sv, mt),1))
+ 
+ #define SVf_IOK		0x00000100  /* has valid public integer value */
+ #define SVf_NOK		0x00000200  /* has valid public numeric value */
