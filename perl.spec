@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.18.0
-%define		rel	3
+%define		rel	4
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -329,11 +329,17 @@ Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-tools-pod = %{epoch}:%{ver}-%{release}
 Provides:	%perl_modversion CPAN
-#Provides:	%perl_modversion Devel::DProf
-Provides:	%perl_modversion Devel::PPPort
+Provides:	%perl_modversion CPAN::Meta
+Provides:	%perl_modversion CPAN::Meta::YAML
 Provides:	%perl_modversion Devel::Peek
+Provides:	%perl_modversion Devel::PPPort
+Provides:	%perl_modversion ExtUtils::CBuilder
+Provides:	%perl_modversion ExtUtils::Command
 Provides:	%perl_modversion ExtUtils::Embed
+Provides:	%perl_modversion ExtUtils::Install
 Provides:	%perl_modversion ExtUtils::MakeMaker
+Provides:	%perl_modversion ExtUtils::Manifest
+Provides:	%perl_modversion ExtUtils::ParseXS
 Provides:	%perl_modversion Module::Build
 Obsoletes:	perl-lib-devel
 
@@ -377,29 +383,42 @@ Summary:	Modules from the core Perl distribution
 Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Provides:	%perl_modversion Archive::Tar
 Provides:	%perl_modversion Attribute::Handlers
 Provides:	%perl_modversion CGI
+Provides:	%perl_modversion Compress::Raw::Bzip2
+Provides:	%perl_modversion Compress::Raw::Zlib
 Provides:	%perl_modversion Digest
 Provides:	%perl_modversion Digest::MD5
+Provides:	%perl_modversion Digest::SHA
 Provides:	%perl_modversion Filter::Simple
 Provides:	%perl_modversion FindBin
 Provides:	%perl_modversion I18N::LangTags
 Provides:	%perl_modversion IPC::SysV
 Provides:	%perl_modversion JSON::PP
+Provides:	%perl_modversion Locale::Codes
 Provides:	%perl_modversion Locale::Maketext
-Provides:	%perl_modversion MIME::Base64
+Provides:	%perl_modversion Locale::Maketext::Simple
 Provides:	%perl_modversion Math::BigInt
 Provides:	%perl_modversion Math::BigRat
 Provides:	%perl_modversion Math::Trig
 Provides:	%perl_modversion Memoize
+Provides:	%perl_modversion MIME::Base64
+Provides:	%perl_modversion Module::CoreList
+Provides:	%perl_modversion Module::Load
+Provides:	%perl_modversion Module::Load::Conditional
 Provides:	%perl_modversion Module::Metadata
+Provides:	%perl_modversion Module::Pluggable
 Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Parse::CPAN::Meta
 Provides:	%perl_modversion Perl::OSType
+Provides:	%perl_modversion Pod::Escapes
 Provides:	%perl_modversion Pod::LaTeX
 Provides:	%perl_modversion Pod::Parser
+Provides:	%perl_modversion Pod::Simple
 Provides:	%perl_modversion Safe
 Provides:	%perl_modversion Storable
+Provides:	%perl_modversion Sys::Syslog
 Provides:	%perl_modversion Term::ANSIColor
 Provides:	%perl_modversion Term::Cap
 Provides:	%perl_modversion Test
@@ -409,9 +428,11 @@ Provides:	%perl_modversion Text::Balanced
 Provides:	%perl_modversion Text::ParseWords
 Provides:	%perl_modversion Text::Soundex
 Provides:	%perl_modversion Time::HiRes
-Provides:	%perl_modversion UNIVERSAL
+Provides:	%perl_modversion Time::Piece
 Provides:	%perl_modversion Unicode::Collate
 Provides:	%perl_modversion Unicode::Normalize
+Provides:	%perl_modversion UNIVERSAL
+Provides:	%perl_modversion bignum
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
 Suggests:	perl-Encode >= 1:2.44
