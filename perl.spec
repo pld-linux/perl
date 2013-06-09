@@ -44,7 +44,7 @@
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
 
 %define		ver	5.18.0
-%define		rel	7
+%define		rel	8
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -882,13 +882,6 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 echo '# Module versions from Perl %{ver} distribution.' > perl-modules
 for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	case $m in
-	Devel::DProf)
-#		+ perl -ilib -MDevel::DProf -e print 'Devel-DProf = ',$Devel::DProf::VERSION
-#		DProf: run perl with -d to use DProf.
-#		Compilation failed in require.
-#		BEGIN failed--compilation aborted.
-		v=$(%{__perl} -e 'do "Devel/DProf.pm"; print $Devel::DProf::VERSION')
-		;;
 	libnet)
 		v=$(awk '/^libnet /{print $2; exit}' cpan/libnet/Changes)
 		;;
@@ -899,8 +892,10 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	echo "$m = $v" >> perl-modules
 done
 
-egrep -v '^([ 	]*$|[;#])' %{SOURCE3} > .mods1
-egrep -v '^([ 	]*$|[;#])' perl-modules > .mods2
+# ExtUtils::CBuilder Compress::Raw::Bzip2 Compress::Raw::Zlib ignored due to VERSION from the loop above
+# is missing ending '0'
+egrep -v '^([ 	]*$|[;#])' %{SOURCE3} | egrep -v 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods1
+egrep -v '^([ 	]*$|[;#])' perl-modules | egrep -v 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods2
 if ! cmp -s .mods1 .mods2; then
 	: %{SOURCE3} outdated with $(pwd)/perl-modules
 	exit 1
