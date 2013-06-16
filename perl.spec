@@ -42,9 +42,11 @@
 # extract module version from source
 %define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
 %define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
+%define		perl_mod2ver()		%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p{print $4}' %{SOURCE4} || echo ERROR)
+%define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p{m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.18.0
-%define		rel	9
+%define		rel	10
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -78,6 +80,7 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
 Source3:	%{name}-modules
+Source4:	%{name}-modules2
 Patch2:		%{name}_580-errno_h-parsing.patch
 Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
@@ -405,6 +408,8 @@ Summary:	Modules from the core Perl distribution
 Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
+Suggests:	perl-Encode >= 1:2.44
+Suggests:	perl-Version-Requirements
 Provides:	%perl_modversion Archive::Tar
 Provides:	%perl_modversion Attribute::Handlers
 Provides:	%perl_modversion CGI
@@ -457,6 +462,7 @@ Provides:	%perl_modversion UNIVERSAL
 Provides:	%perl_modversion bignum
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
+Provides:	%perl_mod2version Scalar-List-Utils
 Obsoletes:	perl-Archive-Tar < %perl_modver Archive::Tar
 Obsoletes:	perl-Attribute-Handlers < %perl_modver Attribute::Handlers
 Obsoletes:	perl-CGI < %perl_modver CGI
@@ -509,8 +515,7 @@ Obsoletes:	perl-UNIVERSAL < %perl_modver UNIVERSAL
 Obsoletes:	perl-bignum < %perl_modver bignum
 Obsoletes:	perl-libnet < %perl_modver libnet
 Obsoletes:	perl-version < %perl_modver version
-Suggests:	perl-Encode >= 1:2.44
-Suggests:	perl-Version-Requirements
+Obsoletes:	perl-Scalar-List-Utils < %perl_mod2ver Scalar-List-Utils
 Obsoletes:	perl-lib
 
 %description modules
@@ -879,7 +884,7 @@ sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_ar
 
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
 
-# update and check perl-modules file
+# update and check perl-modules files
 echo '# Module versions from Perl %{ver} distribution.' > perl-modules
 for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	case $m in
@@ -890,15 +895,26 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 		v=$(%{__perl} -M$m -e "print $m->VERSION" )
 		;;
 	esac
-	echo "$m = $v" >> perl-modules
-done
+	echo "$m = $v"
+done | LC_ALL=C sort >> perl-modules
+echo '# Non-straight named module versions from Perl %{ver} distribution.' > perl-modules2
+for m in $(awk '!/^#/ && !/^$/{print $1"!"$2}' %{SOURCE4}); do
+	mn="${m##*!}"
+	mp="${m%%!*}"
+	v=$(%{__perl} -M$mn -e "print $mn->VERSION" )
+	echo "$mp	$mn = $v"
+done | LC_ALL=C sort >> perl-modules2
 
 # ExtUtils::CBuilder Compress::Raw::Bzip2 Compress::Raw::Zlib ignored due to VERSION from the loop above
 # is missing ending '0'
-egrep -v '^([ 	]*$|[;#])' %{SOURCE3} | egrep -v 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods1
-egrep -v '^([ 	]*$|[;#])' perl-modules | egrep -v 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods2
+grep -Ev '^([ 	]*$|[;#])' %{SOURCE3} | grep -Ev 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods1
+grep -Ev '^([ 	]*$|[;#])' perl-modules | grep -Ev 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods2
 if ! cmp -s .mods1 .mods2; then
 	: %{SOURCE3} outdated with $(pwd)/perl-modules
+	exit 1
+fi
+if ! cmp -s %{SOURCE4} perl-modules2; then
+	: %{SOURCE4} outdated with $(pwd)/perl-modules2
 	exit 1
 fi
 
