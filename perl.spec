@@ -37,13 +37,15 @@
 %define		perl_vendorarch	%{_libdir}/perl5/vendor_perl/%{abi}/%{_target_platform}%{perlthread}
 
 # extract module version from source
-%define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{print $3}' %{SOURCE3} || echo ERROR)
-%define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p{m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE3} || echo ERROR)
-%define		perl_mod2ver()		%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p{print $4}' %{SOURCE4} || echo ERROR)
-%define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p{m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p)}' %{SOURCE4} || echo ERROR)
+%define		perl_modver()		%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p { print $3 }' %{SOURCE3} || echo ERROR)
+%define		perl_modverrel()	%([ -f %{SOURCE3} ] && awk -vp=%1 -vr=%2 '$1 == p { print $3"-"r }' %{SOURCE3} || echo ERROR)
+%define		perl_modversion()	%([ -f %{SOURCE3} ] && awk -vp=%1 '$1 == p { m=$1; gsub(/::/, "-", m); printf("perl-%s = %s\\n", m, $3)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE3} || echo ERROR)
+%define		perl_mod2ver()		%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { print $4 }' %{SOURCE4} || echo ERROR)
+%define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
+%define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.18.0
-%define		rel	10
+%define		rel	11
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -314,18 +316,18 @@ Provides:	%perl_modversion Socket
 Provides:	%perl_modversion Tie::File
 Provides:	%perl_modversion Tie::RefHash
 Provides:	%perl_modversion parent
-Obsoletes:	perl-File-Compare < %perl_modver File::Compare
-Obsoletes:	perl-File-Temp < %perl_modver File::Temp
-Obsoletes:	perl-IO < %perl_modver IO
-Obsoletes:	perl-IO-Compress < %perl_mod2ver IO-Compress
-Obsoletes:	perl-IO-Zlib < %perl_modver IO::Zlib
-Obsoletes:	perl-IPC-Cmd < %perl_modver IPC::Cmd
-Obsoletes:	perl-PathTools < %perl_mod2ver PathTools
-Obsoletes:	perl-PerlIO-via-QuotedPrint < %perl_modver PerlIO::via::QuotedPrint
-Obsoletes:	perl-Socket < %perl_modver Socket
-Obsoletes:	perl-Tie-File < %perl_modver Tie::File
-Obsoletes:	perl-Tie-RefHash < %perl_modver Tie::RefHash
-Obsoletes:	perl-parent < %perl_modver parent
+Obsoletes:	perl-File-Compare < %perl_modverrel File::Compare 99
+Obsoletes:	perl-File-Temp < %perl_modverrel File::Temp 99
+Obsoletes:	perl-IO < %perl_modverrel IO 99
+Obsoletes:	perl-IO-Compress < %perl_mod2verrel IO-Compress 99
+Obsoletes:	perl-IO-Zlib < %perl_modverrel IO::Zlib 99
+Obsoletes:	perl-IPC-Cmd < %perl_modverrel IPC::Cmd 99
+Obsoletes:	perl-PathTools < %perl_mod2verrel PathTools 99
+Obsoletes:	perl-PerlIO-via-QuotedPrint < %perl_modverrel PerlIO::via::QuotedPrint 99
+Obsoletes:	perl-Socket < %perl_modverrel Socket 99
+Obsoletes:	perl-Tie-File < %perl_modverrel Tie::File 99
+Obsoletes:	perl-Tie-RefHash < %perl_modverrel Tie::RefHash 99
+Obsoletes:	perl-parent < %perl_modverrel parent 99
 Obsoletes:	sperl
 Conflicts:	perl < 1:5.8.0
 
@@ -360,19 +362,19 @@ Provides:	%perl_modversion ExtUtils::MakeMaker
 Provides:	%perl_modversion ExtUtils::Manifest
 Provides:	%perl_modversion ExtUtils::ParseXS
 Provides:	%perl_modversion Module::Build
-Obsoletes:	perl-CPAN < %perl_modver CPAN
-Obsoletes:	perl-CPAN-Meta < %perl_modver CPAN::Meta
-Obsoletes:	perl-CPAN-Meta-YAML < %perl_modver CPAN::Meta::YAML
-Obsoletes:	perl-Devel-PPPort < %perl_modver Devel::PPPort
-Obsoletes:	perl-Devel-Peek < %perl_modver Devel::Peek
-Obsoletes:	perl-ExtUtils-CBuilder < %perl_modver ExtUtils::CBuilder
-Obsoletes:	perl-ExtUtils-Command < %perl_modver ExtUtils::Command
-Obsoletes:	perl-ExtUtils-Embed < %perl_modver ExtUtils::Embed
-Obsoletes:	perl-ExtUtils-Install < %perl_modver ExtUtils::Install
-Obsoletes:	perl-ExtUtils-MakeMaker < %perl_modver ExtUtils::MakeMaker
-Obsoletes:	perl-ExtUtils-Manifest < %perl_modver ExtUtils::Manifest
-Obsoletes:	perl-ExtUtils-ParseXS < %perl_modver ExtUtils::ParseXS
-Obsoletes:	perl-Module-Build < %perl_modver Module::Build
+Obsoletes:	perl-CPAN < %perl_modverrel CPAN 99
+Obsoletes:	perl-CPAN-Meta < %perl_modverrel CPAN::Meta 99
+Obsoletes:	perl-CPAN-Meta-YAML < %perl_modverrel CPAN::Meta::YAML 99
+Obsoletes:	perl-Devel-PPPort < %perl_modverrel Devel::PPPort 99
+Obsoletes:	perl-Devel-Peek < %perl_modverrel Devel::Peek 99
+Obsoletes:	perl-ExtUtils-CBuilder < %perl_modverrel ExtUtils::CBuilder 99
+Obsoletes:	perl-ExtUtils-Command < %perl_modverrel ExtUtils::Command 99
+Obsoletes:	perl-ExtUtils-Embed < %perl_modverrel ExtUtils::Embed 99
+Obsoletes:	perl-ExtUtils-Install < %perl_modverrel ExtUtils::Install 99
+Obsoletes:	perl-ExtUtils-MakeMaker < %perl_modverrel ExtUtils::MakeMaker 99
+Obsoletes:	perl-ExtUtils-Manifest < %perl_modverrel ExtUtils::Manifest 99
+Obsoletes:	perl-ExtUtils-ParseXS < %perl_modverrel ExtUtils::ParseXS 99
+Obsoletes:	perl-Module-Build < %perl_modverrel Module::Build 99
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -472,61 +474,61 @@ Provides:	%perl_modversion Unicode::Normalize
 Provides:	%perl_modversion bignum
 Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
-Obsoletes:	perl-Archive-Tar < %perl_modver Archive::Tar
-Obsoletes:	perl-Attribute-Handlers < %perl_modver Attribute::Handlers
-Obsoletes:	perl-CGI < %perl_modver CGI
-Obsoletes:	perl-Compress-Raw-Bzip2 < %perl_modver Compress::Raw::Bzip2
-Obsoletes:	perl-Compress-Raw-Zlib < %perl_modver Compress::Raw::Zlib
-Obsoletes:	perl-Digest < %perl_modver Digest
-Obsoletes:	perl-Digest-MD5 < %perl_modver Digest::MD5
-Obsoletes:	perl-Digest-SHA < %perl_modver Digest::SHA
-Obsoletes:	perl-Filter-Simple < %perl_modver Filter::Simple
-Obsoletes:	perl-FindBin < %perl_modver FindBin
-Obsoletes:	perl-I18N-LangTags < %perl_modver I18N::LangTags
-Obsoletes:	perl-IPC-SysV < %perl_modver IPC::SysV
-Obsoletes:	perl-JSON-PP < %perl_modver JSON::PP
-Obsoletes:	perl-Locale-Codes < %perl_modver Locale::Codes
-Obsoletes:	perl-Locale-Maketext < %perl_modver Locale::Maketext
-Obsoletes:	perl-Locale-Maketext-Simple < %perl_modver Locale::Maketext::Simple
-Obsoletes:	perl-MIME-Base64 < %perl_modver MIME::Base64
-Obsoletes:	perl-Math-BigInt < %perl_modver Math::BigInt
-Obsoletes:	perl-Math-BigRat < %perl_modver Math::BigRat
-Obsoletes:	perl-Math-Trig < %perl_modver Math::Trig
-Obsoletes:	perl-Memoize < %perl_modver Memoize
-Obsoletes:	perl-Module-CoreList < %perl_modver Module::CoreList
-Obsoletes:	perl-Module-Load < %perl_modver Module::Load
-Obsoletes:	perl-Module-Load-Conditional < %perl_modver Module::Load::Conditional
-Obsoletes:	perl-Module-Metadata < %perl_modver Module::Metadata
-Obsoletes:	perl-Module-Pluggable < %perl_modver Module::Pluggable
-Obsoletes:	perl-NEXT < %perl_modver NEXT
-Obsoletes:	perl-Package-Constants < %perl_modver Package::Constants
-Obsoletes:	perl-Params::Check < %perl_modver Params::Check
-Obsoletes:	perl-Parse-CPAN-Meta < %perl_modver Parse::CPAN::Meta
-Obsoletes:	perl-Perl-OSType < %perl_modver Perl::OSType
-Obsoletes:	perl-Pod-Escapes < %perl_modver Pod::Escapes
-Obsoletes:	perl-Pod-LaTeX < %perl_modver Pod::LaTeX
-Obsoletes:	perl-Pod-Parser < %perl_modver Pod::Parser
-Obsoletes:	perl-Pod-Simple < %perl_modver Pod::Simple
-Obsoletes:	perl-Safe < %perl_modver Safe
-Obsoletes:	perl-Scalar-List-Utils < %perl_mod2ver Scalar-List-Utils
-Obsoletes:	perl-Storable < %perl_modver Storable
-Obsoletes:	perl-Sys-Syslog < %perl_modver Sys::Syslog
-Obsoletes:	perl-Term-ANSIColor < %perl_modver Term::ANSIColor
-Obsoletes:	perl-Term-Cap < %perl_modver Term::Cap
-Obsoletes:	perl-Test < %perl_modver Test
-Obsoletes:	perl-Test-Harness < %perl_modver Test::Harness
-Obsoletes:	perl-Test-Simple < %perl_modver Test::Simple
-Obsoletes:	perl-Text-Balanced < %perl_modver Text::Balanced
-Obsoletes:	perl-Text-ParseWords < %perl_modver Text::ParseWords
-Obsoletes:	perl-Text-Soundex < %perl_modver Text::Soundex
-Obsoletes:	perl-Time-HiRes < %perl_modver Time::HiRes
-Obsoletes:	perl-Time-Piece < %perl_modver Time::Piece
-Obsoletes:	perl-UNIVERSAL < %perl_modver UNIVERSAL
-Obsoletes:	perl-Unicode-Collate < %perl_modver Unicode::Collate
-Obsoletes:	perl-Unicode-Normalize < %perl_modver Unicode::Normalize
-Obsoletes:	perl-bignum < %perl_modver bignum
-Obsoletes:	perl-libnet < %perl_modver libnet
-Obsoletes:	perl-version < %perl_modver version
+Obsoletes:	perl-Archive-Tar < %perl_modverrel Archive::Tar 99
+Obsoletes:	perl-Attribute-Handlers < %perl_modverrel Attribute::Handlers 99
+Obsoletes:	perl-CGI < %perl_modverrel CGI 99
+Obsoletes:	perl-Compress-Raw-Bzip2 < %perl_modverrel Compress::Raw::Bzip2 99
+Obsoletes:	perl-Compress-Raw-Zlib < %perl_modverrel Compress::Raw::Zlib 99
+Obsoletes:	perl-Digest < %perl_modverrel Digest 99
+Obsoletes:	perl-Digest-MD5 < %perl_modverrel Digest::MD5 99
+Obsoletes:	perl-Digest-SHA < %perl_modverrel Digest::SHA 99
+Obsoletes:	perl-Filter-Simple < %perl_modverrel Filter::Simple 99
+Obsoletes:	perl-FindBin < %perl_modverrel FindBin 99
+Obsoletes:	perl-I18N-LangTags < %perl_modverrel I18N::LangTags 99
+Obsoletes:	perl-IPC-SysV < %perl_modverrel IPC::SysV 99
+Obsoletes:	perl-JSON-PP < %perl_modverrel JSON::PP 99
+Obsoletes:	perl-Locale-Codes < %perl_modverrel Locale::Codes 99
+Obsoletes:	perl-Locale-Maketext < %perl_modverrel Locale::Maketext 99
+Obsoletes:	perl-Locale-Maketext-Simple < %perl_modverrel Locale::Maketext::Simple 99
+Obsoletes:	perl-MIME-Base64 < %perl_modverrel MIME::Base64 99
+Obsoletes:	perl-Math-BigInt < %perl_modverrel Math::BigInt 99
+Obsoletes:	perl-Math-BigRat < %perl_modverrel Math::BigRat 99
+Obsoletes:	perl-Math-Trig < %perl_modverrel Math::Trig 99
+Obsoletes:	perl-Memoize < %perl_modverrel Memoize 99
+Obsoletes:	perl-Module-CoreList < %perl_modverrel Module::CoreList 99
+Obsoletes:	perl-Module-Load < %perl_modverrel Module::Load 99
+Obsoletes:	perl-Module-Load-Conditional < %perl_modverrel Module::Load::Conditional 99
+Obsoletes:	perl-Module-Metadata < %perl_modverrel Module::Metadata 99
+Obsoletes:	perl-Module-Pluggable < %perl_modverrel Module::Pluggable 99
+Obsoletes:	perl-NEXT < %perl_modverrel NEXT 99
+Obsoletes:	perl-Package-Constants < %perl_modverrel Package::Constants 99
+Obsoletes:	perl-Params::Check < %perl_modverrel Params::Check 99
+Obsoletes:	perl-Parse-CPAN-Meta < %perl_modverrel Parse::CPAN::Meta 99
+Obsoletes:	perl-Perl-OSType < %perl_modverrel Perl::OSType 99
+Obsoletes:	perl-Pod-Escapes < %perl_modverrel Pod::Escapes 99
+Obsoletes:	perl-Pod-LaTeX < %perl_modverrel Pod::LaTeX 99
+Obsoletes:	perl-Pod-Parser < %perl_modverrel Pod::Parser 99
+Obsoletes:	perl-Pod-Simple < %perl_modverrel Pod::Simple 99
+Obsoletes:	perl-Safe < %perl_modverrel Safe 99
+Obsoletes:	perl-Scalar-List-Utils < %perl_mod2verrel Scalar-List-Utils 99
+Obsoletes:	perl-Storable < %perl_modverrel Storable 99
+Obsoletes:	perl-Sys-Syslog < %perl_modverrel Sys::Syslog 99
+Obsoletes:	perl-Term-ANSIColor < %perl_modverrel Term::ANSIColor 99
+Obsoletes:	perl-Term-Cap < %perl_modverrel Term::Cap 99
+Obsoletes:	perl-Test < %perl_modverrel Test 99
+Obsoletes:	perl-Test-Harness < %perl_modverrel Test::Harness 99
+Obsoletes:	perl-Test-Simple < %perl_modverrel Test::Simple 99
+Obsoletes:	perl-Text-Balanced < %perl_modverrel Text::Balanced 99
+Obsoletes:	perl-Text-ParseWords < %perl_modverrel Text::ParseWords 99
+Obsoletes:	perl-Text-Soundex < %perl_modverrel Text::Soundex 99
+Obsoletes:	perl-Time-HiRes < %perl_modverrel Time::HiRes 99
+Obsoletes:	perl-Time-Piece < %perl_modverrel Time::Piece 99
+Obsoletes:	perl-UNIVERSAL < %perl_modverrel UNIVERSAL 99
+Obsoletes:	perl-Unicode-Collate < %perl_modverrel Unicode::Collate 99
+Obsoletes:	perl-Unicode-Normalize < %perl_modverrel Unicode::Normalize 99
+Obsoletes:	perl-bignum < %perl_modverrel bignum 99
+Obsoletes:	perl-libnet < %perl_modverrel libnet 99
+Obsoletes:	perl-version < %perl_modverrel version 99
 Obsoletes:	perl-lib
 
 %description modules
