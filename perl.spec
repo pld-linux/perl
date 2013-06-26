@@ -438,6 +438,7 @@ Provides:	%perl_modversion Locale::Maketext
 Provides:	%perl_modversion Locale::Maketext::Simple
 Provides:	%perl_modversion MIME::Base64
 Provides:	%perl_modversion Math::BigInt
+Provides:	%perl_modversion Math::BigInt::FastCalc
 Provides:	%perl_modversion Math::BigRat
 Provides:	%perl_modversion Math::Trig
 Provides:	%perl_modversion Memoize
@@ -492,6 +493,7 @@ Obsoletes:	perl-Locale-Maketext < %perl_modverrel Locale::Maketext 99
 Obsoletes:	perl-Locale-Maketext-Simple < %perl_modverrel Locale::Maketext::Simple 99
 Obsoletes:	perl-MIME-Base64 < %perl_modverrel MIME::Base64 99
 Obsoletes:	perl-Math-BigInt < %perl_modverrel Math::BigInt 99
+Obsoletes:	perl-Math-BigInt-FastCalc < %perl_modverrel Math::BigInt::FastCalc 99
 Obsoletes:	perl-Math-BigRat < %perl_modverrel Math::BigRat 99
 Obsoletes:	perl-Math-Trig < %perl_modverrel Math::Trig 99
 Obsoletes:	perl-Memoize < %perl_modverrel Memoize 99

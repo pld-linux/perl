@@ -37,6 +37,7 @@ Locale::Maketext = 1.23
 Locale::Maketext::Simple = 0.21
 MIME::Base64 = 3.13
 Math::BigInt = 1.9991
+Math::BigInt::FastCalc = 0.30
 Math::BigRat = 0.2604
 Math::Trig = 1.23
 Memoize = 1.03
