@@ -440,6 +440,7 @@ Provides:	%perl_modversion MIME::Base64
 Provides:	%perl_modversion Math::BigInt
 Provides:	%perl_modversion Math::BigInt::FastCalc
 Provides:	%perl_modversion Math::BigRat
+Provides:	%perl_modversion Math::Complex
 Provides:	%perl_modversion Math::Trig
 Provides:	%perl_modversion Memoize
 Provides:	%perl_modversion Module::CoreList
@@ -495,6 +496,7 @@ Obsoletes:	perl-MIME-Base64 < %perl_modverrel MIME::Base64 99
 Obsoletes:	perl-Math-BigInt < %perl_modverrel Math::BigInt 99
 Obsoletes:	perl-Math-BigInt-FastCalc < %perl_modverrel Math::BigInt::FastCalc 99
 Obsoletes:	perl-Math-BigRat < %perl_modverrel Math::BigRat 99
+Obsoletes:	perl-Math-Complex < %perl_modverrel Math::Complex 99
 Obsoletes:	perl-Math-Trig < %perl_modverrel Math::Trig 99
 Obsoletes:	perl-Memoize < %perl_modverrel Memoize 99
 Obsoletes:	perl-Module-CoreList < %perl_modverrel Module::CoreList 99
