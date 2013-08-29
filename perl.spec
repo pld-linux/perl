@@ -674,6 +674,7 @@ microperlu - popraw je.
 Summary:	Encode - character encodings
 Summary(pl.UTF-8):	Encode - kodowania znaków
 Version:	%perl_modver Encode
+Release:	%{ver}.%{rel}
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Obsoletes:	perl-Encode-compat
