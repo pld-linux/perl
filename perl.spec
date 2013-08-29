@@ -44,8 +44,8 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.18.0
-%define		rel	11
+%define		ver	5.18.1
+%define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -74,7 +74,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.gz
-# Source0-md5:	197ce31e84936bc0a83b03b2ee714cff
+# Source0-md5:	304cb5bd18e48c44edd6053337d3386d
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -86,7 +86,7 @@ Patch4:		%{name}-test-noproc.patch
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
-Patch8:		%{name}-fix-pointer-arithmetic.patch
+
 Patch9:		%{name}-switch.patch
 Patch10:	%{name}-invalid-void-use.patch
 URL:		http://dev.perl.org/perl5/
@@ -714,7 +714,7 @@ z biblioteki GNU gdbm.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
+
 %patch9 -p1
 %patch10 -p1
 

@@ -1,19 +1,19 @@
-# Module versions from Perl 5.18.0 distribution.
+# Module versions from Perl 5.18.1 distribution.
 Archive::Tar = 1.90
 Attribute::Handlers = 0.94
 CGI = 3.63
 CPAN = 2.00
 CPAN::Meta = 2.120921
 CPAN::Meta::YAML = 0.008
-Compress::Raw::Bzip2 = 2.060
-Compress::Raw::Zlib = 2.060
+Compress::Raw::Bzip2 = 2.06
+Compress::Raw::Zlib = 2.06
 Devel::PPPort = 3.20
 Devel::Peek = 1.11
 Digest = 1.17
 Digest::MD5 = 2.52
-Digest::SHA = 5.84
+Digest::SHA = 5.84_01
 Encode = 2.49
-ExtUtils::CBuilder = 0.280210
+ExtUtils::CBuilder = 0.28021
 ExtUtils::Command = 1.17
 ExtUtils::Embed = 1.30
 ExtUtils::Install = 1.59
@@ -43,7 +43,7 @@ Math::Complex = 1.59
 Math::Trig = 1.23
 Memoize = 1.03
 Module::Build = 0.4003
-Module::CoreList = 2.90
+Module::CoreList = 2.96
 Module::Load = 0.24
 Module::Load::Conditional = 0.54
 Module::Metadata = 1.000011
