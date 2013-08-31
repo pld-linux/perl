@@ -622,6 +622,7 @@ Summary:	Tools for manipulating files in the POD format
 Summary(pl.UTF-8):	Narzędzia do przetwarzania plików w formacie POD
 Group:		Applications
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
+Requires:	perl-Encode >= 2:2.49-%{ver}.%{rel}
 
 %description tools-pod
 Tools for manipulating files in the POD (Plain Old Documentation)
