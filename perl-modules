@@ -1,5 +1,4 @@
 # Module versions from Perl 5.18.2 distribution.
-# DO NOT REMOVE TRAILING '0' FROM Compress::Raw::* AND ExtUtils::CBuilder WITHOUT VERYFYING!
 Archive::Tar = 1.90
 Attribute::Handlers = 0.94
 CGI = 3.63

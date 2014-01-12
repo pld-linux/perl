@@ -911,8 +911,12 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	libnet)
 		v=$(awk '/^libnet /{print $2; exit}' cpan/libnet/Changes)
 		;;
+	# special cased since do eval on VERSION
+	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
+		v=$(%{__perl} -M$m -e "print version->parse(\$$m::VERSION)->numify")
+		;;
 	*)
-		v=$(%{__perl} -M$m -e "print $m->VERSION" )
+		v=$(%{__perl} -M$m -e "print \$$m::VERSION")
 		;;
 	esac
 	echo "$m = $v"
@@ -921,15 +925,19 @@ echo '# Non-straight named module versions from Perl %{ver} distribution.' > per
 for m in $(awk '!/^#/ && !/^$/{print $1"!"$2}' %{SOURCE4}); do
 	mn="${m##*!}"
 	mp="${m%%!*}"
-	v=$(%{__perl} -M$mn -e "print $mn->VERSION" )
+	case $m in
+	# special cased since do eval on VERSION
+	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
+		v=$(%{__perl} -M$mn -e "print version->parse(\$$mn::VERSION)->numify")
+		;;
+	*)
+		v=$(%{__perl} -M$mn -e "print \$$mn::VERSION")
+		;;
+	esac
 	echo "$mp	$mn = $v"
 done | LC_ALL=C sort >> perl-modules2
 
-# ExtUtils::CBuilder Compress::Raw::Bzip2 Compress::Raw::Zlib ignored due to VERSION from the loop above
-# is missing ending '0'
-grep -Ev '^([ 	]*$|[;#])' %{SOURCE3} | grep -Ev 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods1
-grep -Ev '^([ 	]*$|[;#])' perl-modules | grep -Ev 'ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib' > .mods2
-if ! cmp -s .mods1 .mods2; then
+if ! cmp -s %{SOURCE3} perl-modules; then
 	: %{SOURCE3} outdated with $(pwd)/perl-modules
 	exit 1
 fi
