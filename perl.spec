@@ -986,6 +986,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/constant.*
 %{perl_privlib}/diagnostics.pm
 %{_mandir}/man3/diagnostics.*
+%{perl_privlib}/experimental.pm
+%{_mandir}/man3/experimental.*
 %{perl_privlib}/feature.pm
 %{_mandir}/man3/feature.*
 %{perl_privlib}/fields.pm
@@ -1250,6 +1252,9 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/utf8.pm
 %{_mandir}/man3/utf8.*
 %{perl_privlib}/version.pm
+%dir %{perl_privlib}/version
+%{perl_privlib}/version/regex.pm
+%{perl_privlib}/version/vpp.pm
 %{_mandir}/man3/version*
 
 %{perl_archlib}/attributes.pm
