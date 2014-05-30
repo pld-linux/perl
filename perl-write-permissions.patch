@@ -18,3 +18,23 @@
          next unless $from =~ /\.pm$/;
          _autosplit($to,$autodir);
      }
+--- perl-5.20.0/dist/ExtUtils-Install/t/Install.t.orig	2014-05-29 13:11:07.961096445 +0200
++++ perl-5.20.0/dist/ExtUtils-Install/t/Install.t	2014-05-29 13:11:20.681234036 +0200
+@@ -237,7 +237,7 @@
+                          },
+     ]);
+ 
+-    ok( !writeable("$bigdir/DummyHard.pm"), 'DummyHard.pm not writeable' );
++    ok( writeable("$bigdir/DummyHard.pm"), 'DummyHard.pm not writeable' );
+ 
+     use File::Compare;
+     ok(compare("$bigdir/Dummy.pm", "$bigdir/DummyHard.pm"),
+@@ -261,7 +261,7 @@
+                          },
+     ]);
+ 
+-    ok( !writeable("$bigdir/DummyOrig.pm"), 'DummyOrig.pm not writeable' );
++    ok( writeable("$bigdir/DummyOrig.pm"), 'DummyOrig.pm not writeable' );
+     ok( !-l "$bigdir/Dummy.pm", 'Dummy.pm not a link' );
+     ok(compare("$bigdir/Dummy.pm", "$bigdir/DummyOrig.pm"),
+         "orig file should be different");
