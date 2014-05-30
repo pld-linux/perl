@@ -24,9 +24,9 @@
 # - change all "R/BR: perl" to one of perl-{base,modules,devel}
 #
 # NOTE
-# - modules in 5.18.0: http://search.cpan.org/~rjbs/perl-5.18.0/
+# - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.18.0
+%define		abi	5.20.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -44,8 +44,8 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.18.2
-%define		rel	1
+%define		ver	5.20.0
+%define		rel	0.1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -74,7 +74,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.gz
-# Source0-md5:	373f57ccc441dbc1812435f45ad20660
+# Source0-md5:	406ec049ebe3afcc80d9c76ec78ca4f8
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -447,14 +447,12 @@ Provides:	%perl_modversion Module::CoreList
 Provides:	%perl_modversion Module::Load
 Provides:	%perl_modversion Module::Load::Conditional
 Provides:	%perl_modversion Module::Metadata
-Provides:	%perl_modversion Module::Pluggable
 Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Package::Constants
 Provides:	%perl_modversion Params::Check
 Provides:	%perl_modversion Parse::CPAN::Meta
 Provides:	%perl_modversion Perl::OSType
 Provides:	%perl_modversion Pod::Escapes
-Provides:	%perl_modversion Pod::LaTeX
 Provides:	%perl_modversion Pod::Parser
 Provides:	%perl_modversion Pod::Simple
 Provides:	%perl_modversion Safe
@@ -467,7 +465,6 @@ Provides:	%perl_modversion Test::Harness
 Provides:	%perl_modversion Test::Simple
 Provides:	%perl_modversion Text::Balanced
 Provides:	%perl_modversion Text::ParseWords
-Provides:	%perl_modversion Text::Soundex
 Provides:	%perl_modversion Time::HiRes
 Provides:	%perl_modversion Time::Piece
 Provides:	%perl_modversion UNIVERSAL
@@ -503,14 +500,12 @@ Obsoletes:	perl-Module-CoreList < %perl_modverrel Module::CoreList 99
 Obsoletes:	perl-Module-Load < %perl_modverrel Module::Load 99
 Obsoletes:	perl-Module-Load-Conditional < %perl_modverrel Module::Load::Conditional 99
 Obsoletes:	perl-Module-Metadata < %perl_modverrel Module::Metadata 99
-Obsoletes:	perl-Module-Pluggable < %perl_modverrel Module::Pluggable 99
 Obsoletes:	perl-NEXT < %perl_modverrel NEXT 99
 Obsoletes:	perl-Package-Constants < %perl_modverrel Package::Constants 99
 Obsoletes:	perl-Params::Check < %perl_modverrel Params::Check 99
 Obsoletes:	perl-Parse-CPAN-Meta < %perl_modverrel Parse::CPAN::Meta 99
 Obsoletes:	perl-Perl-OSType < %perl_modverrel Perl::OSType 99
 Obsoletes:	perl-Pod-Escapes < %perl_modverrel Pod::Escapes 99
-Obsoletes:	perl-Pod-LaTeX < %perl_modverrel Pod::LaTeX 99
 Obsoletes:	perl-Pod-Parser < %perl_modverrel Pod::Parser 99
 Obsoletes:	perl-Pod-Simple < %perl_modverrel Pod::Simple 99
 Obsoletes:	perl-Safe < %perl_modverrel Safe 99
@@ -524,7 +519,6 @@ Obsoletes:	perl-Test-Harness < %perl_modverrel Test::Harness 99
 Obsoletes:	perl-Test-Simple < %perl_modverrel Test::Simple 99
 Obsoletes:	perl-Text-Balanced < %perl_modverrel Text::Balanced 99
 Obsoletes:	perl-Text-ParseWords < %perl_modverrel Text::ParseWords 99
-Obsoletes:	perl-Text-Soundex < %perl_modverrel Text::Soundex 99
 Obsoletes:	perl-Time-HiRes < %perl_modverrel Time::HiRes 99
 Obsoletes:	perl-Time-Piece < %perl_modverrel Time::Piece 99
 Obsoletes:	perl-UNIVERSAL < %perl_modverrel UNIVERSAL 99
@@ -850,7 +844,7 @@ WANTED='
 cd "$owd"
 
 ## remove man pages for other operating systems
-%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,ce,cygwin,dgux,dos}* \
+%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,ce,cygwin,dos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vms,vos,win32}*
 
@@ -909,7 +903,7 @@ echo '# Module versions from Perl %{ver} distribution.' > perl-modules
 for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	case $m in
 	libnet)
-		v=$(awk '/^libnet /{print $2; exit}' cpan/libnet/Changes)
+		v=$(awk '/VERSION/ {print $3; exit}' cpan/libnet/Makefile.PL | tr -d \',)
 		;;
 	# special cased since do eval on VERSION
 	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
@@ -947,7 +941,7 @@ if ! cmp -s %{SOURCE4} perl-modules2; then
 fi
 
 # remove empty .bs files
-find $RPM_BUILD_ROOT -name \*.bs -size 0 -print0 | xargs -0 %{__rm}
+#find $RPM_BUILD_ROOT -name \*.bs -size 0 -print0 | xargs -0 %{__rm}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1310,7 +1304,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Compress/Raw
 %dir %{perl_archlib}/auto/Compress/Raw/*/
 %attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/*/*.so
-%{perl_archlib}/auto/Compress/Raw/*/*.ix
 %{_mandir}/man3/Compress*
 
 %{perl_archlib}/Data
@@ -1396,12 +1389,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
 %{_mandir}/man3/Sys::*
 
-%{perl_archlib}/Text
-%dir %{perl_archlib}/auto/Text
-%dir %{perl_archlib}/auto/Text/Soundex
-%attr(755,root,root) %{perl_archlib}/auto/Text/Soundex/*.so
-#%{_mandir}/man3/Text::Soundex*	# listed later
-
 %{perl_privlib}/Time
 %{perl_archlib}/Time
 %dir %{perl_archlib}/auto/Time
@@ -1445,8 +1432,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/FindBin.*
 %{perl_privlib}/JSON
 %{_mandir}/man3/JSON*
-%{perl_privlib}/Log
-%{_mandir}/man3/Log::*
 %{perl_privlib}/Locale
 %{_mandir}/man3/Locale::*
 %{perl_privlib}/Memoize*
@@ -1461,8 +1446,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Net/*.pm
 %{perl_privlib}/Net/FTP
 %{_mandir}/man3/Net::*
-%{perl_privlib}/Object
-%{_mandir}/man3/Object::*
 %{perl_privlib}/Package
 %{_mandir}/man3/Package::*
 %{perl_privlib}/Params

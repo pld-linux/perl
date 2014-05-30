@@ -4,8 +4,8 @@
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.18/unknown'
--archlibexp='/usr/local/lib/perl5/5.18/unknown'
+-archlib='/usr/local/lib/perl5/5.20/unknown'
+-archlibexp='/usr/local/lib/perl5/5.20/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
@@ -42,8 +42,8 @@
  perl_static_inline='static'
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.18'
--privlibexp='/usr/local/lib/perl5/5.18'
+-privlib='/usr/local/lib/perl5/5.20'
+-privlibexp='/usr/local/lib/perl5/5.20'
  procselfexe=''
  prototype='undef'
 @@ -700,8 +691,6 @@
@@ -52,7 +52,7 @@
  sched_yield='sched_yield()'
 -scriptdir='/usr/local/bin'
 -scriptdirexp='/usr/local/bin'
- seedfunc='srand'
+ seedfunc='Perl_drand48_init'
  selectminbits='32'
  selecttype=int
 --- p/uconfig.h~	2012-08-03 19:35:26.000000000 +0200
@@ -60,7 +60,7 @@
 @@ -4735,5 +4735,5 @@
  
  /* Generated from:
-  * 2c9dc3f21d37b1665f6a59dfc6d79e6cb08bdf36a9c3e427d11d6b9ddffe2439 config_h.SH
-- * 26ab9b4aa382d32761cb91084ba59e7e4b190799502a43366ccb3d2f584783ca uconfig.sh
-+ * c1284f07832b8806da2457d27463e177f35a407920d144abb1a8533f5b7cd3b9 uconfig.sh
+  * 986d2349e078df67f02d5b9747b7fe65abb0d2875fb52a836138919aafe08545 config_h.SH
+- * dbc8d38ba52ae23e5423418bb3f56b1b6fcdaa82cf71ba0be3463e8221bfe0c0 uconfig.sh
++ * 47373608dbea89e81d56c421bde0da0969b5d7183ddff09ec5f65ab952ddc6cc uconfig.sh
   * ex: set ro: */
