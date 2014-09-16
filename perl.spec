@@ -45,7 +45,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.20.0
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -86,7 +86,7 @@ Patch4:		%{name}-test-noproc.patch
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
-
+Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch9:		%{name}-switch.patch
 Patch10:	%{name}-invalid-void-use.patch
 URL:		http://dev.perl.org/perl5/
@@ -711,7 +711,7 @@ z biblioteki GNU gdbm.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-
+%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 
