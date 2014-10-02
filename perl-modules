@@ -1,4 +1,4 @@
-# Module versions from Perl 5.20.0 distribution.
+# Module versions from Perl 5.20.1 distribution.
 Archive::Tar = 1.96
 Attribute::Handlers = 0.96
 CGI = 3.65
@@ -13,7 +13,7 @@ Digest = 1.17
 Digest::MD5 = 2.53
 Digest::SHA = 5.88
 Encode = 2.60
-ExtUtils::CBuilder = 0.280216
+ExtUtils::CBuilder = 0.280217
 ExtUtils::Command = 1.18
 ExtUtils::Embed = 1.32
 ExtUtils::Install = 1.67
@@ -43,7 +43,7 @@ Math::Complex = 1.59
 Math::Trig = 1.23
 Memoize = 1.03
 Module::Build = 0.4205
-Module::CoreList = 3.11
+Module::CoreList = 5.020001
 Module::Load = 0.32
 Module::Load::Conditional = 0.62
 Module::Metadata = 1.000019
@@ -79,4 +79,4 @@ autodie = 2.23
 bignum = 0.37
 libnet = 1.25
 parent = 0.228
-version = 0.9908
+version = 0.9909
