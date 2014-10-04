@@ -940,9 +940,6 @@ if ! cmp -s %{SOURCE4} perl-modules2; then
 	exit 1
 fi
 
-# remove empty .bs files
-#find $RPM_BUILD_ROOT -name \*.bs -size 0 -print0 | xargs -0 %{__rm}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
