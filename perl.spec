@@ -903,7 +903,7 @@ echo '# Module versions from Perl %{ver} distribution.' > perl-modules
 for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	case $m in
 	libnet)
-		v=$(awk '/VERSION/ {print $3; exit}' cpan/libnet/Makefile.PL | tr -d \',)
+		v=$(awk '/VERSION/ {print $3; exit}' cpan/libnet/Makefile.PL | tr -d "',")
 		;;
 	# special cased since do eval on VERSION
 	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
@@ -915,15 +915,12 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	esac
 	echo "$m = $v"
 done | LC_ALL=C sort >> perl-modules
+
 echo '# Non-straight named module versions from Perl %{ver} distribution.' > perl-modules2
 for m in $(awk '!/^#/ && !/^$/{print $1"!"$2}' %{SOURCE4}); do
 	mn="${m##*!}"
 	mp="${m%%!*}"
 	case $m in
-	# special cased since do eval on VERSION
-	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
-		v=$(%{__perl} -M$mn -e "print version->parse(\$$mn::VERSION)->numify")
-		;;
 	*)
 		v=$(%{__perl} -M$mn -e "print \$$mn::VERSION")
 		;;
