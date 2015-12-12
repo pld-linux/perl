@@ -26,7 +26,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.20.0
+%define		abi	5.22.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -44,7 +44,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.20.3
+%define		ver	5.22.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,8 +73,8 @@ Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.gz
-# Source0-md5:	d647d0ea5a7a8194c34759ab9f2610cd
+Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
+# Source0-md5:	ff0f09b17de426eff323426cb140ee79
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -361,7 +361,6 @@ Provides:	%perl_modversion ExtUtils::Install
 Provides:	%perl_modversion ExtUtils::MakeMaker
 Provides:	%perl_modversion ExtUtils::Manifest
 Provides:	%perl_modversion ExtUtils::ParseXS
-Provides:	%perl_modversion Module::Build
 Obsoletes:	perl-CPAN < %perl_modverrel CPAN 99
 Obsoletes:	perl-CPAN-Meta < %perl_modverrel CPAN::Meta 99
 Obsoletes:	perl-CPAN-Meta-YAML < %perl_modverrel CPAN::Meta::YAML 99
@@ -374,7 +373,6 @@ Obsoletes:	perl-ExtUtils-Install < %perl_modverrel ExtUtils::Install 99
 Obsoletes:	perl-ExtUtils-MakeMaker < %perl_modverrel ExtUtils::MakeMaker 99
 Obsoletes:	perl-ExtUtils-Manifest < %perl_modverrel ExtUtils::Manifest 99
 Obsoletes:	perl-ExtUtils-ParseXS < %perl_modverrel ExtUtils::ParseXS 99
-Obsoletes:	perl-Module-Build < %perl_modverrel Module::Build 99
 Obsoletes:	perl-lib-devel
 
 %description devel
@@ -422,7 +420,6 @@ Suggests:	perl-Version-Requirements
 Provides:	%perl_mod2version Scalar-List-Utils
 Provides:	%perl_modversion Archive::Tar
 Provides:	%perl_modversion Attribute::Handlers
-Provides:	%perl_modversion CGI
 Provides:	%perl_modversion Compress::Raw::Bzip2
 Provides:	%perl_modversion Compress::Raw::Zlib
 Provides:	%perl_modversion Digest
@@ -448,7 +445,6 @@ Provides:	%perl_modversion Module::Load
 Provides:	%perl_modversion Module::Load::Conditional
 Provides:	%perl_modversion Module::Metadata
 Provides:	%perl_modversion NEXT
-Provides:	%perl_modversion Package::Constants
 Provides:	%perl_modversion Params::Check
 Provides:	%perl_modversion Parse::CPAN::Meta
 Provides:	%perl_modversion Perl::OSType
@@ -475,7 +471,6 @@ Provides:	%perl_modversion libnet
 Provides:	%perl_modversion version
 Obsoletes:	perl-Archive-Tar < %perl_modverrel Archive::Tar 99
 Obsoletes:	perl-Attribute-Handlers < %perl_modverrel Attribute::Handlers 99
-Obsoletes:	perl-CGI < %perl_modverrel CGI 99
 Obsoletes:	perl-Compress-Raw-Bzip2 < %perl_modverrel Compress::Raw::Bzip2 99
 Obsoletes:	perl-Compress-Raw-Zlib < %perl_modverrel Compress::Raw::Zlib 99
 Obsoletes:	perl-Digest < %perl_modverrel Digest 99
@@ -501,7 +496,6 @@ Obsoletes:	perl-Module-Load < %perl_modverrel Module::Load 99
 Obsoletes:	perl-Module-Load-Conditional < %perl_modverrel Module::Load::Conditional 99
 Obsoletes:	perl-Module-Metadata < %perl_modverrel Module::Metadata 99
 Obsoletes:	perl-NEXT < %perl_modverrel NEXT 99
-Obsoletes:	perl-Package-Constants < %perl_modverrel Package::Constants 99
 Obsoletes:	perl-Params::Check < %perl_modverrel Params::Check 99
 Obsoletes:	perl-Parse-CPAN-Meta < %perl_modverrel Parse::CPAN::Meta 99
 Obsoletes:	perl-Perl-OSType < %perl_modverrel Perl::OSType 99
@@ -566,16 +560,12 @@ Requires:	%{name}-devel = %{epoch}:%{ver}-%{release}
 
 %description tools
 Various tools from the core Perl distribution:
-a2p		- Awk to Perl translator
-find2perl	- translate find command lines to Perl code
-psed, s2p	- a stream editor
+encguess	- guess encodning
 and others.
 
 %description tools -l pl.UTF-8
 Różne narzędzia z podstawowej dystrybucji Perla:
-a2p		- translator skryptów Awka do Perla
-find2perl	- tłumaczenie linii poleceń programu find na kod w Perlu
-psed, s2p	- edytor strumieniowy
+encguess	- odgaduje kodowanie znaków
 i inne.
 
 %package tools-devel
@@ -801,7 +791,6 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 ## use symlinks instead of hardlinks
 %{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/perl
 %{__ln_s} -f c2ph	$RPM_BUILD_ROOT%{_bindir}/pstruct
-%{__ln_s} -f psed	$RPM_BUILD_ROOT%{_bindir}/s2p
 
 ## install directory needed by packages dependant on TAP::Harness
 install -d $RPM_BUILD_ROOT%{perl_privlib}/TAP/Harness
@@ -859,7 +848,6 @@ echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/p
 
 ## We already have these *.pod files as man pages
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},version}/*.pod
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/pod/a2p.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
@@ -878,9 +866,6 @@ cp -p lib/unicore/{Blocks,CaseFolding,SpecialCasing}.txt $RPM_BUILD_ROOT%{perl_p
 # cpan tools, we use rpm instead of cpan for managing packages (some search tool would be nice to have but...)
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/cpan*
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/cpan*
-# others
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/config_data
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/config_data*
 
 owd=$(pwd)
 
@@ -1101,6 +1086,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
 %{_mandir}/man3/Socket.*
 
+%dir %{perl_archlib}/Sub
+%{perl_archlib}/Sub/Util.pm
+%{_mandir}/man3/Sub::Util*
+
 %dir %{perl_archlib}/Tie
 %dir %{perl_archlib}/Tie/Hash
 %{perl_archlib}/Tie/Hash/NamedCapture.pm
@@ -1159,11 +1148,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/CPAN*
 %{perl_privlib}/DB.*
 %{_mandir}/man3/DB.*
-
-%{perl_privlib}/inc
-%{_mandir}/man3/inc::latest*
-%{perl_privlib}/Module/Build*
-%{_mandir}/man3/Module::Build*
 
 %{perl_archlib}/O.*
 %{_mandir}/man3/O.*
@@ -1239,6 +1223,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/less.*
 %{perl_privlib}/locale.pm
 %{_mandir}/man3/locale.*
+%{perl_privlib}/meta_notation.pm
+%{perl_privlib}/ok.pm
+%{_mandir}/man3/ok.*
 %{perl_privlib}/open.pm
 %{_mandir}/man3/open.*
 %{perl_privlib}/sigtrap.pm
@@ -1415,8 +1402,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Attribute*
 %{perl_privlib}/Benchmark*
 %{_mandir}/man3/Benchmark*
-%{perl_privlib}/CGI*
-%{_mandir}/man3/CGI*
 %{perl_privlib}/Config
 %{_mandir}/man3/Config::*
 %{perl_privlib}/DirHandle*
@@ -1445,8 +1430,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Net/*.pm
 %{perl_privlib}/Net/FTP
 %{_mandir}/man3/Net::*
-%{perl_privlib}/Package
-%{_mandir}/man3/Package::*
 %{perl_privlib}/Params
 %{_mandir}/man3/Params::*
 %{perl_privlib}/Parse
@@ -1493,28 +1476,22 @@ rm -rf $RPM_BUILD_ROOT
 
 %files tools
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/a2p
-%{_mandir}/man1/a2p.*
 %attr(755,root,root) %{_bindir}/corelist
 %{_mandir}/man1/corelist.*
-%attr(755,root,root) %{_bindir}/find2perl
-%{_mandir}/man1/find2perl.*
+%attr(755,root,root) %{_bindir}/encguess
+%{_mandir}/man1/encguess.*
 %attr(755,root,root) %{_bindir}/instmodsh
 %{_mandir}/man1/instmodsh.*
 %attr(755,root,root) %{_bindir}/json_pp
 %{_mandir}/man1/json_pp.*
 %attr(755,root,root) %{_bindir}/libnetcfg
 %{_mandir}/man1/libnetcfg.*
-%attr(755,root,root) %{_bindir}/psed
-%{_mandir}/man1/psed.*
 %attr(755,root,root) %{_bindir}/ptar
 %{_mandir}/man1/ptar.*
 %attr(755,root,root) %{_bindir}/ptargrep
 %{_mandir}/man1/ptargrep.*
 %attr(755,root,root) %{_bindir}/ptardiff
 %{_mandir}/man1/ptardiff.*
-%attr(755,root,root) %{_bindir}/s2p
-%{_mandir}/man1/s2p.*
 %attr(755,root,root) %{_bindir}/shasum
 %{_mandir}/man1/shasum.*
 %attr(755,root,root) %{_bindir}/zipdetails

@@ -1,5 +1,5 @@
---- perl-5.12.0/dist/ExtUtils-Install/lib/ExtUtils/Install.pm.orig	2009-08-03 21:36:03.000000000 +0200
-+++ perl-5.12.0/dist/ExtUtils-Install/lib/ExtUtils/Install.pm	2009-09-12 10:07:06.181527344 +0200
+--- perl-5.12.0/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm.orig	2009-08-03 21:36:03.000000000 +0200
++++ perl-5.12.0/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm	2009-09-12 10:07:06.181527344 +0200
 @@ -813,7 +813,7 @@
                  utime($atime,$mtime + $Is_VMS,$targetfile) unless $dry_run>1;
  
@@ -18,8 +18,8 @@
          next unless $from =~ /\.pm$/;
          _autosplit($to,$autodir);
      }
---- perl-5.20.0/dist/ExtUtils-Install/t/Install.t.orig	2014-05-29 13:11:07.961096445 +0200
-+++ perl-5.20.0/dist/ExtUtils-Install/t/Install.t	2014-05-29 13:11:20.681234036 +0200
+--- perl-5.20.0/cpan/ExtUtils-Install/t/Install.t.orig	2014-05-29 13:11:07.961096445 +0200
++++ perl-5.20.0/cpan/ExtUtils-Install/t/Install.t	2014-05-29 13:11:20.681234036 +0200
 @@ -237,7 +237,7 @@
                           },
      ]);
