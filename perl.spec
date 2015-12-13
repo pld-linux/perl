@@ -83,6 +83,10 @@ Source4:	%{name}-modules2
 Patch2:		%{name}_580-errno_h-parsing.patch
 Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
+# Test regen.t checks result of this patch.
+# To run test manually run, from BUILD/perl-*:
+# LD_LIBRARY_PATH=$(pwd) ./preload ./libperl.so ./perl t/porting/regen.t
+# Make sure sha output from test matches sha from uconfig.h
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
