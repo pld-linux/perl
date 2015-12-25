@@ -1,7 +1,6 @@
 # Module versions from Perl 5.22.0 distribution.
 Archive::Tar = 2.04
 Attribute::Handlers = 0.97
-CGI = 4.21
 CPAN = 2.11
 CPAN::Meta = 2.150001
 CPAN::Meta::YAML = 0.012
@@ -42,7 +41,6 @@ Math::BigRat = 0.2608
 Math::Complex = 1.59
 Math::Trig = 1.23
 Memoize = 1.03
-Module::Build = 0.421
 Module::CoreList = 5.20150520
 Module::Load = 0.32
 Module::Load::Conditional = 0.64
