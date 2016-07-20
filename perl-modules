@@ -1,4 +1,4 @@
-# Module versions from Perl 5.22.0 distribution.
+# Module versions from Perl 5.22.2 distribution.
 Archive::Tar = 2.04
 Attribute::Handlers = 0.97
 CPAN = 2.11
@@ -41,7 +41,7 @@ Math::BigRat = 0.2608
 Math::Complex = 1.59
 Math::Trig = 1.23
 Memoize = 1.03
-Module::CoreList = 5.20150520
+Module::CoreList = 5.20160429
 Module::Load = 0.32
 Module::Load::Conditional = 0.64
 Module::Metadata = 1.000026
@@ -55,7 +55,7 @@ Pod::Parser = 1.63
 Pod::Simple = 3.29
 Safe = 2.39
 Socket = 2.018
-Storable = 2.53
+Storable = 2.53_01
 Sys::Syslog = 0.33
 Term::ANSIColor = 4.03
 Term::Cap = 1.15
