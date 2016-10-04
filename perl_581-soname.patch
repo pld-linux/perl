@@ -23,18 +23,18 @@
  		;;
      esac
 -	$spitshell >>$Makefile <<'!NO!SUBS!'
--$(LIBPERL): $& $(obj) $(DYNALOADER) $(LIBPERLEXPORT)
+-$(LIBPERL): $& $(perllib_objs) $(DYNALOADER) $(LIBPERLEXPORT)
 +	$spitshell >>Makefile <<!NO!SUBS!
 +LIBPERL_SONAME=\$(LIBPERL).$version
-+\$(LIBPERL): \$& \$(obj) \$(DYNALOADER) \$(LIBPERLEXPORT)
++\$(LIBPERL): \$& \$(perllib_objs) \$(DYNALOADER) \$(LIBPERLEXPORT)
  !NO!SUBS!
  	case "$useshrplib" in
  	true)
  		$spitshell >>$Makefile <<'!NO!SUBS!'
 -	rm -f $@
--	$(LD) -o $@ $(SHRPLDFLAGS) $(obj) $(DYNALOADER) $(libs)
+-	$(LD) -o $@ $(SHRPLDFLAGS) $(perllib_objs) $(DYNALOADER) $(libs)
 +	rm -f $@ $(LIBPERL_SONAME)
-+	$(LD) -o $(LIBPERL_SONAME) $(SHRPLDFLAGS) -Wl,-soname,$(LIBPERL_SONAME) $(SHRPLDFLAGS) $(obj) $(DYNALOADER) $(libs)
++	$(LD) -o $(LIBPERL_SONAME) $(SHRPLDFLAGS) -Wl,-soname,$(LIBPERL_SONAME) $(SHRPLDFLAGS) $(perllib_objs) $(DYNALOADER) $(libs)
 +	ln -s $(LIBPERL_SONAME) $@
  !NO!SUBS!
  		case "$osname" in
