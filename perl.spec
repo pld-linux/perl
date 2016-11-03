@@ -93,6 +93,7 @@ Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch9:		%{name}-switch.patch
 Patch10:	%{name}-invalid-void-use.patch
+Patch11:	%{name}-test-dst.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -708,6 +709,7 @@ z biblioteki GNU gdbm.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
@@ -723,8 +725,8 @@ chmod a+x runperl
 # Disabling test for now but should also check if
 # perl porting/checkcfgvar.pl --regen --default=undef
 # makes better sense.
-rm t/porting/checkcfgvar.t
-sed -i -e '/^t\/porting\/checkcfgvar\.t.*/d' MANIFEST
+%{__rm} t/porting/checkcfgvar.t
+%{__sed} -i -e '/^t\/porting\/checkcfgvar\.t.*/d' MANIFEST
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
@@ -803,7 +805,7 @@ install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Encode
 
 ## Fix lib
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so
-mv $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
+%{__mv} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}
 %{__ln_s} ../../../../libperl.so.%{abi} $RPM_BUILD_ROOT%{perl_archlib}/CORE/libperl.so.%{abi}
 %{__ln_s} libperl.so.%{abi} $RPM_BUILD_ROOT%{_libdir}/libperl.so
 # installed as non-executable - let rpm generate deps
@@ -876,14 +878,14 @@ owd=$(pwd)
 ## non-english man pages
 %{__bzip2} -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
+%{__mv} $RPM_BUILD_ROOT%{_mandir}/man1/perlcn.* $RPM_BUILD_ROOT%{_mandir}/zh_CN/man1
+%{__mv} $RPM_BUILD_ROOT%{_mandir}/man1/perljp.* $RPM_BUILD_ROOT%{_mandir}/ja/man1
+%{__mv} $RPM_BUILD_ROOT%{_mandir}/man1/perlko.* $RPM_BUILD_ROOT%{_mandir}/ko/man1
+%{__mv} $RPM_BUILD_ROOT%{_mandir}/man1/perltw.* $RPM_BUILD_ROOT%{_mandir}/zh_TW/man1
 
 # `perl -MExtUtils::Embed -e ldopts` includes -Wl,--as-needed
 # which is then forced upon anyone embedding perl.
-sed -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
+%{__sed} -i -e 's#^\(ld.*=.*\)-Wl,--as-needed\(.*\)#\1 \2#g' $RPM_BUILD_ROOT%{perl_archlib}/Config*.pl
 
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
 

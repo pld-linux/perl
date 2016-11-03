@@ -1,0 +1,11 @@
+--- perl-5.24.0/cpan/Time-Piece/t/02core_dst.t.orig	2016-03-01 13:33:01.000000000 +0100
++++ perl-5.24.0/cpan/Time-Piece/t/02core_dst.t	2016-11-03 20:14:33.394601523 +0100
+@@ -127,7 +127,7 @@
+ SKIP: {
+ 	skip "Extra tests for Linux, BSD only.", 6 unless $is_linux or $is_mac or $is_bsd;
+ 
+-    local $ENV{TZ} = "EST5EDT4";
++    local $ENV{TZ} = "EST5EDT4,M3.5.0,M10.5.0";
+     Time::Piece::_tzset();
+     my $lt = localtime(1373371631); #2013-07-09T12:07:11
+     cmp_ok(scalar($lt->tzoffset), 'eq', '-14400');
