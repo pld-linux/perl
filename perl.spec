@@ -45,7 +45,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.24.0
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -462,8 +462,10 @@ Provides:	%perl_modversion Sys::Syslog
 Provides:	%perl_modversion Term::ANSIColor
 Provides:	%perl_modversion Term::Cap
 Provides:	%perl_modversion Test
+Provides:	%perl_modversion Test::Builder::Tester
 Provides:	%perl_modversion Test::Harness
 Provides:	%perl_modversion Test::Simple
+Provides:	%perl_modversion Test::Tester
 Provides:	%perl_modversion Text::Balanced
 Provides:	%perl_modversion Text::ParseWords
 Provides:	%perl_modversion Time::HiRes
@@ -514,8 +516,10 @@ Obsoletes:	perl-Sys-Syslog < %perl_modverrel Sys::Syslog 99
 Obsoletes:	perl-Term-ANSIColor < %perl_modverrel Term::ANSIColor 99
 Obsoletes:	perl-Term-Cap < %perl_modverrel Term::Cap 99
 Obsoletes:	perl-Test < %perl_modverrel Test 99
+Obsoletes:	perl-Test-Builder-Tester < %perl_modverrel Test::Builder::Tester 99
 Obsoletes:	perl-Test-Harness < %perl_modverrel Test::Harness 99
 Obsoletes:	perl-Test-Simple < %perl_modverrel Test::Simple 99
+Obsoletes:	perl-Test-Tester < %perl_modverrel Test::Tester 99
 Obsoletes:	perl-Text-Balanced < %perl_modverrel Text::Balanced 99
 Obsoletes:	perl-Text-ParseWords < %perl_modverrel Text::ParseWords 99
 Obsoletes:	perl-Time-HiRes < %perl_modverrel Time::HiRes 99
