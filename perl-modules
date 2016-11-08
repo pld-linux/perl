@@ -64,6 +64,7 @@ Test::Builder::Tester = 1.28
 Test::Harness = 3.36
 Test::Simple = 1.001014
 Test::Tester = 0.114
+Test::use::ok = 0.16
 Text::Balanced = 2.03
 Text::ParseWords = 3.30
 Text::Tabs = 2013.0523
