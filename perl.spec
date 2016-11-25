@@ -45,7 +45,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.24.0
-%define		rel	3
+%define		rel	4
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -422,7 +422,6 @@ Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Suggests:	perl-Encode >= 1:2.44
 Suggests:	perl-Version-Requirements
-Provides:	%perl_mod2version Scalar-List-Utils
 Provides:	%perl_modversion Archive::Tar
 Provides:	%perl_modversion Attribute::Handlers
 Provides:	%perl_modversion Compress::Raw::Bzip2
@@ -511,7 +510,6 @@ Obsoletes:	perl-Pod-Escapes < %perl_modverrel Pod::Escapes 99
 Obsoletes:	perl-Pod-Parser < %perl_modverrel Pod::Parser 99
 Obsoletes:	perl-Pod-Simple < %perl_modverrel Pod::Simple 99
 Obsoletes:	perl-Safe < %perl_modverrel Safe 99
-Obsoletes:	perl-Scalar-List-Utils < %perl_mod2verrel Scalar-List-Utils 99
 Obsoletes:	perl-Storable < %perl_modverrel Storable 99
 Obsoletes:	perl-Sys-Syslog < %perl_modverrel Sys::Syslog 99
 Obsoletes:	perl-Term-ANSIColor < %perl_modverrel Term::ANSIColor 99
@@ -701,7 +699,28 @@ facilities provided by the GNU gdbm library.
 GDBM_File jest modułem, który umożliwia programom w Perlu korzystanie
 z biblioteki GNU gdbm.
 
-# Setting Version in GDBM_File resets the %version macro.  This hack works around it.
+%package Scalar-List-Utils
+Summary:	List::Util and Scalar::Util - selection of general-utility scalar subroutines
+Summary(pl.UTF-8):	List::Util i Scalar::Util - wybór procedur skalarnych ogólnego zastosowania
+# extra subst to change 1.4202 -> 1.42_02 (so that 1.45 can follow as next version)
+Version:	%(echo %{perl_mod2ver Scalar-List-Utils} | sed -re 's,\.([0-9]{2})([0-9]+)$,.\1_\2,')
+Release:	%{ver}.%{rel}
+Epoch:		0
+Group:		Development/Languages/Perl
+URL:		http://search.cpan.org/dist/Scalar-List-Utils/
+
+%description Scalar-List-Utils
+This package contains a selection of subroutines that people have
+expressed would be nice to have in the perl core, but the usage would
+not really be high enough to warrant the use of a keyword, and the
+size so small such that being individual extensions would be wasteful.
+
+%description Scalar-List-Utils -l pl.UTF-8
+Ten pakiet zawiera wybrane procedury, które według niektórych ludzi
+powinny znaleźć się w głównym pakiecie Perla, ale użyteczność nie jest
+zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
+
+# Setting Version in last %package resets the %version macro. This hack works around it.
 %define		version	%{ver}
 
 %prep
@@ -1142,6 +1161,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/GDBM_File.*
 %endif
 
+%files Scalar-List-Utils
+%defattr(644,root,root,755)
+%{perl_archlib}/List
+%{perl_archlib}/Scalar
+%dir %{perl_archlib}/auto/List
+%dir %{perl_archlib}/auto/List/*/
+%attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
+%{_mandir}/man3/Scalar::*
+%{_mandir}/man3/List::*
+
 %files devel
 %defattr(644,root,root,755)
 %doc doc-devel/*
@@ -1350,12 +1379,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
 %{_mandir}/man3/IPC::[MS]*
 
-%{perl_archlib}/List
-%dir %{perl_archlib}/auto/List
-%dir %{perl_archlib}/auto/List/*/
-%attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
-%{_mandir}/man3/List::*
-
 %{perl_privlib}/Math
 %{perl_archlib}/Math
 %dir %{perl_archlib}/auto/Math
@@ -1449,8 +1472,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Pod::*
 %{perl_privlib}/Safe*
 %{_mandir}/man3/Safe*
-%{perl_archlib}/Scalar
-%{_mandir}/man3/Scalar::*
 %{perl_privlib}/Search
 %{_mandir}/man3/Search::*
 %{perl_privlib}/SelfLoader.*
