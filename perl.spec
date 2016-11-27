@@ -11,7 +11,6 @@
 # - `diagnostics.pm' (perl-base) requires `perldiag.pod' (perl-perldoc)
 #   move .pod file to -base or S: perl-perldoc in -base
 # - what about "prove" (binary+manual)? (conflicts with standalone Test-Harness)
-# - patch MakeMaker to get rid of empty *.bs files (MM_Unix::dynamic_bs())
 # - consider separating C/XS development files (*.h, libperl.so)
 #   and perl development modules (like MakeMaker, Devel...)
 # - subpackage for perl-ExtUtils-MakeMaker, (instmodsh conflicts with
@@ -45,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.24.0
-%define		rel	4
+%define		rel	5
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -587,10 +586,8 @@ Requires:	%{name}-devel = %{epoch}:%{ver}-%{release}
 %description tools-devel
 Various tools from the core Perl distribution:
 c2ph, pstruct	- Dump C structures as generated from C<cc -g -S> stabs
-dprofpp		- display Perl profile data
 h2ph		- convert .h C header files to .ph Perl header files
 h2xs		- convert .h C header files to Perl extensions
-perlcc		- generate executables from Perl programs
 perlivp		- Perl Installation Verification Procedure
 pl2pm		- Rough tool to translate Perl4 .pl files to Perl5 .pm modules.
 splain		- force verbose warning diagnostics
@@ -599,12 +596,10 @@ splain		- force verbose warning diagnostics
 Różne narzędzia z podstawowej dystrybucji Perla:
 c2ph, pstruct	- zrzucanie struktur C w postaci generowanej z tablic
 		  symboli z cc -g -S
-dprofpp		- wyświetlanie perlowych danych profilujących
 h2ph		- konwerter plików nagłówkowych .h z C na perlowe pliki
 		  nagłówkowe .ph
 h2xs		- konwerter plików nagłówkowych .h z C na rozszerzenia
 		  Perla
-perlcc		- generator binarek z programów w Perlu
 perlivp		- procedura weryfikacji instalacji Perla
 pl2pm		- zgrubne narzędzie do tłumaczenia plików pl Perla 4 na
 		  moduły .pm Perla 5
@@ -878,14 +873,38 @@ echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/p
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 ## We already have these *.pod files as man pages
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Test,Net,Locale{,/Maketext},version}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Locale{,/Codes,/Maketext},Module,Net,Test,version}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
-install -d doc-base/{Getopt/Long,Switch} \
-	doc-devel/ExtUtils \
-	doc-modules/{Attribute/Handlers,Filter/Simple,I18N/LangTags,Locale/{Codes,Maketext},Memoize,NEXT} \
-	doc-modules/{Net/Ping,Term/ANSIColor,Test/Simple,Text/{Balanced,TabsWrap},Unicode/Collate,unicore}
+install -d doc-base/{DynaLoader,Errno,File/Glob,IO,PathTools} \
+	doc-devel/{Devel/Peek,ExtUtils/{CBuilder,ParseXS}} \
+	doc-modules/{Attribute/Handlers,Carp,Data/Dumper,Hash/Util/FieldHash,I18N/LangTags,Locale/Maketext} \
+	doc-modules/{Module/CoreList,Net/Ping,Safe,Search/Dict,Storable,Time/HiRes,base,if,mro,unicore}
+cp -p dist/Attribute-Handlers/Changes doc-modules/Attribute/Handlers
+cp -p dist/Carp/{Changes,README} doc-modules/Carp
+cp -p dist/Data-Dumper/{Changes,Todo} doc-modules/Data/Dumper
+cp -p dist/ExtUtils-CBuilder/Changes doc-devel/ExtUtils/CBuilder
+cp -p dist/ExtUtils-ParseXS/Changes doc-devel/ExtUtils/ParseXS
+cp -p dist/I18N-LangTags/{ChangeLog,README} doc-modules/I18N/LangTags
+cp -p dist/IO/{ChangeLog,README} doc-base/IO
+cp -p dist/Locale-Maketext/{ChangeLog,README} doc-modules/Locale/Maketext
+cp -p dist/Module-CoreList/{Changes,README} doc-modules/Module/CoreList
+cp -p dist/Net-Ping/Changes doc-modules/Net/Ping
+cp -p dist/PathTools/Changes doc-base/PathTools
+cp -p dist/Safe/{Changes,README} doc-modules/Safe
+cp -p dist/Search-Dict/Changes doc-modules/Search/Dict
+cp -p dist/Storable/{ChangeLog,README} doc-modules/Storable
+cp -p dist/Time-HiRes/Changes doc-modules/Time/HiRes
+cp -p dist/base/Changes doc-modules/base
+cp -p dist/if/Changes doc-modules/if
+cp -p ext/Devel-Peek/Changes doc-devel/Devel/Peek
+cp -p ext/DynaLoader/README doc-base/DynaLoader
+cp -p ext/Errno/ChangeLog doc-base/Errno
+cp -p ext/File-Glob/{Changes,TODO} doc-base/File/Glob
+cp -p ext/Hash-Util/Changes doc-modules/Hash/Util
+cp -p ext/Hash-Util-FieldHash/Changes doc-modules/Hash/Util/FieldHash
+cp -p ext/mro/Changes doc-modules/mro
 
 # needed only for tests
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Unicode/Collate/keys.txt
@@ -963,6 +982,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README AUTHORS
 %attr(755,root,root) %{_bindir}/perlthanks
+%{_mandir}/man1/perlthanks.1*
 
 %files libs
 %defattr(644,root,root,755)
@@ -987,139 +1007,173 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto
 
 ## pragmas
-%{perl_privlib}/_charnames*
-%{perl_privlib}/autodie*
-%{_mandir}/man3/autodie*
+%{perl_privlib}/_charnames.pm
+%{perl_privlib}/autodie.pm
+%{perl_privlib}/autodie
+%{_mandir}/man3/autodie*.3perl*
 %{perl_privlib}/base.pm
-%{_mandir}/man3/base.*
+%{_mandir}/man3/base.3perl*
 %{perl_privlib}/constant.pm
-%{_mandir}/man3/constant.*
+%{_mandir}/man3/constant.3perl*
 %{perl_privlib}/diagnostics.pm
-%{_mandir}/man3/diagnostics.*
+%{_mandir}/man3/diagnostics.3perl*
 %{perl_privlib}/experimental.pm
-%{_mandir}/man3/experimental.*
+%{_mandir}/man3/experimental.3perl*
 %{perl_privlib}/feature.pm
-%{_mandir}/man3/feature.*
+%{_mandir}/man3/feature.3perl*
 %{perl_privlib}/fields.pm
-%{_mandir}/man3/fields.*
+%{_mandir}/man3/fields.3perl*
 %{perl_privlib}/integer.pm
-%{_mandir}/man3/integer.*
-%{perl_privlib}/overload*
-%{_mandir}/man3/overload*
+%{_mandir}/man3/integer.3perl*
+%{perl_privlib}/overload.pm
+%{perl_privlib}/overload
+%{_mandir}/man3/overload.3perl*
+%{perl_privlib}/overloading.pm
+%{_mandir}/man3/overloading.3perl*
 %{perl_privlib}/parent.pm
-%{_mandir}/man3/parent.*
+%{_mandir}/man3/parent.3perl*
 %{perl_privlib}/sort.pm
-%{_mandir}/man3/sort.*
+%{_mandir}/man3/sort.3perl*
 %{perl_privlib}/strict.pm
-%{_mandir}/man3/strict.*
+%{_mandir}/man3/strict.3perl*
 %{perl_privlib}/subs.pm
-%{_mandir}/man3/subs.*
+%{_mandir}/man3/subs.3perl*
 %{perl_privlib}/vars.pm
-%{_mandir}/man3/vars.*
-%{perl_privlib}/warnings*
-%{_mandir}/man3/warnings*
+%{_mandir}/man3/vars.3perl*
+%{perl_privlib}/warnings.pm
+%{perl_privlib}/warnings
+%{_mandir}/man3/warnings*.3perl*
 
 %{perl_archlib}/lib.pm
-%{_mandir}/man3/lib.*
+%{_mandir}/man3/lib.3perl*
 
 ## arch-_IN_dependent modules
-%{perl_privlib}/Auto*
-%{_mandir}/man3/Auto*
-%{perl_privlib}/Carp*
-%{_mandir}/man3/Carp*
+%{perl_privlib}/AutoLoader.pm
+%{_mandir}/man3/AutoLoader.3perl*
+%{perl_privlib}/AutoSplit.pm
+%{_mandir}/man3/AutoSplit.3perl*
+%{perl_privlib}/Carp.pm
+%{perl_privlib}/Carp
+%{_mandir}/man3/Carp.3perl*
 %dir %{perl_privlib}/Class
-%{perl_privlib}/Class/Struct*
-%{_mandir}/man3/Class::Struct*
-%{perl_privlib}/Exporter*
-%{_mandir}/man3/Exporter*
-%{perl_privlib}/English*
-%{_mandir}/man3/English*
-%{perl_privlib}/Getopt*
-%{_mandir}/man3/Getopt*
-%{perl_privlib}/HTTP*
-%{_mandir}/man3/HTTP*
-# FIXME: README and Changes files
+%{perl_privlib}/Class/Struct.pm
+%{_mandir}/man3/Class::Struct.3perl*
+%{perl_privlib}/Exporter.pm
+%{perl_privlib}/Exporter
+%{_mandir}/man3/Exporter*.3perl*
+%{perl_privlib}/English.pm
+%{_mandir}/man3/English.3perl*
+%{perl_privlib}/Getopt
+%{_mandir}/man3/Getopt::Long.3perl*
+%{_mandir}/man3/Getopt::Std.3perl*
+%{perl_privlib}/HTTP
+%{_mandir}/man3/HTTP::Tiny.3perl*
 %{perl_privlib}/IPC
-%{_mandir}/man3/IPC::Open*
-%{_mandir}/man3/IPC::Cmd*
+%{_mandir}/man3/IPC::Cmd.3perl*
+%{_mandir}/man3/IPC::Open2.3perl*
+%{_mandir}/man3/IPC::Open3.3perl*
 %{perl_privlib}/SelectSaver.pm
-%{_mandir}/man3/SelectSaver.*
+%{_mandir}/man3/SelectSaver.3perl*
 %{perl_privlib}/Symbol.pm
-%{_mandir}/man3/Symbol.*
+%{_mandir}/man3/Symbol.3perl*
 %{perl_privlib}/Tie
-%{_mandir}/man3/Tie::*
-%{perl_privlib}/UNIVERSAL.*
-%{_mandir}/man3/UNIVERSAL.*
-%{perl_privlib}/XSLoader*
-%{_mandir}/man3/XSLoader*
+%{_mandir}/man3/Tie::Array.3perl*
+%{_mandir}/man3/Tie::File.3perl*
+%{_mandir}/man3/Tie::Handle.3perl*
+%{_mandir}/man3/Tie::Hash.3perl*
+%{_mandir}/man3/Tie::Memoize.3perl*
+%{_mandir}/man3/Tie::RefHash.3perl*
+%{_mandir}/man3/Tie::Scalar.3perl*
+%{_mandir}/man3/Tie::StdHandle.3perl*
+%{_mandir}/man3/Tie::SubstrHash.3perl*
+%{perl_privlib}/UNIVERSAL.pm
+%{_mandir}/man3/UNIVERSAL.3perl*
+%{perl_privlib}/XSLoader.pm
+%{_mandir}/man3/XSLoader.3perl*
 
 ## arch-dependent modules
-%{perl_archlib}/Config*
-%{_mandir}/man3/Config.*
-%{perl_archlib}/DynaLoader*
-%{_mandir}/man3/DynaLoader*
-%{perl_archlib}/Errno*
-%{_mandir}/man3/Errno*
+%{perl_archlib}/Config.pm
+%{perl_archlib}/Config_git.pl
+%{perl_archlib}/Config_heavy.pl
+%{_mandir}/man3/Config.3perl*
+%{perl_archlib}/DynaLoader.pm
+%{_mandir}/man3/DynaLoader.3perl*
+%{perl_archlib}/Errno.pm
+%{_mandir}/man3/Errno.3perl*
 
-%{perl_archlib}/Cwd.*
+%{perl_archlib}/Cwd.pm
 %dir %{perl_archlib}/auto/Cwd
-%attr(755,root,root) %{perl_archlib}/auto/Cwd/*.so
-#%{perl_archlib}/auto/Cwd/*.bs
-%{_mandir}/man3/Cwd.*
+%attr(755,root,root) %{perl_archlib}/auto/Cwd/Cwd.so
+%{_mandir}/man3/Cwd.3perl*
 
-%{perl_archlib}/Fcntl.*
+%{perl_archlib}/Fcntl.pm
 %dir %{perl_archlib}/auto/Fcntl
-%attr(755,root,root) %{perl_archlib}/auto/Fcntl/*.so
-#%{perl_archlib}/auto/Fcntl/*.bs
-%{_mandir}/man3/Fcntl.*
+%attr(755,root,root) %{perl_archlib}/auto/Fcntl/Fcntl.so
+%{_mandir}/man3/Fcntl.3perl*
 
-%{perl_privlib}/File*
+%{perl_privlib}/File
+%{perl_privlib}/FileCache.pm
+%{perl_privlib}/FileHandle.pm
 %{perl_archlib}/File
 %dir %{perl_archlib}/auto/File
-%dir %{perl_archlib}/auto/File/*/
-%attr(755,root,root) %{perl_archlib}/auto/File/*/*.so
-#%{perl_archlib}/auto/File/*/*.bs
-%{_mandir}/man3/File*
+%dir %{perl_archlib}/auto/File/DosGlob
+%attr(755,root,root) %{perl_archlib}/auto/File/DosGlob/DosGlob.so
+%dir %{perl_archlib}/auto/File/Glob
+%attr(755,root,root) %{perl_archlib}/auto/File/Glob/Glob.so
+%{_mandir}/man3/File::Basename.3perl*
+%{_mandir}/man3/File::Compare.3perl*
+%{_mandir}/man3/File::Copy.3perl*
+%{_mandir}/man3/File::DosGlob.3perl*
+%{_mandir}/man3/File::Fetch.3perl*
+%{_mandir}/man3/File::Find.3perl*
+%{_mandir}/man3/File::Glob.3perl*
+%{_mandir}/man3/File::GlobMapper.3perl*
+%{_mandir}/man3/File::Path.3perl*
+%{_mandir}/man3/File::Spec*.3perl*
+%{_mandir}/man3/File::Temp.3perl*
+%{_mandir}/man3/File::stat.3perl*
+%{_mandir}/man3/FileCache.3perl*
+%{_mandir}/man3/FileHandle.3perl*
 
 %{perl_privlib}/IO
-%{perl_archlib}/IO*
+%{perl_archlib}/IO.pm
+%{perl_archlib}/IO
 %dir %{perl_archlib}/auto/IO
-%attr(755,root,root) %{perl_archlib}/auto/IO/*.so
-%{_mandir}/man3/IO*
+%attr(755,root,root) %{perl_archlib}/auto/IO/IO.so
+%{_mandir}/man3/IO*.3perl*
 
-%{perl_archlib}/Opcode.*
+%{perl_archlib}/Opcode.pm
 %dir %{perl_archlib}/auto/Opcode
-%attr(755,root,root) %{perl_archlib}/auto/Opcode/*.so
-%{_mandir}/man3/Opcode.*
+%attr(755,root,root) %{perl_archlib}/auto/Opcode/Opcode.so
+%{_mandir}/man3/Opcode.3perl*
 
 %dir %{perl_privlib}/Perl
 %{perl_privlib}/Perl/OSType.pm
-%{_mandir}/man3/Perl::OSType*
+%{_mandir}/man3/Perl::OSType.3perl*
 
-%{perl_privlib}/PerlIO*
+%{perl_privlib}/PerlIO.pm
+%{perl_privlib}/PerlIO
 %{perl_archlib}/PerlIO
 %dir %{perl_archlib}/auto/PerlIO
-%dir %{perl_archlib}/auto/PerlIO/*/
-%attr(755,root,root) %{perl_archlib}/auto/PerlIO/*/*.so
-%{_mandir}/man3/PerlIO*
+%dir %{perl_archlib}/auto/PerlIO/encoding
+%attr(755,root,root) %{perl_archlib}/auto/PerlIO/encoding/encoding.so
+%dir %{perl_archlib}/auto/PerlIO/mmap
+%attr(755,root,root) %{perl_archlib}/auto/PerlIO/mmap/mmap.so
+%dir %{perl_archlib}/auto/PerlIO/scalar
+%attr(755,root,root) %{perl_archlib}/auto/PerlIO/scalar/scalar.so
+%dir %{perl_archlib}/auto/PerlIO/via
+%attr(755,root,root) %{perl_archlib}/auto/PerlIO/via/via.so
+%{_mandir}/man3/PerlIO*.3perl*
 
-%{perl_archlib}/POSIX*
+%{perl_archlib}/POSIX.pm
 %dir %{perl_archlib}/auto/POSIX
-%attr(755,root,root) %{perl_archlib}/auto/POSIX/*.so
-#%{perl_archlib}/auto/POSIX/*.al
-#%{perl_archlib}/auto/POSIX/*.ix
-#%{perl_archlib}/auto/POSIX/SigAction
-#%{perl_archlib}/auto/POSIX/SigRt
-%{_mandir}/man3/POSIX.*
+%attr(755,root,root) %{perl_archlib}/auto/POSIX/POSIX.so
+%{_mandir}/man3/POSIX.3perl*
 
-%{perl_archlib}/Socket.*
+%{perl_archlib}/Socket.pm
 %dir %{perl_archlib}/auto/Socket
-%attr(755,root,root) %{perl_archlib}/auto/Socket/*.so
-%{_mandir}/man3/Socket.*
-
-%dir %{perl_archlib}/Sub
-%{perl_archlib}/Sub/Util.pm
-%{_mandir}/man3/Sub::Util*
+%attr(755,root,root) %{perl_archlib}/auto/Socket/Socket.so
+%{_mandir}/man3/Socket.3perl*
 
 %dir %{perl_archlib}/Tie
 %dir %{perl_archlib}/Tie/Hash
@@ -1127,86 +1181,75 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/Tie
 %dir %{perl_archlib}/auto/Tie/Hash
 %dir %{perl_archlib}/auto/Tie/Hash/NamedCapture
-%attr(755,root,root) %{perl_archlib}/auto/Tie/Hash/NamedCapture/*.so
+%attr(755,root,root) %{perl_archlib}/auto/Tie/Hash/NamedCapture/NamedCapture.so
+%{_mandir}/man3/Tie::Hash::NamedCapture.3perl*
 
 %{perl_archlib}/arybase.pm
 %dir %{perl_archlib}/auto/arybase
-%attr(755,root,root) %{perl_archlib}/auto/arybase/*.so
-%{_mandir}/man3/arybase.*
-
-%files Encode
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/enc2xs
-%attr(755,root,root) %{_bindir}/piconv
-# for dependant packages (ex. perl-Encode-Locale)
-%{perl_vendorlib}/Encode
-# FIXME: *.h to devel(?), check out the use for *.e2x files
-%{perl_privlib}/Encode
-%{perl_archlib}/Encode*
-%{perl_archlib}/encoding.pm
-%dir %{perl_archlib}/auto/Encode
-%dir %{perl_archlib}/auto/Encode/*/
-%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
-%{_mandir}/man1/enc2xs.*
-%{_mandir}/man1/piconv.*
-%{_mandir}/man3/Encode*
-%{_mandir}/man3/encoding.*
-
-%if %{with gdbm}
-%files GDBM_File
-%defattr(644,root,root,755)
-%{perl_archlib}/GDBM_File.*
-%dir %{perl_archlib}/auto/GDBM_File
-%attr(755,root,root) %{perl_archlib}/auto/GDBM_File/*.so
-%{_mandir}/man3/GDBM_File.*
-%endif
-
-%files Scalar-List-Utils
-%defattr(644,root,root,755)
-%{perl_archlib}/List
-%{perl_archlib}/Scalar
-%dir %{perl_archlib}/auto/List
-%dir %{perl_archlib}/auto/List/*/
-%attr(755,root,root) %{perl_archlib}/auto/List/*/*.so
-%{_mandir}/man3/Scalar::*
-%{_mandir}/man3/List::*
+%attr(755,root,root) %{perl_archlib}/auto/arybase/arybase.so
+%{_mandir}/man3/arybase.3perl*
 
 %files devel
 %defattr(644,root,root,755)
 %doc doc-devel/*
 %attr(755,root,root) %{_libdir}/libperl.so
 %{perl_archlib}/CORE/*.h
-%{_mandir}/man3/CORE*
+%{_mandir}/man3/CORE.3perl*
 
 %{perl_privlib}/App/Cpan.pm
-%{_mandir}/man3/App::Cpan*
-# FIXME: Changes file to _docdir (and rm MANIFEST.SKIP?)
+%{_mandir}/man3/App::Cpan.3perl*
 %{perl_privlib}/ExtUtils
-%{_mandir}/man3/ExtUtils*
+%{_mandir}/man3/ExtUtils::CBuilder*.3perl*
+%{_mandir}/man3/ExtUtils::Command*.3perl*
+%{_mandir}/man3/ExtUtils::Constant*.3perl*
+%{_mandir}/man3/ExtUtils::Embed.3perl*
+%{_mandir}/man3/ExtUtils::Install.3perl*
+%{_mandir}/man3/ExtUtils::Installed.3perl*
+%{_mandir}/man3/ExtUtils::Liblist.3perl*
+%{_mandir}/man3/ExtUtils::MM*.3perl*
+%{_mandir}/man3/ExtUtils::MY.3perl*
+%{_mandir}/man3/ExtUtils::MakeMaker*.3perl*
+%{_mandir}/man3/ExtUtils::Manifest.3perl*
+%{_mandir}/man3/ExtUtils::Miniperl.3perl*
+%{_mandir}/man3/ExtUtils::Mkbootstrap.3perl*
+%{_mandir}/man3/ExtUtils::Mksymlists.3perl*
+%{_mandir}/man3/ExtUtils::Packlist.3perl*
+%{_mandir}/man3/ExtUtils::ParseXS*.3perl*
+%{_mandir}/man3/ExtUtils::Typemaps*.3perl*
+%{_mandir}/man3/ExtUtils::XSSymSet.3perl*
+%{_mandir}/man3/ExtUtils::testlib.3perl*
 %{perl_privlib}/vmsish.pm
-%{_mandir}/man3/vmsish.*
-%{perl_privlib}/CPAN*
-%{_mandir}/man3/CPAN*
-%{perl_privlib}/DB.*
-%{_mandir}/man3/DB.*
+%{_mandir}/man3/vmsish.3perl*
+%{perl_privlib}/CPAN.pm
+%{perl_privlib}/CPAN
+%{_mandir}/man3/CPAN.3perl*
+%{_mandir}/man3/CPAN::API::HOWTO.3perl*
+%{_mandir}/man3/CPAN::Debug.3perl*
+%{_mandir}/man3/CPAN::Distroprefs.3perl*
+%{_mandir}/man3/CPAN::FirstTime.3perl*
+%{_mandir}/man3/CPAN::HandleConfig.3perl*
+%{_mandir}/man3/CPAN::Kwalify.3perl*
+%{_mandir}/man3/CPAN::Meta*.3perl*
+%{_mandir}/man3/CPAN::Mirrors.3perl*
+%{_mandir}/man3/CPAN::Nox.3perl*
+%{_mandir}/man3/CPAN::Plugin*.3perl*
+%{_mandir}/man3/CPAN::Queue.3perl*
+%{_mandir}/man3/CPAN::Tarzip.3perl*
+%{_mandir}/man3/CPAN::Version.3perl*
+%{perl_privlib}/DB.pm
+%{_mandir}/man3/DB.3perl*
 
-%{perl_archlib}/O.*
-%{_mandir}/man3/O.*
+%{perl_archlib}/O.pm
+%{_mandir}/man3/O.3perl*
 
 %{perl_privlib}/Devel
 %{perl_archlib}/Devel
 %dir %{perl_archlib}/auto/Devel
-%dir %{perl_archlib}/auto/Devel/*/
-%attr(755,root,root) %{perl_archlib}/auto/Devel/*/*.so
-#%{perl_archlib}/auto/Devel/*/*.bs
-%{_mandir}/man3/Devel::*
-
-#%{perl_archlib}/XS
-#%dir %{perl_archlib}/auto/XS
-#%dir %{perl_archlib}/auto/XS/*/
-#%attr(755,root,root) %{perl_archlib}/auto/XS/*/*.so
-#%{perl_archlib}/auto/XS/*/*.bs
-#%{_mandir}/man3/XS::*
+%dir %{perl_archlib}/auto/Devel/Peek
+%attr(755,root,root) %{perl_archlib}/auto/Devel/Peek/Peek.so
+%{_mandir}/man3/Devel::PPPort.3perl*
+%{_mandir}/man3/Devel::Peek.3perl*
+%{_mandir}/man3/Devel::SelfStubber.3perl*
 
 %files doc-pod
 %defattr(644,root,root,755)
@@ -1217,23 +1260,32 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc-reference
 %defattr(644,root,root,755)
-%{_mandir}/man1/perl[5aefghlmnoprstuvwx]*
-%{_mandir}/man1/perlbo*
-%{_mandir}/man1/perlcall.*
-%{_mandir}/man1/perlcheat.*
-%{_mandir}/man1/perlclib.*
-%{_mandir}/man1/perlcommunity.*
-#%{_mandir}/man1/perlcompile.*
-%{_mandir}/man1/perld[!o]*
-%{_mandir}/man1/perli[!v]*
+%{_mandir}/man1/perl[5aefghlmnoprsuvwx]*.1*
+%{_mandir}/man1/perlbook.1*
+%{_mandir}/man1/perlboot.1*
+%{_mandir}/man1/perlbot.1*
+%{_mandir}/man1/perlcall.1*
+%{_mandir}/man1/perlcheat.1*
+%{_mandir}/man1/perlclib.1*
+%{_mandir}/man1/perlcommunity.1*
+%{_mandir}/man1/perld[!o]*.1*
+%{_mandir}/man1/perli[!v]*.1*
+%{_mandir}/man1/perlthrtut.1*
+%{_mandir}/man1/perltie.1*
+%{_mandir}/man1/perltoc.1*
+%{_mandir}/man1/perltodo.1*
+%{_mandir}/man1/perltooc.1*
+%{_mandir}/man1/perltoot.1*
+%{_mandir}/man1/perltrap.1*
+%{_mandir}/man1/perltru64.1*
 
 %lang(fi) %{_mandir}/fi/man1/perlbook.1*
 %lang(pl) %{_mandir}/pl/man1/perldata.1*
 %lang(pl) %{_mandir}/pl/man1/perl[fors]*.1*
-%lang(zh_CN) %{_mandir}/zh_CN/man1/perlcn.*
-%lang(ja) %{_mandir}/ja/man1/perljp.*
-%lang(ko) %{_mandir}/ko/man1/perlko.*
-%lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/perlcn.1*
+%lang(ja) %{_mandir}/ja/man1/perljp.1*
+%lang(ko) %{_mandir}/ko/man1/perlko.1*
+%lang(zh_TW) %{_mandir}/zh_TW/man1/perltw.1*
 
 %files modules
 %defattr(644,root,root,755)
@@ -1243,63 +1295,64 @@ rm -rf $RPM_BUILD_ROOT
 
 ## pragmas
 %{perl_privlib}/autouse.pm
-%{_mandir}/man3/autouse.*
+%{_mandir}/man3/autouse.3perl*
 %{perl_privlib}/big*.pm
-%{_mandir}/man3/big*
+%{_mandir}/man3/big*.3perl*
 %{perl_privlib}/blib.pm
-%{_mandir}/man3/blib.*
+%{_mandir}/man3/blib.3perl*
 %{perl_privlib}/bytes.pm
-%{_mandir}/man3/bytes.*
+%{_mandir}/man3/bytes.3perl*
 %{perl_privlib}/charnames.pm
-%{_mandir}/man3/charnames.*
-%{perl_privlib}/deprecate*.pm
-%{_mandir}/man3/deprecate*
+%{_mandir}/man3/charnames.3perl*
+%{perl_privlib}/deprecate.pm
+%{_mandir}/man3/deprecate.3perl*
 %{perl_privlib}/encoding
-%{_mandir}/man3/encoding::*
+%{_mandir}/man3/encoding::warnings.3perl*
 %{perl_privlib}/filetest.pm
-%{_mandir}/man3/filetest.*
+%{_mandir}/man3/filetest.3perl*
 %{perl_privlib}/if.pm
-%{_mandir}/man3/if.*
+%{_mandir}/man3/if.3perl*
 %{perl_privlib}/less.pm
-%{_mandir}/man3/less.*
+%{_mandir}/man3/less.3perl*
 %{perl_privlib}/locale.pm
-%{_mandir}/man3/locale.*
+%{_mandir}/man3/locale.3perl*
 %{perl_privlib}/meta_notation.pm
 %{perl_privlib}/ok.pm
-%{_mandir}/man3/ok.*
+%{_mandir}/man3/ok.3perl*
 %{perl_privlib}/open.pm
-%{_mandir}/man3/open.*
+%{_mandir}/man3/open.3perl*
 %{perl_privlib}/sigtrap.pm
-%{_mandir}/man3/sigtrap.*
+%{_mandir}/man3/sigtrap.3perl*
 %{perl_privlib}/utf8.pm
-%{_mandir}/man3/utf8.*
+%{_mandir}/man3/utf8.3perl*
 %{perl_privlib}/version.pm
 %dir %{perl_privlib}/version
 %{perl_privlib}/version/regex.pm
-%{_mandir}/man3/version*
+%{_mandir}/man3/version*.3perl*
 
 %{perl_archlib}/attributes.pm
 %dir %{perl_archlib}/auto/attributes
-%attr(755,root,root) %{perl_archlib}/auto/attributes/*.so
-%{_mandir}/man3/attributes.*
+%attr(755,root,root) %{perl_archlib}/auto/attributes/attributes.so
+%{_mandir}/man3/attributes.3perl*
 %{perl_archlib}/mro.pm
 %dir %{perl_archlib}/auto/mro
-%attr(755,root,root) %{perl_archlib}/auto/mro/*.so
-%{_mandir}/man3/mro.*
+%attr(755,root,root) %{perl_archlib}/auto/mro/mro.so
+%{_mandir}/man3/mro.3perl*
 %{perl_archlib}/re.pm
 %dir %{perl_archlib}/auto/re
-%attr(755,root,root) %{perl_archlib}/auto/re/*.so
-%{_mandir}/man3/re.*
+%attr(755,root,root) %{perl_archlib}/auto/re/re.so
+%{_mandir}/man3/re.3perl*
 %{perl_archlib}/ops.pm
-%{_mandir}/man3/ops.*
+%{_mandir}/man3/ops.3perl*
 
 %if %{with threads}
-%{perl_archlib}/threads*
+%{perl_archlib}/threads.pm
+%{perl_archlib}/threads
 %dir %{perl_archlib}/auto/threads
 %dir %{perl_archlib}/auto/threads/shared
-%attr(755,root,root) %{perl_archlib}/auto/threads/*.so
-%attr(755,root,root) %{perl_archlib}/auto/threads/shared/*.so
-%{_mandir}/man3/t*
+%attr(755,root,root) %{perl_archlib}/auto/threads/threads.so
+%attr(755,root,root) %{perl_archlib}/auto/threads/shared/shared.so
+%{_mandir}/man3/threads*.3perl*
 %endif
 
 ## old *.pl files
@@ -1321,180 +1374,288 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/B
 %{perl_archlib}/B.pm
 %dir %{perl_archlib}/auto/B
-%attr(755,root,root) %{perl_archlib}/auto/B/*.so
-%{_mandir}/man3/B[.:]*
+%attr(755,root,root) %{perl_archlib}/auto/B/B.so
+%{_mandir}/man3/B.3perl*
+%{_mandir}/man3/B::*.3perl*
 
 %{perl_privlib}/Compress
 %{perl_archlib}/Compress
 %dir %{perl_archlib}/auto/Compress
 %dir %{perl_archlib}/auto/Compress/Raw
-%dir %{perl_archlib}/auto/Compress/Raw/*/
-%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/*/*.so
-%{_mandir}/man3/Compress*
+%dir %{perl_archlib}/auto/Compress/Raw/Bzip2
+%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Bzip2/Bzip2.so
+%dir %{perl_archlib}/auto/Compress/Raw/Zlib
+%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Zlib/Zlib.so
+%{_mandir}/man3/Compress::Raw::Bzip2.3perl*
+%{_mandir}/man3/Compress::Raw::Zlib.3perl*
+%{_mandir}/man3/Compress::Zlib.3perl*
 
 %{perl_archlib}/Data
 %dir %{perl_archlib}/auto/Data
 %dir %{perl_archlib}/auto/Data/Dumper
-%attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/*.so
-%{_mandir}/man3/Data*
+%attr(755,root,root) %{perl_archlib}/auto/Data/Dumper/Dumper.so
+%{_mandir}/man3/Data::Dumper.3perl*
 
-%{perl_privlib}/Digest*
+%{perl_privlib}/Digest.pm
+%{perl_privlib}/Digest
 %{perl_archlib}/Digest
 %dir %{perl_archlib}/auto/Digest
-%dir %{perl_archlib}/auto/Digest/*/
-%attr(755,root,root) %{perl_archlib}/auto/Digest/*/*.so
-%{_mandir}/man3/Digest*
+%dir %{perl_archlib}/auto/Digest/MD5
+%attr(755,root,root) %{perl_archlib}/auto/Digest/MD5/MD5.so
+%dir %{perl_archlib}/auto/Digest/SHA
+%attr(755,root,root) %{perl_archlib}/auto/Digest/SHA/SHA.so
+%{_mandir}/man3/Digest.3perl*
+%{_mandir}/man3/Digest::MD5.3perl*
+%{_mandir}/man3/Digest::SHA.3perl*
+%{_mandir}/man3/Digest::base.3perl*
+%{_mandir}/man3/Digest::file.3perl*
 
-# FIXME: Changes file
-%{perl_privlib}/DBM_Filter*
-%{_mandir}/man3/DBM_Filter*
+%{perl_privlib}/DBM_Filter.pm
+%{perl_privlib}/DBM_Filter
+%{_mandir}/man3/DBM_Filter*.3perl*
 
-# FIXME: README and Changes files
 %{perl_privlib}/Filter
 %{perl_archlib}/Filter
 %dir %{perl_archlib}/auto/Filter
 %dir %{perl_archlib}/auto/Filter/Util
 %dir %{perl_archlib}/auto/Filter/Util/Call
-%attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/*.so
-%{_mandir}/man3/Filter*
+%attr(755,root,root) %{perl_archlib}/auto/Filter/Util/Call/Call.so
+%{_mandir}/man3/Filter::Simple.3perl*
+%{_mandir}/man3/Filter::Util::Call.3perl*
 
 %{perl_archlib}/Hash
 %dir %{perl_archlib}/auto/Hash
-%dir %{perl_archlib}/auto/Hash/*/
-%dir %{perl_archlib}/auto/Hash/*/FieldHash
-%attr(755,root,root) %{perl_archlib}/auto/Hash/*/*.so
-%attr(755,root,root) %{perl_archlib}/auto/Hash/*/*/*.so
-%{_mandir}/man3/Hash::*
+%dir %{perl_archlib}/auto/Hash/Util
+%dir %{perl_archlib}/auto/Hash/Util/FieldHash
+%attr(755,root,root) %{perl_archlib}/auto/Hash/Util/Util.so
+%attr(755,root,root) %{perl_archlib}/auto/Hash/Util/FieldHash/FieldHash.so
+%{_mandir}/man3/Hash::Util*.3perl*
 
 %{perl_privlib}/I18N
 %{perl_archlib}/I18N
 %dir %{perl_archlib}/auto/I18N
-%dir %{perl_archlib}/auto/I18N/*/
-%attr(755,root,root) %{perl_archlib}/auto/I18N/*/*.so
-%{_mandir}/man3/I18N::*
+%dir %{perl_archlib}/auto/I18N/Langinfo
+%attr(755,root,root) %{perl_archlib}/auto/I18N/Langinfo/Langinfo.so
+%{_mandir}/man3/I18N::Collate.3perl*
+%{_mandir}/man3/I18N::LangTags*.3perl*
+%{_mandir}/man3/I18N::Langinfo.3perl*
 
 %{perl_archlib}/IPC
 %dir %{perl_archlib}/auto/IPC
-%dir %{perl_archlib}/auto/IPC/*/
-%attr(755,root,root) %{perl_archlib}/auto/IPC/*/*.so
-%{_mandir}/man3/IPC::[MS]*
+%dir %{perl_archlib}/auto/IPC/SysV
+%attr(755,root,root) %{perl_archlib}/auto/IPC/SysV/SysV.so
+%{_mandir}/man3/IPC::Msg.3perl*
+%{_mandir}/man3/IPC::Semaphore.3perl*
+%{_mandir}/man3/IPC::SharedMem.3perl*
+%{_mandir}/man3/IPC::SysV.3perl*
 
 %{perl_privlib}/Math
 %{perl_archlib}/Math
 %dir %{perl_archlib}/auto/Math
-%dir %{perl_archlib}/auto/Math/*/
-%dir %{perl_archlib}/auto/Math/*/*/
-%attr(755,root,root) %{perl_archlib}/auto/Math/*/*/*.so
-%{_mandir}/man3/Math::*
+%dir %{perl_archlib}/auto/Math/BigInt
+%dir %{perl_archlib}/auto/Math/BigInt/FastCalc
+%attr(755,root,root) %{perl_archlib}/auto/Math/BigInt/FastCalc/FastCalc.so
+%{_mandir}/man3/Math::BigFloat.3perl*
+%{_mandir}/man3/Math::BigInt*.3perl*
+%{_mandir}/man3/Math::BigRat.3perl*
+%{_mandir}/man3/Math::Complex.3perl*
+%{_mandir}/man3/Math::Trig.3perl*
 
 %{perl_archlib}/MIME
 %dir %{perl_archlib}/auto/MIME
 %dir %{perl_archlib}/auto/MIME/Base64
-%attr(755,root,root) %{perl_archlib}/auto/MIME/Base64/*.so
-%{_mandir}/man3/MIME::*
+%attr(755,root,root) %{perl_archlib}/auto/MIME/Base64/Base64.so
+%{_mandir}/man3/MIME::Base64.3perl*
+%{_mandir}/man3/MIME::QuotedPrint.3perl*
 
-%{perl_archlib}/SDBM_File.*
+%{perl_archlib}/SDBM_File.pm
 %dir %{perl_archlib}/auto/SDBM_File
-%attr(755,root,root) %{perl_archlib}/auto/SDBM_File/*.so
-%{_mandir}/man3/SDBM_File.*
+%attr(755,root,root) %{perl_archlib}/auto/SDBM_File/SDBM_File.so
+%{_mandir}/man3/SDBM_File.3perl*
 
-%{perl_archlib}/Storable.*
+%{perl_archlib}/Storable.pm
 %dir %{perl_archlib}/auto/Storable
-%attr(755,root,root) %{perl_archlib}/auto/Storable/*.so
-%{_mandir}/man3/Storable.*
+%attr(755,root,root) %{perl_archlib}/auto/Storable/Storable.so
+%{_mandir}/man3/Storable.3perl*
 
 %{perl_archlib}/Sys
 %dir %{perl_archlib}/auto/Sys
-%dir %{perl_archlib}/auto/Sys/*/
-%attr(755,root,root) %{perl_archlib}/auto/Sys/*/*.so
-%{_mandir}/man3/Sys::*
+%dir %{perl_archlib}/auto/Sys/Hostname
+%attr(755,root,root) %{perl_archlib}/auto/Sys/Hostname/Hostname.so
+%dir %{perl_archlib}/auto/Sys/Syslog
+%attr(755,root,root) %{perl_archlib}/auto/Sys/Syslog/Syslog.so
+%{_mandir}/man3/Sys::Hostname.3perl*
+%{_mandir}/man3/Sys::Syslog.3perl*
 
 %{perl_privlib}/Time
 %{perl_archlib}/Time
 %dir %{perl_archlib}/auto/Time
-%dir %{perl_archlib}/auto/Time/*/
-%attr(755,root,root) %{perl_archlib}/auto/Time/*/*.so
-%{_mandir}/man3/Time::*
+%dir %{perl_archlib}/auto/Time/HiRes
+%attr(755,root,root) %{perl_archlib}/auto/Time/HiRes/HiRes.so
+%dir %{perl_archlib}/auto/Time/Piece
+%attr(755,root,root) %{perl_archlib}/auto/Time/Piece/Piece.so
+%{_mandir}/man3/Time::HiRes.3perl*
+%{_mandir}/man3/Time::Local.3perl*
+%{_mandir}/man3/Time::Piece.3perl*
+%{_mandir}/man3/Time::Seconds.3perl*
+%{_mandir}/man3/Time::gmtime.3perl*
+%{_mandir}/man3/Time::localtime.3perl*
+%{_mandir}/man3/Time::tm.3perl*
 
 %dir %{perl_privlib}/Unicode
-%{perl_privlib}/Unicode/*.pm
 %{perl_privlib}/Unicode/Collate
+%{perl_privlib}/Unicode/UCD.pm
 %{perl_archlib}/Unicode
 %dir %{perl_archlib}/auto/Unicode
-%dir %{perl_archlib}/auto/Unicode/*
-%attr(755,root,root) %{perl_archlib}/auto/Unicode/*/*.so
-%{_mandir}/man3/Unicode::*
+%dir %{perl_archlib}/auto/Unicode/Collate
+%attr(755,root,root) %{perl_archlib}/auto/Unicode/Collate/Collate.so
+%dir %{perl_archlib}/auto/Unicode/Normalize
+%attr(755,root,root) %{perl_archlib}/auto/Unicode/Normalize/Normalize.so
+%{_mandir}/man3/Unicode::Collate*.3perl*
+%{_mandir}/man3/Unicode::Normalize.3perl*
+%{_mandir}/man3/Unicode::UCD.3perl*
 
-%{perl_privlib}/AnyDBM*
-%{_mandir}/man3/AnyDBM*
+%{perl_privlib}/AnyDBM_File.pm
+%{_mandir}/man3/AnyDBM_File.3perl*
 %dir %{perl_privlib}/App
-%{perl_privlib}/App/Prove*
-%{_mandir}/man3/App::Prove*
-%{perl_privlib}/Archive*
-%{_mandir}/man3/Archive*
+%{perl_privlib}/App/Prove.pm
+%{perl_privlib}/App/Prove
+%{_mandir}/man3/App::Prove*.3perl*
+%{perl_privlib}/Archive
+%{_mandir}/man3/Archive::Tar*.3perl*
 %{perl_privlib}/Attribute
-%{_mandir}/man3/Attribute*
-%{perl_privlib}/Benchmark*
-%{_mandir}/man3/Benchmark*
+%{_mandir}/man3/Attribute::Handlers.3perl*
+%{perl_privlib}/Benchmark.pm
+%{_mandir}/man3/Benchmark.3perl*
 %{perl_privlib}/Config
-%{_mandir}/man3/Config::*
-%{perl_privlib}/DirHandle*
-%{_mandir}/man3/DirHandle*
-%{perl_privlib}/Dumpvalue.*
-%{_mandir}/man3/Dumpvalue.*
-%{perl_privlib}/Env.*
-%{_mandir}/man3/Env.*
-%{perl_privlib}/Fatal.*
-%{_mandir}/man3/Fatal.*
-%{perl_privlib}/FindBin.*
-%{_mandir}/man3/FindBin.*
+%{_mandir}/man3/Config::Extensions.3perl*
+%{_mandir}/man3/Config::Perl::V.3perl*
+%{perl_privlib}/DirHandle.pm
+%{_mandir}/man3/DirHandle.3perl*
+%{perl_privlib}/Dumpvalue.pm
+%{_mandir}/man3/Dumpvalue.3perl*
+%{perl_privlib}/Env.pm
+%{_mandir}/man3/Env.3perl*
+%{perl_privlib}/Fatal.pm
+%{_mandir}/man3/Fatal.3perl*
+%{perl_privlib}/FindBin.pm
+%{_mandir}/man3/FindBin.3perl*
 %{perl_privlib}/JSON
-%{_mandir}/man3/JSON*
+%{_mandir}/man3/JSON::PP*.3perl*
 %{perl_privlib}/Locale
-%{_mandir}/man3/Locale::*
-%{perl_privlib}/Memoize*
-%{_mandir}/man3/Memoize*
+%{_mandir}/man3/Locale::Codes*.3perl*
+%{_mandir}/man3/Locale::Country.3perl*
+%{_mandir}/man3/Locale::Currency.3perl*
+%{_mandir}/man3/Locale::Language.3perl*
+%{_mandir}/man3/Locale::Maketext*.3perl*
+%{_mandir}/man3/Locale::Script.3perl*
+%{perl_privlib}/Memoize
+%{perl_privlib}/Memoize.pm
+%{_mandir}/man3/Memoize*.3perl*
 %dir %{perl_privlib}/Module
-%{perl_privlib}/Module/[CLMP]*
-%{_mandir}/man3/Module::[CLMP]*
+%{perl_privlib}/Module/CoreList.pm
+%{perl_privlib}/Module/CoreList
+%{perl_privlib}/Module/Load.pm
+%{perl_privlib}/Module/Load
+%{perl_privlib}/Module/Loaded.pm
+%{perl_privlib}/Module/Metadata.pm
+%{_mandir}/man3/Module::CoreList*.3perl*
+%{_mandir}/man3/Module::Load*.3perl*
+%{_mandir}/man3/Module::Metadata.3perl*
 %{perl_privlib}/NEXT.pm
-%{_mandir}/man3/NEXT*
-# FIXME: README and Changes files
+%{_mandir}/man3/NEXT.3perl*
 %dir %{perl_privlib}/Net
-%{perl_privlib}/Net/*.pm
+%{perl_privlib}/Net/Cmd.pm
+%{perl_privlib}/Net/Config.pm
+%{perl_privlib}/Net/Domain.pm
+%{perl_privlib}/Net/FTP.pm
 %{perl_privlib}/Net/FTP
-%{_mandir}/man3/Net::*
+%{perl_privlib}/Net/NNTP.pm
+%{perl_privlib}/Net/Netrc.pm
+%{perl_privlib}/Net/POP3.pm
+%{perl_privlib}/Net/Ping.pm
+%{perl_privlib}/Net/SMTP.pm
+%{perl_privlib}/Net/Time.pm
+%{perl_privlib}/Net/hostent.pm
+%{perl_privlib}/Net/netent.pm
+%{perl_privlib}/Net/protoent.pm
+%{perl_privlib}/Net/servent.pm
+%{_mandir}/man3/Net::Cmd.3perl*
+%{_mandir}/man3/Net::Config.3perl*
+%{_mandir}/man3/Net::Domain.3perl*
+%{_mandir}/man3/Net::FTP.3perl*
+%{_mandir}/man3/Net::NNTP.3perl*
+%{_mandir}/man3/Net::Netrc.3perl*
+%{_mandir}/man3/Net::POP3.3perl*
+%{_mandir}/man3/Net::Ping.3perl*
+%{_mandir}/man3/Net::SMTP.3perl*
+%{_mandir}/man3/Net::Time.3perl*
+%{_mandir}/man3/Net::hostent.3perl*
+%{_mandir}/man3/Net::libnetFAQ.3perl*
+%{_mandir}/man3/Net::netent.3perl*
+%{_mandir}/man3/Net::protoent.3perl*
+%{_mandir}/man3/Net::servent.3perl*
 %{perl_privlib}/Params
-%{_mandir}/man3/Params::*
+%{_mandir}/man3/Params::Check.3perl*
 %{perl_privlib}/Parse
-%{_mandir}/man3/Parse::CPAN::Meta*
+%{_mandir}/man3/Parse::CPAN::Meta.3perl*
 %{perl_privlib}/Pod
-%{_mandir}/man3/Pod::*
-%{perl_privlib}/Safe*
-%{_mandir}/man3/Safe*
+%{_mandir}/man3/Pod::Checker.3perl*
+%{_mandir}/man3/Pod::Escapes.3perl*
+%{_mandir}/man3/Pod::Find.3perl*
+%{_mandir}/man3/Pod::Html.3perl*
+%{_mandir}/man3/Pod::InputObjects.3perl*
+%{_mandir}/man3/Pod::Man.3perl*
+%{_mandir}/man3/Pod::ParseLink.3perl*
+%{_mandir}/man3/Pod::ParseUtils.3perl*
+%{_mandir}/man3/Pod::Parser.3perl*
+%{_mandir}/man3/Pod::Perldoc*.3perl*
+%{_mandir}/man3/Pod::PlainText.3perl*
+%{_mandir}/man3/Pod::Select.3perl*
+%{_mandir}/man3/Pod::Simple*.3perl*
+%{_mandir}/man3/Pod::Text*.3perl*
+%{_mandir}/man3/Pod::Usage.3perl*
+%{perl_privlib}/Safe.pm
+%{_mandir}/man3/Safe.3perl*
 %{perl_privlib}/Search
-%{_mandir}/man3/Search::*
-%{perl_privlib}/SelfLoader.*
-%{_mandir}/man3/SelfLoader.*
-#%{perl_privlib}/Shell.*
-#%{_mandir}/man3/Shell.*
+%{_mandir}/man3/Search::Dict.3perl*
+%{perl_privlib}/SelfLoader.pm
+%{_mandir}/man3/SelfLoader.3perl*
 %{perl_privlib}/TAP
-%{_mandir}/man3/TAP::*
-# FIXME: README and Changes files
+%{_mandir}/man3/TAP::Base.3perl*
+%{_mandir}/man3/TAP::Formatter::*.3perl*
+%{_mandir}/man3/TAP::Harness*.3perl*
+%{_mandir}/man3/TAP::Object.3perl*
+%{_mandir}/man3/TAP::Parser*.3perl*
 %{perl_privlib}/Term
-%{_mandir}/man3/Term::*
-# FIXME: README and Changes files
-%{perl_privlib}/Test*
-%{_mandir}/man3/Test*
+%{_mandir}/man3/Term::ANSIColor.3perl*
+%{_mandir}/man3/Term::Cap.3perl*
+%{_mandir}/man3/Term::Complete.3perl*
+%{_mandir}/man3/Term::ReadLine.3perl*
+%{perl_privlib}/Test.pm
+%{perl_privlib}/Test
+%{_mandir}/man3/Test.3perl*
+%{_mandir}/man3/Test::Builder*.3perl*
+%{_mandir}/man3/Test::Harness.3perl*
+%{_mandir}/man3/Test::More.3perl*
+%{_mandir}/man3/Test::Simple.3perl*
+%{_mandir}/man3/Test::Tester*.3perl*
+%{_mandir}/man3/Test::Tutorial.3perl*
+%{_mandir}/man3/Test::use::ok.3perl*
 %{perl_privlib}/Text
-%{_mandir}/man3/Text::*
+%{_mandir}/man3/Text::Abbrev.3perl*
+%{_mandir}/man3/Text::Balanced.3perl*
+%{_mandir}/man3/Text::ParseWords.3perl*
+%{_mandir}/man3/Text::Tabs.3perl*
+%{_mandir}/man3/Text::Wrap.3perl*
 %if %{with threads}
-%{perl_privlib}/Thread*
-%{_mandir}/man3/Thread*
+%{perl_privlib}/Thread.pm
+%{perl_privlib}/Thread
+%{_mandir}/man3/Thread*.3perl*
 %endif
-# FIXME: README and Changes files
 %{perl_privlib}/User
-%{_mandir}/man3/User::*
+%{_mandir}/man3/User::grent.3perl*
+%{_mandir}/man3/User::pwent.3perl*
 
 %files perldoc
 %defattr(644,root,root,755)
@@ -1504,57 +1665,53 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/pod/perldiag.pod
 %{perl_privlib}/pod/perlfaq*.pod
 %{perl_privlib}/pod/perlfunc.pod
-%{_mandir}/man1/perldoc.*
+%{_mandir}/man1/perldoc.1*
 
 %files tools
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/corelist
-%{_mandir}/man1/corelist.*
+%{_mandir}/man1/corelist.1*
 %attr(755,root,root) %{_bindir}/encguess
-%{_mandir}/man1/encguess.*
+%{_mandir}/man1/encguess.1*
 %attr(755,root,root) %{_bindir}/instmodsh
-%{_mandir}/man1/instmodsh.*
+%{_mandir}/man1/instmodsh.1*
 %attr(755,root,root) %{_bindir}/json_pp
-%{_mandir}/man1/json_pp.*
+%{_mandir}/man1/json_pp.1*
 %attr(755,root,root) %{_bindir}/libnetcfg
-%{_mandir}/man1/libnetcfg.*
+%{_mandir}/man1/libnetcfg.1*
 %attr(755,root,root) %{_bindir}/ptar
-%{_mandir}/man1/ptar.*
+%{_mandir}/man1/ptar.1*
 %attr(755,root,root) %{_bindir}/ptargrep
-%{_mandir}/man1/ptargrep.*
+%{_mandir}/man1/ptargrep.1*
 %attr(755,root,root) %{_bindir}/ptardiff
-%{_mandir}/man1/ptardiff.*
+%{_mandir}/man1/ptardiff.1*
 %attr(755,root,root) %{_bindir}/shasum
-%{_mandir}/man1/shasum.*
+%{_mandir}/man1/shasum.1*
 %attr(755,root,root) %{_bindir}/zipdetails
-%{_mandir}/man1/zipdetails.1.gz
+%{_mandir}/man1/zipdetails.1*
 
 %files tools-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/perlbug
-%{_mandir}/man1/perlbug.*
+%{_mandir}/man1/perlbug.1*
 %attr(755,root,root) %{_bindir}/c2ph
 %attr(755,root,root) %{_bindir}/pstruct
-%{_mandir}/man1/c2ph.*
-%{_mandir}/man1/pstruct.*
-#%attr(755,root,root) %{_bindir}/dprofpp
-#%{_mandir}/man1/dprofpp.*
+%{_mandir}/man1/c2ph.1*
+%{_mandir}/man1/pstruct.1*
 %attr(755,root,root) %{_bindir}/h2ph
-%{_mandir}/man1/h2ph.*
+%{_mandir}/man1/h2ph.1*
 %attr(755,root,root) %{_bindir}/h2xs
-%{_mandir}/man1/h2xs.*
-#%attr(755,root,root) %{_bindir}/perlcc
-#%{_mandir}/man1/perlcc.*
+%{_mandir}/man1/h2xs.1*
 %attr(755,root,root) %{_bindir}/perlivp
-%{_mandir}/man1/perlivp.*
+%{_mandir}/man1/perlivp.1*
 %attr(755,root,root) %{_bindir}/pl2pm
-%{_mandir}/man1/pl2pm.*
+%{_mandir}/man1/pl2pm.1*
 %attr(755,root,root) %{_bindir}/prove
-%{_mandir}/man1/prove.*
+%{_mandir}/man1/prove.1*
 %attr(755,root,root) %{_bindir}/splain
-%{_mandir}/man1/splain.*
+%{_mandir}/man1/splain.1*
 %attr(755,root,root) %{_bindir}/xsubpp
-%{_mandir}/man1/xsubpp.*
+%{_mandir}/man1/xsubpp.1*
 
 %files tools-pod
 %defattr(644,root,root,755)
@@ -1567,3 +1724,43 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.micro
 %attr(755,root,root) %{_bindir}/microperl
 %endif
+
+%files Encode
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/enc2xs
+%attr(755,root,root) %{_bindir}/piconv
+# for dependant packages (ex. perl-Encode-Locale)
+%{perl_vendorlib}/Encode
+# FIXME: *.h to devel(?), check out the use for *.e2x files
+%{perl_privlib}/Encode
+%{perl_archlib}/Encode*
+%{perl_archlib}/encoding.pm
+%dir %{perl_archlib}/auto/Encode
+%dir %{perl_archlib}/auto/Encode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
+%{_mandir}/man1/enc2xs.1*
+%{_mandir}/man1/piconv.1*
+%{_mandir}/man3/Encode*.3perl*
+%{_mandir}/man3/encoding.3perl*
+
+%if %{with gdbm}
+%files GDBM_File
+%defattr(644,root,root,755)
+%{perl_archlib}/GDBM_File.pm
+%dir %{perl_archlib}/auto/GDBM_File
+%attr(755,root,root) %{perl_archlib}/auto/GDBM_File/GDBM_File.so
+%{_mandir}/man3/GDBM_File.3perl*
+%endif
+
+%files Scalar-List-Utils
+%defattr(644,root,root,755)
+%{perl_archlib}/List
+%{perl_archlib}/Scalar
+%dir %{perl_archlib}/Sub
+%{perl_archlib}/Sub/Util.pm
+%dir %{perl_archlib}/auto/List
+%dir %{perl_archlib}/auto/List/Util
+%attr(755,root,root) %{perl_archlib}/auto/List/Util/Util.so
+%{_mandir}/man3/Scalar::Util.3perl*
+%{_mandir}/man3/List::Util*.3perl*
+%{_mandir}/man3/Sub::Util.3perl*
