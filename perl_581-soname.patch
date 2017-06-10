@@ -23,10 +23,10 @@
  		;;
      esac
 -	$spitshell >>$Makefile <<'!NO!SUBS!'
--$(LIBPERL): $& $(perllib_objs) $(DYNALOADER) $(LIBPERLEXPORT)
+-$(LIBPERL): $& $(perllib_dep) $(DYNALOADER) $(LIBPERLEXPORT)
 +	$spitshell >>Makefile <<!NO!SUBS!
 +LIBPERL_SONAME=\$(LIBPERL).$version
-+\$(LIBPERL): \$& \$(perllib_objs) \$(DYNALOADER) \$(LIBPERLEXPORT)
++\$(LIBPERL): \$& \$(perllib_dep) \$(DYNALOADER) \$(LIBPERLEXPORT)
  !NO!SUBS!
  	case "$useshrplib" in
  	true)

@@ -25,7 +25,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.24.0
+%define		abi	5.26.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +43,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.24.1
+%define		ver	5.26.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -72,8 +72,8 @@ Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.bz2
-# Source0-md5:	178ee0e8fa544dbc76d99cf041e2c9f0
+Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
+# Source0-md5:	8c6995718e4cb62188f0d5e3488cd91f
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -90,7 +90,6 @@ Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
-Patch9:		%{name}-switch.patch
 Patch10:	%{name}-invalid-void-use.patch
 Patch11:	%{name}-test-dst.patch
 URL:		http://dev.perl.org/perl5/
@@ -585,7 +584,6 @@ Requires:	%{name}-devel = %{epoch}:%{ver}-%{release}
 
 %description tools-devel
 Various tools from the core Perl distribution:
-c2ph, pstruct	- Dump C structures as generated from C<cc -g -S> stabs
 h2ph		- convert .h C header files to .ph Perl header files
 h2xs		- convert .h C header files to Perl extensions
 perlivp		- Perl Installation Verification Procedure
@@ -594,8 +592,6 @@ splain		- force verbose warning diagnostics
 
 %description tools-devel -l pl.UTF-8
 Różne narzędzia z podstawowej dystrybucji Perla:
-c2ph, pstruct	- zrzucanie struktur C w postaci generowanej z tablic
-		  symboli z cc -g -S
 h2ph		- konwerter plików nagłówkowych .h z C na perlowe pliki
 		  nagłówkowe .ph
 h2xs		- konwerter plików nagłówkowych .h z C na rozszerzenia
@@ -727,7 +723,6 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 
@@ -816,7 +811,6 @@ install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## use symlinks instead of hardlinks
 %{__ln_s} -f perl%{ver}	$RPM_BUILD_ROOT%{_bindir}/perl
-%{__ln_s} -f c2ph	$RPM_BUILD_ROOT%{_bindir}/pstruct
 
 ## install directory needed by packages dependant on TAP::Harness
 install -d $RPM_BUILD_ROOT%{perl_privlib}/TAP/Harness
@@ -1540,6 +1534,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Fatal.3perl*
 %{perl_privlib}/FindBin.pm
 %{_mandir}/man3/FindBin.3perl*
+%{_mandir}/man3/Internals.3perl*
 %{perl_privlib}/JSON
 %{_mandir}/man3/JSON::PP*.3perl*
 %{perl_privlib}/Locale
@@ -1632,6 +1627,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Term::Cap.3perl*
 %{_mandir}/man3/Term::Complete.3perl*
 %{_mandir}/man3/Term::ReadLine.3perl*
+
 %{perl_privlib}/Test.pm
 %{perl_privlib}/Test
 %{_mandir}/man3/Test.3perl*
@@ -1642,6 +1638,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Test::Tester*.3perl*
 %{_mandir}/man3/Test::Tutorial.3perl*
 %{_mandir}/man3/Test::use::ok.3perl*
+
+%{perl_privlib}/Test2.pm
+%{perl_privlib}/Test2
+%{_mandir}/man3/Test2.3perl*
+%{_mandir}/man3/Test2::API*.3perl*
+%{_mandir}/man3/Test2::Event*.3perl*
+%{_mandir}/man3/Test2::Formatter*.3perl*
+%{_mandir}/man3/Test2::Hub*.3perl*
+%{_mandir}/man3/Test2::IPC*.3perl*
+%{_mandir}/man3/Test2::Tools::Tiny.3perl*
+%{_mandir}/man3/Test2::Transition.3perl*
+%{_mandir}/man3/Test2::Util*.3perl*
+
 %{perl_privlib}/Text
 %{_mandir}/man3/Text::Abbrev.3perl*
 %{_mandir}/man3/Text::Balanced.3perl*
@@ -1694,10 +1703,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/perlbug
 %{_mandir}/man1/perlbug.1*
-%attr(755,root,root) %{_bindir}/c2ph
-%attr(755,root,root) %{_bindir}/pstruct
-%{_mandir}/man1/c2ph.1*
-%{_mandir}/man1/pstruct.1*
 %attr(755,root,root) %{_bindir}/h2ph
 %{_mandir}/man1/h2ph.1*
 %attr(755,root,root) %{_bindir}/h2xs
