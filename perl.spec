@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.26.0
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -424,6 +424,7 @@ Provides:	%perl_modversion Archive::Tar
 Provides:	%perl_modversion Attribute::Handlers
 Provides:	%perl_modversion Compress::Raw::Bzip2
 Provides:	%perl_modversion Compress::Raw::Zlib
+Provides:	%perl_modversion Compress::Zlib
 Provides:	%perl_modversion Digest
 Provides:	%perl_modversion Digest::MD5
 Provides:	%perl_modversion Digest::SHA
@@ -478,6 +479,7 @@ Obsoletes:	perl-Archive-Tar < %perl_modverrel Archive::Tar 99
 Obsoletes:	perl-Attribute-Handlers < %perl_modverrel Attribute::Handlers 99
 Obsoletes:	perl-Compress-Raw-Bzip2 < %perl_modverrel Compress::Raw::Bzip2 99
 Obsoletes:	perl-Compress-Raw-Zlib < %perl_modverrel Compress::Raw::Zlib 99
+Obsoletes:	perl-Compress-Zlib < %perl_modverrel Compress::Zlib 99
 Obsoletes:	perl-Digest < %perl_modverrel Digest 99
 Obsoletes:	perl-Digest-MD5 < %perl_modverrel Digest::MD5 99
 Obsoletes:	perl-Digest-SHA < %perl_modverrel Digest::SHA 99
