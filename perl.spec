@@ -314,6 +314,7 @@ Provides:	%perl_modversion File::Temp
 Provides:	%perl_modversion IO
 Provides:	%perl_modversion IO::Zlib
 Provides:	%perl_modversion IPC::Cmd
+Provides:	%perl_modversion Perl::OSType
 Provides:	%perl_modversion PerlIO::via::QuotedPrint
 Provides:	%perl_modversion Socket
 Provides:	%perl_modversion Tie::File
@@ -326,6 +327,7 @@ Obsoletes:	perl-IO-Compress < %perl_mod2verrel IO-Compress 99
 Obsoletes:	perl-IO-Zlib < %perl_modverrel IO::Zlib 99
 Obsoletes:	perl-IPC-Cmd < %perl_modverrel IPC::Cmd 99
 Obsoletes:	perl-PathTools < %perl_mod2verrel PathTools 99
+Obsoletes:	perl-Perl-OSType < %perl_modverrel Perl::OSType 99
 Obsoletes:	perl-PerlIO-via-QuotedPrint < %perl_modverrel PerlIO::via::QuotedPrint 99
 Obsoletes:	perl-Socket < %perl_modverrel Socket 99
 Obsoletes:	perl-Tie-File < %perl_modverrel Tie::File 99
@@ -450,7 +452,6 @@ Provides:	%perl_modversion Module::Metadata
 Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Params::Check
 Provides:	%perl_modversion Parse::CPAN::Meta
-Provides:	%perl_modversion Perl::OSType
 Provides:	%perl_modversion Pod::Escapes
 Provides:	%perl_modversion Pod::Parser
 Provides:	%perl_modversion Pod::Simple
@@ -505,7 +506,6 @@ Obsoletes:	perl-Module-Metadata < %perl_modverrel Module::Metadata 99
 Obsoletes:	perl-NEXT < %perl_modverrel NEXT 99
 Obsoletes:	perl-Params::Check < %perl_modverrel Params::Check 99
 Obsoletes:	perl-Parse-CPAN-Meta < %perl_modverrel Parse::CPAN::Meta 99
-Obsoletes:	perl-Perl-OSType < %perl_modverrel Perl::OSType 99
 Obsoletes:	perl-Pod-Escapes < %perl_modverrel Pod::Escapes 99
 Obsoletes:	perl-Pod-Parser < %perl_modverrel Pod::Parser 99
 Obsoletes:	perl-Pod-Simple < %perl_modverrel Pod::Simple 99
