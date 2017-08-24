@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.26.0
-%define		rel	3
+%define		rel	4
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -306,6 +306,7 @@ Group:		Development/Languages/Perl
 Requires:	%{name}-libs = %{epoch}:%{ver}-%{release}
 Requires:	%{perl_vendorarch}
 Requires:	%{perl_vendorlib}
+Requires:	perl(Scalar::Util)
 Provides:	perl(largefiles)
 Provides:	%perl_mod2version IO-Compress
 Provides:	%perl_mod2version PathTools
