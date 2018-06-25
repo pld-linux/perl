@@ -25,7 +25,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.26.0
+%define		abi	5.28.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +43,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.26.2
+%define		ver	5.28.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	1fa1b53eeff76aa37b17bfc9b2771671
+# Source0-md5:	f3245183c0a08f65e94a3333995af08e
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -84,7 +84,7 @@ Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
 # Test regen.t checks result of this patch.
 # To run test manually run, from BUILD/perl-*:
-# LD_LIBRARY_PATH=$(pwd) ./preload ./libperl.so ./perl t/porting/regen.t
+# PERL5LIB=$(pwd) LD_LIBRARY_PATH=$(pwd) ./preload ./libperl.so ./perl t/porting/regen.t
 # Make sure sha output from test matches sha from uconfig.h
 Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
@@ -1471,6 +1471,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/SDBM_File.3perl*
 
 %{perl_archlib}/Storable.pm
+%dir %{perl_archlib}/Storable
+%{perl_archlib}/Storable/Limit.pm
 %dir %{perl_archlib}/auto/Storable
 %attr(755,root,root) %{perl_archlib}/auto/Storable/Storable.so
 %{_mandir}/man3/Storable.3perl*

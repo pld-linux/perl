@@ -41,14 +41,14 @@ index 33e08e2..7160f54 100644
  	GDBM_FILE 	dbp ;
  	SV *    filter[4];
  	int     filtering ;
-@@ -89,6 +90,7 @@ gdbm_TIEHASH(dbtype, name, read_write, mode)
- 	    if ((dbp =  gdbm_open(name, GDBM_BLOCKSIZE, read_write, mode,
- 	       	     	          (FATALFUNC) croak_string))) {
- 	        RETVAL = (GDBM_File)safecalloc(1, sizeof(GDBM_File_type)) ;
-+		RETVAL->owner = aTHX;
- 		RETVAL->dbp = dbp ;
- 	    }
- 	    
+@@ -99,6 +99,7 @@ gdbm_TIEHASH(dbtype, name, read_write, m
+ 	}
+ 	if (dbp) {
+ 	    RETVAL = (GDBM_File)safecalloc(1, sizeof(GDBM_File_type));
++	    RETVAL->owner = aTHX;
+ 	    RETVAL->dbp = dbp;
+ 	} else {
+ 	    RETVAL = NULL;
 @@ -109,12 +111,14 @@ gdbm_DESTROY(db)
  	PREINIT:
  	int i = store_value;
