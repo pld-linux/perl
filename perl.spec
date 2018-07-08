@@ -92,6 +92,7 @@ Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch10:	%{name}-invalid-void-use.patch
 Patch11:	%{name}-test-dst.patch
+Patch12:	disable-tests-for-libgdbm6.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -728,6 +729,7 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
