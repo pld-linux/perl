@@ -1,0 +1,94 @@
+From 892e8b006aa99ac2c880cdc2a81fd16f06c1a0f3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Mon, 9 Jul 2018 16:18:36 +0200
+Subject: [PATCH] Remove ext/GDBM_File/t/fatal.t
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+gdbm-1.15 defaults to a memory-mapped I/O and does not report any I/O
+errors on store and close operations. Thus ext/GDBM_File/t/fatal.t
+test that expects these fatal error reports fails. Because there is
+no other way to provoke a fatal error in gdbm-1.15 this patch
+removes the test. Future gdbm version promisses reporting a regular
+error on closing a database.
+
+RT#133295
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ MANIFEST                |  1 -
+ ext/GDBM_File/t/fatal.t | 49 -------------------------------------------------
+ 2 files changed, 50 deletions(-)
+ delete mode 100644 ext/GDBM_File/t/fatal.t
+
+diff --git a/MANIFEST b/MANIFEST
+index 95fa539095..b07fed1f54 100644
+--- a/MANIFEST
++++ b/MANIFEST
+@@ -4100,7 +4100,6 @@ ext/GDBM_File/GDBM_File.pm	GDBM extension Perl module
+ ext/GDBM_File/GDBM_File.xs	GDBM extension external subroutines
+ ext/GDBM_File/hints/sco.pl	Hint for GDBM_File for named architecture
+ ext/GDBM_File/Makefile.PL	GDBM extension makefile writer
+-ext/GDBM_File/t/fatal.t		Test the fatal_func argument to gdbm_open
+ ext/GDBM_File/t/gdbm.t		See if GDBM_File works
+ ext/GDBM_File/typemap		GDBM extension interface types
+ ext/Hash-Util/Changes		Change history of Hash::Util
+diff --git a/ext/GDBM_File/t/fatal.t b/ext/GDBM_File/t/fatal.t
+deleted file mode 100644
+index 0e426d4dbc..0000000000
+--- a/ext/GDBM_File/t/fatal.t
++++ /dev/null
+@@ -1,49 +0,0 @@
+-#!./perl -w
+-use strict;
+-
+-use Test::More;
+-use Config;
+-
+-BEGIN {
+-    plan(skip_all => "GDBM_File was not built")
+-	unless $Config{extensions} =~ /\bGDBM_File\b/;
+-
+-    # https://rt.perl.org/Public/Bug/Display.html?id=117967
+-    plan(skip_all => "GDBM_File is flaky in $^O")
+-        if $^O =~ /darwin/;
+-
+-    plan(tests => 8);
+-    use_ok('GDBM_File');
+-}
+-
+-unlink <Op_dbmx*>;
+-
+-open my $fh, '<', $^X or die "Can't open $^X: $!";
+-my $fileno = fileno $fh;
+-isnt($fileno, undef, "Can find next available file descriptor");
+-close $fh or die $!;
+-
+-is((open $fh, "<&=$fileno"), undef,
+-   "Check that we cannot open fileno $fileno. \$! is $!");
+-
+-umask(0);
+-my %h;
+-isa_ok(tie(%h, 'GDBM_File', 'Op_dbmx', GDBM_WRCREAT, 0640), 'GDBM_File');
+-
+-isnt((open $fh, "<&=$fileno"), undef, "dup fileno $fileno")
+-    or diag("\$! = $!");
+-isnt(close $fh, undef,
+-     "close fileno $fileno, out from underneath the GDBM_File");
+-is(eval {
+-    $h{Perl} = 'Rules';
+-    untie %h;
+-    1;
+-}, undef, 'Trapped error when attempting to write to knobbled GDBM_File');
+-
+-# Observed "File write error" and "lseek error" from two different systems.
+-# So there might be more variants. Important part was that we trapped the error
+-# via croak.
+-like($@, qr/ at .*\bfatal\.t line \d+\.\n\z/,
+-     'expected error message from GDBM_File');
+-
+-unlink <Op_dbmx*>;
+-- 
+2.14.4
+
