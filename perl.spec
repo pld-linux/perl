@@ -313,6 +313,7 @@ Provides:	%perl_mod2version IO-Compress
 Provides:	%perl_mod2version PathTools
 Provides:	%perl_modversion File::Compare
 Provides:	%perl_modversion File::Temp
+Provides:	%perl_modversion Getopt::Long
 Provides:	%perl_modversion IO
 Provides:	%perl_modversion IO::Zlib
 Provides:	%perl_modversion IPC::Cmd
