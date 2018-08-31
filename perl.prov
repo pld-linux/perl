@@ -101,6 +101,17 @@ sub process_file {
 			$package = $pack;
 		}
 
+		if ( defined $package && $package == 'Getopt::Long' && /([\$*])(([\w\:\']*)\bVERSION_STRING)\b.*\=/ ) {
+			( $version = $self->{safe}->reval($_) ) =~ s/^\s+|alpha|beta|\s+$//g;
+			if ( defined $version
+				&& length $version
+				&& $version =~ /[^\d\._abcdefgh]/ )
+			{
+				warn "$0: weird version number in $file: [$version]\n";
+				$version = '';
+			}
+		}
+
 		if ( !defined $version && /([\$*])(([\w\:\']*)\bVERSION)\b.*\=/ ) {
 			( $version = $self->{safe}->reval($_) ) =~ s/^\s+|alpha|beta|\s+$//g;
 			if ( defined $version
