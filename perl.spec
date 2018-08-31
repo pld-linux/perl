@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.28.0
-%define		rel	3
+%define		rel	4
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -942,6 +942,10 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	# special cased since do eval on VERSION
 	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
 		v=$(%{__perl} -M$m -e "print version->parse(\$$m::VERSION)->numify")
+		;;
+	# this module has VERSION encoded as int in a way that it loses trailing 0
+	Getopt::Long)
+		v=$(%{__perl} -M$m -e "print \$$m::VERSION_STRING")
 		;;
 	*)
 		v=$(%{__perl} -M$m -e "print \$$m::VERSION")

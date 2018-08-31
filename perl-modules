@@ -25,6 +25,7 @@ File::Temp = 0.2304
 Filter::Simple = 0.95
 FindBin = 1.51
 GDBM_File = 1.17
+Getopt::Long = 2.50
 Hash::Util = 0.22
 I18N::LangTags = 0.43
 IO = 1.39
