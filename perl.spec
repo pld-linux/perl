@@ -25,7 +25,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.28.0
+%define		abi	5.30.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +43,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.28.2
+%define		ver	5.30.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	6bb75770e9ba085b32bf13e4be71e4ac
+# Source0-md5:	037c35000550bdcb47552ad0f6d3064d
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -92,7 +92,6 @@ Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch10:	%{name}-invalid-void-use.patch
 Patch11:	%{name}-test-dst.patch
-Patch12:	remove-ext-GDBM_File-t-fatal.t.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -730,7 +729,6 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
@@ -873,7 +871,7 @@ echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/p
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/File::Spec::{Epoc,Mac,OS2,VMS,Win32}.3perl*
 
 ## We already have these *.pod files as man pages
-%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Locale{,/Codes,/Maketext},Module,Net,Test,version}/*.pod
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Locale{,/Maketext},Module,Net,Test,version}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
 
@@ -1188,11 +1186,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Tie/Hash/NamedCapture/NamedCapture.so
 %{_mandir}/man3/Tie::Hash::NamedCapture.3perl*
 
-%{perl_archlib}/arybase.pm
-%dir %{perl_archlib}/auto/arybase
-%attr(755,root,root) %{perl_archlib}/auto/arybase/arybase.so
-%{_mandir}/man3/arybase.3perl*
-
 %files devel
 %defattr(644,root,root,755)
 %doc doc-devel/*
@@ -1478,8 +1471,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/SDBM_File.3perl*
 
 %{perl_archlib}/Storable.pm
-%dir %{perl_archlib}/Storable
-%{perl_archlib}/Storable/Limit.pm
 %dir %{perl_archlib}/auto/Storable
 %attr(755,root,root) %{perl_archlib}/auto/Storable/Storable.so
 %{_mandir}/man3/Storable.3perl*
@@ -1550,12 +1541,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/JSON
 %{_mandir}/man3/JSON::PP*.3perl*
 %{perl_privlib}/Locale
-%{_mandir}/man3/Locale::Codes*.3perl*
-%{_mandir}/man3/Locale::Country.3perl*
-%{_mandir}/man3/Locale::Currency.3perl*
-%{_mandir}/man3/Locale::Language.3perl*
-%{_mandir}/man3/Locale::Maketext*.3perl*
-%{_mandir}/man3/Locale::Script.3perl*
+%{_mandir}/man3/Locale::Maketext.3*
+%{_mandir}/man3/Locale::Maketext::Cookbook.3*
+%{_mandir}/man3/Locale::Maketext::Guts.3*
+%{_mandir}/man3/Locale::Maketext::GutsLoader.3*
+%{_mandir}/man3/Locale::Maketext::Simple.3*
+%{_mandir}/man3/Locale::Maketext::TPJ13.3*
 %{perl_privlib}/Memoize
 %{perl_privlib}/Memoize.pm
 %{_mandir}/man3/Memoize*.3perl*
