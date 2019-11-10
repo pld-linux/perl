@@ -33,7 +33,6 @@ IO::Zlib = 1.10
 IPC::Cmd = 1.02
 IPC::SysV = 2.07
 JSON::PP = 4.02
-Locale::Codes = 3.24
 Locale::Maketext = 1.29
 Locale::Maketext::Simple = 0.21_01
 MIME::Base64 = 3.15

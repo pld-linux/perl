@@ -437,7 +437,6 @@ Provides:	%perl_modversion FindBin
 Provides:	%perl_modversion I18N::LangTags
 Provides:	%perl_modversion IPC::SysV
 Provides:	%perl_modversion JSON::PP
-Provides:	%perl_modversion Locale::Codes
 Provides:	%perl_modversion Locale::Maketext
 Provides:	%perl_modversion Locale::Maketext::Simple
 Provides:	%perl_modversion MIME::Base64
@@ -491,7 +490,6 @@ Obsoletes:	perl-FindBin < %perl_modverrel FindBin 99
 Obsoletes:	perl-I18N-LangTags < %perl_modverrel I18N::LangTags 99
 Obsoletes:	perl-IPC-SysV < %perl_modverrel IPC::SysV 99
 Obsoletes:	perl-JSON-PP < %perl_modverrel JSON::PP 99
-Obsoletes:	perl-Locale-Codes < %perl_modverrel Locale::Codes 99
 Obsoletes:	perl-Locale-Maketext < %perl_modverrel Locale::Maketext 99
 Obsoletes:	perl-Locale-Maketext-Simple < %perl_modverrel Locale::Maketext::Simple 99
 Obsoletes:	perl-MIME-Base64 < %perl_modverrel MIME::Base64 99
