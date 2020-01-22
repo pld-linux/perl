@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.30.1
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -422,7 +422,7 @@ Summary:	Modules from the core Perl distribution
 Summary(pl.UTF-8):	Moduły z podstawowej dystrybucji Perla
 Group:		Libraries
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
-Suggests:	perl-Encode >= 1:2.44
+Requires:	perl-Encode >= 2:2.49-%{ver}.%{rel}
 Suggests:	perl-Version-Requirements
 Provides:	%perl_modversion Archive::Tar
 Provides:	%perl_modversion Attribute::Handlers
