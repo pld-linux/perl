@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.30.2
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -872,6 +872,10 @@ echo ".so perl%(echo %{ver} | tr -d .)delta.1" >$RPM_BUILD_ROOT%{_mandir}/man1/p
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/{Encode,Locale{,/Maketext},Module,Net,Test,version}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_privlib}/*.pod
 %{__rm} $RPM_BUILD_ROOT%{perl_archlib}/*.pod
+
+## We don't build NDBM_File that Memoize::NDBM_File requires
+%{__rm} $RPM_BUILD_ROOT%{perl_privlib}/Memoize/NDBM_File.pm
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/Memoize::NDBM_File.3perl*
 
 install -d doc-base/{DynaLoader,Errno,File/Glob,IO,PathTools} \
 	doc-devel/{Devel/Peek,ExtUtils/{CBuilder,ParseXS}} \
