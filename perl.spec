@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.30.2
-%define		rel	2
+%define		rel	3
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -1062,6 +1062,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_privlib}/Class
 %{perl_privlib}/Class/Struct.pm
 %{_mandir}/man3/Class::Struct.3perl*
+%{perl_privlib}/Compress
+%{_mandir}/man3/Compress::Zlib.3perl*
 %{perl_privlib}/Exporter.pm
 %{perl_privlib}/Exporter
 %{_mandir}/man3/Exporter*.3perl*
@@ -1096,6 +1098,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/XSLoader.3perl*
 
 ## arch-dependent modules
+%{perl_archlib}/Compress
+%dir %{perl_archlib}/auto/Compress
+%dir %{perl_archlib}/auto/Compress/Raw
+%dir %{perl_archlib}/auto/Compress/Raw/Bzip2
+%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Bzip2/Bzip2.so
+%dir %{perl_archlib}/auto/Compress/Raw/Zlib
+%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Zlib/Zlib.so
+%{_mandir}/man3/Compress::Raw::Bzip2.3perl*
+%{_mandir}/man3/Compress::Raw::Zlib.3perl*
+
 %{perl_archlib}/Config.pm
 %{perl_archlib}/Config_git.pl
 %{perl_archlib}/Config_heavy.pl
@@ -1376,18 +1388,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/B/B.so
 %{_mandir}/man3/B.3perl*
 %{_mandir}/man3/B::*.3perl*
-
-%{perl_privlib}/Compress
-%{perl_archlib}/Compress
-%dir %{perl_archlib}/auto/Compress
-%dir %{perl_archlib}/auto/Compress/Raw
-%dir %{perl_archlib}/auto/Compress/Raw/Bzip2
-%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Bzip2/Bzip2.so
-%dir %{perl_archlib}/auto/Compress/Raw/Zlib
-%attr(755,root,root) %{perl_archlib}/auto/Compress/Raw/Zlib/Zlib.so
-%{_mandir}/man3/Compress::Raw::Bzip2.3perl*
-%{_mandir}/man3/Compress::Raw::Zlib.3perl*
-%{_mandir}/man3/Compress::Zlib.3perl*
 
 %{perl_archlib}/Data
 %dir %{perl_archlib}/auto/Data
