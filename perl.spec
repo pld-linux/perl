@@ -726,9 +726,12 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 
 cat > runperl <<'EOF'
 #!/bin/sh
+# Prevent any system paths from being used.
+# Note: you cant use runperl -MXYZ because BEGIN is executed after -M
 LD_PRELOAD="%{_builddir}/%{name}-%{ver}/libperl.so.%{abi}" \
 PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
-exec %{buildroot}%{_bindir}/perl ${1:+"$@"}
+exec %{buildroot}%{_bindir}/perl -e 'BEGIN { @INC = ("%{buildroot}%{perl_privlib}", "%{buildroot}%{perl_archlib}"); }; if (@ARGV > 0) { do(shift(@ARGV)) or die "Error attempting to execute script: $@\n"; } ' \
+    ${1:+"$@"}
 EOF
 chmod a+x runperl
 
@@ -938,14 +941,14 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 		;;
 	# special cased since do eval on VERSION
 	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
-		v=$(%{__perl} -M$m -e "print version->parse(\$$m::VERSION)->numify")
+		v=$(%{__perl} -e "use $m; print version->parse(\$$m::VERSION)->numify")
 		;;
 	# this module has VERSION encoded as int in a way that it loses trailing 0
 	Getopt::Long)
-		v=$(%{__perl} -M$m -e "print \$$m::VERSION_STRING")
+		v=$(%{__perl} -e "use $m; print \$$m::VERSION_STRING")
 		;;
 	*)
-		v=$(%{__perl} -M$m -e "print \$$m::VERSION")
+		v=$(%{__perl} -e "use $m; print \$$m::VERSION")
 		;;
 	esac
 	echo "$m = $v" >> perl-modules.tmp
@@ -958,7 +961,7 @@ for m in $(awk '!/^#/ && !/^$/{print $1"!"$2}' %{SOURCE4}); do
 	mp="${m%%!*}"
 	case $m in
 	*)
-		v=$(%{__perl} -M$mn -e "print \$$mn::VERSION")
+		v=$(%{__perl} -e "use $mn; print \$$mn::VERSION")
 		;;
 	esac
 	echo "$mp	$mn = $v" >> perl-modules2.tmp
