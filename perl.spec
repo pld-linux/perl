@@ -25,7 +25,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.30.0
+%define		abi	5.32.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +43,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.30.3
+%define		ver	5.32.1
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	0af2ab0f01ec13e37cc13a27de930936
+# Source0-md5:	7f104064b906ad8c7329ca5e409a32d7
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -91,7 +91,6 @@ Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch10:	%{name}-invalid-void-use.patch
-Patch11:	%{name}-test-dst.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -454,7 +453,6 @@ Provides:	%perl_modversion NEXT
 Provides:	%perl_modversion Params::Check
 Provides:	%perl_modversion Parse::CPAN::Meta
 Provides:	%perl_modversion Pod::Escapes
-Provides:	%perl_modversion Pod::Parser
 Provides:	%perl_modversion Pod::Simple
 Provides:	%perl_modversion Safe
 Provides:	%perl_modversion Storable
@@ -504,10 +502,9 @@ Obsoletes:	perl-Module-Load < %perl_modverrel Module::Load 99
 Obsoletes:	perl-Module-Load-Conditional < %perl_modverrel Module::Load::Conditional 99
 Obsoletes:	perl-Module-Metadata < %perl_modverrel Module::Metadata 99
 Obsoletes:	perl-NEXT < %perl_modverrel NEXT 99
-Obsoletes:	perl-Params::Check < %perl_modverrel Params::Check 99
+Obsoletes:	perl-Params-Check < %perl_modverrel Params::Check 99
 Obsoletes:	perl-Parse-CPAN-Meta < %perl_modverrel Parse::CPAN::Meta 99
 Obsoletes:	perl-Pod-Escapes < %perl_modverrel Pod::Escapes 99
-Obsoletes:	perl-Pod-Parser < %perl_modverrel Pod::Parser 99
 Obsoletes:	perl-Pod-Simple < %perl_modverrel Pod::Simple 99
 Obsoletes:	perl-Safe < %perl_modverrel Safe 99
 Obsoletes:	perl-Storable < %perl_modverrel Storable 99
@@ -726,7 +723,6 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch7 -p1
 %patch8 -p1
 %patch10 -p1
-%patch11 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
@@ -855,7 +851,7 @@ WANTED='
 cd "$owd"
 
 ## remove man pages for other operating systems
-%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,ce,cygwin,dos}* \
+%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,cygwin,dos}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vms,vos,win32}*
 
@@ -934,7 +930,7 @@ owd=$(pwd)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/README.perl-non-english-man-pages
 
 # update and check perl-modules files
-echo '# Module versions from Perl %{ver} distribution.' > perl-modules
+echo '# Module versions from Perl %{ver} distribution.' > perl-modules.tmp
 for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	case $m in
 	libnet)
@@ -952,10 +948,11 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 		v=$(%{__perl} -M$m -e "print \$$m::VERSION")
 		;;
 	esac
-	echo "$m = $v"
-done | LC_ALL=C sort >> perl-modules
+	echo "$m = $v" >> perl-modules.tmp
+done
+LC_ALL=C sort perl-modules.tmp > perl-modules && rm perl-modules.tmp
 
-echo '# Non-straight named module versions from Perl %{ver} distribution.' > perl-modules2
+echo '# Non-straight named module versions from Perl %{ver} distribution.' > perl-modules2.tmp
 for m in $(awk '!/^#/ && !/^$/{print $1"!"$2}' %{SOURCE4}); do
 	mn="${m##*!}"
 	mp="${m%%!*}"
@@ -964,8 +961,9 @@ for m in $(awk '!/^#/ && !/^$/{print $1"!"$2}' %{SOURCE4}); do
 		v=$(%{__perl} -M$mn -e "print \$$mn::VERSION")
 		;;
 	esac
-	echo "$mp	$mn = $v"
-done | LC_ALL=C sort >> perl-modules2
+	echo "$mp	$mn = $v" >> perl-modules2.tmp
+done
+LC_ALL=C sort perl-modules2.tmp > perl-modules2 && rm perl-modules2.tmp
 
 if ! cmp -s %{SOURCE3} perl-modules; then
 	: %{SOURCE3} outdated with $(pwd)/perl-modules
@@ -1087,6 +1085,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Tie::File.3perl*
 %{_mandir}/man3/Tie::Handle.3perl*
 %{_mandir}/man3/Tie::Hash.3perl*
+%{_mandir}/man3/Tie::Hash::NamedCapture.3perl*
 %{_mandir}/man3/Tie::Memoize.3perl*
 %{_mandir}/man3/Tie::RefHash.3perl*
 %{_mandir}/man3/Tie::Scalar.3perl*
@@ -1191,15 +1190,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/Socket/Socket.so
 %{_mandir}/man3/Socket.3perl*
 
-%dir %{perl_archlib}/Tie
-%dir %{perl_archlib}/Tie/Hash
-%{perl_archlib}/Tie/Hash/NamedCapture.pm
-%dir %{perl_archlib}/auto/Tie
-%dir %{perl_archlib}/auto/Tie/Hash
-%dir %{perl_archlib}/auto/Tie/Hash/NamedCapture
-%attr(755,root,root) %{perl_archlib}/auto/Tie/Hash/NamedCapture/NamedCapture.so
-%{_mandir}/man3/Tie::Hash::NamedCapture.3perl*
-
 %files devel
 %defattr(644,root,root,755)
 %doc doc-devel/*
@@ -1227,7 +1217,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/ExtUtils::Packlist.3perl*
 %{_mandir}/man3/ExtUtils::ParseXS*.3perl*
 %{_mandir}/man3/ExtUtils::Typemaps*.3perl*
-%{_mandir}/man3/ExtUtils::XSSymSet.3perl*
 %{_mandir}/man3/ExtUtils::testlib.3perl*
 %{perl_privlib}/vmsish.pm
 %{_mandir}/man3/vmsish.3perl*
@@ -1602,16 +1591,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Pod
 %{_mandir}/man3/Pod::Checker.3perl*
 %{_mandir}/man3/Pod::Escapes.3perl*
-%{_mandir}/man3/Pod::Find.3perl*
 %{_mandir}/man3/Pod::Html.3perl*
-%{_mandir}/man3/Pod::InputObjects.3perl*
 %{_mandir}/man3/Pod::Man.3perl*
 %{_mandir}/man3/Pod::ParseLink.3perl*
-%{_mandir}/man3/Pod::ParseUtils.3perl*
-%{_mandir}/man3/Pod::Parser.3perl*
 %{_mandir}/man3/Pod::Perldoc*.3perl*
-%{_mandir}/man3/Pod::PlainText.3perl*
-%{_mandir}/man3/Pod::Select.3perl*
 %{_mandir}/man3/Pod::Simple*.3perl*
 %{_mandir}/man3/Pod::Text*.3perl*
 %{_mandir}/man3/Pod::Usage.3perl*
@@ -1701,6 +1684,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/ptardiff.1*
 %attr(755,root,root) %{_bindir}/shasum
 %{_mandir}/man1/shasum.1*
+%attr(755,root,root) %{_bindir}/streamzip
+%{_mandir}/man1/streamzip.1*
 %attr(755,root,root) %{_bindir}/zipdetails
 %{_mandir}/man1/zipdetails.1*
 
@@ -1747,6 +1732,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/encoding.pm
 %dir %{perl_archlib}/auto/Encode
 %dir %{perl_archlib}/auto/Encode/*/
+%attr(755,root,root) %{perl_archlib}/auto/Encode/*.so
 %attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
 %{_mandir}/man1/enc2xs.1*
 %{_mandir}/man1/piconv.1*

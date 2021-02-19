@@ -1,4 +1,4 @@
-# Non-straight named module versions from Perl 5.30.3 distribution.
-IO-Compress	IO::Compress::Base = 2.084
+# Non-straight named module versions from Perl 5.32.1 distribution.
+IO-Compress	IO::Compress::Base = 2.093
 PathTools	File::Spec = 3.78
-Scalar-List-Utils	List::Util = 1.5
+Scalar-List-Utils	List::Util = 1.55
