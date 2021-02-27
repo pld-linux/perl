@@ -1731,12 +1731,27 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorlib}/Encode
 # FIXME: *.h to devel(?), check out the use for *.e2x files
 %{perl_privlib}/Encode
-%{perl_archlib}/Encode*
+%{perl_archlib}/Encode
+%{perl_archlib}/Encode.pm
 %{perl_archlib}/encoding.pm
 %dir %{perl_archlib}/auto/Encode
-%dir %{perl_archlib}/auto/Encode/*/
-%attr(755,root,root) %{perl_archlib}/auto/Encode/*.so
-%attr(755,root,root) %{perl_archlib}/auto/Encode/*/*.so
+%attr(755,root,root) %{perl_archlib}/auto/Encode/Encode.so
+%dir %{perl_archlib}/auto/Encode/Byte
+%attr(755,root,root) %{perl_archlib}/auto/Encode/Byte/Byte.so
+%dir %{perl_archlib}/auto/Encode/CN
+%attr(755,root,root) %{perl_archlib}/auto/Encode/CN/CN.so
+%dir %{perl_archlib}/auto/Encode/EBCDIC
+%attr(755,root,root) %{perl_archlib}/auto/Encode/EBCDIC/EBCDIC.so
+%dir %{perl_archlib}/auto/Encode/JP
+%attr(755,root,root) %{perl_archlib}/auto/Encode/JP/JP.so
+%dir %{perl_archlib}/auto/Encode/KR
+%attr(755,root,root) %{perl_archlib}/auto/Encode/KR/KR.so
+%dir %{perl_archlib}/auto/Encode/Symbol
+%attr(755,root,root) %{perl_archlib}/auto/Encode/Symbol/Symbol.so
+%dir %{perl_archlib}/auto/Encode/TW
+%attr(755,root,root) %{perl_archlib}/auto/Encode/TW/TW.so
+%dir %{perl_archlib}/auto/Encode/Unicode
+%attr(755,root,root) %{perl_archlib}/auto/Encode/Unicode/Unicode.so
 %{_mandir}/man1/enc2xs.1*
 %{_mandir}/man1/piconv.1*
 %{_mandir}/man3/Encode*.3perl*
