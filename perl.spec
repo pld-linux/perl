@@ -730,7 +730,7 @@ cat > runperl <<'EOF'
 # Note: you cant use runperl -MXYZ because BEGIN is executed after -M
 LD_PRELOAD="%{_builddir}/%{name}-%{ver}/libperl.so.%{abi}" \
 PERL5LIB="%{buildroot}%{perl_privlib}:%{buildroot}%{perl_archlib}" \
-exec %{buildroot}%{_bindir}/perl -e 'BEGIN { @INC = ("%{buildroot}%{perl_privlib}", "%{buildroot}%{perl_archlib}"); }; if (@ARGV > 0) { do(shift(@ARGV)) or die "Error attempting to execute script: $@\n"; } ' \
+exec %{buildroot}%{_bindir}/perl -e 'BEGIN { @INC = ("%{buildroot}%{perl_privlib}", "%{buildroot}%{perl_archlib}"); }; if (@ARGV > 0) { my $script=shift(@ARGV); $0=$script; do($script) or die "Error attempting to execute script: $@\n"; } ' \
     ${1:+"$@"}
 EOF
 chmod a+x runperl
