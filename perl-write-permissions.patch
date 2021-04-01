@@ -1,7 +1,8 @@
---- perl-5.12.0/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm.orig	2009-08-03 21:36:03.000000000 +0200
-+++ perl-5.12.0/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm	2009-09-12 10:07:06.181527344 +0200
-@@ -813,7 +813,7 @@
-                 utime($atime,$mtime + $Is_VMS,$targetfile) unless $dry_run>1;
+diff -urNp -x '*.orig' perl-5.32.1.org/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm perl-5.32.1/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm
+--- perl-5.32.1.org/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm	2020-12-18 11:04:35.000000000 +0100
++++ perl-5.32.1/cpan/ExtUtils-Install/lib/ExtUtils/Install.pm	2021-04-01 22:48:39.572968964 +0200
+@@ -825,7 +825,7 @@ sub install { #XXX OS-SPECIFIC
+                 utime($atime,$mtime + Is_VMS,$targetfile) unless $dry_run>1;
  
  
 -                $mode = 0444 | ( $mode & 0111 ? 0111 : 0 );
@@ -18,9 +19,10 @@
          next unless $from =~ /\.pm$/;
          _autosplit($to,$autodir) if defined $autodir;
      }
---- perl-5.20.0/cpan/ExtUtils-Install/t/Install.t.orig	2014-05-29 13:11:07.961096445 +0200
-+++ perl-5.20.0/cpan/ExtUtils-Install/t/Install.t	2014-05-29 13:11:20.681234036 +0200
-@@ -237,7 +237,7 @@
+diff -urNp -x '*.orig' perl-5.32.1.org/cpan/ExtUtils-Install/t/Install.t perl-5.32.1/cpan/ExtUtils-Install/t/Install.t
+--- perl-5.32.1.org/cpan/ExtUtils-Install/t/Install.t	2020-12-18 11:04:35.000000000 +0100
++++ perl-5.32.1/cpan/ExtUtils-Install/t/Install.t	2021-04-01 22:48:39.572968964 +0200
+@@ -240,7 +240,7 @@ SKIP: {
                           },
      ]);
  
@@ -29,7 +31,7 @@
  
      use File::Compare;
      ok(compare("$bigdir/Dummy.pm", "$bigdir/DummyHard.pm"),
-@@ -261,7 +261,7 @@
+@@ -264,7 +264,7 @@ SKIP: {
                           },
      ]);
  

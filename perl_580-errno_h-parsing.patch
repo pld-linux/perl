@@ -1,7 +1,7 @@
-diff -urN perl-5.6.1.orig/ext/Errno/Errno_pm.PL perl-5.6.1/ext/Errno/Errno_pm.PL
---- perl-5.6.1.orig/ext/Errno/Errno_pm.PL	Sun Apr  8 08:09:16 2001
-+++ perl-5.6.1/ext/Errno/Errno_pm.PL	Thu Apr 12 20:58:53 2001
-@@ -37,6 +37,13 @@
+diff -urNp -x '*.orig' perl-5.32.1.org/ext/Errno/Errno_pm.PL perl-5.32.1/ext/Errno/Errno_pm.PL
+--- perl-5.32.1.org/ext/Errno/Errno_pm.PL	2020-12-18 11:04:36.000000000 +0100
++++ perl-5.32.1/ext/Errno/Errno_pm.PL	2021-04-01 22:48:31.609573602 +0200
+@@ -67,6 +67,13 @@ sub process_file {
              warn "Cannot open '$file'";
              return;
  	}     
@@ -13,5 +13,5 @@ diff -urN perl-5.6.1.orig/ext/Errno/Errno_pm.PL perl-5.6.1/ext/Errno/Errno_pm.PL
 +            return;
 +	}
      } else {
- 	unless(open(FH,"< $file")) {
+ 	unless(open(FH, '<', $file)) {
  	    # This file could be a temporary file created by cppstdin
