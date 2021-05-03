@@ -103,6 +103,8 @@ BuildRequires:	linux-libc-headers >= 7:2.6.24
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
 BuildRequires:	rpmbuild(macros) >= 1.750
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
