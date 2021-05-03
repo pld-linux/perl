@@ -72,7 +72,7 @@ Release:	%{rel}%{!?with_threads:_nothr}
 Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
+Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
 # Source0-md5:	7f104064b906ad8c7329ca5e409a32d7
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
