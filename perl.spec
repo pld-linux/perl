@@ -102,7 +102,7 @@ BuildRequires:	linux-libc-headers >= 7:2.6.24
 %{?with_tests:BuildRequires:	procps}
 # required for proper Provides generation (older are not supported by spec)
 BuildRequires:	rpm-build >= 4.3-0.20040107.4
-BuildRequires:	rpmbuild(macros) >= 1.426
+BuildRequires:	rpmbuild(macros) >= 1.750
 Requires:	%{name}-base = %{epoch}:%{ver}-%{release}
 Requires:	%{name}-modules = %{epoch}:%{ver}-%{release}
 Suggests:	%{name}-doc-reference = %{epoch}:%{ver}-%{release}
@@ -110,7 +110,11 @@ Suggests:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
+%if %{_ver_ge '%{_rpmversion}' '4.16'} && %{_ver_lt '%{_rpmversion}' '5'}
+%define		__perllib_provides %{__perl} %{SOURCE2}
+%else
 %define		__perl_provides %{__perl} %{SOURCE2}
+%endif
 
 %description
 Perl is an interpreted language optimized for scanning arbitrary text
