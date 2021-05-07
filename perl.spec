@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.32.1
-%define		rel	3
+%define		rel	4
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -1076,6 +1076,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Exporter*.3perl*
 %{perl_privlib}/English.pm
 %{_mandir}/man3/English.3perl*
+%{perl_privlib}/Fatal.pm
+%{_mandir}/man3/Fatal.3perl*
 %{perl_privlib}/Getopt
 %{_mandir}/man3/Getopt::Long.3perl*
 %{_mandir}/man3/Getopt::Std.3perl*
@@ -1533,8 +1535,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Dumpvalue.3perl*
 %{perl_privlib}/Env.pm
 %{_mandir}/man3/Env.3perl*
-%{perl_privlib}/Fatal.pm
-%{_mandir}/man3/Fatal.3perl*
 %{perl_privlib}/FindBin.pm
 %{_mandir}/man3/FindBin.3perl*
 %{_mandir}/man3/Internals.3perl*
