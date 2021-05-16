@@ -1719,8 +1719,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files tools-pod
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/pod*
-%{_mandir}/man1/pod*
+%attr(755,root,root) %{_bindir}/pod2*
+%attr(755,root,root) %{_bindir}/podchecker
+%{_mandir}/man1/pod2*.1*
+%{_mandir}/man1/podchecker.1*
 
 %if %{with microperl}
 %files -n microperl
