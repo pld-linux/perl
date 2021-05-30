@@ -43,8 +43,8 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.32.1
-%define		rel	5
+%define		ver	5.34.0
+%define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	7f104064b906ad8c7329ca5e409a32d7
+# Source0-md5:	df7ecb0653440b26dc951ad9dbfab517
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -1225,6 +1225,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/ExtUtils::Miniperl.3perl*
 %{_mandir}/man3/ExtUtils::Mkbootstrap.3perl*
 %{_mandir}/man3/ExtUtils::Mksymlists.3perl*
+%{_mandir}/man3/ExtUtils::PL2Bat.3perl*
 %{_mandir}/man3/ExtUtils::Packlist.3perl*
 %{_mandir}/man3/ExtUtils::ParseXS*.3perl*
 %{_mandir}/man3/ExtUtils::Typemaps*.3perl*
@@ -1672,6 +1673,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/pod/perlfaq*.pod
 %{perl_privlib}/pod/perlfunc.pod
 %{_mandir}/man1/perldoc.1*
+%{_mandir}/man1/perldocstyle.1*
 
 %files tools
 %defattr(644,root,root,755)

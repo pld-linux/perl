@@ -49,18 +49,24 @@ index 33e08e2..7160f54 100644
  	    RETVAL->dbp = dbp;
  	} else {
  	    RETVAL = NULL;
-@@ -109,12 +111,14 @@ gdbm_DESTROY(db)
+@@ -109,15 +111,17 @@ gdbm_DESTROY(db)
  	PREINIT:
  	int i = store_value;
- 	CODE:
--	gdbm_close(db);
+     CODE:
+-        if (gdbm_file_close(db)) {
+-            croak("gdbm_close: %s; %s", gdbm_strerror(gdbm_errno),
+-                  strerror(errno));
+-	}
 -	do {
 -	    if (db->filter[i])
 -		SvREFCNT_dec(db->filter[i]);
 -	} while (i-- > 0);
 -	safefree(db);
 +	if (db && db->owner == aTHX) {
-+	    gdbm_close(db);
++	    if (gdbm_file_close(db)) {
++	    	croak("gdbm_close: %s; %s", gdbm_strerror(gdbm_errno),
++	    	strerror(errno));
++	    }
 +	    do {
 +		if (db->filter[i])
 +		    SvREFCNT_dec(db->filter[i]);
@@ -68,8 +74,8 @@ index 33e08e2..7160f54 100644
 +	    safefree(db);
 +	}
  
- #define gdbm_FETCH(db,key)			gdbm_fetch(db->dbp,key)
- datum_value
+ void
+ gdbm_UNTIE(db, count)
 diff --git a/ext/NDBM_File/NDBM_File.xs b/ext/NDBM_File/NDBM_File.xs
 index 52e60fc..af223e5 100644
 --- a/ext/NDBM_File/NDBM_File.xs
