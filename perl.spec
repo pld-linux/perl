@@ -91,6 +91,9 @@ Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch10:	%{name}-invalid-void-use.patch
+Patch11:	Fix-GDBM_File-to-compile-with-version-1.20-and-earli.patch
+Patch12:	Raise-version-number-in-ext-GDBM_File-GDBM_File.pm.patch
+Patch13:	Fix-definition-of-ITEM_NOT_FOUND-for-pre-1.13-versio.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -729,6 +732,9 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch7 -p1
 %patch8 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
