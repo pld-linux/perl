@@ -299,6 +299,7 @@ Perl 是一种高级编程语言，起源于 C、sed、awk 和 shell 脚本。
 Summary:	Shared Perl library
 Summary(pl.UTF-8):	Biblioteka współdzielona Perla
 Group:		Libraries
+Obsoletes:	perl-lib < 1:5.6.1-7
 Conflicts:	perl-base < 1:5.8.8-8.1
 
 %description libs
@@ -343,7 +344,7 @@ Obsoletes:	perl-Socket < %perl_modverrel Socket 99
 Obsoletes:	perl-Tie-File < %perl_modverrel Tie::File 99
 Obsoletes:	perl-Tie-RefHash < %perl_modverrel Tie::RefHash 99
 Obsoletes:	perl-parent < %perl_modverrel parent 99
-Obsoletes:	sperl
+Obsoletes:	sperl < 1:5.12.0
 Conflicts:	perl < 1:5.8.0
 
 %description base
@@ -388,7 +389,7 @@ Obsoletes:	perl-ExtUtils-Install < %perl_modverrel ExtUtils::Install 99
 Obsoletes:	perl-ExtUtils-MakeMaker < %perl_modverrel ExtUtils::MakeMaker 99
 Obsoletes:	perl-ExtUtils-Manifest < %perl_modverrel ExtUtils::Manifest 99
 Obsoletes:	perl-ExtUtils-ParseXS < %perl_modverrel ExtUtils::ParseXS 99
-Obsoletes:	perl-lib-devel
+Obsoletes:	perl-lib-devel < 1:5.6.1-7
 
 %description devel
 Components required for developing applications which embed a Perl
@@ -403,7 +404,7 @@ Summary:	Perl documentation in POD format
 Summary(pl.UTF-8):	Dokumentacja Perla w formacie POD
 Group:		Documentation
 Requires:	perldoc
-Obsoletes:	perl-pod
+Obsoletes:	perl-pod < 1:5.8.0
 
 %description doc-pod
 Practical Extraction and Report Language - POD docs.
@@ -536,7 +537,6 @@ Obsoletes:	perl-Unicode-Normalize < %perl_modverrel Unicode::Normalize 99
 Obsoletes:	perl-bignum < %perl_modverrel bignum 99
 Obsoletes:	perl-libnet < %perl_modverrel libnet 99
 Obsoletes:	perl-version < %perl_modverrel version 99
-Obsoletes:	perl-lib
 
 %description modules
 Practical Extraction and Report Language - modules from the core
@@ -671,7 +671,7 @@ Release:	%{ver}.%{rel}
 Epoch:		2
 Group:		Libraries
 Requires:	%{name}-base = 1:%{ver}-%{rel}
-Obsoletes:	perl-Encode-compat
+Obsoletes:	perl-Encode-compat < 1
 
 %description Encode
 The Encode module provides the interfaces between Perl's strings and
