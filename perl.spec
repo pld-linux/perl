@@ -43,8 +43,8 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.34.0
-%define		rel	2
+%define		ver	5.34.1
+%define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	df7ecb0653440b26dc951ad9dbfab517
+# Source0-md5:	7d2ece7f50775ea1ff739831935a24bd
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -91,9 +91,6 @@ Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
 Patch10:	%{name}-invalid-void-use.patch
-Patch11:	Fix-GDBM_File-to-compile-with-version-1.20-and-earli.patch
-Patch12:	Raise-version-number-in-ext-GDBM_File-GDBM_File.pm.patch
-Patch13:	Fix-definition-of-ITEM_NOT_FOUND-for-pre-1.13-versio.patch
 URL:		http://dev.perl.org/perl5/
 %ifarch ppc
 # gcc 3.3.x miscompiles pp_hot.c
@@ -686,7 +683,7 @@ Summary:	GDBM_File - Perl5 access to the gdbm library
 Summary(pl.UTF-8):	GDBM_File - dostęp do biblioteki gdbm w Perlu
 Version:	%perl_modver GDBM_File
 Release:	%{ver}.%{rel}
-Epoch:		3
+Epoch:		4
 Group:		Libraries
 Requires:	%{name}-base = 1:%{ver}-%{rel}
 
@@ -732,9 +729,6 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch7 -p1
 %patch8 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
 
 cat > runperl <<'EOF'
 #!/bin/sh
