@@ -1,0 +1,23 @@
+From: Niko Tyni <ntyni@debian.org>
+Date: Thu, 26 Aug 2021 00:34:37 +0300
+Subject: Skip io/msg.t on x32 due to broken System V message queues
+
+Bug-Debian: https://bugs.debian.org/922609
+---
+ t/io/msg.t | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/t/io/msg.t b/t/io/msg.t
+index 2c3f75b..f5bc991 100644
+--- a/t/io/msg.t
++++ b/t/io/msg.t
+@@ -14,6 +14,9 @@ BEGIN {
+   if ($Config{'d_msg'} ne 'define') {
+     skip_all('-- $Config{d_msg} undefined');
+   }
++  if ($Config{'archname'} =~ /gnux32/) {
++    skip_all('-- SysV IPC message queues are broken on x32, see https://bugs.debian.org/988900');
++  }
+ }
+ 
+ use strict;

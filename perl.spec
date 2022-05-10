@@ -79,6 +79,7 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 Source2:	%{name}.prov
 Source3:	%{name}-modules
 Source4:	%{name}-modules2
+Patch0:		x32-io-msg-skip.diff
 Patch2:		%{name}_580-errno_h-parsing.patch
 Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
@@ -721,6 +722,7 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
