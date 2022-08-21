@@ -44,7 +44,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver	5.36.0
-%define		rel	1
+%define		rel	2
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -666,7 +666,7 @@ Summary:	Encode - character encodings
 Summary(pl.UTF-8):	Encode - kodowania znaków
 Version:	%perl_modver Encode
 Release:	%{ver}.%{rel}
-Epoch:		2
+Epoch:		3
 Group:		Libraries
 Requires:	%{name}-base = 1:%{ver}-%{rel}
 Obsoletes:	perl-Encode-compat < 1
