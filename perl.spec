@@ -25,7 +25,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.34.0
+%define		abi	5.36.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +43,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.34.1
+%define		ver	5.36.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	7d2ece7f50775ea1ff739831935a24bd
+# Source0-md5:	826e42da130011699172fd655e49cfa2
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -862,7 +862,7 @@ WANTED='
 cd "$owd"
 
 ## remove man pages for other operating systems
-%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,cygwin,dos}* \
+%{__rm}	$RPM_BUILD_ROOT%{_mandir}/man1/perl{aix,amiga,bs2000,cygwin}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{freebsd,hpux,macos,os2,os390}* \
 	$RPM_BUILD_ROOT%{_mandir}/man1/perl{qnx,solaris,vms,vos,win32}*
 
@@ -1026,6 +1026,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/autodie*.3perl*
 %{perl_privlib}/base.pm
 %{_mandir}/man3/base.3perl*
+%{perl_privlib}/builtin.pm
+%{_mandir}/man3/builtin.3perl*
 %{perl_privlib}/constant.pm
 %{_mandir}/man3/constant.3perl*
 %{perl_privlib}/diagnostics.pm
@@ -1306,6 +1308,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc-modules/*
 
 %{perl_privlib}/unicore
+%{_mandir}/man3/unicore::Name.3perl*
 
 ## pragmas
 %{perl_privlib}/autouse.pm
@@ -1604,6 +1607,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Pod::Checker.3perl*
 %{_mandir}/man3/Pod::Escapes.3perl*
 %{_mandir}/man3/Pod::Html.3perl*
+%{_mandir}/man3/Pod::Html::Util.3perl*
 %{_mandir}/man3/Pod::Man.3perl*
 %{_mandir}/man3/Pod::ParseLink.3perl*
 %{_mandir}/man3/Pod::Perldoc*.3perl*
