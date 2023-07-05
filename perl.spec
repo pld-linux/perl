@@ -25,7 +25,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.36.0
+%define		abi	5.38.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +43,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.36.1
+%define		ver	5.38.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +73,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	825f6b1d7e03b22522e0bdb992fbb728
+# Source0-md5:	e1c8aaec897dd386c741f97eef9f2e87
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -1281,6 +1281,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/perlboot.1*
 %{_mandir}/man1/perlbot.1*
 %{_mandir}/man1/perlcall.1*
+%{_mandir}/man1/perlclass.1*
+%{_mandir}/man1/perlclassguts.1*
 %{_mandir}/man1/perlcheat.1*
 %{_mandir}/man1/perlclib.1*
 %{_mandir}/man1/perlcommunity.1*
@@ -1308,7 +1310,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc-modules/*
 
 %{perl_privlib}/unicore
-%{_mandir}/man3/unicore::Name.3perl*
 
 ## pragmas
 %{perl_privlib}/autouse.pm
@@ -1340,6 +1341,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/open.3perl*
 %{perl_privlib}/sigtrap.pm
 %{_mandir}/man3/sigtrap.3perl*
+%{perl_privlib}/stable.pm
+%{_mandir}/man3/stable.3perl*
 %{perl_privlib}/utf8.pm
 %{_mandir}/man3/utf8.3perl*
 %{perl_privlib}/version.pm

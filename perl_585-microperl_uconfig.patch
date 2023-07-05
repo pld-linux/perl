@@ -4,10 +4,10 @@ diff -urNp -x '*.orig' perl-5.32.1.org/uconfig.h perl-5.32.1/uconfig.h
 @@ -5261,5 +5261,5 @@
  
  /* Generated from:
-  * 87e5998978daf803d19866c43bca24d7c01dc74119650db16f8d18d83f355da9 config_h.SH
-- * 1a5fe19cbcfd68ba70230580fd344189b5c78c11b2285efd5976366e51b3257e uconfig.sh
-+ * 6422951512b8b4f51af01c1445068645c09438db5b0e56f7e711fd9accb4942f uconfig.sh
-  * ex: set ro: */
+  * e17a83ff6ae98071d846d4a001f6ce1a669df08c357fe153c2370adc4910135e config_h.SH
+- * 8d785207fec43bbad5118a8125e625d1cc654455994f09a76c1625b2ae2ae2d0 uconfig.sh
++ * 73a966677d6c98ab485044fbaa1d3bf29e07ef78275e93ae3655889809bdefab uconfig.sh
+  * ex: set ro ft=c: */
 diff -urNp -x '*.orig' perl-5.32.1.org/uconfig.sh perl-5.32.1/uconfig.sh
 --- perl-5.32.1.org/uconfig.sh	2020-12-18 11:04:36.000000000 +0100
 +++ perl-5.32.1/uconfig.sh	2021-04-01 22:48:37.569619974 +0200
@@ -15,8 +15,8 @@ diff -urNp -x '*.orig' perl-5.32.1.org/uconfig.sh perl-5.32.1/uconfig.sh
  afsroot='/afs'
  alignbytes='4'
  aphostname='/bin/hostname'
--archlib='/usr/local/lib/perl5/5.36/unknown'
--archlibexp='/usr/local/lib/perl5/5.36/unknown'
+-archlib='/usr/local/lib/perl5/5.38/unknown'
+-archlibexp='/usr/local/lib/perl5/5.38/unknown'
 -archname='unknown'
  asctime_r_proto='0'
 -bin='/usr/local/bin'
@@ -54,8 +54,8 @@ diff -urNp -x '*.orig' perl-5.32.1.org/uconfig.sh perl-5.32.1/uconfig.sh
  perl_thread_local=''
  phostname='hostname'
  pidtype=int
--privlib='/usr/local/lib/perl5/5.36'
--privlibexp='/usr/local/lib/perl5/5.36'
+-privlib='/usr/local/lib/perl5/5.38'
+-privlibexp='/usr/local/lib/perl5/5.38'
  procselfexe=''
  prototype='undef'
  ptrsize='4'
