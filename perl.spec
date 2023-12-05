@@ -102,7 +102,7 @@ BuildRequires:	gcc >= 5:4.1
 BuildRequires:	linux-libc-headers >= 7:2.6.24
 %{?with_tests:BuildRequires:	procps}
 # required for proper Provides generation (older are not supported by spec)
-BuildRequires:	rpm-build >= 4.3-0.20040107.4
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.750
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -415,6 +415,7 @@ POD.
 Summary:	Perl reference documentation
 Summary(pl.UTF-8):	Dokumentacja Perla
 Group:		Documentation
+BuildArch:	noarch
 
 %description doc-reference
 Reference documentation for the Practical Extraction and Report
