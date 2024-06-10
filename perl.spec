@@ -3,7 +3,6 @@
 %bcond_without	tests		# do not perform "make test"
 %bcond_without	threads		# build without support for threads
 %bcond_without	gdbm		# build without the GDBM_File module
-%bcond_with	microperl	# build microperl (needs fixing)
 #
 # TODO:
 # - fix "FIXME"s
@@ -25,7 +24,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.38.0
+%define		abi	5.40.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -43,7 +42,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.38.2
+%define		ver	5.40.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -73,7 +72,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	d3957d75042918a23ec0abac4a2b7e0a
+# Source0-md5:	cfe14ef0709b9687f9c514042e8e1e82
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -83,11 +82,6 @@ Patch0:		x32-io-msg-skip.diff
 Patch2:		%{name}_580-errno_h-parsing.patch
 Patch3:		%{name}_581-soname.patch
 Patch4:		%{name}-test-noproc.patch
-# Test regen.t checks result of this patch.
-# To run test manually run, from BUILD/perl-*:
-# PERL5LIB=$(pwd) LD_LIBRARY_PATH=$(pwd) ./preload ./libperl.so ./perl t/porting/regen.t
-# Make sure sha output from test matches sha from uconfig.h
-Patch5:		%{name}_585-microperl_uconfig.patch
 Patch6:		%{name}-write-permissions.patch
 Patch7:		%{name}-t-syslog.patch
 Patch8:		%{name}-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects.patch
@@ -638,30 +632,6 @@ pod2usage	- wypisanie informacji o używaniu programu z dokumentacji
 podchecker	- kontrola składni dokumentacji w formacie POD
 podselect	- wypisanie wybranych sekcji z dokumentacji POD
 
-%package -n microperl
-Summary:	A really minimal Perl, even more minimal than miniperl
-Summary(pl.UTF-8):	Naprawdę minimalny Perl, nawet bardziej minimalny niż miniperl
-Group:		Development/Languages/Perl
-
-%description -n microperl
-microperl is supposed to be able a really minimal Perl, even more
-minimal than miniperl. No Configure is needed to build microperl, on
-the other hand this means that interfaces between Perl and your
-operating system are left very -- minimal.
-
-All this is experimental. If you don't know what to do with microperl
-you probably shouldn't. Do not report bugs in microperl; fix the bugs.
-
-%description -n microperl -l pl.UTF-8
-microperl ma być naprawdę minimalnym Perlem, nawet bardziej minimalnym
-od miniperla. Uruchamianie Configure nie jest potrzebne do zbudowania
-microperla, z drugiej strony oznacza to, że interfejs między Perlem a
-systemem operacyjnym pozostaje bardzo minimalny.
-
-Całość jest eksperymentalna. Jeśli nie wiesz co zrobić z microperlem,
-prawdopodobnie nie powinieneś tego robić. Nie zgłaszaj błędów w
-microperlu - popraw je.
-
 %package Encode
 Summary:	Encode - character encodings
 Summary(pl.UTF-8):	Encode - kodowania znaków
@@ -727,7 +697,6 @@ zbyt duża, a rozmiar za mały na tworzenie oddzielnych rozszerzeń.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -743,15 +712,6 @@ exec %{buildroot}%{_bindir}/perl -e 'BEGIN { @INC = ("%{buildroot}%{perl_privlib
     ${1:+"$@"}
 EOF
 chmod a+x runperl
-
-# perl_585-microperl_uconfig.patch removes some variables
-# that are later verified by porting/checkcfgvar.t
-#
-# Disabling test for now but should also check if
-# perl porting/checkcfgvar.pl --regen --default=undef
-# makes better sense.
-%{__rm} t/porting/checkcfgvar.t
-%{__sed} -i -e '/^t\/porting\/checkcfgvar\.t.*/d' MANIFEST
 
 %build
 unset LD_SYMBOLIC_FUNCTIONS || :
@@ -789,24 +749,6 @@ sh Configure \
 	LIBPERL_SONAME=libperl.so.%{abi} \
 	LDDLFLAGS="%{rpmcflags} -shared"
 
-## microperl
-%if %{with microperl}
-%{__rm} uconfig.h
-%{__make} -f Makefile.micro \
-	archlib=%{perl_archlib} \
-	archlibexp=%{perl_archlib} \
-	privlib=%{perl_privlib} \
-	privlibexp=%{perl_privlib} \
-	archname=%{_target_platform}%{perlthread} \
-	osname=%{_host} \
-	bin=%{_bindir} \
-	scriptdir=%{_bindir} \
-	scriptdirexp=%{_bindir} \
-	usemallocwrap='define' \
-	CC="%{__cc}" \
-	OPTIMIZE="%{rpmcflags}"
-%endif
-
 %{?with_tests:%{__make} test -j1}
 #%{?with_tests:%{__make} minitest}
 
@@ -816,7 +758,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{?with_microperl:install microperl $RPM_BUILD_ROOT%{_bindir}}
 install -d $RPM_BUILD_ROOT%{_mandir}/{ja,ko,zh_CN,zh_TW}/man1
 
 ## use symlinks instead of hardlinks
@@ -952,10 +893,6 @@ for m in $(awk '!/^#/ && !/^$/{print $1}' %{SOURCE3}); do
 	ExtUtils::CBuilder|Compress::Raw::Bzip2|Compress::Raw::Zlib)
 		v=$(%{__perl} -e "use $m; print version->parse(\$$m::VERSION)->numify")
 		;;
-	# this module has VERSION encoded as int in a way that it loses trailing 0
-	Getopt::Long)
-		v=$(%{__perl} -e "use $m; print \$$m::VERSION_STRING")
-		;;
 	*)
 		v=$(%{__perl} -e "use $m; print \$$m::VERSION")
 		;;
@@ -1084,7 +1021,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Fatal.pm
 %{_mandir}/man3/Fatal.3perl*
 %{perl_privlib}/Getopt
-%{_mandir}/man3/Getopt::Long.3perl*
+%{_mandir}/man3/Getopt::Long*.3perl*
 %{_mandir}/man3/Getopt::Std.3perl*
 %{perl_privlib}/HTTP
 %{_mandir}/man3/HTTP::Tiny.3perl*
@@ -1190,8 +1127,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/encoding/encoding.so
 %dir %{perl_archlib}/auto/PerlIO/mmap
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/mmap/mmap.so
-%dir %{perl_archlib}/auto/PerlIO/scalar
-%attr(755,root,root) %{perl_archlib}/auto/PerlIO/scalar/scalar.so
 %dir %{perl_archlib}/auto/PerlIO/via
 %attr(755,root,root) %{perl_archlib}/auto/PerlIO/via/via.so
 %{_mandir}/man3/PerlIO*.3perl*
@@ -1635,6 +1570,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Term::Cap.3perl*
 %{_mandir}/man3/Term::Complete.3perl*
 %{_mandir}/man3/Term::ReadLine.3perl*
+%{_mandir}/man3/Term::Table*.3perl*
 
 %{perl_privlib}/Test.pm
 %{perl_privlib}/Test
@@ -1650,14 +1586,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_privlib}/Test2.pm
 %{perl_privlib}/Test2
 %{_mandir}/man3/Test2.3perl*
-%{_mandir}/man3/Test2::API*.3perl*
-%{_mandir}/man3/Test2::Event*.3perl*
-%{_mandir}/man3/Test2::Formatter*.3perl*
-%{_mandir}/man3/Test2::Hub*.3perl*
-%{_mandir}/man3/Test2::IPC*.3perl*
-%{_mandir}/man3/Test2::Tools::Tiny.3perl*
-%{_mandir}/man3/Test2::Transition.3perl*
-%{_mandir}/man3/Test2::Util*.3perl*
+%{_mandir}/man3/Test2::*.3perl*
 
 %{perl_privlib}/Text
 %{_mandir}/man3/Text::Abbrev.3perl*
@@ -1735,13 +1664,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/podchecker
 %{_mandir}/man1/pod2*.1*
 %{_mandir}/man1/podchecker.1*
-
-%if %{with microperl}
-%files -n microperl
-%defattr(644,root,root,755)
-%doc README.micro
-%attr(755,root,root) %{_bindir}/microperl
-%endif
 
 %files Encode
 %defattr(644,root,root,755)
