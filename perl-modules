@@ -1,4 +1,4 @@
-# Module versions from Perl 5.40.1 distribution.
+# Module versions from Perl 5.40.2 distribution.
 Archive::Tar = 3.02_001
 Attribute::Handlers = 1.03
 CPAN = 2.36
@@ -42,7 +42,7 @@ Math::BigRat = 2.003002
 Math::Complex = 1.62
 Math::Trig = 1.62
 Memoize = 1.16
-Module::CoreList = 5.20250118_40
+Module::CoreList = 5.20250413_40
 Module::Load = 0.36
 Module::Load::Conditional = 0.74
 Module::Metadata = 1.000038
