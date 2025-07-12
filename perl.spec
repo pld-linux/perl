@@ -24,7 +24,7 @@
 # NOTE
 # - modules in 5.20.0: http://search.cpan.org/~rjbs/perl-5.20.0/
 
-%define		abi	5.40.0
+%define		abi	5.42.0
 %define		perlthread	%{?with_threads:-thread-multi}
 
 %define		perl_privlib	%{_datadir}/perl5/%{ver}
@@ -42,7 +42,7 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.40.2
+%define		ver	5.42.0
 %define		rel	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -72,7 +72,7 @@ Epoch:		1
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
-# Source0-md5:	9ad7a269dc4053cdbeecd4fde444291b
+# Source0-md5:	7a6950a9f12d01eb96a9d2ed2f4e0072
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	de47d7893f49ad7f41ba69c78511c0db
 Source2:	%{name}.prov
@@ -987,6 +987,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/parent.3perl*
 %{perl_privlib}/sort.pm
 %{_mandir}/man3/sort.3perl*
+%{perl_privlib}/source
+%{_mandir}/man3/source::encoding.3perl*
 %{perl_privlib}/strict.pm
 %{_mandir}/man3/strict.3perl*
 %{perl_privlib}/subs.pm
@@ -1717,6 +1719,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_archlib}/auto/List
 %dir %{perl_archlib}/auto/List/Util
 %attr(755,root,root) %{perl_archlib}/auto/List/Util/Util.so
+%{_mandir}/man3/Scalar::List::Utils.3perl*
 %{_mandir}/man3/Scalar::Util.3perl*
 %{_mandir}/man3/List::Util*.3perl*
 %{_mandir}/man3/Sub::Util.3perl*
