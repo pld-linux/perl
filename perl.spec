@@ -42,8 +42,9 @@
 %define		perl_mod2verrel()	%([ -f %{SOURCE4} ] && awk -vp=%1 -vr=%2 '$1 == p { print $4"-"r }' %{SOURCE4} || echo ERROR)
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
-%define		ver	5.42.0
-%define		rel	1
+%define		ver		5.42.0
+%define		rel		1
+%define		main_epoch	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
 Summary(da.UTF-8):	Programmeringssproget Perl
@@ -68,7 +69,7 @@ Summary(zh_CN.UTF-8):	Perl 编程语言。
 Name:		perl
 Version:	%{ver}
 Release:	%{rel}%{!?with_threads:_nothr}
-Epoch:		1
+Epoch:		%{main_epoch}
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	https://www.cpan.org/src/5.0/%{name}-%{ver}.tar.xz
@@ -676,6 +677,7 @@ Release:	%{ver}.%{rel}
 Epoch:		0
 Group:		Development/Languages/Perl
 URL:		http://search.cpan.org/dist/Scalar-List-Utils/
+Requires:	%{name}-base = %{main_epoch}:%{ver}-%{rel}
 
 %description Scalar-List-Utils
 This package contains a selection of subroutines that people have
