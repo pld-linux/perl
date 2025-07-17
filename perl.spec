@@ -640,7 +640,7 @@ Version:	%perl_modver Encode
 Release:	%{ver}.%{rel}
 Epoch:		3
 Group:		Libraries
-Requires:	%{name}-base = 1:%{ver}-%{rel}
+Requires:	%{name}-base = %{main_epoch}:%{ver}-%{rel}
 Obsoletes:	perl-Encode-compat < 1
 
 %description Encode
@@ -658,7 +658,7 @@ Version:	%perl_modver GDBM_File
 Release:	%{ver}.%{rel}
 Epoch:		4
 Group:		Libraries
-Requires:	%{name}-base = 1:%{ver}-%{rel}
+Requires:	%{name}-base = %{main_epoch}:%{ver}-%{rel}
 
 %description GDBM_File
 GDBM_File is a module which allows Perl programs to make use of the
