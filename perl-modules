@@ -60,6 +60,7 @@ Sys::Syslog = 0.36
 Term::ANSIColor = 5.01
 Term::Cap = 1.18
 Test = 1.31
+Test2::Suite = 1.302210
 Test::Builder::Tester = 1.302210
 Test::Harness = 3.50
 Test::Simple = 1.302210
