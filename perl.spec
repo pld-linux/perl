@@ -323,6 +323,8 @@ Provides:	%perl_modversion PerlIO::via::QuotedPrint
 Provides:	%perl_modversion Socket
 Provides:	%perl_modversion Tie::File
 Provides:	%perl_modversion Tie::RefHash
+Provides:	%perl_modversion Tie::StdArray
+Provides:	%perl_modversion Tie::StdHash
 Provides:	%perl_modversion parent
 Obsoletes:	perl-File-Compare < %perl_modverrel File::Compare 99
 Obsoletes:	perl-File-Temp < %perl_modverrel File::Temp 99
