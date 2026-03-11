@@ -43,7 +43,7 @@
 %define		perl_mod2version()	%([ -f %{SOURCE4} ] && awk -vp=%1 '$1 == p { m=$2; printf("perl-%s = %s\\n", p, $4)}END{if (!m) printf("# Error looking up [%s]\\n", p) }' %{SOURCE4} || echo ERROR)
 
 %define		ver		5.42.1
-%define		rel		1
+%define		rel		2
 %define		main_epoch	1
 Summary:	Practical Extraction and Report Language (Perl)
 Summary(cs.UTF-8):	Programovací jazyk Perl
@@ -108,7 +108,7 @@ Suggests:	perldoc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		__perl		%{_builddir}/perl-%{ver}/runperl
-%if %{_ver_ge '%{_rpmversion}' '4.16'} && %{_ver_lt '%{_rpmversion}' '5'}
+%if %{_ver_ge '%{_rpmversion}' '4.16'} && %{_ver_lt '%{_rpmversion}' '5'} || %{_ver_ge '%{_rpmversion}' '6'}
 %define		__perllib_provides %{__perl} %{SOURCE2}
 %else
 %define		__perl_provides %{__perl} %{SOURCE2}
