@@ -1,11 +1,11 @@
-# Module versions from Perl 5.42.1 distribution.
+# Module versions from Perl 5.42.2 distribution.
 Archive::Tar = 3.04
 Attribute::Handlers = 1.03
 CPAN = 2.38
 CPAN::Meta = 2.150010
 CPAN::Meta::YAML = 0.020
 Compress::Raw::Bzip2 = 2.213
-Compress::Raw::Zlib = 2.213
+Compress::Raw::Zlib = 2.222
 Compress::Zlib = 2.213
 Devel::PPPort = 3.73
 Devel::Peek = 1.36
@@ -42,7 +42,7 @@ Math::BigRat = 2.005002
 Math::Complex = 1.63
 Math::Trig = 1.63
 Memoize = 1.17
-Module::CoreList = 5.20260308
+Module::CoreList = 5.20260329_42
 Module::Load = 0.36
 Module::Load::Conditional = 0.74
 Module::Metadata = 1.000038
